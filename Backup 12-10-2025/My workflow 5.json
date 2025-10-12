@@ -1,0 +1,77 @@
+{
+  "createdAt": "2025-09-29T10:54:02.497Z",
+  "updatedAt": "2025-09-29T11:24:34.534Z",
+  "id": "EJYJSezDz7BcyONg",
+  "name": "My workflow 5",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "37d51cfd-1ddc-44c1-b1d4-7683ac2fc7fd",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "199952dd5f3fd455",
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "935740d3-ea64-451b-a6b6-9636d07c66aa",
+      "name": "Get a message",
+      "webhookId": "401f734e-41ad-49a9-920c-990981e5b099",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QEHGCgJWz2yCdVn0",
+          "name": "Gmail TESTE"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "9c75226b-d80c-406c-99ee-16134560f8b2",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "createdAt": "2025-09-29T10:54:02.497Z",
+      "updatedAt": "2025-09-29T10:54:02.497Z",
+      "role": "workflow:owner",
+      "workflowId": "EJYJSezDz7BcyONg",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
