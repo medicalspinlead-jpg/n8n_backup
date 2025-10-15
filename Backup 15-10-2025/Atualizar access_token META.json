@@ -1,0 +1,106 @@
+{
+  "createdAt": "2025-10-06T18:28:43.505Z",
+  "updatedAt": "2025-10-06T18:37:52.146Z",
+  "id": "5JNW5i86bx6vp5xd",
+  "name": "Atualizar access_token META",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months",
+              "triggerAtDayOfMonth": 15,
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "859a8ff9-13ea-492c-b07e-d9e85dda1ca4",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "sendTo": "desenv.medicalspin@gmail.com",
+        "subject": "ATUALIZAR O ACCESS TOKEN DA META",
+        "message": "ATUALIZAR O ACCESS TOKEN DA META!",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "4d1b13a1-fd43-4932-ac94-fef114953a7a",
+      "name": "Send a message",
+      "webhookId": "013e3dd7-3832-4d06-b28d-cef22b9d1c47",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QEHGCgJWz2yCdVn0",
+          "name": "Gmail TESTE"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "650437e2-bc83-44ff-b3b4-2ed24c8ee89b",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-10-06T18:28:43.505Z",
+      "updatedAt": "2025-10-06T18:28:43.505Z",
+      "role": "workflow:owner",
+      "workflowId": "5JNW5i86bx6vp5xd",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "createdAt": "2025-09-24T16:36:23.604Z",
+      "updatedAt": "2025-09-24T16:36:23.604Z",
+      "id": "1OI7gHy5TinHfu4c",
+      "name": "Meta ADS"
+    },
+    {
+      "createdAt": "2025-09-24T16:36:31.082Z",
+      "updatedAt": "2025-09-24T16:36:31.082Z",
+      "id": "sIJeimO5xvoDAXn2",
+      "name": "Facebook"
+    }
+  ]
+}
