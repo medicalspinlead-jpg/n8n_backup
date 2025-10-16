@@ -1,0 +1,264 @@
+{
+  "createdAt": "2025-09-25T14:45:50.807Z",
+  "updatedAt": "2025-09-25T17:01:23.894Z",
+  "id": "7Nd0vipr1Kvoj6ft",
+  "name": "Meta ADS + PIPEDRIVE + VOXFREE + EVOLUTION Bobinas1",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "title": "={{ $('Create a lead1').item.json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person1').item.json.id }}",
+        "additionalFields": {
+          "stage_id": 1
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        32,
+        -336
+      ],
+      "id": "fa98cfa1-a1ea-4b31-ae27-7206fa5ea159",
+      "name": "Create a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "VAfSRB2KfaKro3h2",
+          "name": "Pipedrive TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $json.data.first_name }}",
+        "additionalFields": {
+          "email": [
+            "={{ $json.data.email }}"
+          ],
+          "phone": [
+            "={{ $json.data.phone_number }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -592,
+        -336
+      ],
+      "id": "6b8c8dc9-6c27-4bed-acd6-5fb8dde9d66e",
+      "name": "Create a person1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "VAfSRB2KfaKro3h2",
+          "name": "Pipedrive TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.first_name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        -336
+      ],
+      "id": "3e3e2dbc-fbde-443e-bb25-0a3ae435b87a",
+      "name": "Create a lead1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "VAfSRB2KfaKro3h2",
+          "name": "Pipedrive TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('Reparo de Bobina').item.json.data['qual_o_nome_da_sua_clínica?'] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -336
+      ],
+      "id": "0cb79d23-8040-4db2-b691-c8332d9b0d00",
+      "name": "Create an organization1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "VAfSRB2KfaKro3h2",
+          "name": "Pipedrive TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "page": {
+          "__rl": true,
+          "value": "109272241704653",
+          "mode": "list",
+          "cachedResultName": "Medical Spin - Soluções em Serviços de Ressonância",
+          "cachedResultUrl": "https://facebook.com/109272241704653"
+        },
+        "form": {
+          "__rl": true,
+          "value": "1500820484584766",
+          "mode": "list",
+          "cachedResultName": "SOL | MV | CS | REPARO DE BOBINA"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.facebookLeadAdsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        -336
+      ],
+      "id": "e577c8c5-d6c7-4026-91f7-1b99c4bcc781",
+      "name": "Reparo de Bobina",
+      "webhookId": "3eb4bbde-cff5-46c8-9490-7091b87134a5",
+      "credentials": {
+        "facebookLeadAdsOAuth2Api": {
+          "id": "3PTnb3xyzbB6mbO4",
+          "name": "Facebook Lead Ads account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Create a person1": {
+      "main": [
+        [
+          {
+            "node": "Create a lead1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead1": {
+      "main": [
+        [
+          {
+            "node": "Create an organization1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization1": {
+      "main": [
+        [
+          {
+            "node": "Create a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reparo de Bobina": {
+      "main": [
+        [
+          {
+            "node": "Create a person1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Reparo de Bobina": [
+      {
+        "json": {
+          "id": "1808086169797025",
+          "data": {
+            "qual_o_nome_da_sua_clínica?": "Clinica teste",
+            "first_name": "Automações MedicalSpin",
+            "phone_number": "+5579999801810",
+            "email": "medicalspin.lead@gmail.com",
+            "inbox_url": null
+          },
+          "form": {
+            "id": "1500820484584766",
+            "name": "SOL | MV | CS | REPARO DE BOBINA",
+            "locale": "pt_BR",
+            "status": "ACTIVE"
+          },
+          "ad": {},
+          "adset": {},
+          "page": {
+            "name": "Medical Spin - Soluções em Serviços de Ressonância",
+            "id": "109272241704653"
+          },
+          "created_time": "2025-09-25T14:43:59+0000"
+        }
+      }
+    ]
+  },
+  "versionId": "9c93dfa0-5c3b-457e-97e3-c7e47edfa4c5",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-09-25T14:45:50.807Z",
+      "updatedAt": "2025-09-25T14:45:50.807Z",
+      "role": "workflow:owner",
+      "workflowId": "7Nd0vipr1Kvoj6ft",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "createdAt": "2025-09-24T16:37:09.332Z",
+      "updatedAt": "2025-09-24T16:37:09.332Z",
+      "id": "5YkbdcoRnrhRGDir",
+      "name": "Sheets"
+    },
+    {
+      "createdAt": "2025-09-24T16:36:41.465Z",
+      "updatedAt": "2025-09-24T16:36:41.465Z",
+      "id": "VX9ODoHJ3pPs74i0",
+      "name": "Pipedrive"
+    },
+    {
+      "createdAt": "2025-09-24T16:36:31.082Z",
+      "updatedAt": "2025-09-24T16:36:31.082Z",
+      "id": "sIJeimO5xvoDAXn2",
+      "name": "Facebook"
+    },
+    {
+      "createdAt": "2025-09-24T16:36:23.604Z",
+      "updatedAt": "2025-09-24T16:36:23.604Z",
+      "id": "1OI7gHy5TinHfu4c",
+      "name": "Meta ADS"
+    },
+    {
+      "createdAt": "2025-09-24T16:36:12.748Z",
+      "updatedAt": "2025-09-24T16:36:12.748Z",
+      "id": "hpP7KRFBtJN9dYGl",
+      "name": "EvolutionAPI"
+    }
+  ]
+}
