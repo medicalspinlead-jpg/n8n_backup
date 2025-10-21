@@ -1,0 +1,75 @@
+{
+  "createdAt": "2025-10-01T14:52:05.291Z",
+  "updatedAt": "2025-10-01T15:09:54.870Z",
+  "id": "2Pre5cGto8pB7fa9",
+  "name": "My workflow 7",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "04e901a8-4911-4755-bfd7-8038fa7cde33",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "80fe1a61-2e91-4e7b-b9a0-d2b4c1a133ce",
+      "name": "Get many deals",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "VAfSRB2KfaKro3h2",
+          "name": "Pipedrive TESTE"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many deals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "0fdd8ad5-87e1-4efa-871e-c6a824eb0d97",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "createdAt": "2025-10-01T14:52:05.291Z",
+      "updatedAt": "2025-10-01T14:52:05.291Z",
+      "role": "workflow:owner",
+      "workflowId": "2Pre5cGto8pB7fa9",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
