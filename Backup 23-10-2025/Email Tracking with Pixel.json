@@ -1,0 +1,82 @@
+{
+  "createdAt": "2025-10-23T12:05:28.271Z",
+  "updatedAt": "2025-10-23T14:00:51.809Z",
+  "id": "cAkc1XBeYNF4s2tQ",
+  "name": "Email Tracking with Pixel",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "sendTo": "desenvmedicalspin@gmail.com",
+        "subject": "oi",
+        "message": "=<p>Olá, este é um teste de rastreamento.</p>\n<img src=\"https://n8n.medicalspin.com.br/webhook/getmail-id\" width=\"1\" height=\"1\" style=\"display:none;\" />",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2608,
+        -528
+      ],
+      "id": "7496b6b0-eef6-4936-94fa-8f69704a1b34",
+      "name": "Send a message",
+      "webhookId": "14f9d3a3-d2be-48fe-984a-dafdcf689a3a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QEHGCgJWz2yCdVn0",
+          "name": "Gmail Main"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "getmail-id",
+        "options": {}
+      },
+      "name": "Webhook Pixel1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        2608,
+        -800
+      ],
+      "id": "c3edfdcf-e01e-4cba-b6bc-4cea5c388fef",
+      "webhookId": "39878595-ac01-4ce3-990f-eef4ca86dce7"
+    }
+  ],
+  "connections": {
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "Webhook Pixel1": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "8d67f256-4e37-4d83-8c7d-e03196416cae",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-10-23T12:05:28.271Z",
+      "updatedAt": "2025-10-23T12:05:28.271Z",
+      "role": "workflow:owner",
+      "workflowId": "cAkc1XBeYNF4s2tQ",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
