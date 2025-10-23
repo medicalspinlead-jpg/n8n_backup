@@ -1,0 +1,1998 @@
+{
+  "createdAt": "2025-10-13T11:38:17.317Z",
+  "updatedAt": "2025-10-13T11:40:38.946Z",
+  "id": "h0IMii6tv4HkBJyJ",
+  "name": "SITE + PIPEDRIVE + VOXFREE copy",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "6e60326f-6c23-4150-997d-b205308c76f0",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        848,
+        -16
+      ],
+      "id": "7e4071e6-4d10-4ae6-8056-5a45e99973ff",
+      "name": "Webhook3",
+      "webhookId": "6e60326f-6c23-4150-997d-b205308c76f0"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Webhook3').item.json.body['fields[name][value]'] }}",
+        "additionalFields": {
+          "email": [
+            "={{ $('Webhook3').item.json.body['fields[field_6ea311e][value]'] }}"
+          ],
+          "phone": [
+            "={{ $('Webhook3').item.json.body['fields[email][value]'] }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        -16
+      ],
+      "id": "c057b01f-c886-4c4a-9881-9e63fbd5cf21",
+      "name": "Create a person3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        -16
+      ],
+      "id": "6e93cd8a-aae7-44cf-9c0e-803b79ca502a",
+      "name": "Create a lead3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $('Create a person3').item.json.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person3').item.json.id }}",
+        "additionalFields": {
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -16
+      ],
+      "id": "6663003f-82af-4d3b-8c36-dda42ddef35a",
+      "name": "Create a deal3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Solicitar Proposta Agora",
+        "height": 192,
+        "width": 1776
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        832,
+        -64
+      ],
+      "id": "0104fd93-7648-47ce-9a6a-66891ed8e14f",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Webhook4').item.json.body['fields[name][value]'] }}",
+        "additionalFields": {
+          "email": [],
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Webhook4').item.json.body['fields[email][value]'] }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        208
+      ],
+      "id": "cd27ce13-4886-42e1-bb01-b04875f502ad",
+      "name": "Create a person4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {
+          "organization_id": "={{ $('Create an organization').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        208
+      ],
+      "id": "d201de66-9a41-42f4-a1eb-7ed895b0594b",
+      "name": "Create a lead4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person4').item.json.id }}",
+        "additionalFields": {
+          "org_id": "={{ $('Create an organization').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        208
+      ],
+      "id": "9922975c-556f-400b-94c3-1953c4084473",
+      "name": "Create a deal4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Solicitar Contato Agora",
+        "height": 176,
+        "width": 1952,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        832,
+        176
+      ],
+      "id": "b4b6ff2b-d71f-47c4-b78c-71ac55200187",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('Webhook4').item.json.body['fields[field_7425966][value]'] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        208
+      ],
+      "id": "701cd7ad-11ca-4eae-95cf-b2f782a46c8f",
+      "name": "Create an organization",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Página de Ressonância Certificada",
+        "height": 496,
+        "width": 2016,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        800,
+        -112
+      ],
+      "id": "a414628c-fe10-41e0-82e6-a50af1e0edda",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "7b322dff-edae-4095-bb2c-4e1108456eb0",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        848,
+        512
+      ],
+      "id": "ffe7d80c-6628-412a-8166-d04a41506fba",
+      "name": "Webhook5",
+      "webhookId": "7b322dff-edae-4095-bb2c-4e1108456eb0",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Webhook5').item.json.body['fields[name][value]'] }}",
+        "additionalFields": {
+          "email": [
+            "={{ $('Webhook5').item.json.body['fields[field_6ea311e][value]'] }}"
+          ],
+          "phone": [
+            "={{ $('Webhook5').item.json.body['fields[field_e50ce0b][value]'] }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        512
+      ],
+      "id": "b525cce1-7de1-4b09-95ef-d256aacb78cb",
+      "name": "Create a person5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.owner_id.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        512
+      ],
+      "id": "7c59bcdb-b096-4e02-b2ee-eaca80aacc60",
+      "name": "Create a lead5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person5').item.json.id }}",
+        "additionalFields": {
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        512
+      ],
+      "id": "3b4ec1f7-abd2-4138-a260-4242dcb577dd",
+      "name": "Create a deal5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## FORM PUP-UP",
+        "height": 176,
+        "width": 1488,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        832,
+        480
+      ],
+      "id": "1b5b897b-9860-44f4-a13f-0343986d5fad",
+      "name": "Sticky Note7",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "69ca90f7-f579-4217-9b82-cbf8f106738e",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        848,
+        720
+      ],
+      "id": "6bf0a520-9c5b-4bd0-979a-9da85bc47c71",
+      "name": "Webhook6",
+      "webhookId": "69ca90f7-f579-4217-9b82-cbf8f106738e",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Webhook6').item.json.body['fields[name][value]'] }}",
+        "additionalFields": {
+          "email": [],
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Webhook6').item.json.body['fields[field_d0a4874][value]'] }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        720
+      ],
+      "id": "2ae77426-2bd2-4847-9542-361c5462d31e",
+      "name": "Create a person6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.owner_id.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {
+          "organization_id": "={{ $('Create an organization1').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        720
+      ],
+      "id": "dfd41b98-78a4-4753-8b51-c5bf76f23810",
+      "name": "Create a lead6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "title": "={{ $('Create a person6').item.json.owner_id.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person6').item.json.id }}",
+        "additionalFields": {
+          "org_id": "={{ $('Create an organization1').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        720
+      ],
+      "id": "34a4ae65-7060-4970-b9b8-0fc1eb2ac0ca",
+      "name": "Create a deal6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Solicitar Contato Agora",
+        "height": 192,
+        "width": 1664,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        832,
+        672
+      ],
+      "id": "5f822def-523d-4933-8529-708352ce5b9a",
+      "name": "Sticky Note8",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('Webhook6').item.json.body['fields[field_201ca7a][value]'] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        720
+      ],
+      "id": "a04d0c3e-1b65-40f2-a411-0e2e0a802d43",
+      "name": "Create an organization1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Página de Bobinas de Exames",
+        "height": 496,
+        "width": 1728,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        800,
+        416
+      ],
+      "id": "a50543d2-fa9f-4cb3-bdd1-6eeb42d0df17",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978480406,
+          "mode": "list",
+          "cachedResultName": "SITE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Edit Fields2').item.json.name }}",
+            "EMAIL": "={{ $('Edit Fields2').item.json.email }}",
+            "TELEFONE": "={{ $('Edit Fields2').item.json.phone }}",
+            "CLÍNICA": "={{ $('Edit Fields2').item.json.org }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLÍNICA",
+              "displayName": "CLÍNICA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2608,
+        208
+      ],
+      "id": "ad23e06c-138c-422e-92d0-94cb46efb3ea",
+      "name": "Append row in sheet3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Create a person5').item.json.name }}",
+            "EMAIL": "={{ $('Create a person5').item.json.email[0].value }}",
+            "TELEFONE": "={{ $('Create a person5').item.json.phone[0].value }}",
+            "SITE/META?": "SITE",
+            "ORGÂNICO/ADS": "SITE"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "SITE/META?",
+              "displayName": "SITE/META?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLÍNICA",
+              "displayName": "CLÍNICA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ORGÂNICO/ADS",
+              "displayName": "ORGÂNICO/ADS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2144,
+        512
+      ],
+      "id": "d58bc9e8-9ad5-4975-b416-e82f1b14551a",
+      "name": "Append row in sheet5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Create a person6').item.json.name }}",
+            "EMAIL": "={{ $('Create a person6').item.json.email[0].value }}",
+            "TELEFONE": "={{ $('Create a person6').item.json.phone[0].value }}",
+            "SITE/META?": "SITE",
+            "ORGÂNICO/ADS": "SITE"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "SITE/META?",
+              "displayName": "SITE/META?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLÍNICA",
+              "displayName": "CLÍNICA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ORGÂNICO/ADS",
+              "displayName": "ORGÂNICO/ADS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2320,
+        720
+      ],
+      "id": "a3cf35e1-67e7-460d-948b-5ec82b739810",
+      "name": "Append row in sheet6",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🚀LEAD SITE PG RESSONÂNCIA CERTIFICADA\n\n🔹Nome: {{ $('Create a person3').item.json.name }}\n🔹Telefone: {{ $('Create a person3').item.json.phone[0].value }}\n🔹Email: {{ $('Create a person3').item.json.email[0].value }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        -16
+      ],
+      "id": "b4b347ee-21fc-4439-b3da-a3bde1f22d38",
+      "name": "Create a note3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🚀LEAD SITE PG RESSONÂNCIA CERTIFICADA\n\n🔹Nome: {{ $('Create a person4').item.json.name }}\n🔹Telefone: {{ $('Create a person4').item.json.phone[0].value }}\n🔹Email: {{ $('Create a person4').item.json.email[0].value }}\n🔹Clínica: {{ $('Create an organization').item.json.name }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1728,
+        208
+      ],
+      "id": "df212078-6a44-4c30-ac6c-e3de8a99c389",
+      "name": "Create a note4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        512
+      ],
+      "id": "45d15c6e-ced7-48f2-b114-a8234c14c340",
+      "name": "Create a note5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "VAfSRB2KfaKro3h2",
+          "name": "Pipedrive TESTE"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1728,
+        720
+      ],
+      "id": "06a20f72-575c-4acf-b1b1-859f54ceaee6",
+      "name": "Create a note6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "VAfSRB2KfaKro3h2",
+          "name": "Pipedrive TESTE"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Cria o Contato').item.json.phone[0].value }}\",\n    \"mensagem\": \"Olá, {{ $('Code in JavaScript').item.json.name }}!\\n📌Bem-vindo à *Medical Spin* — referência nacional em *Equipamentos de Ressonância Magnética e Radiologia*.\",\n    \"mensagem\": \"👋 Olá, {{ $('Code in JavaScript').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* ⚡\\n🔧 Um especialista já foi avisado!\\n\\n🧪 *Em nosso lab certificado*, restauramos bobinas condenadas com *100% de sucesso nos testes de IQT* ✅\\n\\n📍 Pode informar *modelo, marca da RM* e o que está buscando?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"Nome: {{ $('Code in JavaScript').item.json.name }}\\nTelefone: {{ $('Code in JavaScript').item.json.phone }}\\nEmail: {{ $('Code in JavaScript').item.json.email }}\\nClínica(Se existir): {{ $('Code in JavaScript').item.json.clinic_name }}\\nDetalhes da Clínica(Se existir): {{ $('Code in JavaScript').item.json.clinic_details }}\\nMarca da Máquina(Se existir): {{ $('Code in JavaScript').item.json.machine_brand }}\\nModelo da Máquina(Se existir): {{ $('Code in JavaScript').item.json.machine_model }}\\nProblema(Se existir): {{ $('Code in JavaScript').item.json.problem }}\\nStatus da Máquina(Se existir): {{ $('Code in JavaScript').item.json.machine_status }}\\nModelo de Ressonância(Se existir): {{ $('Code in JavaScript').item.json.mri_model }}\\nFormADS: {{ $json.form }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        -480
+      ],
+      "id": "90331c98-37fa-4059-98c1-0fd826ff2d8b",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b88d8ef2-8461-4b65-95b9-da090f997910",
+              "name": "dp_id",
+              "value": "959",
+              "type": "string"
+            },
+            {
+              "id": "8cbecb4a-8bc0-42ff-9357-c33f317c50cd",
+              "name": "form",
+              "value": "Reparo de bobina",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        336,
+        -480
+      ],
+      "id": "594aadc3-58b3-4828-af01-3eb87defdd41",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Edit Fields1').item.json.phone }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields1').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* 🤖\\n🧠 Um especialista foi avisado e atenderá você em breve!\\n\\n🎯 *Bem-vindo* ao *Programa Medical Spin Certified*.\\nSua *ressonância protegida* pela *Solução 360°* 🛡️\\n\\n💬 Pode nos contar mais sobre o seu projeto?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🚀LEAD SITE PG RESSONÂNCIA CERTIFICADA\\n🔹Nome: {{ $('Create a person3').item.json.name }}\\n🔹Telefone: {{ $('Create a person3').item.json.phone[0].value }}\\n🔹Email: {{ $('Create a person3').item.json.email[0].value }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2464,
+        -16
+      ],
+      "id": "e3fa72f4-8192-4be3-9b88-893aae2dd38d",
+      "name": "HTTP Request8"
+    },
+    {
+      "parameters": {
+        "options": {
+          "appendAttribution": false
+        },
+        "path": "8db21b90-5385-43bc-97db-3460709ecf22"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1728,
+        -16
+      ],
+      "id": "67e68273-4db4-4347-8c18-36ae1c009a9a",
+      "name": "Send a message",
+      "webhookId": "8db21b90-5385-43bc-97db-3460709ecf22",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QEHGCgJWz2yCdVn0",
+          "name": "Gmail TESTE"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "appendAttribution": false
+        },
+        "path": "50ac4dda-22b1-40a4-a03a-128d785f92be"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1904,
+        208
+      ],
+      "id": "6aeecd99-a3ef-4c91-999c-e9577f1f28c3",
+      "name": "Send a message1",
+      "webhookId": "50ac4dda-22b1-40a4-a03a-128d785f92be",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QEHGCgJWz2yCdVn0",
+          "name": "Gmail TESTE"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "577ec979-a18e-4e38-9779-7f2286744638",
+              "name": "dp_id",
+              "value": "958",
+              "type": "string"
+            },
+            {
+              "id": "c5f10275-92b2-490a-b4ae-1c321c124c18",
+              "name": "form",
+              "value": "Compra de Ressonância",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2256,
+        208
+      ],
+      "id": "082c3714-29f2-4f7c-b921-6a5487f47f26",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Edit Fields2').item.json.phone }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields2').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* 🤖\\n🧠 Um especialista foi avisado e atenderá você em breve!\\n\\n🎯 *Bem-vindo* ao *Programa Medical Spin Certified*.\\nSua *ressonância protegida* pela *Solução 360°* 🛡️\\n\\n💬 Pode nos contar mais sobre o seu projeto?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🚀LEAD SITE PG RESSONÂNCIA CERTIFICADA\\n🔹Nome: {{ $('Create a person4').item.json.name }}\\n🔹Telefone: {{ $('Create a person4').item.json.phone[0].value }}\\n🔹Email: {{ $('Create a person4').item.json.email[0].value }}\\n🔹Clínica: {{ $('Edit Fields2').item.json.org }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2432,
+        208
+      ],
+      "id": "3d63081d-475e-460f-8c48-c3a47013688b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+              "name": "name",
+              "value": "={{ $('Create a person3').item.json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+              "name": "email",
+              "value": "={{ $('Create a person3').item.json.email[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+              "name": "phone",
+              "value": "={{ $('Create a person3').item.json.phone[0].value }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1904,
+        -16
+      ],
+      "id": "b6785ed1-c3b6-446a-9f3c-9d723e3c12c7",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "577ec979-a18e-4e38-9779-7f2286744638",
+              "name": "dp_id",
+              "value": "958",
+              "type": "string"
+            },
+            {
+              "id": "c5f10275-92b2-490a-b4ae-1c321c124c18",
+              "name": "form",
+              "value": "Compra de Ressonância",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2288,
+        -16
+      ],
+      "id": "b768b713-1424-48d8-8d78-e311e206751b",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "183c5886-ad51-4074-bbba-b0fadc4a4539",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        848,
+        208
+      ],
+      "id": "9cfa361c-9156-4f14-a78f-d7ce737967fb",
+      "name": "Webhook4",
+      "webhookId": "183c5886-ad51-4074-bbba-b0fadc4a4539"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+              "name": "name",
+              "value": "={{ $('Create a person4').item.json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+              "name": "email",
+              "value": "={{ $('Create a person4').item.json.email[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+              "name": "phone",
+              "value": "={{ $('Create a person4').item.json.phone[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "284a1bf1-0831-4a70-9cbe-b107c2f074e7",
+              "name": "org",
+              "value": "={{ $('Create an organization').item.json.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2080,
+        208
+      ],
+      "id": "73e3c9bc-9a8e-461f-bb17-e7a4ca38e405",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978480406,
+          "mode": "list",
+          "cachedResultName": "SITE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Edit Fields1').item.json.name }}",
+            "EMAIL": "={{ $('Edit Fields1').item.json.email }}",
+            "TELEFONE": "={{ $('Edit Fields1').item.json.phone }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLÍNICA",
+              "displayName": "CLÍNICA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2640,
+        -16
+      ],
+      "id": "7ae097f4-5c18-4df8-be73-24980b013499",
+      "name": "Append row in sheet4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Node: Function\n// Nome sugerido: \"Formatar Telefone\"\n\nreturn items.map(item => {\n  let telefone = item.json.telefone || \"\";\n\n  // Remove espaços, parênteses, traços, etc.\n  telefone = telefone.replace(/\\D/g, \"\");\n\n  // Verifica se já começa com 55\n  if (!telefone.startsWith(\"55\")) {\n    telefone = \"55\" + telefone;\n  }\n\n  // Garante que tenha o +\n  if (!telefone.startsWith(\"+\")) {\n    telefone = \"+\" + telefone;\n  }\n\n  item.json.telefone = telefone;\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2080,
+        -16
+      ],
+      "id": "7f771d1b-022a-403b-8651-effa018e2986",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+              "name": "name",
+              "value": "={{ $('Create a person3').item.json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+              "name": "email",
+              "value": "={{ $('Create a person3').item.json.email[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+              "name": "phone",
+              "value": "={{ $('Create a person3').item.json.phone[0].value }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1456,
+        -384
+      ],
+      "id": "88c17980-af5e-4e34-a0d9-388545a82137",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Node: Function\n// Nome sugerido: \"Formatar Telefone\"\n\nreturn items.map(item => {\n  let telefone = item.json.telefone || \"\";\n\n  // Remove espaços, parênteses, traços, etc.\n  telefone = telefone.replace(/\\D/g, \"\");\n\n  // Verifica se já começa com 55\n  if (!telefone.startsWith(\"55\")) {\n    telefone = \"55\" + telefone;\n  }\n\n  // Garante que tenha o +\n  if (!telefone.startsWith(\"+\")) {\n    telefone = \"+\" + telefone;\n  }\n\n  item.json.telefone = telefone;\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1632,
+        -384
+      ],
+      "id": "8f2075e8-f42d-423a-a03d-97d86edc5384",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "connections": {
+    "Webhook3": {
+      "main": [
+        [
+          {
+            "node": "Create a person3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person3": {
+      "main": [
+        [
+          {
+            "node": "Create a lead3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead3": {
+      "main": [
+        [
+          {
+            "node": "Create a deal3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal3": {
+      "main": [
+        [
+          {
+            "node": "Create a note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person4": {
+      "main": [
+        [
+          {
+            "node": "Create a lead4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead4": {
+      "main": [
+        [
+          {
+            "node": "Create a deal4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal4": {
+      "main": [
+        [
+          {
+            "node": "Create a note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization": {
+      "main": [
+        [
+          {
+            "node": "Create a person4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook5": {
+      "main": [
+        [
+          {
+            "node": "Create a person5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person5": {
+      "main": [
+        [
+          {
+            "node": "Create a lead5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead5": {
+      "main": [
+        [
+          {
+            "node": "Create a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal5": {
+      "main": [
+        [
+          {
+            "node": "Create a note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook6": {
+      "main": [
+        [
+          {
+            "node": "Create an organization1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person6": {
+      "main": [
+        [
+          {
+            "node": "Create a lead6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead6": {
+      "main": [
+        [
+          {
+            "node": "Create a deal6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal6": {
+      "main": [
+        [
+          {
+            "node": "Create a note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization1": {
+      "main": [
+        [
+          {
+            "node": "Create a person6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note4": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note3": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note5": {
+      "main": [
+        []
+      ]
+    },
+    "Create a note6": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch6": {
+      "main": [
+        [],
+        [],
+        [],
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request8": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook4": {
+      "main": [
+        [
+          {
+            "node": "Create an organization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook3": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.medicalspin.com.br",
+            "user-agent": "WordPress/6.8.3; https://ressonanciacertificada.medicalspin.com.br",
+            "content-length": "1649",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip, br",
+            "content-type": "application/x-www-form-urlencoded",
+            "x-forwarded-for": "162.241.63.31",
+            "x-forwarded-host": "n8n.medicalspin.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "162.241.63.31"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "form[id]": "76b8204f",
+            "form[name]": "New Form",
+            "fields[name][id]": "name",
+            "fields[name][type]": "text",
+            "fields[name][title]": "Name",
+            "fields[name][value]": "Alzira Márcia Camillo Feitosa",
+            "fields[name][raw_value]": "Alzira Márcia Camillo Feitosa",
+            "fields[name][required]": "1",
+            "fields[field_6ea311e][id]": "field_6ea311e",
+            "fields[field_6ea311e][type]": "email",
+            "fields[field_6ea311e][title]": "Email",
+            "fields[field_6ea311e][value]": "alziracamillo@yahoo.com.br",
+            "fields[field_6ea311e][raw_value]": "alziracamillo@yahoo.com.br",
+            "fields[field_6ea311e][required]": "1",
+            "fields[email][id]": "email",
+            "fields[email][type]": "text",
+            "fields[email][title]": "WhatsApp",
+            "fields[email][value]": "(11) 98663-2475",
+            "fields[email][raw_value]": "(11) 98663-2475",
+            "fields[email][required]": "1",
+            "meta[date][title]": "Date",
+            "meta[date][value]": "10 de outubro de 2025",
+            "meta[time][title]": "Time",
+            "meta[time][value]": "16:17",
+            "meta[page_url][title]": "Page URL",
+            "meta[page_url][value]": "https://ressonanciacertificada.medicalspin.com.br/?gad_source=1&gad_campaignid=22919133515&gclid=Cj0KCQjw3aLHBhDTARIsAIRij58mzW6baGDKL0raQaYgbNKM12sI1iYGp-leR5Yrr3xU9NVA7gWz6FgaAqx_EALw_wcB",
+            "meta[user_agent][title]": "User Agent",
+            "meta[user_agent][value]": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36",
+            "meta[remote_ip][title]": "Remote IP",
+            "meta[remote_ip][value]": "191.183.40.238",
+            "meta[credit][title]": "Powered by",
+            "meta[credit][value]": "Elementor"
+          },
+          "webhookUrl": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-rc",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook5": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.medicalspin.com.br",
+            "user-agent": "WordPress/6.8.2; https://bobinasdeexames.medicalspin.com.br",
+            "content-length": "859",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip, br",
+            "content-type": "application/x-www-form-urlencoded",
+            "x-forwarded-for": "162.241.63.31",
+            "x-forwarded-host": "n8n.medicalspin.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "162.241.63.31"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "form[id]": "1879e02c",
+            "form[name]": "New Form",
+            "fields[name][id]": "name",
+            "fields[name][type]": "text",
+            "fields[name][title]": "Name",
+            "fields[name][value]": "Desenv - MedicalSpin",
+            "fields[name][raw_value]": "Desenv - MedicalSpin",
+            "fields[name][required]": "1",
+            "fields[field_6ea311e][id]": "field_6ea311e",
+            "fields[field_6ea311e][type]": "email",
+            "fields[field_6ea311e][title]": "Email",
+            "fields[field_6ea311e][value]": "teste@gmail.com",
+            "fields[field_6ea311e][raw_value]": "teste@gmail.com",
+            "fields[field_6ea311e][required]": "1",
+            "fields[field_e50ce0b][id]": "field_e50ce0b",
+            "fields[field_e50ce0b][type]": "text",
+            "fields[field_e50ce0b][title]": "WhatsApp",
+            "fields[field_e50ce0b][value]": "(79) 99980-1810",
+            "fields[field_e50ce0b][raw_value]": "(79) 99980-1810",
+            "fields[field_e50ce0b][required]": "0"
+          },
+          "webhookUrl": "https://n8n.medicalspin.com.br/webhook/form-popup",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook6": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.medicalspin.com.br",
+            "user-agent": "WordPress/6.8.2; https://bobinasdeexames.medicalspin.com.br",
+            "content-length": "1436",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip, br",
+            "content-type": "application/x-www-form-urlencoded",
+            "x-forwarded-for": "162.241.63.31",
+            "x-forwarded-host": "n8n.medicalspin.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "162.241.63.31"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "form[id]": "b33910a",
+            "form[name]": "New Form",
+            "fields[name][id]": "name",
+            "fields[name][type]": "text",
+            "fields[name][title]": "NOME",
+            "fields[name][value]": "Desenv - MedicalSpin",
+            "fields[name][raw_value]": "Desenv - MedicalSpin",
+            "fields[name][required]": "1",
+            "fields[field_d0a4874][id]": "field_d0a4874",
+            "fields[field_d0a4874][type]": "text",
+            "fields[field_d0a4874][title]": "WHATSAPP",
+            "fields[field_d0a4874][value]": "(79) 99980-1810",
+            "fields[field_d0a4874][raw_value]": "(79) 99980-1810",
+            "fields[field_d0a4874][required]": "1",
+            "fields[field_201ca7a][id]": "field_201ca7a",
+            "fields[field_201ca7a][type]": "text",
+            "fields[field_201ca7a][title]": "NOME DA CLÍNICA",
+            "fields[field_201ca7a][value]": "teste",
+            "fields[field_201ca7a][raw_value]": "teste",
+            "fields[field_201ca7a][required]": "1",
+            "fields[field_2172b25][id]": "field_2172b25",
+            "fields[field_2172b25][type]": "text",
+            "fields[field_2172b25][title]": "MODELO DA BOBINA",
+            "fields[field_2172b25][value]": "teste",
+            "fields[field_2172b25][raw_value]": "teste",
+            "fields[field_2172b25][required]": "1",
+            "fields[field_d1cc2fa][id]": "field_d1cc2fa",
+            "fields[field_d1cc2fa][type]": "select",
+            "fields[field_d1cc2fa][title]": "TIPO DE SERVIÇO",
+            "fields[field_d1cc2fa][value]": "Restauração",
+            "fields[field_d1cc2fa][raw_value]": "Restauração",
+            "fields[field_d1cc2fa][required]": "1"
+          },
+          "webhookUrl": "https://n8n.medicalspin.com.br/webhook/solicitar-contato-agora-bbex",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook4": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.medicalspin.com.br",
+            "user-agent": "WordPress/6.8.3; https://ressonanciacertificada.medicalspin.com.br",
+            "content-length": "2006",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip, br",
+            "content-type": "application/x-www-form-urlencoded",
+            "x-forwarded-for": "162.241.63.31",
+            "x-forwarded-host": "n8n.medicalspin.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "162.241.63.31"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "form[id]": "f1357f6",
+            "form[name]": "New Form",
+            "fields[name][id]": "name",
+            "fields[name][type]": "text",
+            "fields[name][title]": "Name",
+            "fields[name][value]": "Alzira Márcia Camillo Feitosa",
+            "fields[name][raw_value]": "Alzira Márcia Camillo Feitosa",
+            "fields[name][required]": "0",
+            "fields[email][id]": "email",
+            "fields[email][type]": "text",
+            "fields[email][title]": "WhatsApp",
+            "fields[email][value]": "(11) 98663-2475",
+            "fields[email][raw_value]": "(11) 98663-2475",
+            "fields[email][required]": "1",
+            "fields[field_7425966][id]": "field_7425966",
+            "fields[field_7425966][type]": "text",
+            "fields[field_7425966][title]": "Nome da Clínica",
+            "fields[field_7425966][value]": "revistranconsultoria@uol.com.br",
+            "fields[field_7425966][raw_value]": "revistranconsultoria@uol.com.br",
+            "fields[field_7425966][required]": "1",
+            "fields[field_4c4a22a][id]": "field_4c4a22a",
+            "fields[field_4c4a22a][type]": "text",
+            "fields[field_4c4a22a][title]": "Mensagem",
+            "fields[field_4c4a22a][value]": "Tenho curso técnico de enfermagem",
+            "fields[field_4c4a22a][raw_value]": "Tenho curso técnico de enfermagem ",
+            "fields[field_4c4a22a][required]": "1",
+            "meta[date][title]": "Date",
+            "meta[date][value]": "10 de outubro de 2025",
+            "meta[time][title]": "Time",
+            "meta[time][value]": "17:09",
+            "meta[page_url][title]": "Page URL",
+            "meta[page_url][value]": "https://ressonanciacertificada.medicalspin.com.br/?gad_source=1&gad_campaignid=22919133515&gclid=Cj0KCQjw3aLHBhDTARIsAIRij59yBx89ueiUqoOmG70q2bvauS4i13XlsKLO2hhwDL-eeHUbnmkdIosaArWoEALw_wcB",
+            "meta[user_agent][title]": "User Agent",
+            "meta[user_agent][value]": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36",
+            "meta[remote_ip][title]": "Remote IP",
+            "meta[remote_ip][value]": "191.183.40.238",
+            "meta[credit][title]": "Powered by",
+            "meta[credit][value]": "Elementor"
+          },
+          "webhookUrl": "https://n8n.medicalspin.com.br/webhook/solicitar-contato-agora",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "0a585fe0-b6dd-42c1-9f6e-4de56a9d3bd4",
+  "triggerCount": 2,
+  "shared": [
+    {
+      "createdAt": "2025-10-13T11:38:17.317Z",
+      "updatedAt": "2025-10-13T11:38:17.317Z",
+      "role": "workflow:owner",
+      "workflowId": "h0IMii6tv4HkBJyJ",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "createdAt": "2025-09-24T16:37:09.332Z",
+      "updatedAt": "2025-09-24T16:37:09.332Z",
+      "id": "5YkbdcoRnrhRGDir",
+      "name": "Sheets"
+    },
+    {
+      "createdAt": "2025-09-24T16:36:52.149Z",
+      "updatedAt": "2025-09-24T16:36:52.149Z",
+      "id": "mNNtWNrcwkgaVLXN",
+      "name": "Site"
+    },
+    {
+      "createdAt": "2025-09-24T16:36:41.465Z",
+      "updatedAt": "2025-09-24T16:36:41.465Z",
+      "id": "VX9ODoHJ3pPs74i0",
+      "name": "Pipedrive"
+    },
+    {
+      "createdAt": "2025-09-24T16:36:31.082Z",
+      "updatedAt": "2025-09-24T16:36:31.082Z",
+      "id": "sIJeimO5xvoDAXn2",
+      "name": "Facebook"
+    },
+    {
+      "createdAt": "2025-09-24T16:36:23.604Z",
+      "updatedAt": "2025-09-24T16:36:23.604Z",
+      "id": "1OI7gHy5TinHfu4c",
+      "name": "Meta ADS"
+    },
+    {
+      "createdAt": "2025-09-24T16:36:12.748Z",
+      "updatedAt": "2025-09-24T16:36:12.748Z",
+      "id": "hpP7KRFBtJN9dYGl",
+      "name": "EvolutionAPI"
+    }
+  ]
+}
