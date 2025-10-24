@@ -1,0 +1,98 @@
+{
+  "createdAt": "2025-10-23T19:21:41.500Z",
+  "updatedAt": "2025-10-23T19:53:34.156Z",
+  "id": "ehyfddkmH0uVxqJs",
+  "name": "My workflow",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "html": "<!doctype html>\n<html lang=\"pt-BR\">\n<head>\n<meta charset=\"utf-8\" />\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />\n<title>Painel de Execuções</title>\n<link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap\" rel=\"stylesheet\">\n<script src=\"https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js\"></script>\n<style>\n*{box-sizing:border-box;font-family:Inter,system-ui;}\nbody{margin:0;background:#0b1220;color:#e6eef6;padding:16px}\n.wrap{max-width:1100px;margin:auto;display:grid;grid-template-columns:1fr 360px;gap:16px}\nheader{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.card{background:rgba(255,255,255,0.03);padding:12px;border-radius:12px}\n.kpis{display:flex;gap:10px}\n.kpi{background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;text-align:center;flex:1}\n.kpi .num{font-size:20px;font-weight:700}\n.small{font-size:12px;color:#94a3b8}\n.list{max-height:360px;overflow:auto;display:flex;flex-direction:column;gap:6px}\n.item{display:flex;justify-content:space-between;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);align-items:center;font-size:13px}\n.badge{padding:4px 8px;border-radius:999px;font-weight:600;font-size:12px}\n.badge.success{background:rgba(16,185,129,0.12);color:#10b981}\n.badge.error{background:rgba(239,68,68,0.12);color:#ef4444}\ntable{width:100%;border-collapse:collapse;font-size:13px}\nth,td{padding:6px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.04)}\nth{color:#94a3b8;font-weight:600}\n@media(max-width:900px){.wrap{grid-template-columns:1fr}}\n</style>\n</head>\n<body>\n<div class=\"wrap\">\n  <header>\n    <h1 style=\"font-size:18px\">Painel de Execuções</h1>\n    <div style=\"display:flex;gap:8px\">\n      <select id=\"timeRange\"><option value=\"7\">7 dias</option><option value=\"30\" selected>30 dias</option></select>\n      <input id=\"searchFlow\" placeholder=\"Filtrar fluxo\" style=\"background:transparent;border:1px solid #1e293b;border-radius:8px;padding:6px;color:#e6eef6\">\n      <button id=\"refreshBtn\" style=\"background:#06b6d4;border:none;padding:6px 10px;border-radius:8px;color:#fff;cursor:pointer\">Atualizar</button>\n    </div>\n  </header>\n\n  <section class=\"card\">\n    <div class=\"kpis\">\n      <div class=\"kpi\"><div class=\"small\">Total</div><div id=\"kpiTotal\" class=\"num\">0</div></div>\n      <div class=\"kpi\"><div class=\"small\">Sucessos</div><div id=\"kpiSuccess\" class=\"num\">0</div></div>\n      <div class=\"kpi\"><div class=\"small\">Erros</div><div id=\"kpiError\" class=\"num\">0</div></div>\n    </div>\n    <div style=\"display:flex;gap:10px;margin-top:10px\">\n      <canvas id=\"lineChart\" style=\"flex:1;height:200px\"></canvas>\n      <canvas id=\"donutChart\" style=\"width:200px;height:200px\"></canvas>\n    </div>\n    <div style=\"margin-top:10px\">\n      <canvas id=\"barChart\" style=\"width:100%;height:150px\"></canvas>\n    </div>\n  </section>\n\n  <aside class=\"card\">\n    <div class=\"small\" style=\"margin-bottom:6px\">Últimas execuções</div>\n    <div id=\"execList\" class=\"list\"></div>\n    <div class=\"small\" style=\"margin:10px 0 6px\">Tabela completa</div>\n    <table><thead><tr><th>Fluxo</th><th>Status</th><th>Data</th><th>Detalhes</th></tr></thead><tbody id=\"execTable\"></tbody></table>\n  </aside>\n</div>\n\n<script>\nlet data = window.n8nExecutions || [];\n\nconst kpiTotal=document.getElementById('kpiTotal'),\n      kpiSuccess=document.getElementById('kpiSuccess'),\n      kpiError=document.getElementById('kpiError'),\n      list=document.getElementById('execList'),\n      table=document.getElementById('execTable'),\n      range=document.getElementById('timeRange'),\n      search=document.getElementById('searchFlow');\n\nfunction refresh(){\n  const days=parseInt(range.value,10);\n  const cutoff=new Date();cutoff.setDate(cutoff.getDate()-days);\n  const flow=search.value.toLowerCase();\n  const f=data.filter(e=>new Date(e.timestamp)>=cutoff && (!flow||e.flow.toLowerCase().includes(flow)));\n  const s=f.filter(e=>e.status==='success').length;\n  const err=f.length-s;\n  kpiTotal.textContent=f.length;\n  kpiSuccess.textContent=s;\n  kpiError.textContent=err;\n\n  list.innerHTML=''; table.innerHTML='';\n  f.slice(0,20).forEach(e=>{\n    list.innerHTML+=`<div class=\"item\"><div>${e.flow}</div><div class=\"small\">${new Date(e.timestamp).toLocaleString()}</div><div class=\"badge ${e.status}\">${e.status}</div></div>`;\n    table.innerHTML+=`<tr><td>${e.flow}</td><td>${e.status}</td><td>${new Date(e.timestamp).toLocaleString()}</td><td>${e.message||''}</td></tr>`;\n  });\n\n  const byDate={};\n  f.forEach(e=>{\n    const d=e.timestamp.slice(0,10);\n    if(!byDate[d])byDate[d]={t:0,s:0,e:0};\n    byDate[d].t++;e.status==='success'?byDate[d].s++:byDate[d].e++;\n  });\n  const labels=Object.keys(byDate).sort();\n  const totals=labels.map(l=>byDate[l].t),succ=labels.map(l=>byDate[l].s),errs=labels.map(l=>byDate[l].e);\n  if(window._line)window._line.destroy();\n  window._line=new Chart(lineChart,{type:'line',data:{labels,datasets:[{label:'Total',data:totals,borderColor:'#06b6d4'},{label:'Sucessos',data:succ,borderColor:'#10b981'},{label:'Erros',data:errs,borderColor:'#ef4444'}]},options:{plugins:{legend:{labels:{color:'#e6eef6'}}},scales:{x:{ticks:{color:'#94a3b8'}},y:{ticks:{color:'#94a3b8'},beginAtZero:true}}}});\n  if(window._donut)window._donut.destroy();\n  window._donut=new Chart(donutChart,{type:'doughnut',data:{labels:['Sucesso','Erro'],datasets:[{data:[s,err],backgroundColor:['#10b981','#ef4444']}]},options:{plugins:{legend:{labels:{color:'#e6eef6'}}}}});\n  const byFlow={};\n  f.forEach(e=>byFlow[e.flow]=(byFlow[e.flow]||0)+1);\n  const top=Object.entries(byFlow).sort((a,b)=>b[1]-a[1]).slice(0,6);\n  if(window._bar)window._bar.destroy();\n  window._bar=new Chart(barChart,{type:'bar',data:{labels:top.map(x=>x[0]),datasets:[{data:top.map(x=>x[1]),backgroundColor:'#06b6d4'}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#94a3b8'}},y:{ticks:{color:'#e6eef6'}}}}});\n}\ndocument.getElementById('refreshBtn').onclick=refresh;\nsearch.oninput=()=>setTimeout(refresh,300);\nrefresh();\n</script>\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "65125099-7730-4184-b61e-5b35c478fb15",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "path": "dash",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b4a69756-47b8-4d25-8493-63c05358f195",
+      "name": "Webhook",
+      "webhookId": "1adec4a5-5ea7-458a-8494-faa403e414c4"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        400,
+        0
+      ],
+      "id": "bd417056-4be3-4933-ad21-4b04d4830510",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "9cf26cff-cf4e-4b99-9f62-6750f9950a8c",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-10-23T19:21:41.500Z",
+      "updatedAt": "2025-10-23T19:21:41.500Z",
+      "role": "workflow:owner",
+      "workflowId": "ehyfddkmH0uVxqJs",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
