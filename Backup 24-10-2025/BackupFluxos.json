@@ -1,0 +1,318 @@
+{
+  "createdAt": "2025-10-10T13:17:27.281Z",
+  "updatedAt": "2025-10-23T19:07:58.762Z",
+  "id": "4bpbXrMMut5Uui7n",
+  "name": "BackupFluxos",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -624,
+        -64
+      ],
+      "id": "014e71e4-49ac-4341-a689-d123a238a8fe",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "525cfda3-c26f-44d0-b47c-b88bc13fb7af",
+              "name": "folderName",
+              "value": "=Backup {{ $now.format('dd-LL-yyyy') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -416,
+        -64
+      ],
+      "id": "00fb97c1-b796-45d4-bf3d-386a75a79a9c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        -64
+      ],
+      "id": "d0b0e7d7-b656-4f35-aed5-82c68b1e43e1",
+      "name": "Get many workflows",
+      "credentials": {
+        "n8nApi": {
+          "id": "RpZZSZjrkrn2oCVY",
+          "name": "BackupFluxos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        0,
+        -64
+      ],
+      "id": "68ac2750-de75-4e8a-bcb9-746154ad1009",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "91b33237-9a72-48ac-8390-71d305950e2a",
+              "name": "node",
+              "value": "={{ JSON.stringify($json, null, 2) }}",
+              "type": "string"
+            },
+            {
+              "id": "a3b8c646-9c59-4a27-ab90-a1b5ab7031e3",
+              "name": "fileName",
+              "value": "={{ $json.name }}.json",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        32
+      ],
+      "id": "2e5f8f8b-746f-40f6-b88c-00fbf96a4188",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "node",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        32
+      ],
+      "id": "68d59358-e826-48b5-9431-f24d21dcd773",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        624,
+        32
+      ],
+      "id": "ec1878f6-d661-4538-8954-5542dafa6dfd",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "medicalspinlead-jpg",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "n8n_backup",
+          "mode": "list",
+          "cachedResultName": "n8n_backup",
+          "cachedResultUrl": "https://github.com/medicalspinlead-jpg/n8n_backup"
+        },
+        "filePath": "={{ $('Edit Fields').item.json.folderName }}/{{ $('Edit Fields1').item.json.fileName }}",
+        "fileContent": "={{ $json.data }}",
+        "commitMessage": "={{ $now.setZone('America/Sao_Paulo').format('dd-LL-yyyy T') }} Backup concluído com sucesso!"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        32
+      ],
+      "id": "a26adc7d-cc4c-4263-b71e-72f4a0f1e3e9",
+      "name": "Create a file",
+      "webhookId": "022eedff-5107-48cb-bf80-223498bd6655",
+      "credentials": {
+        "githubApi": {
+          "id": "DchgieS36N9Z5U2B",
+          "name": "GitHub account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Backup diário dos fluxos de trabalho",
+        "height": 432,
+        "width": 1904,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        -176
+      ],
+      "id": "295120fa-eeb5-4ba2-97e5-1a04f1060ed3",
+      "name": "Sticky Note"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get many workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many workflows": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a file": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "uzuOlcmJWDFhCTf7"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "bf46fde1-9dd5-4bc5-9c08-150940cf4cb5",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-10-10T13:17:27.281Z",
+      "updatedAt": "2025-10-10T13:17:27.281Z",
+      "role": "workflow:owner",
+      "workflowId": "4bpbXrMMut5Uui7n",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
