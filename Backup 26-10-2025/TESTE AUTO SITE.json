@@ -1,0 +1,1412 @@
+{
+  "createdAt": "2025-10-21T18:28:10.476Z",
+  "updatedAt": "2025-10-23T11:06:31.184Z",
+  "id": "wfx6Ljvx3wRpmtQF",
+  "name": "TESTE AUTO SITE",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Teste automatizado SITE + PIPEDRIVE + VOXFREE",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nome",
+              "placeholder": "Nome"
+            },
+            {
+              "fieldLabel": "Email",
+              "placeholder": "Email"
+            },
+            {
+              "fieldLabel": "WhatsApp",
+              "placeholder": "Telefone"
+            },
+            {
+              "fieldLabel": "Clínica",
+              "placeholder": "Clínica"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -1872,
+        -208
+      ],
+      "id": "035ebc5d-62c6-4c30-8816-a7263415233c",
+      "name": "On form submission",
+      "webhookId": "ae02f13d-8e37-450f-9087-0e07be4d6615"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        -1408
+      ],
+      "id": "0eee02ad-2966-4c06-a014-513ce714e734",
+      "name": "PG Inícial POPUP SPPA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        -1264
+      ],
+      "id": "51c2d42f-1a16-49fd-b804-d6799103a6aa",
+      "name": "PG Inícial POPUP QSA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        -1120
+      ],
+      "id": "e0f8e6fd-bd10-4558-89bf-cf696b027396",
+      "name": "PG Inícial POPUP SEA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        -976
+      ],
+      "id": "44efebec-c941-4c1c-a414-4d25818bfc7c",
+      "name": "PG Inícial FFORM ECA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/form-popup-bobinas",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        -832
+      ],
+      "id": "7ebcd615-70ef-46f8-9899-9112e6fa2e53",
+      "name": "PG BBEX POPUP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-contato-agora-bbex",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        -688
+      ],
+      "id": "0d8c4e7c-56e4-42c5-898a-9ae6d6d1c6b4",
+      "name": "PG BBEX FFORM SCA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-rc",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        -544
+      ],
+      "id": "63389e73-a686-4b35-a8c7-92fe6e3d3460",
+      "name": "PG RC POPUP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/ressonancia-certificada",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        -400
+      ],
+      "id": "ddbb7c8d-fc35-4892-8f63-01173ecedd55",
+      "name": "PG RC FFORM SCA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/compra-de-tomografia",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        -256
+      ],
+      "id": "ee1f853c-6165-40cf-94a8-c30badcf35d4",
+      "name": "PG TC"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/desmontagem-montagem-rm",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        -112
+      ],
+      "id": "501b60d8-e138-478a-bdd7-c45310d747f1",
+      "name": "PG D/M RM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/consultoria",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        48
+      ],
+      "id": "d6f5a885-82fe-4d47-8cea-4c92b8339f79",
+      "name": "PG CTRIA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/diagnostico-de-ressonancia",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        208
+      ],
+      "id": "bb185654-b492-4103-af75-9a08a9b902c9",
+      "name": "PG DG RM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/contratos-de-manutencao",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        336
+      ],
+      "id": "960f9075-be2a-45d6-8e99-73472ce3abb9",
+      "name": "PG CT MNTÇ"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/concerto-de-bbdeex",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        496
+      ],
+      "id": "33cbf503-8fff-4a45-8a67-0087bea7b0cb",
+      "name": "PG RP BBEX"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/projetos-sala-de-rm",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        640
+      ],
+      "id": "db33e2c3-ed28-49b6-9e2b-35f02f0a9d38",
+      "name": "PG PJ SRM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/site-planning",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        784
+      ],
+      "id": "4302f7f5-6381-44b9-b860-1be67fe362d7",
+      "name": "PG SP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/planejamento-salas-de-rm-rf",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        928
+      ],
+      "id": "350b602f-a6f5-4420-be6b-3c17c2095ec9",
+      "name": "PG PLA SRM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/empresa",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        1072
+      ],
+      "id": "f968c558-4cd0-42ca-883a-05f409ee8c6d",
+      "name": "PG EMP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/laudos-tecnicos",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        1216
+      ],
+      "id": "64d418f5-6508-42b2-857c-a7f702f08e3b",
+      "name": "PG LD"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/cocerto-de-modulos",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4464,
+        1360
+      ],
+      "id": "12593f41-fa85-47eb-b443-d0db1d134495",
+      "name": "PG CT MD"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        -1408
+      ],
+      "id": "6038dd60-0746-4e26-a055-4e42874be49c",
+      "name": "Wait",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        -1264
+      ],
+      "id": "de300599-baed-416e-ab97-7a413e5e5b4d",
+      "name": "Wait1",
+      "webhookId": "8fa82629-5606-414d-b844-3a962854b874"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        -1120
+      ],
+      "id": "ada388e3-4ef9-42af-a49a-0135e719fed9",
+      "name": "Wait2",
+      "webhookId": "5b2e93de-196c-499f-b924-45e6081ede59"
+    },
+    {
+      "parameters": {
+        "amount": 4
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        -976
+      ],
+      "id": "3a362741-a03e-4bad-8836-7362cd26a485",
+      "name": "Wait3",
+      "webhookId": "db4ce060-0c5d-4a2a-aa5b-d411dc581488"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        -832
+      ],
+      "id": "10857f01-7179-4892-983d-5979a7349c75",
+      "name": "Wait4",
+      "webhookId": "753b4aec-9f86-4fd5-8aec-05784e07e6dc"
+    },
+    {
+      "parameters": {
+        "amount": 6
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        -688
+      ],
+      "id": "8e6c1d1e-89f7-4587-8e17-bb09efc763cb",
+      "name": "Wait5",
+      "webhookId": "e56b2dc9-5b20-43ab-a84d-d4d962b7ceb1"
+    },
+    {
+      "parameters": {
+        "amount": 7
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        -544
+      ],
+      "id": "cc5d403b-0ab4-4b44-b526-5b5c186fc758",
+      "name": "Wait7",
+      "webhookId": "79d058b7-0fce-476a-89bd-79fe794beb63"
+    },
+    {
+      "parameters": {
+        "amount": 8
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        -400
+      ],
+      "id": "843a79be-1705-426e-8195-d0ff64dbfad4",
+      "name": "Wait8",
+      "webhookId": "6cafb353-8ae0-4bc6-833b-e0f5f347e437"
+    },
+    {
+      "parameters": {
+        "amount": 9
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        -256
+      ],
+      "id": "fa59f21e-46d8-46fd-8d3f-30c519dc480d",
+      "name": "Wait6",
+      "webhookId": "4863914e-035a-4405-8519-c34090a5e582"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        -112
+      ],
+      "id": "bab0ff71-bcc5-43f1-8d0b-a7c0ce2b00bb",
+      "name": "Wait9",
+      "webhookId": "7301441f-db91-4256-9ca4-c2b1b7010bba"
+    },
+    {
+      "parameters": {
+        "amount": 11
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        48
+      ],
+      "id": "06b526b6-6204-4616-9d15-8ac41141b79d",
+      "name": "Wait11",
+      "webhookId": "fe5e752f-210f-4aab-a3af-29dbfc0edb37"
+    },
+    {
+      "parameters": {
+        "amount": 12
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        208
+      ],
+      "id": "5dc5b1fc-0d06-42a1-a3c5-92b42b793b2e",
+      "name": "Wait12",
+      "webhookId": "6779bf6d-7852-4faa-afae-657a2d0d1568"
+    },
+    {
+      "parameters": {
+        "amount": 13
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        336
+      ],
+      "id": "8d5091e3-7d50-40b4-86d1-c5361499bbe8",
+      "name": "Wait10",
+      "webhookId": "07a50e30-569a-43eb-bfbd-dce9fb936653"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        1360
+      ],
+      "id": "5269e10c-87ed-4fcf-b226-6e8cf291909e",
+      "name": "Wait13",
+      "webhookId": "ba69a01d-15c9-47eb-ab3c-ac832a77954b"
+    },
+    {
+      "parameters": {
+        "amount": 14
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        496
+      ],
+      "id": "a38396fc-13e6-45b6-80e2-764b231005c1",
+      "name": "Wait14",
+      "webhookId": "b8413c17-d2e2-4917-b6ab-d678869a694a"
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        640
+      ],
+      "id": "09d54904-4468-4770-b246-d0963eac86cb",
+      "name": "Wait15",
+      "webhookId": "ac3f1a97-3478-4a5c-ba33-dcf8cf062903"
+    },
+    {
+      "parameters": {
+        "amount": 16
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        784
+      ],
+      "id": "7b61bc88-9706-4651-85c1-f6f144fcb644",
+      "name": "Wait16",
+      "webhookId": "fc8fd36d-c45b-4016-b971-4fe457cd6cc1"
+    },
+    {
+      "parameters": {
+        "amount": 19
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        1216
+      ],
+      "id": "31182511-e50e-45d6-9da8-a77391c62537",
+      "name": "Wait17",
+      "webhookId": "9687286a-70f7-4a71-99ac-b18c698fd50f"
+    },
+    {
+      "parameters": {
+        "amount": 18
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        1072
+      ],
+      "id": "371a653a-be55-41ba-be6e-189ac8aa567f",
+      "name": "Wait18",
+      "webhookId": "2d8d2401-ef14-490e-9f9c-3ae73c9f23eb"
+    },
+    {
+      "parameters": {
+        "amount": 17
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        928
+      ],
+      "id": "8f78eb7f-baab-4710-8c47-0c5a5a978b01",
+      "name": "Wait19",
+      "webhookId": "f41e5904-823f-457b-ad32-331b1f568341"
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait14",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait15",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait16",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait17",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial POPUP SPPA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial POPUP QSA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial POPUP SEA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial FFORM ECA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "PG BBEX POPUP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "PG BBEX FFORM SCA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait7": {
+      "main": [
+        [
+          {
+            "node": "PG RC POPUP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait8": {
+      "main": [
+        [
+          {
+            "node": "PG RC FFORM SCA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "PG TC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait9": {
+      "main": [
+        [
+          {
+            "node": "PG D/M RM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait11": {
+      "main": [
+        [
+          {
+            "node": "PG CTRIA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait12": {
+      "main": [
+        [
+          {
+            "node": "PG DG RM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait10": {
+      "main": [
+        [
+          {
+            "node": "PG CT MNTÇ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait13": {
+      "main": [
+        [
+          {
+            "node": "PG CT MD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait14": {
+      "main": [
+        [
+          {
+            "node": "PG RP BBEX",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait15": {
+      "main": [
+        [
+          {
+            "node": "PG PJ SRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait16": {
+      "main": [
+        [
+          {
+            "node": "PG SP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait17": {
+      "main": [
+        [
+          {
+            "node": "PG LD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait18": {
+      "main": [
+        [
+          {
+            "node": "PG EMP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait19": {
+      "main": [
+        [
+          {
+            "node": "PG PLA SRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG Inícial POPUP SPPA": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "uzuOlcmJWDFhCTf7"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "452d138f-4584-42d1-a2b7-de99e2ef7c3e",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-10-21T18:28:10.476Z",
+      "updatedAt": "2025-10-21T18:28:10.476Z",
+      "role": "workflow:owner",
+      "workflowId": "wfx6Ljvx3wRpmtQF",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "createdAt": "2025-10-21T19:31:45.239Z",
+      "updatedAt": "2025-10-21T19:31:45.239Z",
+      "id": "f79MexMyl7KYGGBi",
+      "name": "n8nForm"
+    },
+    {
+      "createdAt": "2025-10-21T19:31:33.198Z",
+      "updatedAt": "2025-10-21T19:31:33.198Z",
+      "id": "JSm7SqZly4KlPNXH",
+      "name": "Http"
+    }
+  ]
+}
