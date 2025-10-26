@@ -1,0 +1,88 @@
+{
+  "createdAt": "2025-10-23T14:15:55.784Z",
+  "updatedAt": "2025-10-23T19:19:31.259Z",
+  "id": "glHDF155pxFJWKrt",
+  "name": "Atualizar Servidor SÁB 00:00",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "command": "sudo apt update && sudo apt upgrade -y"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        208,
+        -160
+      ],
+      "id": "861cc3aa-25b4-4423-8982-b1646ca4f4fd",
+      "name": "Execute a command",
+      "credentials": {
+        "sshPassword": {
+          "id": "QAwmI0Mvp7unGwp4",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                6
+              ]
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        -160
+      ],
+      "id": "0ff7ebbf-345b-4b3a-a730-43849c78fbdb",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execute a command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "b92fcf31-6085-4a50-8bd2-6d8226d4d5c8",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-10-23T14:15:55.784Z",
+      "updatedAt": "2025-10-23T14:15:55.784Z",
+      "role": "workflow:owner",
+      "workflowId": "glHDF155pxFJWKrt",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
