@@ -1,0 +1,843 @@
+{
+  "createdAt": "2025-10-15T10:55:27.210Z",
+  "updatedAt": "2025-10-24T13:30:12.337Z",
+  "id": "Z79PegYpPZIMYNvc",
+  "name": "Mapeamento de produtos na loja de peças",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "loja-de-peças",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6f00228b-f3f6-447a-91c3-36aba0267327",
+      "name": "Webhook",
+      "webhookId": "ee4f75d4-d3b9-4683-a09e-6063ca3f14f0"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d8467d57-fa71-4111-ac81-7b972b437907",
+              "name": "body.product_name",
+              "value": "={{ $json.body.product_name }}",
+              "type": "string"
+            },
+            {
+              "id": "e2a85183-5da2-47cd-8a3e-9a6da88f4e61",
+              "name": "body.product_url",
+              "value": "={{ $json.body.product_url }}",
+              "type": "string"
+            },
+            {
+              "id": "45be3bf9-bd72-46ee-8d50-a9dcd6a706d6",
+              "name": "body.timestamp",
+              "value": "={{ $now.format('dd-LL-yyyy T') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "297c82ec-3f10-41ff-8551-9b3e49762d31",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ",
+          "mode": "list",
+          "cachedResultName": "Mapeamento de Produtos da Loja de Peças",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Produtos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $json.body.timestamp }}",
+            "LINK": "={{ $json.body.product_url }}",
+            "PRODUTO": "={{ $json.body.product_name }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "PRODUTO",
+              "displayName": "PRODUTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LINK",
+              "displayName": "LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        0
+      ],
+      "id": "8b9bcc4e-8458-474b-8b4a-1395f919f842",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "loja-de-peças1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        160
+      ],
+      "id": "5bf5c2f4-ffc3-4504-81da-a724508eb7f7",
+      "name": "Webhook1",
+      "webhookId": "ee4f75d4-d3b9-4683-a09e-6063ca3f14f0"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "83f1bffe-0e3b-4fae-a38e-e80061b3ca7d",
+              "name": "body.data.key.remoteJid",
+              "value": "={{ $json.body.data.key.remoteJid.replace('@s.whatsapp.net', '') }}",
+              "type": "string"
+            },
+            {
+              "id": "b3057820-4c9d-44dd-b25d-003f396ee8f4",
+              "name": "body.data.key.fromMe",
+              "value": "={{ $json.body.data.key.fromMe }}",
+              "type": "boolean"
+            },
+            {
+              "id": "64251236-d9dd-49cf-946d-7e97c571b906",
+              "name": "body.data.pushName",
+              "value": "={{ $json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "6aa3b3ac-b1a7-4942-9938-f2ad573c7164",
+              "name": "body.data.message.conversation",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "acaea2db-4e15-4c25-9157-059fbb87f4b2",
+              "name": "produto",
+              "value": "={{ $json.body.data.message.conversation.match(/produto:\\s*\\*(.*?)\\*/)?.[1] }}",
+              "type": "string"
+            },
+            {
+              "id": "f7c68c1a-22f1-4078-8e11-d664fd5fb03c",
+              "name": "produto_url",
+              "value": "={{ ($json.body.data.message.conversation.match(/https?:\\/\\/[^\\s]+/) || [null])[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        160
+      ],
+      "id": "f4cf91db-29b6-40f6-83a8-ce4bb2dbbc24",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b2f8e2b-0739-48ed-bea1-a5d1ae34ebeb",
+              "leftValue": "={{ $json.body.data.message.conversation }}",
+              "rightValue": "Olá! Gostaria de solicitar um orçamento para o produto:",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "3bec5a9d-cf13-4c37-aa6b-6176b5680e40",
+              "leftValue": "={{ $json.body.data.key.fromMe }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        160
+      ],
+      "id": "b6a9647e-8e6f-4192-bbfd-7699bc5763a8",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        656,
+        144
+      ],
+      "id": "a2d7f567-ee95-4739-9c8e-2b97a96f962b",
+      "name": "Create an organization",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+        "additionalFields": {
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        864,
+        144
+      ],
+      "id": "d3d432e9-a238-4712-9f4f-40d061fff937",
+      "name": "Create a person",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.org_id.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        144
+      ],
+      "id": "69e97bf5-516b-46e8-ab68-aabd6bb985f4",
+      "name": "Create a lead",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Site"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "Inbound"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        144
+      ],
+      "id": "6b44073c-1960-48a4-bf3d-9322b08c825b",
+      "name": "Create a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🛒LEAD INTERESSADO NA LOJA DE PEÇAS\n\n🔹Nome: {{ $('Edit Fields1').item.json.body.data.pushName }}\n🔹Telefone: {{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\n🔹Produto: {{ $('Edit Fields1').item.json.produto }}\n🔹Link: {{ $('Edit Fields1').item.json.produto_url }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "org_id": "={{ $('Create an organization').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1472,
+        144
+      ],
+      "id": "aa9b1701-d0a8-4422-a3d1-023c635a9efa",
+      "name": "Create a note",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ",
+          "mode": "list",
+          "cachedResultName": "Mapeamento de Produtos da Loja de Peças",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 348125450,
+          "mode": "list",
+          "cachedResultName": "Lead",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit#gid=348125450"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "PRODUTO": "={{ $('Edit Fields1').item.json.produto }}",
+            "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+            "NOME": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+            "TELEFONE": "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}",
+            "LINK": "={{ $('Edit Fields1').item.json.produto_url }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PRODUTO",
+              "displayName": "PRODUTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LINK",
+              "displayName": "LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2064,
+        144
+      ],
+      "id": "8b009038-77cf-49f4-90fc-05d080ccecd2",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields1').item.json.body.data.pushName }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* 🤖\\n🧠 Um especialista foi avisado e atenderá você em breve!\\n\\n🎯 *Bem-vindo* ao *Programa Medical Spin Certified*.\\nSua *ressonância protegida* pela *Solução 360°* 🛡️\\n\\n💬 Pode nos contar mais sobre o seu projeto?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🛒LEAD INTERESSADO NA LOJA DE PEÇAS\\n🔹Nome: {{ $('Edit Fields1').item.json.body.data.pushName }}\\n🔹Telefone: {{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\\n🔹Produto: {{ $('Edit Fields1').item.json.produto }}\\n🔹Link: {{ $('Edit Fields1').item.json.produto_url }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1872,
+        144
+      ],
+      "id": "6408a40b-3c7d-4eab-b6f4-aefad2d7d5b9",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b88d8ef2-8461-4b65-95b9-da090f997910",
+              "name": "dp_id",
+              "value": "956",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        144
+      ],
+      "id": "992c626e-6466-4528-924d-1649b1763b5d",
+      "name": "Edit Fields6"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create an organization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization": {
+      "main": [
+        [
+          {
+            "node": "Create a person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person": {
+      "main": [
+        [
+          {
+            "node": "Create a lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead": {
+      "main": [
+        [
+          {
+            "node": "Create a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal": {
+      "main": [
+        [
+          {
+            "node": "Create a note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "uzuOlcmJWDFhCTf7"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.medicalspin.com.br",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+            "content-length": "272",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "https://medicalspin.com.br",
+            "priority": "u=1, i",
+            "referer": "https://medicalspin.com.br/",
+            "sec-ch-ua": "\"Google Chrome\";v=\"141\", \"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"141\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-site",
+            "x-forwarded-for": "45.233.97.30",
+            "x-forwarded-host": "n8n.medicalspin.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "45.233.97.30"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "product_name": "Bobina de Exames de Crânio 16 canais – Ressonância Magnética 3.0T",
+            "product_url": "https://medicalspin.com.br/produto/comprar-bobina-cranio-16-canais-3t-bobina-cabeca-16-canais-bobina-neurologica-3-tesla-preco/",
+            "timestamp": "2025-10-15T14:26:14.957Z"
+          },
+          "webhookUrl": "https://n8n.medicalspin.com.br/webhook/loja-de-peças",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.medicalspin.com.br",
+            "user-agent": "axios/1.12.2",
+            "content-length": "1687",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n.medicalspin.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "10.0.1.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "teste",
+            "data": {
+              "key": {
+                "remoteJid": "557991190534@s.whatsapp.net",
+                "remoteJidAlt": "74561236291780@lid",
+                "fromMe": false,
+                "id": "A5B1995B171BC8A4759C12388F5225A1",
+                "participant": "",
+                "addressingMode": "pn"
+              },
+              "pushName": "Konverta",
+              "status": "DELIVERY_ACK",
+              "message": {
+                "messageContextInfo": {
+                  "deviceListMetadata": {
+                    "senderKeyIndexes": [],
+                    "recipientKeyIndexes": [],
+                    "senderKeyHash": {
+                      "0": 230,
+                      "1": 223,
+                      "2": 83,
+                      "3": 10,
+                      "4": 124,
+                      "5": 114,
+                      "6": 162,
+                      "7": 138,
+                      "8": 85,
+                      "9": 130
+                    },
+                    "senderTimestamp": {
+                      "low": 1760539723,
+                      "high": 0,
+                      "unsigned": true
+                    },
+                    "recipientKeyHash": {
+                      "0": 64,
+                      "1": 70,
+                      "2": 137,
+                      "3": 83,
+                      "4": 98,
+                      "5": 171,
+                      "6": 156,
+                      "7": 98,
+                      "8": 22,
+                      "9": 181
+                    },
+                    "recipientTimestamp": {
+                      "low": 1760549939,
+                      "high": 0,
+                      "unsigned": true
+                    }
+                  },
+                  "deviceListMetadataVersion": 2,
+                  "messageSecret": {
+                    "0": 120,
+                    "1": 88,
+                    "2": 173,
+                    "3": 41,
+                    "4": 222,
+                    "5": 192,
+                    "6": 240,
+                    "7": 8,
+                    "8": 46,
+                    "9": 248,
+                    "10": 195,
+                    "11": 245,
+                    "12": 23,
+                    "13": 202,
+                    "14": 88,
+                    "15": 54,
+                    "16": 28,
+                    "17": 73,
+                    "18": 224,
+                    "19": 71,
+                    "20": 63,
+                    "21": 155,
+                    "22": 180,
+                    "23": 145,
+                    "24": 234,
+                    "25": 208,
+                    "26": 186,
+                    "27": 196,
+                    "28": 134,
+                    "29": 23,
+                    "30": 116,
+                    "31": 87
+                  }
+                },
+                "conversation": "Olá! Gostaria de solicitar um orçamento para o produto:\r\n\r\n*Placa de Circuito Impresso CDAS - Ressonância Magnética Philips*\n*URL:* https://medicalspin.com.br/produto/comprar-placa-cdas-philips-rm-placa-circuito-impresso-ressonancia-peca-cdas-philips-preco/\r\n\r\nObrigado!"
+              },
+              "messageType": "conversation",
+              "messageTimestamp": 1760552042,
+              "instanceId": "80907aae-f95f-4a56-a70a-1c3d0c2a5aa6",
+              "source": "android"
+            },
+            "destination": "https://n8n.medicalspin.com.br/webhook/teste",
+            "date_time": "2025-10-15T15:14:02.415Z",
+            "sender": "557999801810@s.whatsapp.net",
+            "server_url": "https://evolutionapi.medicalspin.com.br",
+            "apikey": "BA3F275081A6-455B-BA9D-D907F37BC11F"
+          },
+          "webhookUrl": "https://n8n.medicalspin.com.br/webhook/teste",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "c9fad756-f713-4249-8d96-550b69bd60ae",
+  "triggerCount": 2,
+  "shared": [
+    {
+      "createdAt": "2025-10-15T10:55:27.210Z",
+      "updatedAt": "2025-10-15T10:55:27.210Z",
+      "role": "workflow:owner",
+      "workflowId": "Z79PegYpPZIMYNvc",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
