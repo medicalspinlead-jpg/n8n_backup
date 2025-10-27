@@ -1,0 +1,1640 @@
+{
+  "createdAt": "2025-09-19T12:18:07.303Z",
+  "updatedAt": "2025-09-25T17:05:50.977Z",
+  "id": "dS9MgPZ21BGOxhcR",
+  "name": "BETA - Cadastro de Produtos",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE",
+          "mode": "list",
+          "cachedResultName": "Produtos no site",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1277238565,
+          "mode": "list",
+          "cachedResultName": "PHILIPS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit#gid=1277238565"
+        },
+        "options": {}
+      },
+      "id": "0066cdd1-4c94-4ac7-a402-3a0be8a033cc",
+      "name": "Ler Planilha",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        1120,
+        128
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://medicalspin.com.br/wp-json/wc/v3/products",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $json.NOME }}\",\n  \"type\": \"simple\",\n  \"description\": \"{{ $json['DESCRIÇÃO'] }}\",\n  \"short_description\": \"{{ $json.NOME }}\",\n  \"categories\": [\n    {\n      \"id\": 1400,\n      \"name\": \"Ressonância Magnética\",\n      \"slug\": \"ressonancia-magnetica\"\n    },\n    {\n      \"id\": 1402,\n      \"name\": \"Tomografia\",\n      \"slug\": \"tomografia\"\n    }\n  ],\n  \"attributes\": [\n    \n    {\n      \"id\": 2,\n      \"name\": \"Categorias\",\n      \"slug\": \"pa_categorias\",\n      \"position\": 0,\n      \"visible\": true,\n      \"variation\": false,\n      \"options\": [ \"Ressonância Magnética\", \"Tomografia\" ]\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Marcas\",\n      \"slug\": \"pa_marcas\",\n      \"position\": 1,\n      \"visible\": true,\n      \"variation\": false,\n      \"options\": [ \"Philips\" ]\n    }\n  ],\n  \"brands\": [\n    {\n      \"id\": 792,\n      \"name\": \"Philips\",\n      \"slug\": \"philips\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"name\": \"{{ $json.NOME }}\"\n    }\n  ],\n  \"images\": [\n    {\n      \"src\": \"{{ $json['LINK IMG REF'] }}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1792,
+        48
+      ],
+      "id": "b46b38a1-597e-4f07-9fbb-07244758bbf1",
+      "name": "Postar Produto",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "XskOnzxQoAXoo5EU",
+          "name": "Woocommerce WP"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://medicalspin.com.br/wp-json/wc/v3/products/4599",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -16,
+        656
+      ],
+      "id": "0f80f58d-397f-433b-bf68-c16d77b72ebd",
+      "name": "Pegar Produto",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "XskOnzxQoAXoo5EU",
+          "name": "Woocommerce WP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0fb385aa-4f3d-4806-932d-a1f5bb20955d",
+              "leftValue": "={{ $json['POSTADO?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1360,
+        128
+      ],
+      "id": "06c3c16c-d54b-41a9-b07c-52b01a898e22",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE",
+          "mode": "list",
+          "cachedResultName": "Produtos no site",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1277238565,
+          "mode": "list",
+          "cachedResultName": "PHILIPS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit#gid=1277238565"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('Limit').item.json.ID }}",
+            "POSTADO?": "SIM",
+            "ID WP": "={{ $json.id }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "MARCA",
+              "displayName": "MARCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DESCRIÇÃO",
+              "displayName": "DESCRIÇÃO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LINK IMG REF",
+              "displayName": "LINK IMG REF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "POSTADO?",
+              "displayName": "POSTADO?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID WP",
+              "displayName": "ID WP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2080,
+        32
+      ],
+      "id": "c9975efc-65f6-4e44-b23a-dc75f65e645b",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 5
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1536,
+        48
+      ],
+      "id": "6aa39cf4-ed13-4277-a49d-7b280cc3c3a1",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "content": "## Pegar Produto(s)",
+        "height": 224,
+        "width": 560,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        608
+      ],
+      "id": "b2060277-19cf-4920-b4cc-74c0adf63b50",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Condição e Limite",
+        "height": 304,
+        "width": 352,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        -16
+      ],
+      "id": "266a232b-35e4-4360-8425-fb92779ce409",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Atualiza Planilha",
+        "height": 256,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2016,
+        -16
+      ],
+      "id": "f6b72a74-3b9d-4190-9915-851447f6dbea",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Postar Produtos",
+        "height": 256,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1728,
+        -16
+      ],
+      "id": "d7386550-e06d-49f9-8fee-fdcf3b7dfd6b",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## PHILIPS",
+        "height": 256,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        32
+      ],
+      "id": "c43aa879-6e6a-44b5-808f-07b3c48b453a",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE",
+          "mode": "list",
+          "cachedResultName": "Produtos no site",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1277238565,
+          "mode": "list",
+          "cachedResultName": "PHILIPS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit#gid=1277238565"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "POSTADO?": "ERRO",
+            "ID": "={{ $('Limit').item.json.ID }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "MARCA",
+              "displayName": "MARCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DESCRIÇÃO",
+              "displayName": "DESCRIÇÃO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LINK IMG REF",
+              "displayName": "LINK IMG REF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "POSTADO?",
+              "displayName": "POSTADO?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID WP",
+              "displayName": "ID WP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2128,
+        336
+      ],
+      "id": "c5260a45-fcc5-404d-b396-677b496230e3",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Erro Conhecido/Desconhecido",
+        "height": 256,
+        "width": 384,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1984,
+        256
+      ],
+      "id": "0e369542-55c7-4659-b6c3-5d561e4f71ce",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "url": "https://medicalspin.com.br/wp-json/wc/v3/products?per_page=100\n&page=1",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        192,
+        656
+      ],
+      "id": "80d69ba8-a1b0-43c6-adb1-09d9caae3e21",
+      "name": "Pegar Tudo",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "XskOnzxQoAXoo5EU",
+          "name": "Woocommerce WP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE",
+          "mode": "list",
+          "cachedResultName": "Produtos no site",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 385908059,
+          "mode": "list",
+          "cachedResultName": "GE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit#gid=385908059"
+        },
+        "options": {}
+      },
+      "id": "be917a09-9349-4e40-9a88-ea3d32d85b1d",
+      "name": "Ler Planilha1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        1104,
+        672
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://medicalspin.com.br/wp-json/wc/v3/products",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $json.NOME }}\",\n  \"type\": \"simple\",\n  \"description\": \"{{ $json['DESCRIÇÃO'] }}\",\n  \"short_description\": \"{{ $json.NOME }}\",\n  \"categories\": [\n    {\n      \"id\": 1400,\n      \"name\": \"Ressonância Magnética\",\n      \"slug\": \"ressonancia-magnetica\"\n    },\n    {\n      \"id\": 1402,\n      \"name\": \"Tomografia\",\n      \"slug\": \"tomografia\"\n    }\n  ],\n  \"attributes\": [\n    \n    {\n      \"id\": 2,\n      \"name\": \"Categorias\",\n      \"slug\": \"pa_categorias\",\n      \"position\": 0,\n      \"visible\": true,\n      \"variation\": false,\n      \"options\": [ \"Ressonância Magnética\", \"Tomografia\" ]\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Marcas\",\n      \"slug\": \"pa_marcas\",\n      \"position\": 1,\n      \"visible\": true,\n      \"variation\": false,\n      \"options\": [ \"GE\" ]\n    }\n  ],\n  \"brands\": [\n    {\n      \"id\": 792,\n      \"name\": \"GE\",\n      \"slug\": \"ge\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"name\": \"{{ $json.NOME }}\"\n    }\n  ],\n  \"images\": [\n    {\n      \"src\": \"{{ $json['LINK IMG REF'] }}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1776,
+        592
+      ],
+      "id": "6b3b3419-b5ae-4cb4-bb43-b877d85e7ed6",
+      "name": "Postar Produto1",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "XskOnzxQoAXoo5EU",
+          "name": "Woocommerce WP"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0fb385aa-4f3d-4806-932d-a1f5bb20955d",
+              "leftValue": "={{ $json['POSTADO?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1344,
+        672
+      ],
+      "id": "2babe9de-d4f1-4446-8ebf-96b1256db1a8",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE",
+          "mode": "list",
+          "cachedResultName": "Produtos no site",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 385908059,
+          "mode": "list",
+          "cachedResultName": "GE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit#gid=385908059"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('Limit1').item.json.ID }}",
+            "POSTADO?": "SIM",
+            "ID WP": "={{ $json.id }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "MARCA",
+              "displayName": "MARCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DESCRIÇÃO",
+              "displayName": "DESCRIÇÃO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LINK IMG REF",
+              "displayName": "LINK IMG REF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "POSTADO?",
+              "displayName": "POSTADO?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID WP",
+              "displayName": "ID WP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2064,
+        576
+      ],
+      "id": "47b589f8-1aff-4c0e-a30f-52c0eaf507d5",
+      "name": "Update row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 5
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        592
+      ],
+      "id": "4e328f2c-8800-4dea-b9b1-d40a688e4d99",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        592,
+        672
+      ],
+      "id": "bf8d4822-8479-4ab5-8510-75a5aa647f34",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "content": "## Executa a cada 30s",
+        "height": 208,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        528,
+        624
+      ],
+      "id": "e990f322-41e9-4851-8727-848fe9462c39",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Condição e Limite",
+        "height": 304,
+        "width": 352,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1312,
+        528
+      ],
+      "id": "7578881f-a7f0-495b-b75f-9a1805bc19e7",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## Atualiza Planilha",
+        "height": 256,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        528
+      ],
+      "id": "02637f66-ced0-4e51-a529-149fafc58e4a",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "## Postar Produtos",
+        "height": 256,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1712,
+        528
+      ],
+      "id": "f3f21eb1-1863-4e9d-880f-bbccd25d2cbc",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## GE",
+        "height": 256,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        576
+      ],
+      "id": "9f246d7b-c272-4724-951b-72e8f386bd56",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE",
+          "mode": "list",
+          "cachedResultName": "Produtos no site",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 385908059,
+          "mode": "list",
+          "cachedResultName": "GE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit#gid=385908059"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "POSTADO?": "ERRO",
+            "ID": "={{ $('Limit1').item.json.ID }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "MARCA",
+              "displayName": "MARCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DESCRIÇÃO",
+              "displayName": "DESCRIÇÃO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LINK IMG REF",
+              "displayName": "LINK IMG REF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "POSTADO?",
+              "displayName": "POSTADO?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID WP",
+              "displayName": "ID WP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2112,
+        880
+      ],
+      "id": "04ce1e3e-865c-4c43-bc5a-5ed45e6fc65c",
+      "name": "Update row in sheet3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Erro Conhecido/Desconhecido",
+        "height": 256,
+        "width": 384,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1968,
+        800
+      ],
+      "id": "efe99923-f6ee-454a-99a9-b9e01bcd8b7b",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE",
+          "mode": "list",
+          "cachedResultName": "Produtos no site",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 956971604,
+          "mode": "list",
+          "cachedResultName": "SIEMENS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit#gid=956971604"
+        },
+        "options": {}
+      },
+      "id": "f496ab8c-ac55-4195-96cd-be1378dec6de",
+      "name": "Ler Planilha2",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        1088,
+        1216
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://medicalspin.com.br/wp-json/wc/v3/products",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $json.NOME }}\",\n  \"type\": \"simple\",\n  \"description\": \"{{ $json['DESCRIÇÃO'] }}\",\n  \"short_description\": \"{{ $json.NOME }}\",\n  \"categories\": [\n    {\n      \"id\": 1400,\n      \"name\": \"Ressonância Magnética\",\n      \"slug\": \"ressonancia-magnetica\"\n    },\n    {\n      \"id\": 1402,\n      \"name\": \"Tomografia\",\n      \"slug\": \"tomografia\"\n    }\n  ],\n  \"attributes\": [\n    \n    {\n      \"id\": 2,\n      \"name\": \"Categorias\",\n      \"slug\": \"pa_categorias\",\n      \"position\": 0,\n      \"visible\": true,\n      \"variation\": false,\n      \"options\": [ \"Ressonância Magnética\", \"Tomografia\" ]\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Marcas\",\n      \"slug\": \"pa_marcas\",\n      \"position\": 1,\n      \"visible\": true,\n      \"variation\": false,\n      \"options\": [ \"Siemens\" ]\n    }\n  ],\n  \"brands\": [\n    {\n      \"id\": 792,\n      \"name\": \"Siemens\",\n      \"slug\": \"siemens\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"name\": \"{{ $json.NOME }}\"\n    }\n  ],\n  \"images\": [\n    {\n      \"src\": \"{{ $json['LINK IMG REF'] }}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        1136
+      ],
+      "id": "ef96abe8-fe68-4265-a393-e375a2d01f3d",
+      "name": "Postar Produto2",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "XskOnzxQoAXoo5EU",
+          "name": "Woocommerce WP"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0fb385aa-4f3d-4806-932d-a1f5bb20955d",
+              "leftValue": "={{ $json['POSTADO?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1328,
+        1216
+      ],
+      "id": "9a8f4980-f576-4349-8779-86da39c0ce8c",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE",
+          "mode": "list",
+          "cachedResultName": "Produtos no site",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1277238565,
+          "mode": "list",
+          "cachedResultName": "PHILIPS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit#gid=1277238565"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('Limit2').item.json.ID }}",
+            "POSTADO?": "SIM",
+            "ID WP": "={{ $json.id }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "MARCA",
+              "displayName": "MARCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DESCRIÇÃO",
+              "displayName": "DESCRIÇÃO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LINK IMG REF",
+              "displayName": "LINK IMG REF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "POSTADO?",
+              "displayName": "POSTADO?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID WP",
+              "displayName": "ID WP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2048,
+        1120
+      ],
+      "id": "1d1f6cee-164a-4f34-a9f5-ee1dc5182564",
+      "name": "Update row in sheet4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 5
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1504,
+        1136
+      ],
+      "id": "22aaaa9b-0e8d-470b-8877-0813b49c8c2c",
+      "name": "Limit2"
+    },
+    {
+      "parameters": {
+        "content": "## Condição e Limite",
+        "height": 304,
+        "width": 352,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        1072
+      ],
+      "id": "b7f8652e-3761-4a99-ae4c-e1b69830b566",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "content": "## Atualiza Planilha",
+        "height": 256,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1984,
+        1072
+      ],
+      "id": "3662e7b9-e846-4e07-ac98-636122b15af7",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "content": "## Postar Produtos",
+        "height": 256,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1696,
+        1072
+      ],
+      "id": "675ad6ac-540b-4f98-871c-44e28d3ff0fe",
+      "name": "Sticky Note16"
+    },
+    {
+      "parameters": {
+        "content": "## SIEMENS",
+        "height": 256,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        1120
+      ],
+      "id": "9522f6ae-2115-4c87-bf26-ca951eae2cd6",
+      "name": "Sticky Note17"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE",
+          "mode": "list",
+          "cachedResultName": "Produtos no site",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1277238565,
+          "mode": "list",
+          "cachedResultName": "PHILIPS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NSWLL8Z1cgBL0AhEAG-PHGHh-ZVQnAemhKsNPSWtmKE/edit#gid=1277238565"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "POSTADO?": "ERRO",
+            "ID": "={{ $('Limit2').item.json.ID }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "MARCA",
+              "displayName": "MARCA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DESCRIÇÃO",
+              "displayName": "DESCRIÇÃO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LINK IMG REF",
+              "displayName": "LINK IMG REF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "POSTADO?",
+              "displayName": "POSTADO?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID WP",
+              "displayName": "ID WP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2096,
+        1424
+      ],
+      "id": "da21d59d-e4cc-4298-9140-abbf470c29fd",
+      "name": "Update row in sheet5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Erro Conhecido/Desconhecido",
+        "height": 256,
+        "width": 384,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1952,
+        1344
+      ],
+      "id": "4dc8a78b-32f5-4765-aac5-2312e1e194cf",
+      "name": "Sticky Note18"
+    }
+  ],
+  "connections": {
+    "Ler Planilha": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postar Produto": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Postar Produto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ler Planilha1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postar Produto1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Postar Produto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Ler Planilha1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Ler Planilha",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Ler Planilha2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ler Planilha2": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postar Produto2": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update row in sheet5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Limit2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit2": {
+      "main": [
+        [
+          {
+            "node": "Postar Produto2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger1": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "9d450b10-3e19-423f-b643-d671d81d6281",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-09-19T12:18:07.303Z",
+      "updatedAt": "2025-09-19T12:18:07.303Z",
+      "role": "workflow:owner",
+      "workflowId": "dS9MgPZ21BGOxhcR",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "createdAt": "2025-09-24T16:36:52.149Z",
+      "updatedAt": "2025-09-24T16:36:52.149Z",
+      "id": "mNNtWNrcwkgaVLXN",
+      "name": "Site"
+    },
+    {
+      "createdAt": "2025-09-24T16:37:09.332Z",
+      "updatedAt": "2025-09-24T16:37:09.332Z",
+      "id": "5YkbdcoRnrhRGDir",
+      "name": "Sheets"
+    }
+  ]
+}
