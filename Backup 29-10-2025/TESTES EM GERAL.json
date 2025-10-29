@@ -1,0 +1,64 @@
+{
+  "updatedAt": "2025-10-28T19:47:06.958Z",
+  "createdAt": "2025-09-29T19:38:40.861Z",
+  "id": "zncK6TiR4TlXRC76",
+  "name": "TESTES EM GERAL",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"5579991190534\",\n    \"mensagem\": \"Teste da Mensagem 2\",\n    \"direcionamento\": \"745\",\n    \"msg_operador\": \"Teste\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        32,
+        -224
+      ],
+      "id": "2cb89468-af3c-4d1e-8de4-3ca02825f0f3",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "content": "Chave, é a identificação de voces aqui no nosso sistema, já está certo.\ncanal é o ID do whatsapp deles no nosso sistema, tambem já está certo, pois eles só tem um numero de whatsapp cadastrado aqui.\nMensagem é o que voce vai envair para o cliente, mas não é um campo obrigatorio\ndirecionamento é o ID do departamento que vai receber essa conversa. esse vai mudar. para ver o ID do departamento dentro do nosso sistema tem que acessar o menu Omnichannel -> departamentos. Lá vai ter a lista de todos os departamentos criados, bem como o ID de cada um.\nmsg_operador é aquela nota interna que falamos, o cliente não ve isso, somente o operador.",
+        "height": 336,
+        "width": 432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -320
+      ],
+      "id": "bf5f8273-c2d6-406e-a1c2-61c2415a84f3",
+      "name": "Sticky Note"
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "9f4dd5a9-3daf-4f6c-95f4-ff6ca12af29a",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-09-29T19:38:40.861Z",
+      "createdAt": "2025-09-29T19:38:40.861Z",
+      "role": "workflow:owner",
+      "workflowId": "zncK6TiR4TlXRC76",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
