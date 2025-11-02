@@ -1,0 +1,923 @@
+{
+  "updatedAt": "2025-11-01T17:10:21.709Z",
+  "createdAt": "2025-10-30T14:31:44.041Z",
+  "id": "FSAtnUMnSTAZcazx",
+  "name": "Extração de lista de CNPJs CNES",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://cnes2.datasus.gov.br/Mod_Ind_Equipamentos_Listar.asp?VCod_Equip=12&VTipo_Equip=1%20&VListar=1&VEstado=00&VMun=&VComp=",
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        32,
+        -16
+      ],
+      "id": "fd964802-965c-463e-9f94-5a1367c36560",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.Link }}",
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        864,
+        0
+      ],
+      "id": "e22affab-ee27-40af-9f15-6a995a865248",
+      "name": "HTTP Request1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        448,
+        -16
+      ],
+      "id": "d3d6a0f2-d1fd-4827-8968-85bb51913f8b",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA",
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "==HYPERLINK(\"{{ $('Code in JavaScript').item.json.Link }}\"; \"{{ $('Code in Python (Beta)1').item.json.Nome }}\")",
+            "CNPJ": "={{ $('Code in Python (Beta)1').item.json.CNPJ }}",
+            "Município": "={{ $('Code in Python (Beta)1').item.json['Município'].replace(/\\s*-+\\s*IBGE.*$/, '').trim() }}",
+            "Estado": "={{ $('Code in Python (Beta)1').item.json.UF }}",
+            "Existentes": "={{ $('Code in JavaScript').item.json.Existentes }}",
+            "em Uso": "={{ $('Code in JavaScript').item.json.Em_Uso }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Município",
+              "displayName": "Município",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação",
+              "displayName": "Responsável pela investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia de e-mail \"Nome do Responsável\"",
+              "displayName": "Cadencia de e-mail \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta ",
+              "displayName": "Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo concluído (Contrato, bobinas comp. Enviar e-mail) ",
+              "displayName": "Objetivo concluído (Contrato, bobinas comp. Enviar e-mail) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. de qualificação",
+              "displayName": "Responsável pela lig. de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de qualificação",
+              "displayName": "Data da ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Qualificação da Ligação",
+              "displayName": "Qualificação da Ligação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo ",
+              "displayName": "Objetivo ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1696,
+        -64
+      ],
+      "id": "56604a64-403d-4961-984a-da36663dd6da",
+      "name": "Append row in sheet",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "from bs4 import BeautifulSoup\nimport re\n\nhtml = items[0]['json']['data']\nsoup = BeautifulSoup(html, 'html.parser')\n\n# Limpa o texto\ndef clean(text):\n    if not text:\n        return \"\"\n    return re.sub(r'\\s+', ' ', text.replace('\\xa0', ' ')).strip()\n\n# Captura todas as linhas relevantes\nrows = []\nfor tr in soup.find_all(\"tr\"):\n    tds = [clean(td.get_text()) for td in tr.find_all(\"td\")]\n    if tds:\n        rows.append(tds)\n\ndados = {\n    \"Nome\": \"\",\n    \"CNES\": \"\",\n    \"CNPJ\": \"\",\n    \"NomeEmpresarial\": \"\",\n    \"CPF\": \"\",\n    \"Personalidade\": \"\",\n    \"Logradouro\": \"\",\n    \"Número\": \"\",\n    \"Telefone\": \"\",\n    \"Complemento\": \"\",\n    \"Bairro\": \"\",\n    \"CEP\": \"\",\n    \"Município\": \"\",\n    \"UF\": \"\",\n    \"TipoEstabelecimento\": \"\",\n    \"SubTipoEstabelecimento\": \"\",\n    \"Gestão\": \"\",\n    \"Dependência\": \"\",\n    \"NúmeroAlvará\": \"\",\n    \"ÓrgãoExpedidor\": \"\",\n    \"DataExpedição\": \"\",\n    \"HoráriodeFuncionamento\": \"\",\n}\n\n# Lê por pares de linhas (rótulo / valor)\nfor i in range(len(rows) - 1):\n    rotulos = \" \".join(rows[i])\n    valores = rows[i + 1]\n\n    if \"Nome:\" in rotulos and \"CNES:\" in rotulos and \"CNPJ:\" in rotulos:\n        dados[\"Nome\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"CNES\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"CNPJ\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Nome Empresarial:\" in rotulos and \"CPF:\" in rotulos:\n        dados[\"NomeEmpresarial\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"CPF\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"Personalidade\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Logradouro:\" in rotulos and \"Telefone:\" in rotulos:\n        dados[\"Logradouro\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"Número\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"Telefone\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Complemento:\" in rotulos and \"Munic\" in rotulos:\n        dados[\"Complemento\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"Bairro\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"CEP\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n        dados[\"Município\"] = clean(valores[3]) if len(valores) > 3 else \"\"\n        dados[\"UF\"] = clean(valores[4]) if len(valores) > 4 else \"\"\n\n    elif \"Tipo Estabelecimento:\" in rotulos:\n        dados[\"TipoEstabelecimento\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"SubTipoEstabelecimento\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"Gestão\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n        dados[\"Dependência\"] = clean(valores[3]) if len(valores) > 3 else \"\"\n\n    elif \"Número Alvar\" in rotulos or \"Alvar\" in rotulos:\n        dados[\"NúmeroAlvará\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"ÓrgãoExpedidor\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"DataExpedição\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Horário de Funcionamento\" in rotulos:\n        # próxima linha contém o texto\n        if i + 1 < len(rows):\n            dados[\"HoráriodeFuncionamento\"] = clean(rows[i + 1][0])\n\nreturn [{\"json\": dados}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1072,
+        -16
+      ],
+      "id": "24da3f53-bb7d-4c82-a460-28b390427a89",
+      "name": "Code in Python (Beta)1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const baseUrl = \"https://cnes2.datasus.gov.br/\";\n\n// Pega o item corretamente (lista ou único objeto)\nconst item = Array.isArray(items) ? items[0] : items;\n\n// HTML pode vir em json.data ou direto em json\nconst html = item.json.data || item.json || \"\";\n\n// Expressão regular para capturar cada linha da tabela\nconst rowRegex = /<tr[^>]*bgcolor=['\"]#cccccc['\"][^>]*>(.*?)<\\/tr>/gis;\nconst tdRegex = /<td[^>]*>(.*?)<\\/td>/gis;\nconst linkRegex = /<a[^>]*href=['\"]([^'\"]+)['\"][^>]*>(.*?)<\\/a>/i;\n\nconst resultados = [];\n\nlet match;\nwhile ((match = rowRegex.exec(html)) !== null) {\n  const rowHtml = match[1];\n  const cols = [...rowHtml.matchAll(tdRegex)].map(m => m[1]);\n\n  if (cols.length >= 4) {\n    const linkMatch = cols[1].match(linkRegex);\n    if (!linkMatch) continue;\n\n    const linkHref = linkMatch[1].trim();\n    const nome = linkMatch[2].replace(/<[^>]*>/g, \"\").trim();\n\n    let link = linkHref;\n    if (link && !link.startsWith(\"http\")) {\n      link = baseUrl + link.replace(/^\\//, \"\");\n    }\n\n    const existentes = cols[2].replace(/<[^>]*>/g, \"\").trim();\n    const emUso = cols[3].replace(/<[^>]*>/g, \"\").trim();\n\n    resultados.push({\n      Estabelecimento: nome,\n      Link: link,\n      Existentes: existentes,\n      Em_Uso: emUso,\n    });\n  }\n}\n\nreturn resultados.map(r => ({ json: r }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        -16
+      ],
+      "id": "5aec884b-b190-48d7-9d22-b81119d68eb0",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1904,
+        -80
+      ],
+      "id": "57cb62c9-bb80-4c3a-a6f7-b2c77b287978",
+      "name": "Wait",
+      "webhookId": "599fa408-0700-4f55-ae1f-89603f8fca6b"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b87ae472-09fd-4230-9b26-7711305555b5",
+              "leftValue": "={{ $json.Nome }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1488,
+        -48
+      ],
+      "id": "fa43d403-339f-4495-94d9-00cff98c41b1",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA",
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Nome",
+              "lookupValue": "={{ $json.Nome }}"
+            }
+          ]
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "detectAutomatically",
+              "readRowsUntil": "firstEmptyRow"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1280,
+        -32
+      ],
+      "id": "da57b508-e871-4eae-9782-1d56d378d1aa",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "content": "### Pega o link do CNES",
+        "height": 208,
+        "width": 192,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -80
+      ],
+      "id": "dedaf8f9-b5e4-4c50-86d6-5018a045479b",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "### Pega o HTML da página do CNPJ",
+        "height": 208,
+        "width": 192,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        -80
+      ],
+      "id": "2ccd1896-a3b8-4dc0-89ec-15da6f285e8f",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        656,
+        -208
+      ],
+      "id": "8e3d6b63-3330-4862-bb0c-bc31aeba0132",
+      "name": "..."
+    },
+    {
+      "parameters": {
+        "content": "### Pega o HTML da página do CNPJ",
+        "height": 208,
+        "width": 192,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -80
+      ],
+      "id": "c51ee689-f42a-4393-9cb1-b7a0960bbf54",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "### Pega as informações do link",
+        "height": 208,
+        "width": 192,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        -96
+      ],
+      "id": "854773a9-ca7e-472f-a5c8-5e77ff4e43df",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "### Loop para percorrer os itens",
+        "height": 208,
+        "width": 192,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -80
+      ],
+      "id": "44f9bcf1-e186-416e-ba57-c78ce2de4f80",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "### Pega informação existente",
+        "height": 208,
+        "width": 192,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        -96
+      ],
+      "id": "0524e70f-b479-4bf9-9ed3-d296a7d5c0ff",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "### Verifica se existe ou não",
+        "height": 208,
+        "width": 192,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        -112
+      ],
+      "id": "3c44ab9a-a3f2-46ae-9dcf-9e5249c65884",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "### Adiciona item",
+        "height": 208,
+        "width": 192,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        -112
+      ],
+      "id": "4668cf17-c53f-4f4c-ac7a-48aac79d1151",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "### Espera 5 segundos",
+        "height": 208,
+        "width": 192,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1856,
+        -112
+      ],
+      "id": "c1e35558-ccc2-4cfa-bf77-f633a433d1b1",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "### Gatilho a cada 20 minutos",
+        "height": 208,
+        "width": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -80
+      ],
+      "id": "045c064b-4bad-4d61-adb8-2997918920cb",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "# Extrai a lista de CNPJ/ CNES ",
+        "height": 480,
+        "width": 2304,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -256
+      ],
+      "id": "ba106db0-68b5-4270-a4ea-4ca9a15f4b7f",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        656,
+        0
+      ],
+      "id": "80b28c4a-12a5-437b-a202-c127a2c8aafc",
+      "name": "Wait1",
+      "webhookId": "15918fb8-6450-486c-9ea9-049d4c88a203"
+    },
+    {
+      "parameters": {
+        "content": "### Espera 5 segundos",
+        "height": 208,
+        "width": 192,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        608,
+        -80
+      ],
+      "id": "addd6a29-beb3-4563-8da1-53418fed80e2",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "afea8ea4-7e41-4943-8ace-097cbe32c1d9",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "...",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Code in Python (Beta)1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in Python (Beta)1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {
+        "json": {}
+      }
+    ]
+  },
+  "versionId": "a14d90af-6159-4b74-95cc-f2c4f1278e9a",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-10-30T14:31:44.041Z",
+      "createdAt": "2025-10-30T14:31:44.041Z",
+      "role": "workflow:owner",
+      "workflowId": "FSAtnUMnSTAZcazx",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2025-10-30T19:31:25.358Z",
+      "createdAt": "2025-10-30T19:31:25.358Z",
+      "id": "lGXMbU3Qddxsbx4R",
+      "name": "Javascript"
+    },
+    {
+      "updatedAt": "2025-10-30T19:31:15.147Z",
+      "createdAt": "2025-10-30T19:31:15.147Z",
+      "id": "NiTXSoEv5e34KVeY",
+      "name": "Python"
+    },
+    {
+      "updatedAt": "2025-10-21T19:31:33.198Z",
+      "createdAt": "2025-10-21T19:31:33.198Z",
+      "id": "JSm7SqZly4KlPNXH",
+      "name": "Http"
+    },
+    {
+      "updatedAt": "2025-09-24T16:37:09.332Z",
+      "createdAt": "2025-09-24T16:37:09.332Z",
+      "id": "5YkbdcoRnrhRGDir",
+      "name": "Sheets"
+    }
+  ]
+}
