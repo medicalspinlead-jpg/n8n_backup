@@ -1,0 +1,729 @@
+{
+  "updatedAt": "2025-11-03T18:07:56.040Z",
+  "createdAt": "2025-10-30T14:31:44.041Z",
+  "id": "FSAtnUMnSTAZcazx",
+  "name": "Extração de lista de CNPJs CNES",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://cnes2.datasus.gov.br/Mod_Ind_Equipamentos_Listar.asp?VCod_Equip=12&VTipo_Equip=1%20&VListar=1&VEstado=00&VMun=&VComp=",
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        32,
+        -16
+      ],
+      "id": "fd964802-965c-463e-9f94-5a1367c36560",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.Link }}",
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        864,
+        -16
+      ],
+      "id": "e22affab-ee27-40af-9f15-6a995a865248",
+      "name": "HTTP Request1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        688,
+        -32
+      ],
+      "id": "d3d6a0f2-d1fd-4827-8968-85bb51913f8b",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "from bs4 import BeautifulSoup\nimport re\n\nhtml = items[0]['json']['data']\nsoup = BeautifulSoup(html, 'html.parser')\n\n# Limpa o texto\ndef clean(text):\n    if not text:\n        return \"\"\n    return re.sub(r'\\s+', ' ', text.replace('\\xa0', ' ')).strip()\n\n# Captura todas as linhas relevantes\nrows = []\nfor tr in soup.find_all(\"tr\"):\n    tds = [clean(td.get_text()) for td in tr.find_all(\"td\")]\n    if tds:\n        rows.append(tds)\n\ndados = {\n    \"Nome\": \"\",\n    \"CNES\": \"\",\n    \"CNPJ\": \"\",\n    \"NomeEmpresarial\": \"\",\n    \"CPF\": \"\",\n    \"Personalidade\": \"\",\n    \"Logradouro\": \"\",\n    \"Número\": \"\",\n    \"Telefone\": \"\",\n    \"Complemento\": \"\",\n    \"Bairro\": \"\",\n    \"CEP\": \"\",\n    \"Município\": \"\",\n    \"UF\": \"\",\n    \"TipoEstabelecimento\": \"\",\n    \"SubTipoEstabelecimento\": \"\",\n    \"Gestão\": \"\",\n    \"Dependência\": \"\",\n    \"NúmeroAlvará\": \"\",\n    \"ÓrgãoExpedidor\": \"\",\n    \"DataExpedição\": \"\",\n    \"HoráriodeFuncionamento\": \"\",\n}\n\n# Lê por pares de linhas (rótulo / valor)\nfor i in range(len(rows) - 1):\n    rotulos = \" \".join(rows[i])\n    valores = rows[i + 1]\n\n    if \"Nome:\" in rotulos and \"CNES:\" in rotulos and \"CNPJ:\" in rotulos:\n        dados[\"Nome\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"CNES\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"CNPJ\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Nome Empresarial:\" in rotulos and \"CPF:\" in rotulos:\n        dados[\"NomeEmpresarial\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"CPF\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"Personalidade\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Logradouro:\" in rotulos and \"Telefone:\" in rotulos:\n        dados[\"Logradouro\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"Número\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"Telefone\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Complemento:\" in rotulos and \"Munic\" in rotulos:\n        dados[\"Complemento\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"Bairro\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"CEP\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n        dados[\"Município\"] = clean(valores[3]) if len(valores) > 3 else \"\"\n        dados[\"UF\"] = clean(valores[4]) if len(valores) > 4 else \"\"\n\n    elif \"Tipo Estabelecimento:\" in rotulos:\n        dados[\"TipoEstabelecimento\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"SubTipoEstabelecimento\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"Gestão\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n        dados[\"Dependência\"] = clean(valores[3]) if len(valores) > 3 else \"\"\n\n    elif \"Número Alvar\" in rotulos or \"Alvar\" in rotulos:\n        dados[\"NúmeroAlvará\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"ÓrgãoExpedidor\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"DataExpedição\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Horário de Funcionamento\" in rotulos:\n        # próxima linha contém o texto\n        if i + 1 < len(rows):\n            dados[\"HoráriodeFuncionamento\"] = clean(rows[i + 1][0])\n\nreturn [{\"json\": dados}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1072,
+        -32
+      ],
+      "id": "24da3f53-bb7d-4c82-a460-28b390427a89",
+      "name": "Code in Python (Beta)1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const baseUrl = \"https://cnes2.datasus.gov.br/\";\n\n// Pega o item corretamente (lista ou único objeto)\nconst item = Array.isArray(items) ? items[0] : items;\nconst html = item.json.data || item.json || \"\";\n\nconst rowRegex = /<tr[^>]*bgcolor=['\"]#cccccc['\"][^>]*>(.*?)<\\/tr>/gis;\nconst tdRegex = /<td[^>]*>(.*?)<\\/td>/gis;\nconst linkRegex = /<a[^>]*href=['\"]([^'\"]+)['\"][^>]*>(.*?)<\\/a>/i;\n\nconst resultados = [];\n\nlet match;\nwhile ((match = rowRegex.exec(html)) !== null) {\n  const rowHtml = match[1];\n  const cols = [...rowHtml.matchAll(tdRegex)].map(m => m[1]);\n\n  if (cols.length >= 4) {\n    const linkMatch = cols[1].match(linkRegex);\n    if (!linkMatch) continue;\n\n    const linkHref = linkMatch[1].trim();\n    const nome = linkMatch[2].replace(/<[^>]*>/g, \"\").trim();\n\n    let link = linkHref;\n    if (link && !link.startsWith(\"http\")) {\n      link = baseUrl + link.replace(/^\\//, \"\");\n    }\n\n    const existentes = cols[2].replace(/<[^>]*>/g, \"\").trim();\n    const emUso = cols[3].replace(/<[^>]*>/g, \"\").trim();\n\n    resultados.push({\n      Estabelecimento: nome,\n      Link: link,\n      Existentes: existentes,\n      Em_Uso: emUso,\n    });\n  }\n}\n\n// Adiciona o número do lote (1 ou 2)\nconst total = resultados.length;\nconst metade = Math.ceil(total / 2);\n\nconst final = resultados.map((r, i) => ({\n  json: {\n    ...r,\n    Lote: i < metade ? 1 : 2\n  }\n}));\n\nreturn final;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        192,
+        -16
+      ],
+      "id": "5aec884b-b190-48d7-9d22-b81119d68eb0",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1728,
+        -64
+      ],
+      "id": "57cb62c9-bb80-4c3a-a6f7-b2c77b287978",
+      "name": "Wait",
+      "webhookId": "599fa408-0700-4f55-ae1f-89603f8fca6b"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        864,
+        -144
+      ],
+      "id": "8e3d6b63-3330-4862-bb0c-bc31aeba0132",
+      "name": "..."
+    },
+    {
+      "parameters": {
+        "content": "# Extrai a lista de CNPJ/ CNES ",
+        "height": 480,
+        "width": 2528,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -256
+      ],
+      "id": "ba106db0-68b5-4270-a4ea-4ca9a15f4b7f",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "afea8ea4-7e41-4943-8ace-097cbe32c1d9",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "maxItems": 1571
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        496,
+        -96
+      ],
+      "id": "998a9b2c-e1c1-431d-8fe7-98741d59a162",
+      "name": "Primeiros",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "maxItems": 1571
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        496,
+        48
+      ],
+      "id": "fbff1706-04fb-41f8-8513-0c564cddd4d5",
+      "name": "Ultimos"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dfaf47f0-8ded-41f5-81c7-4c7a10b74909",
+              "leftValue": "={{ $json.Lote }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        352,
+        -16
+      ],
+      "id": "44fe0135-2035-4794-8b4d-e64f5b789034",
+      "name": "If1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1296,
+        -48
+      ],
+      "id": "84ef2ca6-83a1-498f-88d6-068102744a6e",
+      "name": "Wait1",
+      "webhookId": "9765a5de-6d61-45fb-a0ac-0c714d2e4571"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA",
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1185343356,
+          "mode": "list",
+          "cachedResultName": "Página3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA/edit#gid=1185343356"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "==HYPERLINK(\"{{ $('Code in JavaScript').item.json.Link }}\"; \"{{ $('Code in Python (Beta)1').item.json.Nome }}\")",
+            "CNPJ": "={{ $('Code in Python (Beta)1').item.json.CNPJ }}",
+            "Município": "={{ $('Code in Python (Beta)1').item.json['Município'].replace(/\\s*-+\\s*IBGE.*$/, '').trim() }}",
+            "Estado": "={{ $('Code in Python (Beta)1').item.json.UF }}",
+            "Existentes": "={{ $('Code in JavaScript').item.json.Existentes }}",
+            "em Uso": "={{ $('Code in JavaScript').item.json.Em_Uso }}"
+          },
+          "matchingColumns": [
+            "Nome"
+          ],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Município",
+              "displayName": "Município",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação",
+              "displayName": "Responsável pela investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia de e-mail \"Nome do Responsável\"",
+              "displayName": "Cadencia de e-mail \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta ",
+              "displayName": "Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo concluído (Contrato, bobinas comp. Enviar e-mail) ",
+              "displayName": "Objetivo concluído (Contrato, bobinas comp. Enviar e-mail) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. de qualificação",
+              "displayName": "Responsável pela lig. de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de qualificação",
+              "displayName": "Data da ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Qualificação da Ligação",
+              "displayName": "Qualificação da Ligação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo ",
+              "displayName": "Objetivo ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1504,
+        -48
+      ],
+      "id": "56604a64-403d-4961-984a-da36663dd6da",
+      "name": "Append row in sheet",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      },
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "...",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Code in Python (Beta)1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in Python (Beta)1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Primeiros": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ultimos": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Primeiros",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ultimos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {
+        "json": {}
+      }
+    ]
+  },
+  "versionId": "99e4a91c-1421-4d67-b358-7a8cbecd443e",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-10-30T14:31:44.041Z",
+      "createdAt": "2025-10-30T14:31:44.041Z",
+      "role": "workflow:owner",
+      "workflowId": "FSAtnUMnSTAZcazx",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2025-10-30T19:31:25.358Z",
+      "createdAt": "2025-10-30T19:31:25.358Z",
+      "id": "lGXMbU3Qddxsbx4R",
+      "name": "Javascript"
+    },
+    {
+      "updatedAt": "2025-10-30T19:31:15.147Z",
+      "createdAt": "2025-10-30T19:31:15.147Z",
+      "id": "NiTXSoEv5e34KVeY",
+      "name": "Python"
+    },
+    {
+      "updatedAt": "2025-10-21T19:31:33.198Z",
+      "createdAt": "2025-10-21T19:31:33.198Z",
+      "id": "JSm7SqZly4KlPNXH",
+      "name": "Http"
+    },
+    {
+      "updatedAt": "2025-09-24T16:37:09.332Z",
+      "createdAt": "2025-09-24T16:37:09.332Z",
+      "id": "5YkbdcoRnrhRGDir",
+      "name": "Sheets"
+    }
+  ]
+}
