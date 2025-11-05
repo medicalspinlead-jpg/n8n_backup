@@ -1,0 +1,530 @@
+{
+  "updatedAt": "2025-11-04T17:11:50.619Z",
+  "createdAt": "2025-11-04T16:42:55.146Z",
+  "id": "1xUqi9TTR4XV1Wi9",
+  "name": "My workflow",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"Nova Sprint\",\n  \"startDate\": \"{{ $json.startDate }}\",\n  \"endDate\": \"{{ $json.endDate }}\",\n  \"originBoardId\": 4\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "c1a7fe10-fb8e-43ef-b2bb-7c10be9cd127",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                2
+              ],
+              "triggerAtHour": 17
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -176,
+        0
+      ],
+      "id": "8f842d46-3e8e-4a4b-988d-8ca4f6cefa51",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7ba64de1-f2b0-4d35-8796-cb29319f3bb5",
+              "name": "startDate",
+              "value": "={{ $now }}",
+              "type": "string"
+            },
+            {
+              "id": "3da78947-b46d-49ad-9d52-869cdcbd7da1",
+              "name": "endDate",
+              "value": "={{ $now.plus({ days: 7 }) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        32,
+        0
+      ],
+      "id": "48b137c3-aa54-4666-9093-13ecb020c066",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "https://medicalspin.atlassian.net/rest/agile/1.0/board/4/sprint",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        32,
+        160
+      ],
+      "id": "0a07cefa-7cd2-4f79-b3cc-b46a14e5dbbd",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://medicalspin.atlassian.net/rest/agile/1.0/sprint/{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"state\": \"active\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "4fbf05e8-e65a-46f5-9df8-1232c3fe4022",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://medicalspin.atlassian.net/rest/agile/1.0/sprint/{{ $json.values[5].id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"state\": \"closed\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        160
+      ],
+      "id": "54c96567-72e5-4faf-b7c0-1139bb540765",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "3682ca98-eb9b-4dc7-a81e-1c3805998e54",
+      "name": "Wait",
+      "webhookId": "e5ca6786-78f2-4a20-9b2a-8335d1c67a65"
+    },
+    {
+      "parameters": {
+        "url": "=https://medicalspin.atlassian.net/rest/agile/1.0/sprint/{{ $json.id }}/issue",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        400,
+        160
+      ],
+      "id": "1775ab86-b5e5-49a4-8995-09d825de80a3",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "86d540fb-e0dd-440e-9d22-2a85542a2efc",
+              "leftValue": "={{ $json.issues[0].fields.statusCategory.key }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        608,
+        160
+      ],
+      "id": "ee470625-34f8-4f6c-b614-63df940f392f",
+      "name": "If"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "HTTP Request": [
+      {
+        "json": {
+          "id": 341,
+          "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/341",
+          "state": "future",
+          "name": "Nova Sprint",
+          "startDate": "2025-11-04T13:53:20.105-03:00",
+          "endDate": "2025-11-11T13:53:20.106-03:00",
+          "originBoardId": 4
+        }
+      }
+    ],
+    "HTTP Request2": [
+      {
+        "json": {
+          "maxResults": 50,
+          "startAt": 0,
+          "total": 10,
+          "isLast": true,
+          "values": [
+            {
+              "id": 72,
+              "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/72",
+              "state": "closed",
+              "name": "quadro Sprint 1",
+              "startDate": "2025-09-23T10:00:00.000Z",
+              "endDate": "2025-09-30T10:00:00.000Z",
+              "completeDate": "2025-09-30T19:28:52.337Z",
+              "createdDate": "2025-09-18T11:45:14.487Z",
+              "originBoardId": 4,
+              "goal": ""
+            },
+            {
+              "id": 138,
+              "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/138",
+              "state": "closed",
+              "name": "quadro Sprint 3",
+              "startDate": "2025-10-14T10:00:42.428Z",
+              "endDate": "2025-10-14T20:00:00.000Z",
+              "completeDate": "2025-10-21T19:49:49.809Z",
+              "createdDate": "2025-10-01T13:31:39.499Z",
+              "originBoardId": 4,
+              "goal": ""
+            },
+            {
+              "id": 172,
+              "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/172",
+              "state": "closed",
+              "name": "quadro Sprint 4",
+              "startDate": "2025-10-21T17:24:00.000Z",
+              "endDate": "2025-10-28T03:24:00.000Z",
+              "completeDate": "2025-10-29T12:19:33.310Z",
+              "createdDate": "2025-10-21T19:52:55.618Z",
+              "originBoardId": 4,
+              "goal": ""
+            },
+            {
+              "id": 272,
+              "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/272",
+              "state": "closed",
+              "name": "quadro Sprint 4",
+              "startDate": "2025-10-29T12:32:06.118Z",
+              "endDate": "2025-11-04T22:32:02.000Z",
+              "completeDate": "2025-10-29T12:32:32.842Z",
+              "createdDate": "2025-10-29T12:31:46.447Z",
+              "originBoardId": 4,
+              "goal": ""
+            },
+            {
+              "id": 274,
+              "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/274",
+              "state": "closed",
+              "name": "quadro Sprint 4",
+              "startDate": "2025-10-21T12:38:16.849Z",
+              "endDate": "2025-10-28T12:38:00.000Z",
+              "completeDate": "2025-10-29T12:38:35.574Z",
+              "createdDate": "2025-10-29T12:34:45.739Z",
+              "originBoardId": 4,
+              "goal": ""
+            },
+            {
+              "id": 271,
+              "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/271",
+              "state": "active",
+              "name": "quadro Sprint 5",
+              "startDate": "2025-10-28T12:25:25.000Z",
+              "endDate": "2025-11-04T12:25:00.000Z",
+              "createdDate": "2025-10-29T12:21:13.560Z",
+              "originBoardId": 4,
+              "goal": ""
+            },
+            {
+              "id": 105,
+              "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/105",
+              "state": "future",
+              "name": "quadro Sprint 2",
+              "startDate": "2025-09-30T10:00:00.000Z",
+              "endDate": "2025-10-07T10:00:00.000Z",
+              "createdDate": "2025-09-30T19:28:52.445Z",
+              "originBoardId": 4
+            },
+            {
+              "id": 171,
+              "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/171",
+              "state": "future",
+              "name": "quadro Sprint 3",
+              "startDate": "2025-10-14T03:00:00.000Z",
+              "endDate": "2025-10-21T03:00:00.000Z",
+              "createdDate": "2025-10-21T19:49:49.945Z",
+              "originBoardId": 4,
+              "goal": ""
+            },
+            {
+              "id": 275,
+              "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/275",
+              "state": "future",
+              "name": "quadro Sprint 4",
+              "createdDate": "2025-10-29T12:38:35.686Z",
+              "originBoardId": 4
+            },
+            {
+              "id": 341,
+              "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/341",
+              "state": "future",
+              "name": "Nova Sprint",
+              "startDate": "2025-11-04T16:53:20.105Z",
+              "endDate": "2025-11-11T16:53:20.106Z",
+              "originBoardId": 4
+            }
+          ]
+        }
+      }
+    ],
+    "HTTP Request3": [
+      {
+        "json": {
+          "id": 271,
+          "self": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint/271",
+          "state": "closed",
+          "name": "quadro Sprint 5",
+          "startDate": "2025-10-28T12:25:25.000Z",
+          "endDate": "2025-11-04T12:25:00.000Z",
+          "completeDate": "2025-11-04T17:02:10.222Z",
+          "createdDate": "2025-10-29T12:21:13.560Z",
+          "originBoardId": 4,
+          "goal": ""
+        }
+      }
+    ]
+  },
+  "versionId": "fdc9a2c9-c46f-45d5-8dac-ba84b8ce8e69",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-11-04T16:42:55.146Z",
+      "createdAt": "2025-11-04T16:42:55.146Z",
+      "role": "workflow:owner",
+      "workflowId": "1xUqi9TTR4XV1Wi9",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
