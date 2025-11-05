@@ -1,0 +1,221 @@
+{
+  "updatedAt": "2025-10-25T15:40:38.049Z",
+  "createdAt": "2025-10-15T16:55:48.718Z",
+  "id": "uzuOlcmJWDFhCTf7",
+  "name": "Fluxo erros Automações",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c6ed1a56-5289-4aae-9ae3-8452af49d29b",
+      "name": "Error Trigger",
+      "notesInFlow": false,
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "5579999801810",
+        "messageText": "=🧩 EXECUÇÃO COM ERRO\n\n🆔 ID: {{ $json.execution.id }}\n🔗 URL: {{ $json.execution.url.replace('http://localhost:5678', 'https://n8n.medicalspin.com.br').replace(/\\/executions\\/\\d+$/, '') }}\n\n❌ ERRO: {{ $json.execution.error.name }}\n📦 TIPO: {{ $json.execution.error.node.type }}\n💬 MSG: {{ $json.execution.error.message }}\n\n⚙️ FLUXO: {{ $json.workflow.name }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        192,
+        0
+      ],
+      "id": "f84fe05e-8108-43d6-8bd1-0c7e19d9efbb",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "70uh12r25ZnXKIUg",
+          "name": "WhatsApp"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://medicalspin.atlassian.net/rest/api/3/issue",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"project\": {\n      \"key\": \"MN\"\n    },\n    \"summary\": \"Execução com erro no fluxo - {{ $('Error Trigger').item.json.workflow.name }}\",\n    \"description\": {\n      \"type\": \"doc\",\n      \"version\": 1,\n      \"content\": [\n        {\n          \"type\": \"paragraph\",\n          \"content\": [\n            {\"type\": \"text\", \"text\": \"ID: {{ $('Error Trigger').item.json.execution.id }}\"},\n            {\"type\": \"text\", \"text\": \"\\nURL: {{ $('Error Trigger').item.json.execution.url.replace('http://localhost:5678', 'https://n8n.medicalspin.com.br').replace(/\\/executions\\/\\d+$/, '') }}\"},\n            {\"type\": \"text\", \"text\": \"\\nERRO: {{ $('Error Trigger').item.json.execution.error.name }}\"},\n            {\"type\": \"text\", \"text\": \"\\nTIPO: {{ $('Error Trigger').item.json.execution.error.node.type }}\"},\n            {\"type\": \"text\", \"text\": \"\\nMSG: {{ $('Error Trigger').item.json.execution.error.message }}\"},\n            {\"type\": \"text\", \"text\": \"\\nFLUXO: {{ $('Error Trigger').item.json.workflow.name }}\"}\n          ]\n        }\n      ]\n    },\n    \"issuetype\": {\n      \"name\": \"Task\"\n    }\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        368,
+        0
+      ],
+      "id": "e310f0ba-8c6d-4c10-a41c-8ee890541026",
+      "name": "HTTP Request1"
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Error Trigger": [
+      {
+        "json": {
+          "execution": {
+            "id": "2352",
+            "url": "http://localhost:5678/workflow/I8ICJMGjQ1vAYkOi/executions/2352",
+            "error": {
+              "level": "warning",
+              "tags": {},
+              "timestamp": 1760996836780,
+              "context": {
+                "itemIndex": 0,
+                "messageTemplate": "No path back to referenced node",
+                "descriptionKey": "pairedItemNoConnection",
+                "type": "paired_item_no_connection",
+                "nodeCause": "Create an organization",
+                "parameter": "assignments"
+              },
+              "functionality": "regular",
+              "name": "NodeOperationError",
+              "node": {
+                "parameters": {
+                  "mode": "manual",
+                  "duplicateItem": false,
+                  "assignments": {
+                    "assignments": [
+                      {
+                        "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+                        "name": "name",
+                        "value": "={{ $('Create a person3').item.json.first_name }}",
+                        "type": "string"
+                      },
+                      {
+                        "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+                        "name": "email",
+                        "value": "={{ $('Create a person3').item.json.email[0].value }}",
+                        "type": "string"
+                      },
+                      {
+                        "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+                        "name": "phone",
+                        "value": "={{ $('Create a person3').item.json.phone[0].value }}",
+                        "type": "string"
+                      },
+                      {
+                        "id": "a5123d9c-5ccf-4698-a318-edda1e2889fa",
+                        "name": "org",
+                        "value": "={{ $('Create an organization').item.json.name }}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "includeOtherFields": false,
+                  "options": {}
+                },
+                "type": "n8n-nodes-base.set",
+                "typeVersion": 3.4,
+                "position": [
+                  2064,
+                  -16
+                ],
+                "id": "ada3d80e-4432-4353-b78b-6ed8ddaa9607",
+                "name": "Edit Fields1"
+              },
+              "messages": [],
+              "message": "Invalid expression",
+              "stack": "NodeOperationError: Invalid expression\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file+packages+nodes-base_@aws-sdk+credential-providers@3.808.0_asn1.js@5_afd197edb2c1f848eae21a96a97fab23/node_modules/n8n-nodes-base/nodes/Set/v2/manual.mode.ts:243:9)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file+packages+nodes-base_@aws-sdk+credential-providers@3.808.0_asn1.js@5_afd197edb2c1f848eae21a96a97fab23/node_modules/n8n-nodes-base/nodes/Set/v2/SetV2.node.ts:352:48)\n    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_@opentelemetry+api@1.9.0_@opentelemetry+sdk-trace-base@1.30_08b575bec2313d5d8a4cc75358971443/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1093:31)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_@opentelemetry+api@1.9.0_@opentelemetry+sdk-trace-base@1.30_08b575bec2313d5d8a4cc75358971443/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1274:22)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_@opentelemetry+api@1.9.0_@opentelemetry+sdk-trace-base@1.30_08b575bec2313d5d8a4cc75358971443/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1676:38\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_@opentelemetry+api@1.9.0_@opentelemetry+sdk-trace-base@1.30_08b575bec2313d5d8a4cc75358971443/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2292:11"
+            },
+            "lastNodeExecuted": "Edit Fields1",
+            "mode": "webhook"
+          },
+          "workflow": {
+            "id": "I8ICJMGjQ1vAYkOi",
+            "name": "SITE + PIPEDRIVE + VOXFREE"
+          }
+        }
+      }
+    ]
+  },
+  "versionId": "f4b24186-65e2-4bec-bde0-e83636e9b169",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-10-15T16:55:48.718Z",
+      "createdAt": "2025-10-15T16:55:48.718Z",
+      "role": "workflow:owner",
+      "workflowId": "uzuOlcmJWDFhCTf7",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2025-10-17T11:33:42.346Z",
+      "createdAt": "2025-10-17T11:33:42.346Z",
+      "id": "oRryzBqELIQCnHy2",
+      "name": "errorNode"
+    },
+    {
+      "updatedAt": "2025-09-24T16:37:09.332Z",
+      "createdAt": "2025-09-24T16:37:09.332Z",
+      "id": "5YkbdcoRnrhRGDir",
+      "name": "Sheets"
+    }
+  ]
+}
