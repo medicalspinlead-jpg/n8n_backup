@@ -1,0 +1,51 @@
+{
+  "updatedAt": "2025-11-05T12:19:44.302Z",
+  "createdAt": "2025-11-04T19:53:04.744Z",
+  "id": "JkWqVaHJf1ohcdTD",
+  "name": "PIPEDRIVE",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.pipedriveTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b991135c-f876-48a6-b108-8f8a1e8da7e6",
+      "name": "Pipedrive Trigger",
+      "webhookId": "93348334-fe75-462e-b4fa-2f77668335b3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Pipedrive Trigger": {}
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "9328ee8d-1242-484f-bbf7-f4036a4dd29e",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-04T19:53:04.744Z",
+      "createdAt": "2025-11-04T19:53:04.744Z",
+      "role": "workflow:owner",
+      "workflowId": "JkWqVaHJf1ohcdTD",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
