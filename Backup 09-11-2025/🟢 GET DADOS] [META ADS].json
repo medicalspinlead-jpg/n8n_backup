@@ -1,0 +1,342 @@
+{
+  "updatedAt": "2025-10-20T11:20:48.705Z",
+  "createdAt": "2025-09-24T16:35:11.204Z",
+  "id": "b0r6KXzpvrfVlRPW",
+  "name": "🟢 GET DADOS] [META ADS]",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 18
+            }
+          ]
+        }
+      },
+      "id": "56c88a97-a991-4b49-9df9-d8e6033b6daf",
+      "name": "1h3",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        16,
+        480
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "content": "# CAMPANHAS - dia anterior\n",
+        "height": 764.059910537647,
+        "width": 2279.840501916075
+      },
+      "id": "87089a88-df85-4ed0-b689-51e4d3de8676",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "b2b760c0-8f5a-4e90-9931-52ee08820f80",
+      "name": "Separa os dados3",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        640,
+        480
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "18df9941-85bc-4990-8b08-575a4fee231d",
+              "name": "metaAct",
+              "value": "1363484047451149",
+              "type": "string"
+            },
+            {
+              "id": "fe2eac3e-db11-4a7b-9a6e-6c7cab970f27",
+              "name": "desde",
+              "value": "={{$today.minus({ days: 0 }).toFormat('yyyy-MM-dd')}}",
+              "type": "string"
+            },
+            {
+              "id": "3087bf5e-938c-4a74-8313-bc02c38226a5",
+              "name": "até",
+              "value": "={{$today.minus({days: 0}).toFormat('yyyy-MM-dd')}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "986c3ae0-173e-4d6a-a82f-012b4bde646a",
+      "name": "Set Variáveis3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "graphApiVersion": "v23.0",
+        "node": "=act_{{ $item(\"0\").$node[\"Set Variáveis3\"].json[\"metaAct\"] }}",
+        "edge": "insights",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "time_increment",
+                "value": "1"
+              },
+              {
+                "name": "level",
+                "value": "campaign"
+              },
+              {
+                "name": "fields",
+                "value": "=campaign_name,\nadset_name,\nad_name,\nspend,\nimpressions,\nreach,\nactions"
+              },
+              {
+                "name": "limit",
+                "value": "3000"
+              },
+              {
+                "name": "time_range",
+                "value": "={\n  \"since\":\"{{ $item(\"0\").$node[\"Set Variáveis3\"].json[\"desde\"] }}\",\n  \"until\":\"{{ $item(\"0\").$node[\"Set Variáveis3\"].json[\"até\"] }}\"\n} "
+              }
+            ]
+          }
+        }
+      },
+      "id": "6be842da-fb6f-4152-8817-e36233c7b06e",
+      "name": "Dados de Ontem3",
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "position": [
+        432,
+        480
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "OSZt4OqMQNt0FaqZ",
+          "name": "Facebook Graph account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all(); \nconst dataFaceFormatted = [];\n\n// Função para traduzir nomes de métricas\nfunction traduzirAcao(actionType) {\n  const mapa = {\n    \"link_click\": \"Cliques no link\",\n    \"page_engagement\": \"Envolvimento com a página\",\n    \"landing_page_view\": \"Visualizações da página de destino\",\n    \"omni_landing_page_view\": \"Visualizações da página de destino (Omni)\",\n    \"post_engagement\": \"Envolvimento com a publicação\",\n    \"post_interaction_gross\": \"Interações na publicação\",\n    \"post_reaction\": \"Reações na publicação\",\n    \"video_view\": \"Visualizações de vídeo\",\n    \"lead\": \"Leads\",\n    \"offsite_complete_registration_add_meta_leads\": \"Cadastro concluído (Meta Leads)\",\n    \"offsite_content_view_add_meta_leads\": \"Visualização de conteúdo (Meta Leads)\",\n    \"offsite_search_add_meta_leads\": \"Busca (Meta Leads)\",\n    \"onsite_conversion.lead_grouped\": \"Conversões (Lead agrupado)\",\n    \"onsite_conversion.messaging_conversation_started_7d\": \"Mensagens iniciadas\",\n    \"purchase\": \"Compras\"\n  };\n  return mapa[actionType] || actionType;\n}\n\nitems.forEach(item => {\n  const data = item.json;\n\n  let mensagens = 0;\n  let linkClickValue = 0;\n  let compras = 0;\n  let leads = 0;\n\n  let sp = parseFloat(data.spend || 0);  \n  const impressions = parseInt(data.impressions || 0);\n  const reach = parseInt(data.reach || 0);\n\n  // Objeto final de métricas separadas\n  const metricasSeparadas = {};\n\n  if (data.actions) {\n    data.actions.forEach(action => {\n      const value = parseInt(action.value || 0);\n      const nomeTraduzido = traduzirAcao(action.action_type);\n\n      // Cada métrica vira uma coluna própria\n      metricasSeparadas[nomeTraduzido] = value;\n\n      if (action.action_type === 'onsite_conversion.messaging_conversation_started_7d') {\n        mensagens = value;\n      }\n      if (action.action_type === 'link_click') {\n        linkClickValue = value;\n      }\n      if (action.action_type === 'purchase') {\n        compras = value;\n      }\n      if (action.action_type === 'lead' || action.action_type === 'onsite_conversion.lead_grouped') {\n        leads += value; // soma leads\n      }\n    });\n  }\n\n  // Calcula métricas principais\n  let custoPorMensagem = mensagens > 0 ? (sp / mensagens).toFixed(2).replace(\".\", \",\") : \"0,00\";\n  let cpc = linkClickValue > 0 ? (sp / linkClickValue).toFixed(2).replace(\".\", \",\") : \"0,00\";\n  let cpm = impressions > 0 ? (sp / (impressions / 1000)).toFixed(2).replace(\".\", \",\") : \"0,00\";\n  let frequencia = reach > 0 ? (impressions / reach).toFixed(2).replace(\".\", \",\") : \"0,00\";\n  let cpl = leads > 0 ? (sp / leads).toFixed(2).replace(\".\", \",\") : \"0,00\";\n  let roas = sp > 0 && compras > 0 ? (compras / sp).toFixed(2).replace(\".\", \",\") : \"0,00\";\n\n  dataFaceFormatted.push({\n    Data: data.date_start,\n    Campanha: data.campaign_name,\n    Gasto: sp.toFixed(2).replace(\".\", \",\"),\n    Impressões: impressions,\n    Alcance: reach,\n    Frequência: frequencia,\n    Cliques: linkClickValue,\n    CPC: cpc,\n    CPM: cpm,\n    Mensagens: mensagens,\n    \"Custo por Mensagens\": custoPorMensagem,\n    Leads: leads,\n    CPL: cpl,\n    Compras: compras,\n    ROAS: roas,\n    ...metricasSeparadas // 🔥 cada métrica traduzida em campo separado\n  });\n});\n\nreturn dataFaceFormatted.map(r => ({ json: r }));\n"
+      },
+      "id": "e25a60e3-1152-4d98-a58d-714d3653104e",
+      "name": "Code3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        832,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 3,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1040,
+        480
+      ],
+      "id": "3c367bfa-4afb-483d-a06d-ce06a3f02119",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        448
+      ],
+      "id": "cc3997eb-0f98-4a94-8dde-62c6de5f4f93",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "557999801810",
+        "messageText": "=🚀 Métricas Diárias dos Anúncios MedicalSpin\n\n📆 Data: {{ $json.Data }}\n🎯 Campanha: {{ $json.Campanha }}\n💳 Gasto: {{ $json.Gasto }}\n👀 Impressões: {{ $json['Impressões'] }}\n🌍 Alcance: {{ $json.Alcance }}\n🔁 Frequência: {{ $json['Frequência'] }}\n🖱️ Cliques: {{ $json.Cliques }}\n📈 CPC: {{ $json.CPC }}\n📊 CPM: {{ $json.CPM }}\n💰 CPL: {{ $json.CPL }}\n🧲 Leads: {{ $json.Leads }}\n✅ Cadastro concluído (Meta Leads): {{ $json['Cadastro concluído (Meta Leads)'] }}\n🔗 Cliques no link: {{ $json['Cliques no link'] }}\n📘 Envolvimento com a página: {{ $json['Envolvimento com a página'] }}\n💬 Envolvimento com a publicação: {{ $json['Envolvimento com a publicação'] }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        592
+      ],
+      "id": "ed9fd6ea-9975-4b89-b29a-b0eaffe022e5",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "70uh12r25ZnXKIUg",
+          "name": "WhatsApp"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "1h3": {
+      "main": [
+        [
+          {
+            "node": "Set Variáveis3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Separa os dados3": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variáveis3": {
+      "main": [
+        [
+          {
+            "node": "Dados de Ontem3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados de Ontem3": {
+      "main": [
+        [
+          {
+            "node": "Separa os dados3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "uzuOlcmJWDFhCTf7"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:1h3": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "89ff6297-5deb-48e6-9786-6b3f2201774b",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-09-24T16:35:11.204Z",
+      "createdAt": "2025-09-24T16:35:11.204Z",
+      "role": "workflow:owner",
+      "workflowId": "b0r6KXzpvrfVlRPW",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2025-09-24T16:36:31.082Z",
+      "createdAt": "2025-09-24T16:36:31.082Z",
+      "id": "sIJeimO5xvoDAXn2",
+      "name": "Facebook"
+    },
+    {
+      "updatedAt": "2025-09-24T16:36:23.604Z",
+      "createdAt": "2025-09-24T16:36:23.604Z",
+      "id": "1OI7gHy5TinHfu4c",
+      "name": "Meta ADS"
+    },
+    {
+      "updatedAt": "2025-09-24T16:36:12.748Z",
+      "createdAt": "2025-09-24T16:36:12.748Z",
+      "id": "hpP7KRFBtJN9dYGl",
+      "name": "EvolutionAPI"
+    },
+    {
+      "updatedAt": "2025-09-24T19:16:04.744Z",
+      "createdAt": "2025-09-24T19:16:04.744Z",
+      "id": "aY3E1ZzctVldOdn0",
+      "name": "Aula tamplate"
+    }
+  ]
+}
