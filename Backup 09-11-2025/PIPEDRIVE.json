@@ -1,0 +1,741 @@
+{
+  "updatedAt": "2025-11-07T17:38:34.876Z",
+  "createdAt": "2025-11-04T19:53:04.744Z",
+  "id": "JkWqVaHJf1ohcdTD",
+  "name": "PIPEDRIVE",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.pipedriveTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b991135c-f876-48a6-b108-8f8a1e8da7e6",
+      "name": "Pipedrive Trigger",
+      "webhookId": "93348334-fe75-462e-b4fa-2f77668335b3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "548fade4-56f1-4962-b256-9f5ebc272b96",
+              "leftValue": "={{ $json.done }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "abfd58d3-bf60-4b35-aedd-12a06c0e7b7f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "20e3021e-7820-4de5-9aa6-c401b0bc3563",
+              "name": "deal_id",
+              "value": "={{ $json.data.deal_id }}",
+              "type": "number"
+            },
+            {
+              "id": "4f362708-164e-456c-b92f-f08eefaf0dcb",
+              "name": "done",
+              "value": "={{ $json.data.done }}",
+              "type": "boolean"
+            },
+            {
+              "id": "8541c2c0-a995-42fa-b6b4-90b37861c0d2",
+              "name": "type",
+              "value": "={{ $json.data.type }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "fad88d0f-b31c-4be8-87e0-48e0ee8bef49",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dealId": "={{ $json.deal_id }}",
+        "resolveProperties": true
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        656,
+        -64
+      ],
+      "id": "44acaabd-5d29-4f15-a937-facfcf6872e5",
+      "name": "Get a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "get",
+        "organizationId": "={{ $json.last_activity.org_id }}",
+        "resolveProperties": true
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        864,
+        96
+      ],
+      "id": "d5e123b2-2630-406b-8266-feb8fb119e54",
+      "name": "Get an organization",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        656,
+        96
+      ],
+      "id": "44fc6e18-7498-472c-a9d3-4d2e2b50814b",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        -64
+      ],
+      "id": "b3ecb185-5881-41ce-80ab-aaa17ad93236",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1072,
+        96
+      ],
+      "id": "329a0ab4-3e95-4861-9277-330fde3e9cfb",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1264,
+        -48
+      ],
+      "id": "0b70a88c-8586-4951-bb91-0d91291ae206",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS OUTBOUND CNES2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $json.org_name }}",
+            "CNPJ": "={{ $json.CNPJ }}",
+            "CIDADE": "={{ $json[\"Endereço\"] }}",
+            "UF": "={{ $json.UF }}",
+            "CAMPANHA": "={{ $json.Campanha }}",
+            "Data da Investigação Web (Pipe)": "={{ $json[\"Atualizado em\"] }}",
+            "E-MAIL": "={{ $json.email }}",
+            "SITE": "={{ $json.Site }}"
+          },
+          "matchingColumns": [
+            "NOME"
+          ],
+          "schema": [
+            {
+              "id": "CNES",
+              "displayName": "CNES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "SITE",
+              "displayName": "SITE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "E-MAIL",
+              "displayName": "E-MAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Responsável pela Verificação de lista",
+              "displayName": "Responsável pela Verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAMPANHA",
+              "displayName": "CAMPANHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "displayName": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Resposta ",
+              "displayName": "Data da Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta do e-mail x",
+              "displayName": "Resposta do e-mail x",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "displayName": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. de qualificação",
+              "displayName": "Responsável pela lig. de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de qualificação",
+              "displayName": "Data da ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Qualificação da Ligação",
+              "displayName": "Qualificação da Ligação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo ",
+              "displayName": "Objetivo ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1680,
+        -48
+      ],
+      "id": "d8a84a63-18f2-4183-92c8-85650cfe4b03",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hSAEi7hvpCuMonde",
+          "name": "Google Sheets TESTE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens e junta em um só objeto\nconst merged = Object.assign({}, ...$input.all().map(i => i.json));\n\n// Retorna apenas um item\nreturn [{ json: merged }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1472,
+        -48
+      ],
+      "id": "946762a7-caec-4bc2-9b48-6eef0743d468",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "connections": {
+    "Pipedrive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a deal": {
+      "main": [
+        [
+          {
+            "node": "Get an organization",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get an organization": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Pipedrive Trigger": {}
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Pipedrive Trigger": [
+      {
+        "json": {
+          "data": {
+            "active_flag": true,
+            "add_time": "2025-11-07T13:02:02Z",
+            "busy_flag": false,
+            "custom_fields": {},
+            "deal_id": 1357,
+            "done": true,
+            "due_date": "2025-11-07",
+            "due_time": {
+              "timezone_id": null,
+              "value": ""
+            },
+            "duration": {
+              "timezone_id": null,
+              "value": ""
+            },
+            "id": 4766,
+            "type": "investigacao_web_ob__organ",
+            "lead_id": null,
+            "location": null,
+            "org_id": 1037,
+            "owner_id": 24207328,
+            "person_id": 777,
+            "public_description": "",
+            "subject": "Investigação Web OB | Organização",
+            "update_time": "2025-11-07T17:33:00Z",
+            "update_user_id": null
+          },
+          "previous": {
+            "done": false,
+            "update_time": "2025-11-07T17:32:38Z"
+          },
+          "meta": {
+            "action": "change",
+            "company_id": "14556440",
+            "correlation_id": "994fd6f6-de52-470e-b2d5-cc0ea98d2080",
+            "entity_id": "4766",
+            "entity": "activity",
+            "id": "029d472c-cb47-4b70-bfa6-8ec7fcd12556",
+            "is_bulk_edit": false,
+            "timestamp": "2025-11-07T17:33:00.324Z",
+            "type": "general",
+            "user_id": "24207328",
+            "version": "2.0",
+            "webhook_id": "1809710",
+            "webhook_owner_id": "24207328",
+            "change_source": "app",
+            "permitted_user_ids": [
+              "24207317",
+              "24207328"
+            ],
+            "attempt": 1,
+            "host": "medicalspin.pipedrive.com"
+          }
+        }
+      }
+    ]
+  },
+  "versionId": "695be7eb-df31-484f-83cc-474384dfb93a",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-04T19:53:04.744Z",
+      "createdAt": "2025-11-04T19:53:04.744Z",
+      "role": "workflow:owner",
+      "workflowId": "JkWqVaHJf1ohcdTD",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
