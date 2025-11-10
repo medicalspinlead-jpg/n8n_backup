@@ -1,0 +1,41 @@
+{
+  "updatedAt": "2025-09-25T17:03:48.400Z",
+  "createdAt": "2025-09-24T16:35:48.078Z",
+  "id": "1ELAofoscDPEFZsL",
+  "name": "AGENTE MANUNTENÇÂO",
+  "active": false,
+  "isArchived": false,
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "c52cfcec-af85-4c09-b4fb-2035821281bc",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-09-24T16:35:48.078Z",
+      "createdAt": "2025-09-24T16:35:48.078Z",
+      "role": "workflow:owner",
+      "workflowId": "1ELAofoscDPEFZsL",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2025-09-24T16:36:12.748Z",
+      "createdAt": "2025-09-24T16:36:12.748Z",
+      "id": "hpP7KRFBtJN9dYGl",
+      "name": "EvolutionAPI"
+    },
+    {
+      "updatedAt": "2025-09-24T16:37:29.092Z",
+      "createdAt": "2025-09-24T16:37:29.092Z",
+      "id": "5CZtpKCr0tLhFz8U",
+      "name": "IA"
+    }
+  ]
+}
