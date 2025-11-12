@@ -1,0 +1,5486 @@
+{
+  "updatedAt": "2025-10-30T18:17:29.500Z",
+  "createdAt": "2025-10-21T18:28:10.476Z",
+  "id": "wfx6Ljvx3wRpmtQF",
+  "name": "TESTE AUTOMÁTICO FORMS SITE",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "TESTE AUTOMÁTICO FORMS SITE",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nome",
+              "placeholder": "Nome"
+            },
+            {
+              "fieldLabel": "Email",
+              "placeholder": "Email"
+            },
+            {
+              "fieldLabel": "WhatsApp",
+              "placeholder": "Telefone"
+            },
+            {
+              "fieldLabel": "Clínica",
+              "placeholder": "Clínica"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -1872,
+        -208
+      ],
+      "id": "035ebc5d-62c6-4c30-8816-a7263415233c",
+      "name": "On form submission",
+      "webhookId": "ae02f13d-8e37-450f-9087-0e07be4d6615"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -1584
+      ],
+      "id": "0eee02ad-2966-4c06-a014-513ce714e734",
+      "name": "PG Inícial POPUP SPPA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -1440
+      ],
+      "id": "51c2d42f-1a16-49fd-b804-d6799103a6aa",
+      "name": "PG Inícial POPUP QSA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -1296
+      ],
+      "id": "e0f8e6fd-bd10-4558-89bf-cf696b027396",
+      "name": "PG Inícial POPUP SEA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -1152
+      ],
+      "id": "44efebec-c941-4c1c-a414-4d25818bfc7c",
+      "name": "PG Inícial FFORM ECA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/form-popup-bobinas",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -1008
+      ],
+      "id": "7ebcd615-70ef-46f8-9899-9112e6fa2e53",
+      "name": "PG BBEX POPUP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-contato-agora-bbex",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -864
+      ],
+      "id": "0d8c4e7c-56e4-42c5-898a-9ae6d6d1c6b4",
+      "name": "PG BBEX FFORM SCA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-rc",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -720
+      ],
+      "id": "63389e73-a686-4b35-a8c7-92fe6e3d3460",
+      "name": "PG RC POPUP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/ressonancia-certificada",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -576
+      ],
+      "id": "ddbb7c8d-fc35-4892-8f63-01173ecedd55",
+      "name": "PG RC FFORM SCA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/compra-de-tomografia",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -432
+      ],
+      "id": "ee1f853c-6165-40cf-94a8-c30badcf35d4",
+      "name": "PG TC"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/desmontagem-montagem-rm",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -288
+      ],
+      "id": "501b60d8-e138-478a-bdd7-c45310d747f1",
+      "name": "PG D/M RM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/consultoria",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -144
+      ],
+      "id": "d6f5a885-82fe-4d47-8cea-4c92b8339f79",
+      "name": "PG CTRIA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/diagnostico-de-ressonancia",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        0
+      ],
+      "id": "bb185654-b492-4103-af75-9a08a9b902c9",
+      "name": "PG DG RM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/contratos-de-manutencao",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        144
+      ],
+      "id": "960f9075-be2a-45d6-8e99-73472ce3abb9",
+      "name": "PG CT MNTÇ"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/concerto-de-bbdeex",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        288
+      ],
+      "id": "33cbf503-8fff-4a45-8a67-0087bea7b0cb",
+      "name": "PG RP BBEX"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/projetos-sala-de-rm",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        432
+      ],
+      "id": "db33e2c3-ed28-49b6-9e2b-35f02f0a9d38",
+      "name": "PG PJ SRM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/site-planning",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        576
+      ],
+      "id": "4302f7f5-6381-44b9-b860-1be67fe362d7",
+      "name": "PG SP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/planejamento-salas-de-rm-rf",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        736
+      ],
+      "id": "350b602f-a6f5-4420-be6b-3c17c2095ec9",
+      "name": "PG PLA SRM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/empresa",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        880
+      ],
+      "id": "f968c558-4cd0-42ca-883a-05f409ee8c6d",
+      "name": "PG EMP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/laudos-tecnicos",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        1024
+      ],
+      "id": "64d418f5-6508-42b2-857c-a7f702f08e3b",
+      "name": "PG LD"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/cocerto-de-modulos",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        1168
+      ],
+      "id": "12593f41-fa85-47eb-b443-d0db1d134495",
+      "name": "PG CT MD"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -1584
+      ],
+      "id": "6038dd60-0746-4e26-a055-4e42874be49c",
+      "name": "Wait",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -1440
+      ],
+      "id": "de300599-baed-416e-ab97-7a413e5e5b4d",
+      "name": "Wait1",
+      "webhookId": "8fa82629-5606-414d-b844-3a962854b874"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -1296
+      ],
+      "id": "ada388e3-4ef9-42af-a49a-0135e719fed9",
+      "name": "Wait2",
+      "webhookId": "5b2e93de-196c-499f-b924-45e6081ede59"
+    },
+    {
+      "parameters": {
+        "amount": 4
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -1152
+      ],
+      "id": "3a362741-a03e-4bad-8836-7362cd26a485",
+      "name": "Wait3",
+      "webhookId": "db4ce060-0c5d-4a2a-aa5b-d411dc581488"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -1008
+      ],
+      "id": "10857f01-7179-4892-983d-5979a7349c75",
+      "name": "Wait4",
+      "webhookId": "753b4aec-9f86-4fd5-8aec-05784e07e6dc"
+    },
+    {
+      "parameters": {
+        "amount": 6
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -864
+      ],
+      "id": "8e6c1d1e-89f7-4587-8e17-bb09efc763cb",
+      "name": "Wait5",
+      "webhookId": "e56b2dc9-5b20-43ab-a84d-d4d962b7ceb1"
+    },
+    {
+      "parameters": {
+        "amount": 7
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -720
+      ],
+      "id": "cc5d403b-0ab4-4b44-b526-5b5c186fc758",
+      "name": "Wait7",
+      "webhookId": "79d058b7-0fce-476a-89bd-79fe794beb63"
+    },
+    {
+      "parameters": {
+        "amount": 8
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -576
+      ],
+      "id": "843a79be-1705-426e-8195-d0ff64dbfad4",
+      "name": "Wait8",
+      "webhookId": "6cafb353-8ae0-4bc6-833b-e0f5f347e437"
+    },
+    {
+      "parameters": {
+        "amount": 9
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -432
+      ],
+      "id": "fa59f21e-46d8-46fd-8d3f-30c519dc480d",
+      "name": "Wait6",
+      "webhookId": "4863914e-035a-4405-8519-c34090a5e582"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -288
+      ],
+      "id": "bab0ff71-bcc5-43f1-8d0b-a7c0ce2b00bb",
+      "name": "Wait9",
+      "webhookId": "7301441f-db91-4256-9ca4-c2b1b7010bba"
+    },
+    {
+      "parameters": {
+        "amount": 11
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        -144
+      ],
+      "id": "06b526b6-6204-4616-9d15-8ac41141b79d",
+      "name": "Wait11",
+      "webhookId": "fe5e752f-210f-4aab-a3af-29dbfc0edb37"
+    },
+    {
+      "parameters": {
+        "amount": 12
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        0
+      ],
+      "id": "5dc5b1fc-0d06-42a1-a3c5-92b42b793b2e",
+      "name": "Wait12",
+      "webhookId": "6779bf6d-7852-4faa-afae-657a2d0d1568"
+    },
+    {
+      "parameters": {
+        "amount": 13
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        144
+      ],
+      "id": "8d5091e3-7d50-40b4-86d1-c5361499bbe8",
+      "name": "Wait10",
+      "webhookId": "07a50e30-569a-43eb-bfbd-dce9fb936653"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        1168
+      ],
+      "id": "5269e10c-87ed-4fcf-b226-6e8cf291909e",
+      "name": "Wait13",
+      "webhookId": "ba69a01d-15c9-47eb-ab3c-ac832a77954b"
+    },
+    {
+      "parameters": {
+        "amount": 14
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        288
+      ],
+      "id": "a38396fc-13e6-45b6-80e2-764b231005c1",
+      "name": "Wait14",
+      "webhookId": "b8413c17-d2e2-4917-b6ab-d678869a694a"
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        432
+      ],
+      "id": "09d54904-4468-4770-b246-d0963eac86cb",
+      "name": "Wait15",
+      "webhookId": "ac3f1a97-3478-4a5c-ba33-dcf8cf062903"
+    },
+    {
+      "parameters": {
+        "amount": 16
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        576
+      ],
+      "id": "7b61bc88-9706-4651-85c1-f6f144fcb644",
+      "name": "Wait16",
+      "webhookId": "fc8fd36d-c45b-4016-b971-4fe457cd6cc1"
+    },
+    {
+      "parameters": {
+        "amount": 19
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        1024
+      ],
+      "id": "31182511-e50e-45d6-9da8-a77391c62537",
+      "name": "Wait17",
+      "webhookId": "9687286a-70f7-4a71-99ac-b18c698fd50f"
+    },
+    {
+      "parameters": {
+        "amount": 18
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        880
+      ],
+      "id": "371a653a-be55-41ba-be6e-189ac8aa567f",
+      "name": "Wait18",
+      "webhookId": "2d8d2401-ef14-490e-9f9c-3ae73c9f23eb"
+    },
+    {
+      "parameters": {
+        "amount": 17
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        736
+      ],
+      "id": "8f78eb7f-baab-4710-8c47-0c5a5a978b01",
+      "name": "Wait19",
+      "webhookId": "f41e5904-823f-457b-ad32-331b1f568341"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -1584
+      ],
+      "id": "81a6c25f-77c8-44b8-8874-68b6fa6ad0f6",
+      "name": "Wait20",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -1584
+      ],
+      "id": "9ebbc231-2f4c-432c-a1f7-45c598c8bf5d",
+      "name": "Search a deal1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -1584
+      ],
+      "id": "561316cf-cf7d-4adf-bf38-0fe4a1a12410",
+      "name": "Delete a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -1584
+      ],
+      "id": "c8a76e29-0243-4693-a25d-a5d2addffb42",
+      "name": "Delete a person",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal1').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal1').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -1584
+      ],
+      "id": "39f945b6-92fd-4658-b6b2-09f0e11c5ccd",
+      "name": "Search a person",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -1584
+      ],
+      "id": "248b6caa-6cc9-42b1-862c-6ce57282ec6c",
+      "name": "Delete an organization",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -1440
+      ],
+      "id": "c8211431-be16-44ff-831c-53a7a9876ae7",
+      "name": "Wait21",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -1440
+      ],
+      "id": "2fd3a3a3-4e0a-4e95-a6dc-43fdd9c74fa3",
+      "name": "Search a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -1440
+      ],
+      "id": "6633cc5b-2d08-412c-83a4-b73be817a725",
+      "name": "Delete a deal1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -1440
+      ],
+      "id": "0ec27ba7-f2b2-4b7f-817e-120172b384ba",
+      "name": "Delete a person1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -1440
+      ],
+      "id": "3e16f1d9-9814-4bc2-8b2a-95ecd5474ca3",
+      "name": "Search a person1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person1').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -1440
+      ],
+      "id": "49d298ac-67d3-4614-bf35-5e2b7979d99c",
+      "name": "Delete an organization1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -1296
+      ],
+      "id": "dd3e3cba-626e-4131-a27e-138f6891ddf9",
+      "name": "Wait22",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -1296
+      ],
+      "id": "5b98bf7c-49fb-4462-a856-d899999e2d78",
+      "name": "Search a deal2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -1296
+      ],
+      "id": "bc9feba5-e1d6-4791-864e-e915ac4ca3e7",
+      "name": "Delete a deal2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -1296
+      ],
+      "id": "f10f45c5-434d-4113-8f23-a15ecb68a17e",
+      "name": "Delete a person2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal2').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal2').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -1296
+      ],
+      "id": "19f648ab-fe31-4867-bc9b-764ca324d1a6",
+      "name": "Search a person2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person2').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -1296
+      ],
+      "id": "bd67e0f3-73e9-42fc-811a-6caf00f1a8a2",
+      "name": "Delete an organization2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -1152
+      ],
+      "id": "d829f966-d2af-42fa-ab6d-d3db37ed03d9",
+      "name": "Wait23",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -1152
+      ],
+      "id": "0ce4e834-9bac-4c86-8cbd-fcaea0e9a824",
+      "name": "Search a deal3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -1152
+      ],
+      "id": "2470c434-4ae4-45da-a587-4a4d1249b802",
+      "name": "Delete a deal3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -1152
+      ],
+      "id": "4323511c-bd83-4034-a04e-519f1d5aa0ef",
+      "name": "Delete a person3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal3').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal3').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -1152
+      ],
+      "id": "1acb71e8-39e5-4299-a955-2642eb3edf4a",
+      "name": "Search a person3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person3').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -1152
+      ],
+      "id": "4abd963b-85ad-4472-bb35-7edee86a7172",
+      "name": "Delete an organization3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -1008
+      ],
+      "id": "13e41456-ec95-441f-8287-0c775173cd5b",
+      "name": "Wait24",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -1008
+      ],
+      "id": "c488545e-b68a-44f2-878e-c9a03ab90154",
+      "name": "Search a deal4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -1008
+      ],
+      "id": "038bae4a-bca2-4e3f-a2e8-03be6d88312f",
+      "name": "Delete a deal4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -1008
+      ],
+      "id": "92567958-d2e5-4888-884a-e84a17c9d01f",
+      "name": "Delete a person4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal4').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal4').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -1008
+      ],
+      "id": "efcfc1b2-79b6-455c-928f-7a52f3ec67bd",
+      "name": "Search a person4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person4').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -1008
+      ],
+      "id": "b2ccf16f-8f90-40fa-b1e0-c4cb30724bed",
+      "name": "Delete an organization4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -864
+      ],
+      "id": "ce33c98a-be9f-4c61-90c2-86f432bdecc2",
+      "name": "Wait25",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -864
+      ],
+      "id": "11ce768f-d04d-4b8b-b1c4-36c60c27d278",
+      "name": "Search a deal5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -864
+      ],
+      "id": "d6e42b59-00d0-46f1-b4ed-7b9e50ca7c66",
+      "name": "Delete a deal5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -864
+      ],
+      "id": "7044c0f3-9ead-4b02-aded-a7eb2f01fff3",
+      "name": "Delete a person5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal5').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal5').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -864
+      ],
+      "id": "bfbc27d7-5ff0-427d-b27d-85f528fe91db",
+      "name": "Search a person5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person5').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -864
+      ],
+      "id": "a65102b9-7e06-41ab-b120-47f588ba5e84",
+      "name": "Delete an organization5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -720
+      ],
+      "id": "2a1f4563-1326-4042-88cb-04b24d1d2535",
+      "name": "Wait26",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -720
+      ],
+      "id": "3c5cfa3d-58a6-409b-b05a-86329428894b",
+      "name": "Search a deal6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -720
+      ],
+      "id": "5610359e-de87-458a-9a62-60d4f6ae7b28",
+      "name": "Delete a deal6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -720
+      ],
+      "id": "9789f26c-cc62-4411-8f23-44d5086999e5",
+      "name": "Delete a person6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal6').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal6').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -720
+      ],
+      "id": "848ed291-9ffa-4c80-b4a7-be997a28a2de",
+      "name": "Search a person6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person6').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -720
+      ],
+      "id": "3df5c254-acea-4274-a1df-d5695ece7f30",
+      "name": "Delete an organization6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -576
+      ],
+      "id": "f09e562a-19a0-4556-973d-5e6713b1a120",
+      "name": "Wait27",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -576
+      ],
+      "id": "b32d8260-fd12-4457-905b-1fc558850dce",
+      "name": "Search a deal7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -576
+      ],
+      "id": "6f84bf6e-0e11-4442-92cd-07477bd422a8",
+      "name": "Delete a deal7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -576
+      ],
+      "id": "a12627eb-2d8e-4f06-9d5f-aa3aebb9454b",
+      "name": "Delete a person7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal7').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal7').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -576
+      ],
+      "id": "266a7d21-5172-48e7-8c69-f85c57ffea28",
+      "name": "Search a person7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person7').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -576
+      ],
+      "id": "f36fb0bd-fa81-4a57-88b5-c695364d5951",
+      "name": "Delete an organization7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -432
+      ],
+      "id": "e8c127d5-ed9c-42bd-8b24-0aea1dc8886f",
+      "name": "Wait28",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -432
+      ],
+      "id": "55e74813-e86e-4584-81f3-063f437e9468",
+      "name": "Search a deal8",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -432
+      ],
+      "id": "a029bb70-257e-414b-83bb-5fa92c060da9",
+      "name": "Delete a deal8",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -432
+      ],
+      "id": "716d3c25-8e7e-4a37-8cbb-a67376b9ccd4",
+      "name": "Delete a person8",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal8').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal8').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -432
+      ],
+      "id": "f7704f20-40de-44d0-9f0d-6d0ceaaec167",
+      "name": "Search a person8",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person8').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -432
+      ],
+      "id": "63816022-0151-46d9-ae98-1a7878835973",
+      "name": "Delete an organization8",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -288
+      ],
+      "id": "dc14c109-23a7-4e04-8e3a-dff032f8ab22",
+      "name": "Wait29",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -288
+      ],
+      "id": "55431125-0975-42cc-9034-94f919a5bcfe",
+      "name": "Search a deal9",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -288
+      ],
+      "id": "a7fb8d5e-f640-4074-968e-e34304744924",
+      "name": "Delete a deal9",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -288
+      ],
+      "id": "0613ad63-41db-4aa4-b76f-fd716fb7ff49",
+      "name": "Delete a person9",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal9').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal9').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -288
+      ],
+      "id": "1a92044e-8128-4bd7-9d22-31ba1a0f0fac",
+      "name": "Search a person9",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person9').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -288
+      ],
+      "id": "41a3a4ed-307f-4173-b081-d70d747c8818",
+      "name": "Delete an organization9",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -144
+      ],
+      "id": "54e6444c-be91-4867-a52f-213d9866d321",
+      "name": "Wait30",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -144
+      ],
+      "id": "fa16bf5b-ad70-4706-acbd-66de3f8c7a20",
+      "name": "Search a deal10",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -144
+      ],
+      "id": "14743d77-a414-4002-b935-16c1bb2c77c3",
+      "name": "Delete a deal10",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -144
+      ],
+      "id": "dc4047a2-ab27-47b2-b3db-f9cd8e50e62c",
+      "name": "Delete a person10",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal10').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal10').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -144
+      ],
+      "id": "e66156c8-e954-424a-83f0-338dcff5a690",
+      "name": "Search a person10",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person10').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -144
+      ],
+      "id": "8e32e500-479d-47a9-a4c6-dcfa135c1c88",
+      "name": "Delete an organization10",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        0
+      ],
+      "id": "b4e88cb3-7f91-4a6e-ac0a-e050288587e1",
+      "name": "Wait31",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        0
+      ],
+      "id": "e11cb1ce-6f33-463d-94a8-7a9d9ce4b1a3",
+      "name": "Search a deal11",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        0
+      ],
+      "id": "bb4a695b-cdc5-4641-bc03-0028fe2bf88e",
+      "name": "Delete a deal11",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        0
+      ],
+      "id": "fa0d3d06-8869-48ab-87c6-1c2fc088c5a0",
+      "name": "Delete a person11",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal11').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal11').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        0
+      ],
+      "id": "ddcbf66c-1dfb-488d-9274-a903855d7606",
+      "name": "Search a person11",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person11').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        0
+      ],
+      "id": "9dffcdb7-e27a-403d-94c5-c5b9d6f933d2",
+      "name": "Delete an organization11",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        144
+      ],
+      "id": "20ea97c9-e643-4f2f-ac20-8546437f894c",
+      "name": "Wait32",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        144
+      ],
+      "id": "62918d22-1895-45ea-a03a-90463633e902",
+      "name": "Search a deal12",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        144
+      ],
+      "id": "86675c60-76a2-4828-807e-1e5856fdcf72",
+      "name": "Delete a deal12",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        144
+      ],
+      "id": "0720b7b2-6d61-4730-87d6-6df269440db2",
+      "name": "Delete a person12",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal12').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal12').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        144
+      ],
+      "id": "7283bede-caa5-47e5-bf25-8e16c4bfb21b",
+      "name": "Search a person12",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person12').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        144
+      ],
+      "id": "d51f6e9d-47ce-4666-a040-cb4ede53b589",
+      "name": "Delete an organization12",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        288
+      ],
+      "id": "146e1d03-b046-43da-a3f8-9f8cd852fdca",
+      "name": "Wait33",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        288
+      ],
+      "id": "1cfc649f-7857-45e2-b385-0bcbfa52b96d",
+      "name": "Search a deal13",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        288
+      ],
+      "id": "726f78d7-69bc-4125-9cc6-e96672e2af83",
+      "name": "Delete a deal13",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        288
+      ],
+      "id": "08f5845e-2439-46a3-bd2f-336567409cc3",
+      "name": "Delete a person13",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal13').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal13').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        288
+      ],
+      "id": "3cb9e79f-56f3-4d12-9b65-1ee0f18e946e",
+      "name": "Search a person13",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person13').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        288
+      ],
+      "id": "5f0c4447-f957-419f-a38e-5b30bffe94e7",
+      "name": "Delete an organization13",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        432
+      ],
+      "id": "91a54d30-e772-49ad-9703-41abd7e0cd34",
+      "name": "Wait34",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        432
+      ],
+      "id": "7080546e-5d32-485e-843c-4a65db8b4fb2",
+      "name": "Search a deal14",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        432
+      ],
+      "id": "cadbe5a8-92f5-45c9-bacc-32590cbc5554",
+      "name": "Delete a deal14",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        432
+      ],
+      "id": "a0198654-6eef-4091-8840-37f9f5072c98",
+      "name": "Delete a person14",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal14').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal14').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        432
+      ],
+      "id": "88e93174-809f-4df4-a9d1-d6caef9eb4b5",
+      "name": "Search a person14",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person14').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        432
+      ],
+      "id": "a9f6b5e9-08be-4d92-82b8-5518d3e08346",
+      "name": "Delete an organization14",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        576
+      ],
+      "id": "4404281a-b09f-41ed-b327-bed5c113888e",
+      "name": "Wait35",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        576
+      ],
+      "id": "f1596eea-077d-4a05-91b9-9d892be65e26",
+      "name": "Search a deal15",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        576
+      ],
+      "id": "53a3425c-856d-4493-a674-7ea8ce12c858",
+      "name": "Delete a deal15",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        576
+      ],
+      "id": "991ded92-2324-4465-b477-96dfcf80264d",
+      "name": "Delete a person15",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal15').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal15').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        576
+      ],
+      "id": "76c73c9f-a304-431b-8e85-2b98ff1ed92a",
+      "name": "Search a person15",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person15').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        576
+      ],
+      "id": "a7754bc7-5d04-487e-a709-8d1ad7d1671f",
+      "name": "Delete an organization15",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        736
+      ],
+      "id": "2e90352a-d881-47a5-a7e6-fd4fdf1ed0c9",
+      "name": "Wait36",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        736
+      ],
+      "id": "6af2f59c-5f03-4126-8598-daa6cef5b143",
+      "name": "Search a deal16",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        736
+      ],
+      "id": "6e71d8aa-2359-4424-aa66-ff242ed506e6",
+      "name": "Delete a deal16",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        736
+      ],
+      "id": "966fc185-2ead-45c0-921e-400cddd21cd8",
+      "name": "Delete a person16",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal16').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal16').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        736
+      ],
+      "id": "08bd975a-8046-4b2e-a107-3bff5d38a029",
+      "name": "Search a person16",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person16').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        736
+      ],
+      "id": "96a020db-832e-4789-9113-5364c3b40d00",
+      "name": "Delete an organization16",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        880
+      ],
+      "id": "9941f7ae-21ba-4610-9d22-f44396f9de6a",
+      "name": "Wait37",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        880
+      ],
+      "id": "d811d077-b212-4881-b82c-9b9c683f95e7",
+      "name": "Search a deal17",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        880
+      ],
+      "id": "67d6d9ea-8c10-4d7f-b2d7-a966fb61ca7a",
+      "name": "Delete a deal17",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        880
+      ],
+      "id": "cd034b17-4ade-45a2-9590-9de4f3661a00",
+      "name": "Delete a person17",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal17').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal17').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        880
+      ],
+      "id": "7901361c-2bcf-4b16-b760-6806e6151a97",
+      "name": "Search a person17",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person17').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        880
+      ],
+      "id": "39d2f60d-c5f2-49b1-97d7-4bcaa40fa8a5",
+      "name": "Delete an organization17",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        1024
+      ],
+      "id": "ef6fed60-37ac-4271-b22b-7dc50486301b",
+      "name": "Wait38",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        1024
+      ],
+      "id": "5aaf0015-9482-486b-99cf-136236a57a22",
+      "name": "Search a deal18",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        1024
+      ],
+      "id": "b438a00b-c845-42bf-8747-1a1c7d50e97b",
+      "name": "Delete a deal18",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        1024
+      ],
+      "id": "5888b55d-8d27-445b-9722-64724e3594b2",
+      "name": "Delete a person18",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal18').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal18').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        1024
+      ],
+      "id": "b783cdd3-a41e-4259-a36f-eac8ff3e8745",
+      "name": "Search a person18",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person18').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        1024
+      ],
+      "id": "9c4ee907-e338-4460-8743-09bdba2c8abb",
+      "name": "Delete an organization18",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        1168
+      ],
+      "id": "502ed214-585d-45ea-95a6-088d3bd79c60",
+      "name": "Wait39",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        1168
+      ],
+      "id": "b2e4deba-5a9f-4fb3-a8d1-4a830ad389e1",
+      "name": "Search a deal19",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        1168
+      ],
+      "id": "296a122b-e2b3-4192-bd31-94aca1bacb9a",
+      "name": "Delete a deal19",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        1168
+      ],
+      "id": "94a362cf-13fe-41f8-aaf4-95ecfd1719cc",
+      "name": "Delete a person19",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal19').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal19').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        160,
+        1168
+      ],
+      "id": "84363a64-31d6-4c36-b4e4-d351220fbbb0",
+      "name": "Search a person19",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person19').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        1168
+      ],
+      "id": "886a8f7d-1db9-49c9-9b72-ee99de34657a",
+      "name": "Delete an organization19",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "ZMM2giDIvEPYf7kD",
+          "name": "Pipedrive Rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 10
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1168,
+        -560
+      ],
+      "id": "e7120e71-2962-44a8-aae0-f8b696512693",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "numberInputs": 10
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1168,
+        -128
+      ],
+      "id": "478c7994-c33a-46f0-8c6a-258abf383af1",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1344,
+        -224
+      ],
+      "id": "0dccfc9e-a8e3-40c7-b8ad-0c3d608f1d23",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "5579999801810",
+        "messageText": "=✅ Teste concluído com sucesso\n\n📅 Data: {{ $now.format('dd-LL-yyyy') }}\n🆔 ID da Execução: {{ $execution.id }}\n🌐 URL: https://n8n.medicalspin.com.br/workflow/{{\n $workflow.id }}\n⚙️ Fluxo: {{ $workflow.name }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        -224
+      ],
+      "id": "c0ef9091-956e-4263-8a0a-8ba6f9d8f15d",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "70uh12r25ZnXKIUg",
+          "name": "WhatsApp"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ids: items.map(item => item.json.id)\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        -224
+      ],
+      "id": "bb88a8e1-2d1e-4bf9-b00d-fd516b453cd0",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait14",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait15",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait16",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait17",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial POPUP SPPA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial POPUP QSA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial POPUP SEA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial FFORM ECA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "PG BBEX POPUP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "PG BBEX FFORM SCA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait7": {
+      "main": [
+        [
+          {
+            "node": "PG RC POPUP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait8": {
+      "main": [
+        [
+          {
+            "node": "PG RC FFORM SCA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "PG TC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait9": {
+      "main": [
+        [
+          {
+            "node": "PG D/M RM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait11": {
+      "main": [
+        [
+          {
+            "node": "PG CTRIA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait12": {
+      "main": [
+        [
+          {
+            "node": "PG DG RM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait10": {
+      "main": [
+        [
+          {
+            "node": "PG CT MNTÇ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait13": {
+      "main": [
+        [
+          {
+            "node": "PG CT MD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait14": {
+      "main": [
+        [
+          {
+            "node": "PG RP BBEX",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait15": {
+      "main": [
+        [
+          {
+            "node": "PG PJ SRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait16": {
+      "main": [
+        [
+          {
+            "node": "PG SP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait17": {
+      "main": [
+        [
+          {
+            "node": "PG LD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait18": {
+      "main": [
+        [
+          {
+            "node": "PG EMP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait19": {
+      "main": [
+        [
+          {
+            "node": "PG PLA SRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG Inícial POPUP SPPA": {
+      "main": [
+        [
+          {
+            "node": "Wait20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait20": {
+      "main": [
+        [
+          {
+            "node": "Search a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal1": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG Inícial FFORM ECA": {
+      "main": [
+        [
+          {
+            "node": "Wait23",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG Inícial POPUP SEA": {
+      "main": [
+        [
+          {
+            "node": "Wait22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG Inícial POPUP QSA": {
+      "main": [
+        [
+          {
+            "node": "Wait21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG BBEX POPUP": {
+      "main": [
+        [
+          {
+            "node": "Wait24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG BBEX FFORM SCA": {
+      "main": [
+        [
+          {
+            "node": "Wait25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG RC POPUP": {
+      "main": [
+        [
+          {
+            "node": "Wait26",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG RC FFORM SCA": {
+      "main": [
+        [
+          {
+            "node": "Wait27",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG TC": {
+      "main": [
+        [
+          {
+            "node": "Wait28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG D/M RM": {
+      "main": [
+        [
+          {
+            "node": "Wait29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG CTRIA": {
+      "main": [
+        [
+          {
+            "node": "Wait30",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG DG RM": {
+      "main": [
+        [
+          {
+            "node": "Wait31",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG CT MNTÇ": {
+      "main": [
+        [
+          {
+            "node": "Wait32",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG RP BBEX": {
+      "main": [
+        [
+          {
+            "node": "Wait33",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG PJ SRM": {
+      "main": [
+        [
+          {
+            "node": "Wait34",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal": {
+      "main": [
+        [
+          {
+            "node": "Search a person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person": {
+      "main": [
+        [
+          {
+            "node": "Delete a person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait21": {
+      "main": [
+        [
+          {
+            "node": "Search a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal1": {
+      "main": [
+        [
+          {
+            "node": "Search a person1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person1": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person1": {
+      "main": [
+        [
+          {
+            "node": "Delete a person1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait22": {
+      "main": [
+        [
+          {
+            "node": "Search a deal2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal2": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal2": {
+      "main": [
+        [
+          {
+            "node": "Search a person2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person2": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person2": {
+      "main": [
+        [
+          {
+            "node": "Delete a person2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait23": {
+      "main": [
+        [
+          {
+            "node": "Search a deal3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal3": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal3": {
+      "main": [
+        [
+          {
+            "node": "Search a person3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person3": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person3": {
+      "main": [
+        [
+          {
+            "node": "Delete a person3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait24": {
+      "main": [
+        [
+          {
+            "node": "Search a deal4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal4": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal4": {
+      "main": [
+        [
+          {
+            "node": "Search a person4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person4": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person4": {
+      "main": [
+        [
+          {
+            "node": "Delete a person4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait25": {
+      "main": [
+        [
+          {
+            "node": "Search a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal5": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal5": {
+      "main": [
+        [
+          {
+            "node": "Search a person5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person5": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person5": {
+      "main": [
+        [
+          {
+            "node": "Delete a person5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait26": {
+      "main": [
+        [
+          {
+            "node": "Search a deal6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal6": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal6": {
+      "main": [
+        [
+          {
+            "node": "Search a person6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person6": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person6": {
+      "main": [
+        [
+          {
+            "node": "Delete a person6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait27": {
+      "main": [
+        [
+          {
+            "node": "Search a deal7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal7": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal7": {
+      "main": [
+        [
+          {
+            "node": "Search a person7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person7": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person7": {
+      "main": [
+        [
+          {
+            "node": "Delete a person7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait28": {
+      "main": [
+        [
+          {
+            "node": "Search a deal8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal8": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal8": {
+      "main": [
+        [
+          {
+            "node": "Search a person8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person8": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person8": {
+      "main": [
+        [
+          {
+            "node": "Delete a person8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait29": {
+      "main": [
+        [
+          {
+            "node": "Search a deal9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal9": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal9": {
+      "main": [
+        [
+          {
+            "node": "Search a person9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person9": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person9": {
+      "main": [
+        [
+          {
+            "node": "Delete a person9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait30": {
+      "main": [
+        [
+          {
+            "node": "Search a deal10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal10": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal10": {
+      "main": [
+        [
+          {
+            "node": "Search a person10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person10": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person10": {
+      "main": [
+        [
+          {
+            "node": "Delete a person10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait31": {
+      "main": [
+        [
+          {
+            "node": "Search a deal11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal11": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal11": {
+      "main": [
+        [
+          {
+            "node": "Search a person11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person11": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person11": {
+      "main": [
+        [
+          {
+            "node": "Delete a person11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait32": {
+      "main": [
+        [
+          {
+            "node": "Search a deal12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal12": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal12": {
+      "main": [
+        [
+          {
+            "node": "Search a person12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person12": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person12": {
+      "main": [
+        [
+          {
+            "node": "Delete a person12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait33": {
+      "main": [
+        [
+          {
+            "node": "Search a deal13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal13": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal13": {
+      "main": [
+        [
+          {
+            "node": "Search a person13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person13": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person13": {
+      "main": [
+        [
+          {
+            "node": "Delete a person13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait34": {
+      "main": [
+        [
+          {
+            "node": "Search a deal14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal14": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal14": {
+      "main": [
+        [
+          {
+            "node": "Search a person14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person14": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person14": {
+      "main": [
+        [
+          {
+            "node": "Delete a person14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait35": {
+      "main": [
+        [
+          {
+            "node": "Search a deal15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal15": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal15": {
+      "main": [
+        [
+          {
+            "node": "Search a person15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person15": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person15": {
+      "main": [
+        [
+          {
+            "node": "Delete a person15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG SP": {
+      "main": [
+        [
+          {
+            "node": "Wait35",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait36": {
+      "main": [
+        [
+          {
+            "node": "Search a deal16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal16": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal16": {
+      "main": [
+        [
+          {
+            "node": "Search a person16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person16": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person16": {
+      "main": [
+        [
+          {
+            "node": "Delete a person16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait37": {
+      "main": [
+        [
+          {
+            "node": "Search a deal17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal17": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal17": {
+      "main": [
+        [
+          {
+            "node": "Search a person17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person17": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person17": {
+      "main": [
+        [
+          {
+            "node": "Delete a person17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait38": {
+      "main": [
+        [
+          {
+            "node": "Search a deal18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal18": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal18": {
+      "main": [
+        [
+          {
+            "node": "Search a person18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person18": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person18": {
+      "main": [
+        [
+          {
+            "node": "Delete a person18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait39": {
+      "main": [
+        [
+          {
+            "node": "Search a deal19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal19": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal19": {
+      "main": [
+        [
+          {
+            "node": "Search a person19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person19": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person19": {
+      "main": [
+        [
+          {
+            "node": "Delete a person19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG PLA SRM": {
+      "main": [
+        [
+          {
+            "node": "Wait36",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG EMP": {
+      "main": [
+        [
+          {
+            "node": "Wait37",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG LD": {
+      "main": [
+        [
+          {
+            "node": "Wait38",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG CT MD": {
+      "main": [
+        [
+          {
+            "node": "Wait39",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an organization": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an organization1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Delete an organization2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Delete an organization3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Delete an organization4": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Delete an organization5": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Delete an organization6": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "Delete an organization7": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 7
+          }
+        ]
+      ]
+    },
+    "Delete an organization8": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 8
+          }
+        ]
+      ]
+    },
+    "Delete an organization9": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 9
+          }
+        ]
+      ]
+    },
+    "Delete an organization10": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an organization11": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Delete an organization12": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Delete an organization13": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Delete an organization14": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Delete an organization15": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Delete an organization16": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "Delete an organization17": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 7
+          }
+        ]
+      ]
+    },
+    "Delete an organization18": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 8
+          }
+        ]
+      ]
+    },
+    "Delete an organization19": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 9
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "uzuOlcmJWDFhCTf7"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "38605775-9a03-4b86-a4e0-4999188c030c",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-10-21T18:28:10.476Z",
+      "createdAt": "2025-10-21T18:28:10.476Z",
+      "role": "workflow:owner",
+      "workflowId": "wfx6Ljvx3wRpmtQF",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2025-10-21T19:31:45.239Z",
+      "createdAt": "2025-10-21T19:31:45.239Z",
+      "id": "f79MexMyl7KYGGBi",
+      "name": "n8nForm"
+    },
+    {
+      "updatedAt": "2025-10-21T19:31:33.198Z",
+      "createdAt": "2025-10-21T19:31:33.198Z",
+      "id": "JSm7SqZly4KlPNXH",
+      "name": "Http"
+    }
+  ]
+}
