@@ -1,0 +1,34 @@
+{
+  "updatedAt": "2025-11-11T19:24:40.522Z",
+  "createdAt": "2025-11-11T10:07:31.633Z",
+  "id": "oRhRoC6FEiAxBaiM",
+  "name": "My workflow",
+  "active": false,
+  "isArchived": false,
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Google Calendar Trigger": {
+      "lastTimeChecked": "2025-11-11T10:15:30Z"
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "af3da45d-9bd5-45e3-b7bd-6c3222c73075",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-11T10:07:31.633Z",
+      "createdAt": "2025-11-11T10:07:31.633Z",
+      "role": "workflow:owner",
+      "workflowId": "oRhRoC6FEiAxBaiM",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
