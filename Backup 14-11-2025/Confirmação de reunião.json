@@ -1,0 +1,287 @@
+{
+  "updatedAt": "2025-11-13T18:33:21.476Z",
+  "createdAt": "2025-11-11T10:07:31.633Z",
+  "id": "oRhRoC6FEiAxBaiM",
+  "name": "Confirmação de reunião",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "desenvmedicalspin@gmail.com",
+          "mode": "list",
+          "cachedResultName": "desenvmedicalspin@gmail.com"
+        },
+        "returnAll": true,
+        "timeMin": "=",
+        "timeMax": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        64,
+        0
+      ],
+      "id": "17a5b6c1-969b-4603-812f-239443e599fd",
+      "name": "Get many events",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "bb1iZsiQTblnlZKc",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ddfd83aa-3e43-4d46-ac0a-9574bb28369f",
+              "leftValue": "={{ $json.start.dateTime }}",
+              "rightValue": "2025-",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "07b16cda-09ea-4d45-9e32-8e4766453bca",
+              "leftValue": "={{ $json.end.dateTime }}",
+              "rightValue": "2025-",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "4f888aea-fb4e-471c-9fdd-7777466cd7c1",
+              "leftValue": "={{ $json.description }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "25c6afbe-ca75-4c09-9653-3167932f71f3",
+              "leftValue": "={{ new Date($json.start.dateTime).toDateString() }}",
+              "rightValue": "={{ new Date().toDateString() }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        272,
+        0
+      ],
+      "id": "9ffd89eb-a9c0-41ea-a864-d3c90d8858a6",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a4336fd5-69ba-4509-b798-c21df528ade4",
+              "name": "inicio",
+              "value": "={{ $json.start.dateTime }}",
+              "type": "string"
+            },
+            {
+              "id": "537709a4-f4b6-45b8-a73c-297593f42ac4",
+              "name": "fim",
+              "value": "={{ $json.end.dateTime }}",
+              "type": "string"
+            },
+            {
+              "id": "aa3cd834-b346-4778-96ec-f9270dfad7e8",
+              "name": "participantes",
+              "value": "={{ $json.attendees }}",
+              "type": "array"
+            },
+            {
+              "id": "d01d6bed-dcce-4205-a7ed-a5e5114bcf86",
+              "name": "numero",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "8c5831a9-dfac-4f5e-ad74-5c7d67d4436d",
+              "name": "url",
+              "value": "={{ $json.conferenceData.entryPoints[0].uri }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        0
+      ],
+      "id": "d5463df6-d0f5-44fb-9f9a-391dda06b482",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.contato }}",
+        "messageText": "=Dr {{ $json.nome }}, Bom dia!\nSeu horário está confirmado para *hoje, às {{ $('Edit Fields').item.json.inicio.match(/T(\\d{2}:\\d{2})/)[1] }}*, horário de Brasilia.\n\n{{ $('Edit Fields').item.json.url }}\nO *link do Meet* está no seu e-mail e também acima.\n\nNosso engenheiro se preparou especialmente para o seu projeto.\n\n*Preciso apenas da sua confirmação*. \nPode responder com “ *ok* ”, por aqui?",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        912,
+        0
+      ],
+      "id": "360111a4-8e7c-45fc-9941-e7968eec9805",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "70uh12r25ZnXKIUg",
+          "name": "WhatsApp"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -144,
+        0
+      ],
+      "id": "f595bc6b-5d89-4b5b-866c-cd8169491535",
+      "name": "Todo dia 7:30AM"
+    },
+    {
+      "parameters": {
+        "jsCode": "const texto = $json.numero;\n\n// Regex que captura todas as variações de \"nome\" e \"contato\"\nconst regex = /(n[úu]mero|numero|nome|n)\\s*:\\s*([^:\\n]+)[\\s\\S]*?(telefone|t[ée]lefone|t|contato)\\s*:\\s*([+\\d\\s-]+)/gi;\n\nconst resultados = [];\nlet match;\n\nwhile ((match = regex.exec(texto)) !== null) {\n  let nome = match[2].trim();\n  let contato = match[4].trim();\n\n  // Remove tudo que não for número\n  contato = contato.replace(/\\D/g, '');\n\n  // Adiciona o 55 se não tiver\n  if (!contato.startsWith('55')) {\n    contato = '55' + contato;\n  }\n\n  resultados.push({\n    nome,\n    contato\n  });\n}\n\n// Caso não encontre nenhum, retorna item vazio pra não quebrar fluxo\nif (resultados.length === 0) {\n  return [{ json: { nome: null, contato: null } }];\n}\n\n// Retorna cada par nome/contato como item separado\nreturn resultados.map(r => ({ json: r }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        0
+      ],
+      "id": "7003798a-3270-47a3-9f4c-006397d6ad69",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "connections": {
+    "Get many events": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Todo dia 7:30AM": {
+      "main": [
+        [
+          {
+            "node": "Get many events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Google Calendar Trigger": {
+      "lastTimeChecked": "2025-11-11T10:15:30Z"
+    },
+    "node:Todo dia 7:30AM": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "4b12a6f6-078e-4ae6-8f08-0fd653afd4c8",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-11T10:07:31.633Z",
+      "createdAt": "2025-11-11T10:07:31.633Z",
+      "role": "workflow:owner",
+      "workflowId": "oRhRoC6FEiAxBaiM",
+      "projectId": "GjBqXqsURslZKNiG"
+    }
+  ],
+  "tags": []
+}
