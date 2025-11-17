@@ -1,0 +1,90 @@
+{
+  "createdAt": "2025-11-17T14:11:01.556Z",
+  "updatedAt": "2025-11-17T19:38:19.570Z",
+  "id": "yWv6lyB5rVxmn8Ho",
+  "name": "Atualizar Servidor SÁB 00:00",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "command": "sudo apt update && sudo apt upgrade -y"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0dec2eb9-3cd3-41eb-a5f5-3357827b033c",
+      "name": "Execute a command",
+      "credentials": {
+        "sshPassword": {
+          "id": "gmZEvPFpOOfL26ym",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months",
+              "triggerAtDayOfMonth": 15,
+              "triggerAtHour": 18
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4c8e07e4-bdf5-409d-8b61-3a3b5bbbfa46",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execute a command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "eac9f0a0-4219-4b12-93ac-fa8ffe9dfe8b",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-11-17T14:11:01.556Z",
+      "updatedAt": "2025-11-17T14:11:01.556Z",
+      "role": "workflow:owner",
+      "workflowId": "yWv6lyB5rVxmn8Ho",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "tags": []
+}
