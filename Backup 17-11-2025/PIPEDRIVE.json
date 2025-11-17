@@ -1,0 +1,4717 @@
+{
+  "createdAt": "2025-11-17T13:56:44.976Z",
+  "updatedAt": "2025-11-17T19:16:00.301Z",
+  "id": "54jxOH41sbsU0cF3",
+  "name": "PIPEDRIVE",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "action": "change",
+        "entity": "activity"
+      },
+      "type": "n8n-nodes-base.pipedriveTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -544,
+        496
+      ],
+      "id": "b045448f-6575-404a-b146-c29a93820803",
+      "name": "Pipedrive Trigger",
+      "webhookId": "93348334-fe75-462e-b4fa-2f77668335b3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "548fade4-56f1-4962-b256-9f5ebc272b96",
+              "leftValue": "={{ $json.done }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -128,
+        496
+      ],
+      "id": "7d330093-9357-4dc5-b160-05bcd09a3ea1",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "20e3021e-7820-4de5-9aa6-c401b0bc3563",
+              "name": "deal_id",
+              "value": "={{ $json.data.deal_id }}",
+              "type": "number"
+            },
+            {
+              "id": "4f362708-164e-456c-b92f-f08eefaf0dcb",
+              "name": "done",
+              "value": "={{ $json.data.done }}",
+              "type": "boolean"
+            },
+            {
+              "id": "8541c2c0-a995-42fa-b6b4-90b37861c0d2",
+              "name": "type",
+              "value": "={{ $json.data.type }}",
+              "type": "string"
+            },
+            {
+              "id": "29ca73ab-7b2d-4b8e-ae73-b5c6245fa730",
+              "name": "data.due_date",
+              "value": "={{ $json.data.due_date }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -336,
+        496
+      ],
+      "id": "c866fd49-a244-486b-aff5-a61c3d104a4d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dealId": "={{ $json.deal_id }}",
+        "resolveProperties": true
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        336,
+        496
+      ],
+      "id": "aa8b547e-799c-423d-85ae-f4ec546439da",
+      "name": "Get a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "get",
+        "organizationId": "={{ $json.last_activity.org_id }}",
+        "resolveProperties": true
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        528,
+        640
+      ],
+      "id": "7d2b335d-4895-4c53-a3aa-91895070da5f",
+      "name": "Get an organization",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        80,
+        688
+      ],
+      "id": "8fa18eda-94e8-411f-bc71-85c06afddc90",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "079b1aea-4a0e-44d1-9eb6-755b48deb0dc",
+              "name": "[\"[SDR] Caminho do Lead\"]",
+              "value": "={{ $json[\"[SDR] Caminho do Lead\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "0bbd3d54-a0af-4b02-8e8c-4c1ed5e04a70",
+              "name": "type",
+              "value": "={{ $('Edit Fields').item.json.type }}",
+              "type": "string"
+            },
+            {
+              "id": "2c6d6c0a-0577-4756-8082-4698fb562356",
+              "name": "SDR Responsável",
+              "value": "={{ $json[\"SDR Responsável\"] }}",
+              "type": "array"
+            },
+            {
+              "id": "974e29c5-ffd5-4cca-ae3b-e100b84139cd",
+              "name": "Lig_filtragem de dados",
+              "value": "={{ $json['[SDR] Objetivo da \"Lig. filtragem de dados\"'] }}",
+              "type": "string"
+            },
+            {
+              "id": "37579208-366f-4750-be02-0a51e1f03976",
+              "name": "Lig_validação técnica",
+              "value": "={{ $json['[SDR] Objetivo da \"Lig. Validação técnica\"'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5f3275b4-4c0f-4592-9a3d-7a56e74870b0",
+              "name": "data",
+              "value": "={{ $('Edit Fields').item.json.data }}",
+              "type": "object"
+            },
+            {
+              "id": "e60a14c5-bd1d-458a-b762-c7aa47535b08",
+              "name": "objetivo_da Ligação Validação técnica",
+              "value": "={{ $json['[SDR] Objetivo da \"Objetivo da Ligação Validação técnica\"'] }}",
+              "type": "string"
+            },
+            {
+              "id": "89e8f784-f3ee-4066-a840-3aefd93ce1ff",
+              "name": "resultado_da Ligação Validação técnica",
+              "value": "={{ $json['[SDR] Resultado da \"Ligação Validação técnica\"'] }}",
+              "type": "string"
+            },
+            {
+              "id": "84ddbac8-7aec-4555-8bfd-5a056c298bf5",
+              "name": "responsável_pela Ligação Comercial OB",
+              "value": "={{ $json['[COMERCIAL] Responsável pela \"Ligação Comercial OB\"'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e5b4d780-bb6b-464d-853f-173e81ab4f5d",
+              "name": "destino_do Lead após investigação inicial",
+              "value": "={{ $json[\"[SDR] Destino do Lead após investigação inicial\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "1b029e3c-8cba-47d0-b906-555dfb6dfdc5",
+              "name": "destino_do Lead após Ligação Comercial",
+              "value": "={{ $json[\"[COMERCIAL] Destino do Lead após Ligação Comercial\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "a39f40bd-a9d2-45e4-b2b3-6fdfd08ec0de",
+              "name": "Temperatura",
+              "value": "={{ $json.Etiqueta }}",
+              "type": "array"
+            },
+            {
+              "id": "a5e3f038-e84f-42db-9759-b462ef031004",
+              "name": "stage_id",
+              "value": "={{ $json.stage_id }}",
+              "type": "number"
+            },
+            {
+              "id": "9c734b42-00de-4954-a295-a6f0cca98608",
+              "name": "Lead",
+              "value": "={{ $json.person_name }}",
+              "type": "string"
+            },
+            {
+              "id": "6624ef1e-48d2-4344-a2c2-3385f3cf8373",
+              "name": "instituição",
+              "value": "={{ $json.org_name }}",
+              "type": "string"
+            },
+            {
+              "id": "9c16d7f8-03c4-419b-8413-845254bade24",
+              "name": "Campanha",
+              "value": "={{ $json.Campanha }}",
+              "type": "string"
+            },
+            {
+              "id": "ad107d74-8191-4f2a-9c53-0e4dcc49259d",
+              "name": "Resultado Cadência IB",
+              "value": "={{ $json[\"Resultado Cadência IB\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        496
+      ],
+      "id": "a3ccdb16-bd5b-49a9-a1f6-7402dd577b9d",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "266a5267-f0a5-48e3-b043-81bf2b817be5",
+              "name": "CNPJ",
+              "value": "={{ String($json.CNPJ).padStart(14, '0').replace(/^(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})$/, '$1.$2.$3/$4-$5') }}",
+              "type": "string"
+            },
+            {
+              "id": "118e922b-5e92-40b8-a254-dffcf8b8936a",
+              "name": "dataPipe",
+              "value": "={{ $json.last_activity.due_date }}",
+              "type": "string"
+            },
+            {
+              "id": "1b796a1b-7aa3-4e73-9c13-8c14ea691674",
+              "name": "Endereço",
+              "value": "={{ $json[\"Endereço\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "79d2e227-ec62-4df8-9b3c-25891db3f465",
+              "name": "UF",
+              "value": "={{ $json.UF }}",
+              "type": "string"
+            },
+            {
+              "id": "027fabb0-d483-4cc5-9873-16afdc3d1be3",
+              "name": "Empreendimento",
+              "value": "={{ $json.Empreendimento }}",
+              "type": "string"
+            },
+            {
+              "id": "d20fd8b9-22b0-4c25-b997-de6dffb7a207",
+              "name": "Site",
+              "value": "={{ $json.Site }}",
+              "type": "string"
+            },
+            {
+              "id": "66207f60-bba4-4e5e-bc59-4197e1ed2cee",
+              "name": "E-mail",
+              "value": "={{ $json[\"E-mail\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        560
+      ],
+      "id": "fc5d002a-13ac-4361-8590-481f389414cf",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        848,
+        512
+      ],
+      "id": "f10e7744-7a8c-4fe4-b684-b67a66256ee4",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens e junta em um só objeto\nconst merged = Object.assign({}, ...$input.all().map(i => i.json));\n\n// Retorna apenas um item\nreturn [{ json: merged }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        512
+      ],
+      "id": "8ef913b4-652f-4e7e-b5a4-06b4dc27b5d3",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fad060aa-85fe-4f8e-a8ad-8b96c413b23c",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "investigacao_web_ob__organ",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "investigacao_web_ob__organ"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "ligacao_ob__op_filtragem_d",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "7634761e-08af-46b7-ac30-378f1394a234"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ligacao_ob__op_filtragem_d"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9ddc33ce-759e-4271-8c2c-913889553e60",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "lig_validacao_tecnica",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "lig_validacao_tecnica"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7135d1fd-cf73-4ba8-bac8-7a1105cda95b",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "ligacao_ob__ligacao_comerc",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ligacao_ob__ligacao_comerc"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3bdcf4ef-3e8f-441e-8f3f-157ca258cc52",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "ligacao_ob__reuniao_comerc",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ligacao_ob__reuniao_comerc"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "35415a06-a9c8-4307-b714-bb12cb4e64e0",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "atualizar_dados_inbound",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "atualizar_dados_inbound"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "598b1cc1-f919-4bfd-8fb6-aad986a051c0",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "reuniao_de_qualificacao",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "reuniao_de_qualificacao"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7e9bc286-5838-4397-b143-e82d85ba997e",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "reuniao_de_apresentacao",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        80,
+        400
+      ],
+      "id": "70bfb6ab-a01d-43f7-9048-7b759203846c",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS OUTBOUND CNES2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data da Investigação Web (Pipe)": "={{ $json.data.due_date.split('-').reverse().join('/') }}",
+            "CNPJ": "={{ $json.CNPJ }}",
+            "Caminho": "={{ $json[\"[SDR] Caminho do Lead\"] }}",
+            "NOME": "={{ $json.Lead }}",
+            "EMPREENDIMENTO": "={{ $json.Empreendimento }}",
+            "CIDADE": "={{ $json[\"Endereço\"] }}",
+            "UF": "={{ $json.UF }}",
+            "SITE": "={{ $json.Site }}",
+            "E-MAIL": "={{ $json[\"E-mail\"] }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EMPREENDIMENTO",
+              "displayName": "EMPREENDIMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "SITE",
+              "displayName": "SITE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "E-MAIL",
+              "displayName": "E-MAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela Verificação de lista",
+              "displayName": "Responsável pela Verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAMPANHA",
+              "displayName": "CAMPANHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "displayName": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Resposta ",
+              "displayName": "Data da Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta do e-mail x",
+              "displayName": "Resposta do e-mail x",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "displayName": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado da lig. Validação técnica",
+              "displayName": "Resultado da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de \"Qualificação Comercial\"",
+              "displayName": "Data da ligação de \"Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "displayName": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead",
+              "displayName": "Temperatura do Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reunnião comercial OB",
+              "displayName": "Reunnião comercial OB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        624
+      ],
+      "id": "6a9991ae-7fc2-4ab9-b115-e2c80cd7e51a",
+      "name": "Investigação Web OB | Organização",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS OUTBOUND CNES2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CNPJ": "={{ $json.CNPJ }}",
+            "Data da lig. Validação técnica": "={{ $json.data.due_date.split('-').reverse().join('/') }}",
+            "Responsável pela lig. Validação técnica": "={{ $json[\"SDR Responsável\"][0] }}",
+            "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ": "={{ $json[\"Lig_validação técnica\"].replace(/\\[\"?|\"?\\]/g, '') }}",
+            "Resultado da lig. Validação técnica": "={{ $json[\"resultado_da Ligação Validação técnica\"] }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EMPREENDIMENTO",
+              "displayName": "EMPREENDIMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "SITE",
+              "displayName": "SITE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "E-MAIL",
+              "displayName": "E-MAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela Verificação de lista",
+              "displayName": "Responsável pela Verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAMPANHA",
+              "displayName": "CAMPANHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "displayName": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Resposta ",
+              "displayName": "Data da Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta do e-mail x",
+              "displayName": "Resposta do e-mail x",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "displayName": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Resultado da lig. Validação técnica",
+              "displayName": "Resultado da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data da ligação de \"Qualificação Comercial\"",
+              "displayName": "Data da ligação de \"Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "displayName": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead",
+              "displayName": "Temperatura do Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reunnião comercial OB",
+              "displayName": "Reunnião comercial OB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        976
+      ],
+      "id": "621f5eba-8a1e-466d-88cb-bbc76985f4fe",
+      "name": "Ligação OB | Lig. Validação técnica",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS OUTBOUND CNES2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CNPJ": "={{ $json.CNPJ }}",
+            "Data da lig. filtragem de dados": "={{ $json.data.due_date.split('-').reverse().join('/') }}",
+            "Responsável pela lig. filtragem de dados": "={{ $json[\"SDR Responsável\"][0] }}",
+            "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ": "={{ $json[\"Lig_filtragem de dados\"].replace(/\\[\"?|\"?\\]/g, '') }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EMPREENDIMENTO",
+              "displayName": "EMPREENDIMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "SITE",
+              "displayName": "SITE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "E-MAIL",
+              "displayName": "E-MAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela Verificação de lista",
+              "displayName": "Responsável pela Verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAMPANHA",
+              "displayName": "CAMPANHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "displayName": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Resposta ",
+              "displayName": "Data da Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta do e-mail x",
+              "displayName": "Resposta do e-mail x",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "displayName": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado da lig. Validação técnica",
+              "displayName": "Resultado da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de \"Qualificação Comercial\"",
+              "displayName": "Data da ligação de \"Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "displayName": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead",
+              "displayName": "Temperatura do Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reunnião comercial OB",
+              "displayName": "Reunnião comercial OB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        800
+      ],
+      "id": "0aa20f4a-7f7c-4306-ad47-8e26d4912dac",
+      "name": "Ligação OB | Op. Filtragem de dados",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS OUTBOUND CNES2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CNPJ": "={{ $json.CNPJ }}",
+            "Data da ligação de \"Qualificação Comercial\"": "={{ $json.data.due_date.split('-').reverse().join('/') }}",
+            "Temperatura do Lead": "={{ $json.Temperatura[0] }}",
+            "Responsável pela 'Lig. de Qualificação Comercial\"": "={{ $json[\"responsável_pela Ligação Comercial OB\"].replace(/\\[\"?|\"?\\]/g, '') }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EMPREENDIMENTO",
+              "displayName": "EMPREENDIMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "SITE",
+              "displayName": "SITE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "E-MAIL",
+              "displayName": "E-MAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela Verificação de lista",
+              "displayName": "Responsável pela Verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAMPANHA",
+              "displayName": "CAMPANHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "displayName": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Resposta ",
+              "displayName": "Data da Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta do e-mail x",
+              "displayName": "Resposta do e-mail x",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "displayName": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado da lig. Validação técnica",
+              "displayName": "Resultado da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de \"Qualificação Comercial\"",
+              "displayName": "Data da ligação de \"Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "displayName": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Temperatura do Lead",
+              "displayName": "Temperatura do Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reunnião comercial OB",
+              "displayName": "Reunnião comercial OB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        1152
+      ],
+      "id": "7f4b2fb0-d930-4b1a-907f-847815350705",
+      "name": "OB/IB | Ligação Comercial",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS OUTBOUND CNES2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CNPJ": "={{ $json.CNPJ }}",
+            "Reunnião comercial OB": "={{ $json.data.due_date.split('-').reverse().join('/') }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EMPREENDIMENTO",
+              "displayName": "EMPREENDIMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "SITE",
+              "displayName": "SITE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "E-MAIL",
+              "displayName": "E-MAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela Verificação de lista",
+              "displayName": "Responsável pela Verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAMPANHA",
+              "displayName": "CAMPANHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "displayName": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Resposta ",
+              "displayName": "Data da Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta do e-mail x",
+              "displayName": "Resposta do e-mail x",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "displayName": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado da lig. Validação técnica",
+              "displayName": "Resultado da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de \"Qualificação Comercial\"",
+              "displayName": "Data da ligação de \"Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "displayName": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead",
+              "displayName": "Temperatura do Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reunnião comercial OB",
+              "displayName": "Reunnião comercial OB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        1328
+      ],
+      "id": "a433eb26-039f-4882-a2ca-ddea7b7e0b1b",
+      "name": "OB | Reunião Comercial",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "teste",
+        "org_id": "=teste",
+        "additionalFields": {
+          "stage_id": "={{ 17 }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        368,
+        -64
+      ],
+      "id": "e321ff39-e302-44d6-9864-6f01b4c327b8",
+      "name": "Create a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUNBD",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data de Entrada": "={{ $json.dataPipe.split('-').reverse().join('/') }}",
+            "Nome": "={{ $json.Lead }}",
+            "CNPJ": "={{ $json.CNPJ }}",
+            "Instituição": "={{ $json[\"instituição\"] }}",
+            "Endereço": "={{ $json[\"Endereço\"] }}",
+            "UF": "={{ $json.UF }}",
+            "Campanha": "={{ $json.Campanha }}",
+            "Temperatura do Lead na qualificação": "={{ $json.Temperatura[0] }}",
+            "Cadencia IB": "={{ $json[\"Resultado Cadência IB\"] }}",
+            "Destino do Lead após investigação inicial ": "={{ $json[\"destino_do Lead após investigação inicial\"] }}",
+            "Destino do Lead": "={{ $json[\"destino_do Lead após Ligação Comercial\"] }}",
+            "Responsável pela investigação e lig. de qualificação": "={{ $json[\"responsável_pela Ligação Comercial OB\"] }}",
+            "Responsável pela ligação de qualificação": "={{ $json[\"SDR Responsável\"][0] }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "26.313.383/0001-41",
+              "displayName": "26.313.383/0001-41",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instituição",
+              "displayName": "Instituição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Endereço",
+              "displayName": "Endereço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Data de Entrada",
+              "displayName": "Data de Entrada",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Data da investigação",
+              "displayName": "Data da investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Ligação \"Op. Filtragem de dados\"",
+              "displayName": "Data da Ligação \"Op. Filtragem de dados\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação e lig. de qualificação",
+              "displayName": "Responsável pela investigação e lig. de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Destino do Lead após investigação inicial ",
+              "displayName": "Destino do Lead após investigação inicial ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Cadencia IB",
+              "displayName": "Cadencia IB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ligação de qualificação",
+              "displayName": "Ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela ligação de qualificação",
+              "displayName": "Responsável pela ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Temperatura do Lead na qualificação",
+              "displayName": "Temperatura do Lead na qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Destino do Lead",
+              "displayName": "Destino do Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data da reunião comercial",
+              "displayName": "Data da reunião comercial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        80
+      ],
+      "id": "c26d5ae1-a14c-40da-a69a-ce9cfb450772",
+      "name": "ATUALIZAR DADOS INBOUND",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUNBD",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CNPJ": "={{ $json.CNPJ }}",
+            "Cadencia IB": "={{ $json[\"Resultado Cadência IB\"] }}",
+            "Data da investigação": "={{ $json.data.due_date.split('-').reverse().join('/') }}",
+            "Nome": "={{ $json.Lead }}",
+            "Instituição": "={{ $json[\"instituição\"] }}",
+            "Endereço": "={{ $json[\"Endereço\"] }}",
+            "UF": "={{ $json.UF }}",
+            "Campanha": "={{ $json.Campanha }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "26.313.383/0001-41",
+              "displayName": "26.313.383/0001-41",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Instituição",
+              "displayName": "Instituição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Endereço",
+              "displayName": "Endereço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data de Entrada",
+              "displayName": "Data de Entrada",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da investigação",
+              "displayName": "Data da investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data da Ligação \"Op. Filtragem de dados\"",
+              "displayName": "Data da Ligação \"Op. Filtragem de dados\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação e lig. de qualificação",
+              "displayName": "Responsável pela investigação e lig. de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino do Lead após investigação inicial ",
+              "displayName": "Destino do Lead após investigação inicial ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia IB",
+              "displayName": "Cadencia IB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ligação de qualificação",
+              "displayName": "Ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela ligação de qualificação",
+              "displayName": "Responsável pela ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead na qualificação",
+              "displayName": "Temperatura do Lead na qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino do Lead",
+              "displayName": "Destino do Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da reunião comercial",
+              "displayName": "Data da reunião comercial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        -272
+      ],
+      "id": "515641b2-f7ec-4209-8c18-b4df12adc79c",
+      "name": "Investigação Web OB | Organização1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS OUTBOUND CNES2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CNPJ": "={{ $json.CNPJ }}",
+            "Data da lig. filtragem de dados": "={{ $json.data.due_date.split('-').reverse().join('/') }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EMPREENDIMENTO",
+              "displayName": "EMPREENDIMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "SITE",
+              "displayName": "SITE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "E-MAIL",
+              "displayName": "E-MAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela Verificação de lista",
+              "displayName": "Responsável pela Verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CAMPANHA",
+              "displayName": "CAMPANHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "displayName": "Data de importação ao Pipedrive e início da cadencia de 5 e-mails \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Resposta ",
+              "displayName": "Data da Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta do e-mail x",
+              "displayName": "Resposta do e-mail x",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo da \"Lig. filtragem de dados\" concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "displayName": "Objetivo da lig. Validação técnica (Conversar com responsável e enviar e-mail de apresentação) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado da lig. Validação técnica",
+              "displayName": "Resultado da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de \"Qualificação Comercial\"",
+              "displayName": "Data da ligação de \"Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "displayName": "Responsável pela 'Lig. de Qualificação Comercial\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead",
+              "displayName": "Temperatura do Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reunnião comercial OB",
+              "displayName": "Reunnião comercial OB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        -96
+      ],
+      "id": "fbac3924-bda9-4ef8-8bd4-233ee7428740",
+      "name": "Ligação OB | Op. Filtragem de dados1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": 17,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    },
+                    "id": "00e224c8-e241-4aa8-993e-797c01caf69e"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "88411585-9ccd-4e2f-9ec1-ac774557d921",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": 15,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "da9bc26b-a97b-4d38-993f-7ce89cf57204",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "51",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "69265a9b-aa49-4da5-a6e1-19b1a304b82b",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "50",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "af215593-bbb8-4a23-b1d3-5d5f367517f2",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "16",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8d3b5ddd-af1a-429b-8c1d-de0dc5e28cec",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "14",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e7190d75-1b1a-478d-885b-f1dc2c072110",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "60",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1264,
+        288
+      ],
+      "id": "a8717be3-c19d-4505-8334-25a3c33c14ee",
+      "name": "INBOUND"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": 11,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    },
+                    "id": "00e224c8-e241-4aa8-993e-797c01caf69e"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "88411585-9ccd-4e2f-9ec1-ac774557d921",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": 12,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "573fed6f-c1d7-4850-a946-11c371e24c59",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "7",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a5e62cbe-cd33-4ab5-bccb-efc925ad2bf4",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "39",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "37eb6944-1bd9-482c-b895-356436067fb8",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "31",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2b6a0a08-4ac7-4bcc-ad18-8d9fae41a30d",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "6",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fb4d3052-0310-4659-ad6d-af469e80dbf6",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "9",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5b316e32-bab4-403e-8995-5209822c9c5b",
+                    "leftValue": "={{ $json.stage_id }}",
+                    "rightValue": "8",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1264,
+        592
+      ],
+      "id": "de8b4acf-ae1d-45f1-88ff-f5e8ab670b34",
+      "name": "OUTBOUND"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "investigacao_web_ob__organ",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "80cf8953-d5cb-4bba-9e4b-d1a9de1704cd"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "\tinvestigacao_web_ob__organ"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fc977a9c-9907-45e9-b99b-bf8478a48421",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "ligacao_ob__op_filtragem_d",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "=ligacao_ob__op_filtragem_d"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "94bf027f-eefc-4535-b4a4-86e5b8a54cde",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "atualizar_dados_inbound",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "atualizar_dados_inbound"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "477b4b0a-5782-4948-a63b-1514acf8976d",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "reuniao_de_qualificacao",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "reuniao_de_qualificacao"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "1793d99f-31a2-493e-a8e8-144f927eab0e",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "reuniao_de_apresentacao",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "reuniao_de_apresentacao"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1744,
+        320
+      ],
+      "id": "464a3a36-b8d1-4425-bf37-fe23a74f8de4",
+      "name": "Inbound"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "investigacao_web_ob__organ",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "80cf8953-d5cb-4bba-9e4b-d1a9de1704cd"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "\tinvestigacao_web_ob__organ"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fc977a9c-9907-45e9-b99b-bf8478a48421",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "ligacao_ob__op_filtragem_d",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "=ligacao_ob__op_filtragem_d"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c4504291-9006-47b4-9802-78d2a329bb5c",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "lig_validacao_tecnica",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "lig_validacao_tecnica"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b2e74fc8-ce4f-45c2-9c16-5228669d76e3",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "ligacao_ob__ligacao_comerc",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ligacao_ob__ligacao_comerc"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "77e0b550-1650-4245-a044-5d731cc9e679",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "ligacao_ob__reuniao_comerc",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ligacao_ob__reuniao_comerc"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1744,
+        640
+      ],
+      "id": "d4b10e79-deee-4a86-ae4c-1e0d17ab0109",
+      "name": "Outbound"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUNBD",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CNPJ": "={{ $json.CNPJ }}",
+            "Responsável pela investigação e lig. de qualificação": "={{ $json[\"SDR Responsável\"][0] }}",
+            "Ligação de qualificação": "={{ $json.data.due_date.split('-').reverse().join('/') }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "26.313.383/0001-41",
+              "displayName": "26.313.383/0001-41",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instituição",
+              "displayName": "Instituição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Endereço",
+              "displayName": "Endereço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de Entrada",
+              "displayName": "Data de Entrada",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da investigação",
+              "displayName": "Data da investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Ligação \"Op. Filtragem de dados\"",
+              "displayName": "Data da Ligação \"Op. Filtragem de dados\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação e lig. de qualificação",
+              "displayName": "Responsável pela investigação e lig. de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Destino do Lead após investigação inicial ",
+              "displayName": "Destino do Lead após investigação inicial ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia IB",
+              "displayName": "Cadencia IB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ligação de qualificação",
+              "displayName": "Ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Responsável pela ligação de qualificação",
+              "displayName": "Responsável pela ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead na qualificação",
+              "displayName": "Temperatura do Lead na qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino do Lead",
+              "displayName": "Destino do Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da reunião comercial",
+              "displayName": "Data da reunião comercial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        256
+      ],
+      "id": "f5b4c0cc-5d5e-42cf-98a4-4dd20f104398",
+      "name": "OB / IB | Ligação de qualificação comercial",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUNBD",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CNPJ": "={{ $json.CNPJ }}",
+            "Data da reunião comercial": "={{ $json.data.due_date.split('-').reverse().join('/') }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "26.313.383/0001-41",
+              "displayName": "26.313.383/0001-41",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instituição",
+              "displayName": "Instituição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Endereço",
+              "displayName": "Endereço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de Entrada",
+              "displayName": "Data de Entrada",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da investigação",
+              "displayName": "Data da investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Ligação \"Op. Filtragem de dados\"",
+              "displayName": "Data da Ligação \"Op. Filtragem de dados\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação e lig. de qualificação",
+              "displayName": "Responsável pela investigação e lig. de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino do Lead após investigação inicial ",
+              "displayName": "Destino do Lead após investigação inicial ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia IB",
+              "displayName": "Cadencia IB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ligação de qualificação",
+              "displayName": "Ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela ligação de qualificação",
+              "displayName": "Responsável pela ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead na qualificação",
+              "displayName": "Temperatura do Lead na qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino do Lead",
+              "displayName": "Destino do Lead",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da reunião comercial",
+              "displayName": "Data da reunião comercial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        432
+      ],
+      "id": "deb64ebb-586f-4023-8ee8-47eb0509b8f2",
+      "name": "Reunião de apresentação",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Pipedrive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a deal": {
+      "main": [
+        [
+          {
+            "node": "Get an organization",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get an organization": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "OUTBOUND",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "INBOUND",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OUTBOUND": {
+      "main": [
+        [
+          {
+            "node": "Outbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Outbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Outbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Outbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Outbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Outbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Outbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Outbound",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inbound": {
+      "main": [
+        [
+          {
+            "node": "Investigação Web OB | Organização1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ligação OB | Op. Filtragem de dados1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ATUALIZAR DADOS INBOUND",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OB / IB | Ligação de qualificação comercial",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reunião de apresentação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outbound": {
+      "main": [
+        [
+          {
+            "node": "Investigação Web OB | Organização",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ligação OB | Op. Filtragem de dados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ligação OB | Lig. Validação técnica",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OB/IB | Ligação Comercial",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OB | Reunião Comercial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "INBOUND": {
+      "main": [
+        [
+          {
+            "node": "Inbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Inbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Inbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Inbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Inbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Inbound",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Inbound",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": {
+    "node:Pipedrive Trigger": {
+      "webhookId": 1812887
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Pipedrive Trigger": [
+      {
+        "json": {
+          "data": {
+            "active_flag": true,
+            "add_time": "2025-11-17T18:58:50Z",
+            "busy_flag": false,
+            "custom_fields": {},
+            "deal_id": 1357,
+            "done": true,
+            "due_date": "2025-11-17",
+            "due_time": {
+              "timezone_id": null,
+              "value": ""
+            },
+            "duration": {
+              "timezone_id": null,
+              "value": ""
+            },
+            "id": 5344,
+            "type": "reuniao_de_apresentacao",
+            "lead_id": null,
+            "location": null,
+            "org_id": 1037,
+            "owner_id": 24207317,
+            "person_id": 777,
+            "public_description": "",
+            "subject": "Reunião de apresentação",
+            "update_time": "2025-11-17T19:06:15Z",
+            "update_user_id": null
+          },
+          "previous": {
+            "done": false,
+            "update_time": "2025-11-17T19:05:56Z"
+          },
+          "meta": {
+            "action": "change",
+            "company_id": "14556440",
+            "correlation_id": "ce965a50-6958-428e-9a40-b9b9434aa3e2",
+            "entity_id": "5344",
+            "entity": "activity",
+            "id": "b15a30c9-1562-4fe4-90ca-7e49e63d7219",
+            "is_bulk_edit": false,
+            "timestamp": "2025-11-17T19:06:15.806Z",
+            "type": "general",
+            "user_id": "24207317",
+            "version": "2.0",
+            "webhook_id": "1812884",
+            "webhook_owner_id": "24207328",
+            "change_source": "app",
+            "permitted_user_ids": [
+              "24207317",
+              "24207328"
+            ],
+            "attempt": 1,
+            "host": "medicalspin.pipedrive.com"
+          }
+        }
+      }
+    ],
+    "Code in JavaScript": [
+      {
+        "json": {
+          "[SDR] Caminho do Lead": "Prospecção",
+          "type": "atualizar_dados_inbound",
+          "SDR Responsável": [
+            "Rodrigo"
+          ],
+          "Lig_filtragem de dados": "[\"Nome do responsável\"]",
+          "Lig_validação técnica": "[\"Conversar com responsável\"]",
+          "data": {
+            "due_date": "2025-11-17"
+          },
+          "objetivo_da Ligação Validação técnica": "[\"Conversar com um responsável\"]",
+          "resultado_da Ligação Validação técnica": "Direcionamento comercial",
+          "responsável_pela Ligação Comercial OB": "[\"Rodrigo\"]",
+          "destino_do Lead após investigação inicial": "Setor Comercial",
+          "destino_do Lead após Ligação Comercial": "Reunião comercial",
+          "Temperatura": [
+            "Muito Quente"
+          ],
+          "stage_id": 17,
+          "Lead": "Wendel Teste",
+          "instituição": "Teste 2",
+          "Campanha": "Campanha Facebook",
+          "Resultado Cadência IB": "Dia 1 - (B) Mensagem Whatsapp",
+          "CNPJ": "06.665.656/5626-26",
+          "dataPipe": "2025-11-17",
+          "Endereço": "teste",
+          "UF": "SE",
+          "Empreendimento": "Hospital",
+          "Site": "teste.com",
+          "E-mail": "teste@gmail.com"
+        }
+      }
+    ]
+  },
+  "versionId": "34765afb-fb77-4e42-9c25-4f5c65aad45c",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-11-17T13:56:44.976Z",
+      "updatedAt": "2025-11-17T13:56:44.976Z",
+      "role": "workflow:owner",
+      "workflowId": "54jxOH41sbsU0cF3",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "tags": []
+}
