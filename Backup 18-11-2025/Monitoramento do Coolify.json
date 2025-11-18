@@ -1,0 +1,115 @@
+{
+  "updatedAt": "2025-11-18T18:57:02.234Z",
+  "createdAt": "2025-11-18T12:40:19.307Z",
+  "id": "EuhCdsKjHmRnlYcl",
+  "name": "Monitoramento do Coolify",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "9ccfe0a1-bafe-47ed-8e2b-336d44a1b876",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7838b52d-ba1e-4e13-8fc5-82ed2f6bce05",
+      "name": "Webhook",
+      "webhookId": "9ccfe0a1-bafe-47ed-8e2b-336d44a1b876"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "5579999801810",
+        "messageText": "=📢 Novo Evento na Coolify\n\nMensagem: {{ $json.body.message }}\nEvento: {{ $json.body.event }}\nURL: {{ $json.body.url }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "ab2e95ba-1eac-4ea4-939a-cb40f9acd561",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "GuzzleHttp/7",
+            "content-length": "130",
+            "content-type": "application/json",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "10.0.1.1",
+            "accept-encoding": "gzip"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "success": true,
+            "message": "This is a test webhook notification from Coolify.",
+            "event": "test",
+            "url": "http://95.217.164.173:8000"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/9ccfe0a1-bafe-47ed-8e2b-336d44a1b876",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "b7f745f4-7032-4feb-b90b-05a33cf91e7e",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-18T12:40:19.307Z",
+      "createdAt": "2025-11-18T12:40:19.307Z",
+      "role": "workflow:owner",
+      "workflowId": "EuhCdsKjHmRnlYcl",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "tags": []
+}
