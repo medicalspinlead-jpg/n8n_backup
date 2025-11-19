@@ -1,0 +1,144 @@
+{
+  "updatedAt": "2025-11-19T14:39:35.479Z",
+  "createdAt": "2025-11-19T14:18:55.214Z",
+  "id": "XPdfiD70CzN7yMxS",
+  "name": "My workflow 2",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "7a6699a8-890e-4b2b-8a03-167175154a31",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a99c95c7-511c-4389-87dd-05c6a1782fb5",
+      "name": "Webhook",
+      "webhookId": "7a6699a8-890e-4b2b-8a03-167175154a31"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "20836bd6-f0f1-46d8-ab69-1b727a111fdd",
+              "leftValue": "={{ $json.body.data.message.conversation }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "fc652cb9-e82d-452f-a34e-d67812288b84",
+      "name": "If"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "axios/1.12.2",
+            "content-length": "765",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "10.0.1.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "teste",
+            "data": {
+              "key": {
+                "remoteJid": "557999801810@s.whatsapp.net",
+                "remoteJidAlt": "7228732002361@lid",
+                "fromMe": true,
+                "id": "AC691FDE1FCFB604589F3ADC0C67ED57",
+                "participant": "",
+                "addressingMode": "pn"
+              },
+              "pushName": "Wendel Lucas",
+              "status": "SERVER_ACK",
+              "message": {
+                "conversation": "Oi"
+              },
+              "messageType": "conversation",
+              "messageTimestamp": 1763562941,
+              "instanceId": "a67cc44b-8277-4434-924c-42708131588f",
+              "source": "android"
+            },
+            "destination": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/7a6699a8-890e-4b2b-8a03-167175154a31",
+            "date_time": "2025-11-19T11:35:41.962Z",
+            "sender": "557999801810@s.whatsapp.net",
+            "server_url": "http://evo-j0o08ok8sgwc4cog04w0owok.95.217.164.173.sslip.io",
+            "apikey": "70B682D69733-4725-9C71-961DCF9A99C0"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/7a6699a8-890e-4b2b-8a03-167175154a31",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "c0b5bf69-fb51-4ca4-a110-8294fdaa2be1",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-19T14:18:55.214Z",
+      "createdAt": "2025-11-19T14:18:55.214Z",
+      "role": "workflow:owner",
+      "workflowId": "XPdfiD70CzN7yMxS",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "tags": []
+}
