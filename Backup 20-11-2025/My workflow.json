@@ -1,0 +1,540 @@
+{
+  "updatedAt": "2025-11-19T13:59:42.559Z",
+  "createdAt": "2025-11-17T17:32:47.207Z",
+  "id": "dMO7C44rrWElTB1W",
+  "name": "My workflow",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8a2ab6c7-163d-4ede-8f60-80e7d7958a2f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -304,
+        -64
+      ],
+      "id": "9ad28797-1ecb-4c00-806f-e67147e056af",
+      "name": "Webhook",
+      "webhookId": "8a2ab6c7-163d-4ede-8f60-80e7d7958a2f"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    rawBinary: items[0].binary.data.data.toString()\n  }\n}];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -96,
+        -64
+      ],
+      "id": "d982d924-d46f-441e-9e2e-e3aff1f66528",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": "const base64 = $json.rawBinary;\nconst text = Buffer.from(base64, \"base64\").toString(\"utf8\");\n\nreturn [{\n  json: { text }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        96,
+        -64
+      ],
+      "id": "906ae653-c586-4d16-8aba-d28c042d882b",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $json.text;\n\n// Expressão regular que captura qualquer URL começando com http/https\nconst links = text.match(/https?:\\/\\/[^\\s>]+/g) || [];\n\nreturn [{\n  json: { links }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        -64
+      ],
+      "id": "e410f1f1-d826-44b2-9169-5e22c2371150",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c0c3d74a-ee47-412c-b31a-c961780f3208",
+              "name": "links[0]",
+              "value": "={{ $json.links[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        -64
+      ],
+      "id": "df09de15-5e80-47f6-ab17-e7b869e421ad",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.links[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        688,
+        -64
+      ],
+      "id": "c3a4e638-6e83-4a4e-b1b2-4418454ae3bf",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const html = $json.data;\n\n// pega o primeiro link dentro do content=\"0;URL=...\"\nconst match = html.match(/URL=([^\"]+)/i);\n\nreturn [{\n  json: {\n    realUrl: match ? match[1] : null\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        -64
+      ],
+      "id": "17dbd031-a185-4038-95c3-3df29cd0211f",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6dd1e45f-944e-424a-96a6-65bd7ee5effa",
+              "name": "realUrl",
+              "value": "={{ $json.realUrl }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1104,
+        -64
+      ],
+      "id": "f44f6435-8aa0-4879-953d-2e3bfa792150",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.realUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1328,
+        -64
+      ],
+      "id": "817d1b69-dc60-4c5c-9efc-c172d4570686",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        1536,
+        -64
+      ],
+      "id": "183fdde0-0456-45be-8327-eba6ca10eb23",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "44891af5-40ac-4ac6-938c-eff803276399",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1744,
+        -64
+      ],
+      "id": "55d9e7c7-3928-4685-b4cb-90ed36d457ca",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $json.text;\n\n// Função simples para capturar usando regex\nfunction extract(regex, group = 1) {\n  const m = text.match(regex);\n  return m ? m[group].trim() : null;\n}\n\n// Remove múltiplos espaços\nconst clean = (t) => t?.replace(/\\s+/g, ' ').trim();\n\n// Empresa\nconst cnpj = extract(/(\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}-\\d{2})/);\nconst razao = extract(/\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}-\\d{2}\\s+(.+?)\\s+Período/);\n\n// Documento\nconst numeroDocumento = extract(/Número do Documento\\s*\\n([^\\n]+)/);\n\n// 🔥 NOVO — captura \"Outubro/2025\" ou qualquer \"Mês/AAAA\"\nconst periodo = extract(/(Janeiro|Fevereiro|Março|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro)\\/\\d{4}/);\n\n// Alternativa caso venha como \"10/2025\"\nconst periodoNumerico = extract(/(\\d{2}\\/\\d{4})/);\n\nconst periodoFinal = periodo || periodoNumerico;\n\nconst vencimento = extract(/Pagar.*?até\\s*\\n?(\\d{2}\\/\\d{2}\\/\\d{4})/);\nconst valorTotal = extract(/Valor Total do Documento\\s*\\n([\\d,]+)/);\nconst recibo = extract(/Nº Recibo Declaração:\\s*([\\d]+)/);\n\n// Composição — captura códigos e valores\nfunction extractTable() {\n  const entries = [];\n  \n  const regex = /(\\d{3,4})\\s+([A-Z].+?)\\s+([\\d,]+)\\s+[\\d,]+/g;\n  let m;\n\n  while ((m = regex.exec(text)) !== null) {\n    entries.push({\n      codigo: m[1],\n      descricao: clean(m[2]),\n      valor: parseFloat(m[3].replace(',', '.'))\n    });\n  }\n\n  return entries;\n}\n\nconst composicao = extractTable();\n\n// Linha digitável\nconst linhaDigitavel = extract(/(\\d{11}\\s\\d\\s\\d{11}\\s\\d\\s\\d{11}\\s\\d\\s\\d{11}\\s\\d)/);\n\n// Retorno final\nreturn [\n  {\n    json: {\n      empresa: {\n        cnpj,\n        razaoSocial: razao,\n      },\n      documento: {\n        numero: numeroDocumento,\n        periodoApuracao: periodoFinal,\n        vencimento,\n        valorTotal: valorTotal ? parseFloat(valorTotal.replace(',', '.')) : null,\n        recibo,\n      },\n      composicao,\n      linhaDigitavel\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1952,
+        -64
+      ],
+      "id": "86fae09a-fbfc-4674-91f2-fe04f4395430",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dc9940a4-a738-4863-b7c8-2e68046a196e",
+              "name": "documento.numero",
+              "value": "={{ $json.documento.numero }}",
+              "type": "string"
+            },
+            {
+              "id": "ac0e47fe-ebb6-4ada-84a9-ed48bfdc3c12",
+              "name": "documento.periodoApuracao",
+              "value": "={{ $json.documento.periodoApuracao }}",
+              "type": "string"
+            },
+            {
+              "id": "3ee0bf34-9caa-4f11-9d1c-5a857220f6f6",
+              "name": "documento.vencimento",
+              "value": "={{ $json.documento.vencimento }}",
+              "type": "string"
+            },
+            {
+              "id": "ac5b2b1a-06a6-46d8-bd0d-956cd8098381",
+              "name": "documento.valorTotal",
+              "value": "={{ $json.documento.valorTotal }}",
+              "type": "number"
+            },
+            {
+              "id": "175d9425-ac6e-409f-8ee8-e6222769ab44",
+              "name": "documento.recibo",
+              "value": "={{ $json.documento.recibo }}",
+              "type": "string"
+            },
+            {
+              "id": "da1e69b5-71c2-4a97-9382-53e8236b9ab7",
+              "name": "composicao",
+              "value": "={{ $json.composicao }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2176,
+        -64
+      ],
+      "id": "04ad3477-b83a-429d-bb0b-90279e43063f",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "44891af5-40ac-4ac6-938c-eff803276399",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1744,
+        96
+      ],
+      "id": "2203db3e-5a79-4f8a-afce-4234d8494dac",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.text;\n\n// Normaliza o texto\nconst normalize = t => t.replace(/\\r/g, \"\").replace(/\\t/g, \"\").trim();\n\n// Separar holerites (cada bloco começa pelo CNPJ + Razão Social)\nconst blocks = raw.split(/SCIENTEE MEDICAL BUSINESS GROUP/gi).slice(1);\n\nfunction toNumber(v) {\n  if (!v) return null;\n  return parseFloat(v.replace(/\\./g, \"\").replace(\",\", \".\"));\n}\n\nfunction extract(regex, text, group = 1) {\n  const m = text.match(regex);\n  return m ? m[group].trim() : null;\n}\n\n// Extrair composição (Código / Descrição / Referência / Valor)\nfunction extractComposicao(text) {\n  const lines = text.split(\"\\n\").map(l => l.trim());\n\n  const comps = [];\n  let inTable = false;\n\n  for (const line of lines) {\n    // A tabela começa aqui:\n    if (/^Código Descrição Referência/i.test(line)) {\n      inTable = true;\n      continue;\n    }\n\n    // Sai quando chegar nessas linhas repetidas\n    if (/^SCIENTEE|^Declaro ter recebido|^Assinatura/i.test(line)) break;\n\n    if (!inTable) continue;\n\n    // Código + Descrição + Referência + Vencimentos/Descontos\n    const match = line.match(/^(\\d+)\\s+(.+?)\\s+(\\d+(?:,\\d+)?)\\s+(\\d+(?:,\\d+)?)/);\n    if (match) {\n      comps.push({\n        codigo: match[1],\n        descricao: match[2],\n        referencia: match[3],\n        valor: toNumber(match[4])\n      });\n    }\n  }\n\n  return comps;\n}\n\n// Agora percorre cada holerite\nconst result = blocks.map(block => {\n\n  block = normalize(block);\n\n  // Nome completo\n  const nome = extract(/Nome do Funcionário\\s*\\n(.+)/i, block);\n\n  // CBO\n  const cbo = extract(/CBO\\s*\\n?(\\d{6})/i, block);\n\n  // Cargo\n  const cargo = extract(/(?:ASSISTENTE ADMINISTRATIVO|VENDEDOR)/i, block);\n\n  // Admissão\n  const admissao = extract(/Admissão:\\s*([\\d/]+)/i, block);\n\n  // Período\n  const periodo = extract(/13o\\. Adiantamento\\s*\\n(.+?2025)/i, block);\n\n  // Salário Base\n  const salarioBase = toNumber(extract(/Sal[áa]rio Base\\s*\\n([\\d\\.,]+)/i, block));\n\n  // Salário Contr. INSS\n  const salarioContr = toNumber(extract(/Sal\\.? Contr\\.? INSS\\s*\\n([\\d\\.,]+)/i, block));\n\n  // Total de Vencimentos\n  const totalVencimentos = toNumber(extract(/Total de Vencimentos\\s*\\n([\\d\\.,]+)/i, block));\n\n  // Total de Descontos\n  const totalDescontos = toNumber(extract(/Total de Descontos\\s*\\n([\\d\\.,]+)/i, block));\n\n  // Valor Líquido\n  const valorLiquido = toNumber(extract(/Valor L[ií]quido[\\s\\S]*?(\\d{1,3}(?:\\.\\d{3})*,\\d{2})/i, block));\n\n  // Empresa + CNPJ\n  const cnpj = extract(/(\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}-\\d{2})/, block);\n  const razaoSocial = \"SCIENTEE MEDICAL BUSINESS GROUP - EQUIPAMENTOS E SERVICOS DE RADIOLOGIA LTDA\";\n\n  // Composição da folha\n  const composicao = extractComposicao(block);\n\n  return {\n    nome,\n    cbo,\n    cargo,\n    admissao,\n    periodo,\n    salarioBase,\n    salarioContr,\n    totalVencimentos,\n    totalDescontos,\n    valorLiquido,\n\n    empresa: {\n      cnpj,\n      razaoSocial\n    },\n\n    composicao\n  };\n});\n\nreturn result.map(r => ({ json: r }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1952,
+        96
+      ],
+      "id": "a68dd670-973a-440d-bcd7-5bd21fdc7afa",
+      "name": "Code in JavaScript5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "203548fd-9ec7-47ba-a4f9-febc6a4d5746",
+              "name": "nome",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2368,
+        96
+      ],
+      "id": "3a7632de-2d4e-4c3b-b65e-e37c90aa405a",
+      "name": "Edit Fields5"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript5": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Gmail Trigger": {
+      "Gmail Trigger": {
+        "lastTimeChecked": 1763553444
+      }
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "Google",
+            "content-length": "630",
+            "accept-encoding": "gzip, deflate, br",
+            "x-forwarded-for": "66.249.83.133",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "66.249.83.133"
+          },
+          "params": {},
+          "query": {},
+          "body": {},
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/8a2ab6c7-163d-4ede-8f60-80e7d7958a2f",
+          "executionMode": "production"
+        },
+        "binary": {
+          "data": {
+            "mimeType": "application/octet-stream",
+            "fileExtension": "bin",
+            "data": "UmU6IDEzIFNBTEFSSU8gMS8yIFJlZi4gMTEyMDI1IC0gQklPNzM1NTAgYWdlbmRhZG8uDQoNCkVtIHRlci4sIDExIGRlIG5vdi4gZGUgMjAyNSDDoHMgMTg6NDUsIDxhZG1AZGFuaWVsYWhvcm5jb250YWJpbC5jb20uYnI+DQplc2NyZXZldToNCg0KPiBPbGEsIHNlZ3VlIGFiYWl4byBvIGxpbmsgcGFyYSBvIGFycXVpdm86DQo+IDEzIFNBTEFSSU8gMS8yDQo+IDEzIHNhbGFyaW8gcHJpbWVpcmEgcGFyY2VsYQ0KPg0KPiBWZW5jaW1lbnRvOiAyOC8xMS8yMDI1DQo+DQo+IFJlZmVyZW50ZSBhIGVtcHJlc2E6DQo+IFNDSUVOVEVFIE1FRElDQUwgQlVTSU5FU1MgR1JPVVAgLSBFUVVJUEFNRU5UT1MgRSBTRVJWSUNPUyBERSBSQURJT0xPR0lBDQo+IExUREENCj4gQ05QSjogNTU1MzQ3MjQwMDAxMDcNCj4NCj4gQ2xpcXVlIG5vIGxpbmsgcGFyYSBhY2Vzc2FyIG8gYXJxdWl2byENCj4NCj4gaHR0cHM6Ly9kaG9ybi5zaXN0ZW1hLmJpby5ici9wYy9hLnBocD9hPTczNTUwDQo+DQo+IENvbmZpcmEgbyBjYWxlbmRhcmlvIGRlIE9icmlnYWNvZXMgZSBoaXN0b3JpY28gZGUgYXJxdWl2b3Mgbm8gUG9ydGFsIGRvDQo+IENsaWVudGUhDQo+IGh0dHA6Ly9kaG9ybi5zaXN0ZW1hLmJpby5ici9wYw0KPg0KPg0KDQotLQ0K",
+            "fileName": "39b29891-7af8-4ee2-95d4-6e00e8bf6719",
+            "fileSize": "630 B"
+          }
+        }
+      }
+    ]
+  },
+  "versionId": "bca0a98c-606d-41b1-a5a0-d998abe50061",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T17:32:47.207Z",
+      "createdAt": "2025-11-17T17:32:47.207Z",
+      "role": "workflow:owner",
+      "workflowId": "dMO7C44rrWElTB1W",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "tags": []
+}
