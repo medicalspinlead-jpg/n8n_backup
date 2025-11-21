@@ -1,0 +1,667 @@
+{
+  "updatedAt": "2025-11-21T18:32:21.362Z",
+  "createdAt": "2025-11-19T14:18:55.214Z",
+  "id": "XPdfiD70CzN7yMxS",
+  "name": "Magnetto - Chatbot com Redis [[BETA]]",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "7a6699a8-890e-4b2b-8a03-167175154a31",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -240,
+        48
+      ],
+      "id": "a99c95c7-511c-4389-87dd-05c6a1782fb5",
+      "name": "Webhook",
+      "webhookId": "7a6699a8-890e-4b2b-8a03-167175154a31"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34998565-4754-4036-9919-919fba42692c",
+              "leftValue": "={{ $json.body.data.message.conversation }}",
+              "rightValue": "Magnetto",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -32,
+        48
+      ],
+      "id": "4ea1e48b-c132-45d7-9bc3-ac4404dcbc51",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $json.body.data.key.remoteJid }}",
+        "messageText": "Olá! 👋 Eu sou o *Magnetto*, seu assistente virtual. Estou aqui para ajudar você com dúvidas, suporte e informações de forma rápida e simples. \n\nComo posso ajudar você hoje? \n\n1-Criar Ordem de serviço\n2-Sair",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        256,
+        32
+      ],
+      "id": "7a7266cb-25f8-43cf-8724-99b7f5358f81",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=id:{{ $json.data.key.remoteJid }}",
+        "value": "menu_principal",
+        "expire": true,
+        "ttl": 600
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        464,
+        32
+      ],
+      "id": "cdd843a3-c487-4304-9685-3be58d29ae82",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "id",
+        "key": "=id:{{ $json.body.data.key.remoteJid }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        256,
+        192
+      ],
+      "id": "003c6650-d08e-424a-b324-2be4c848e7ed",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "69886729-8e82-426c-802f-46705c3e2b3a"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "1"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "18831c78-d752-417a-bd9f-c14e5d50c084",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "2",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "2"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        688,
+        176
+      ],
+      "id": "12945b2e-a3c7-4d17-9d25-7aaad93234c7",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b0bc1622-ccd0-489e-a51e-5eaa1c4bd334",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        464,
+        192
+      ],
+      "id": "ee05a5cc-1e63-4b5c-929a-218e66b5874e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/form/db095550-d6da-4d27-b58a-b9e20e6155d0",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        928,
+        112
+      ],
+      "id": "3553eadc-db7b-4852-9d59-ff8d7ae95104",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "Até logo. Para me chamar novamente, basta digitar *Magnetto*",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        928,
+        256
+      ],
+      "id": "3be0b9e1-feee-4557-ae4b-3ff10ec1932f",
+      "name": "Enviar texto5",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=id:{{ $json.data.key.remoteJid }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        256
+      ],
+      "id": "b5685e85-c488-4a9f-a61c-09e0e95996af",
+      "name": "Redis6",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "os teste",
+        "formDescription": "teste",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nome Fantasia",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Razão Social"
+            },
+            {
+              "fieldLabel": "CNPJ",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Cidade",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "UF",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "RS"
+                  },
+                  {
+                    "option": "SC"
+                  },
+                  {
+                    "option": "PR"
+                  },
+                  {
+                    "option": "SP"
+                  },
+                  {
+                    "option": "RJ"
+                  },
+                  {
+                    "option": "MG"
+                  },
+                  {
+                    "option": "BA"
+                  },
+                  {
+                    "option": "PE"
+                  },
+                  {
+                    "option": "CE"
+                  },
+                  {
+                    "option": "PA"
+                  },
+                  {
+                    "option": "MA"
+                  },
+                  {
+                    "option": "GO"
+                  },
+                  {
+                    "option": "AM"
+                  },
+                  {
+                    "option": "PB"
+                  },
+                  {
+                    "option": "ES"
+                  },
+                  {
+                    "option": "RN"
+                  },
+                  {
+                    "option": "PI"
+                  },
+                  {
+                    "option": "AL"
+                  },
+                  {
+                    "option": "MT"
+                  },
+                  {
+                    "option": "DF"
+                  },
+                  {
+                    "option": "MS"
+                  },
+                  {
+                    "option": "SE"
+                  },
+                  {
+                    "option": "RO"
+                  },
+                  {
+                    "option": "TO"
+                  },
+                  {
+                    "option": "AC"
+                  },
+                  {
+                    "option": "AP"
+                  },
+                  {
+                    "option": "RR"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Nome do Solicitante"
+            },
+            {
+              "fieldLabel": "Fabricante",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Philips"
+                  },
+                  {
+                    "option": "GE HealthCare"
+                  },
+                  {
+                    "option": "Siemens Healthineers AG"
+                  },
+                  {
+                    "option": "Canon Medical Systems"
+                  },
+                  {
+                    "option": "Hitachi"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Modelo",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "N° de Série (S/N) ",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Motivação do Serviço",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Eventos Relevantes Associados",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Tipo de Intervenção",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Manutenção Corretiva"
+                  },
+                  {
+                    "option": "Manutenção Preventiva"
+                  },
+                  {
+                    "option": "Visita Técnica"
+                  },
+                  {
+                    "option": "Outro"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "gerar os",
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "Sucesso!"
+            }
+          },
+          "ignoreBots": true
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        1136,
+        112
+      ],
+      "id": "6cb0db5f-4f3b-4f97-bc3e-dff5011e6a68",
+      "name": "On form submission",
+      "webhookId": "db095550-d6da-4d27-b58a-b9e20e6155d0"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        []
+      ]
+    },
+    "Redis1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar texto5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto1": {
+      "main": [
+        []
+      ]
+    },
+    "Enviar texto5": {
+      "main": [
+        [
+          {
+            "node": "Redis6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "axios/1.12.2",
+            "content-length": "782",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "10.0.1.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "teste",
+            "data": {
+              "key": {
+                "remoteJid": "557999801810@s.whatsapp.net",
+                "remoteJidAlt": "7228732002361@lid",
+                "fromMe": true,
+                "id": "AC207D77E12BB056D508A7B47F8FE65B",
+                "participant": "",
+                "addressingMode": "pn"
+              },
+              "pushName": "Wendel Lucas",
+              "status": "SERVER_ACK",
+              "message": {
+                "conversation": "Teste\nTeste\nTeste"
+              },
+              "messageType": "conversation",
+              "messageTimestamp": 1763733437,
+              "instanceId": "a67cc44b-8277-4434-924c-42708131588f",
+              "source": "android"
+            },
+            "destination": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/7a6699a8-890e-4b2b-8a03-167175154a31",
+            "date_time": "2025-11-21T10:57:17.528Z",
+            "sender": "557999801810@s.whatsapp.net",
+            "server_url": "http://evo-j0o08ok8sgwc4cog04w0owok.95.217.164.173.sslip.io",
+            "apikey": "70B682D69733-4725-9C71-961DCF9A99C0"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/7a6699a8-890e-4b2b-8a03-167175154a31",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "672e9277-d70e-4fd4-8423-3eec4aed6620",
+  "triggerCount": 2,
+  "shared": [
+    {
+      "updatedAt": "2025-11-19T14:18:55.214Z",
+      "createdAt": "2025-11-19T14:18:55.214Z",
+      "role": "workflow:owner",
+      "workflowId": "XPdfiD70CzN7yMxS",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "tags": []
+}
