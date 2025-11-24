@@ -1,0 +1,230 @@
+{
+  "updatedAt": "2025-11-17T19:19:27.238Z",
+  "createdAt": "2025-11-17T14:12:05.304Z",
+  "id": "vDQ5Ln3pUAYUeKCi",
+  "name": "Atualizar access_token META",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months",
+              "triggerAtDayOfMonth": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fb365056-550b-4586-9f3c-2f212122e090",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "IBycaSsXqdACnr31",
+          "mode": "list",
+          "cachedResultName": "token",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/IBycaSsXqdACnr31"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "1"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "70de02ea-9730-44d2-aa3b-07bcd9c97a9b",
+      "name": "Get row(s)"
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v23.0/oauth/access_token",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "grant_type",
+              "value": "fb_exchange_token"
+            },
+            {
+              "name": "client_id",
+              "value": "1337896127719232"
+            },
+            {
+              "name": "client_secret",
+              "value": "676ea68b5b957ee52a9864941745379d"
+            },
+            {
+              "name": "fb_exchange_token",
+              "value": "={{ $json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "f2454fb5-c592-48ca-a453-f9b09f996bda",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "IBycaSsXqdACnr31",
+          "mode": "list",
+          "cachedResultName": "token",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/IBycaSsXqdACnr31"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "1"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "token": "={{ $json.access_token }}"
+          },
+          "matchingColumns": [
+            "token"
+          ],
+          "schema": [
+            {
+              "id": "token",
+              "displayName": "token",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "b6c0edd6-d0fd-4a77-b6e8-df927821e33b",
+      "name": "Update row(s)"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": null,
+  "pinData": {
+    "HTTP Request": [
+      {
+        "json": {
+          "access_token": "EAATAzzdwZA0ABPjzZAZAVfgqU1UPgd0eZCloA0htituQxH5EPir7GIQYSXFONCnFCUSKBNKqU2tm6ZA4Ujf21NoBfzHwGMHDyNbmhqfJNZAJYf9IWUf3GzWiBLrFFrMdlkU06YNMFiWs55JqrUpIKQtpNTT1uLIXsZCKooUxkhQC0neLQtybnskmPslufyu",
+          "token_type": "bearer"
+        }
+      }
+    ]
+  },
+  "versionId": "503492be-d9ef-416b-a785-a4ec06b7ff0e",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T14:12:05.304Z",
+      "createdAt": "2025-11-17T14:12:05.304Z",
+      "role": "workflow:owner",
+      "workflowId": "vDQ5Ln3pUAYUeKCi",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2025-11-17T14:11:29.912Z",
+      "createdAt": "2025-11-17T14:11:29.912Z",
+      "id": "1TwLnMKvi0k7VFNg",
+      "name": "Meta ADS"
+    },
+    {
+      "updatedAt": "2025-11-17T14:11:29.909Z",
+      "createdAt": "2025-11-17T14:11:29.909Z",
+      "id": "IH7MEWK4Uwzz1LV0",
+      "name": "Facebook"
+    },
+    {
+      "updatedAt": "2025-11-17T14:11:29.903Z",
+      "createdAt": "2025-11-17T14:11:29.903Z",
+      "id": "A1HgiGap1mb2jgxR",
+      "name": "Database_n8n"
+    }
+  ]
+}
