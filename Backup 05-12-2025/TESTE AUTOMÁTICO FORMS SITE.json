@@ -1,0 +1,4938 @@
+{
+  "updatedAt": "2025-11-17T19:18:09.143Z",
+  "createdAt": "2025-11-17T14:33:39.373Z",
+  "id": "lL78JeqoeoJ1Vhj5",
+  "name": "TESTE AUTOMÁTICO FORMS SITE",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "TESTE AUTOMÁTICO FORMS SITE",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nome",
+              "placeholder": "Nome"
+            },
+            {
+              "fieldLabel": "Email",
+              "placeholder": "Email"
+            },
+            {
+              "fieldLabel": "WhatsApp",
+              "placeholder": "Telefone"
+            },
+            {
+              "fieldLabel": "Clínica",
+              "placeholder": "Clínica"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -928,
+        1376
+      ],
+      "id": "f3af6b59-483e-4e74-9098-d0fafc08e28b",
+      "name": "On form submission",
+      "webhookId": "ae02f13d-8e37-450f-9087-0e07be4d6615"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        0
+      ],
+      "id": "202c60ea-8b69-4a61-9215-b156c93379e3",
+      "name": "PG Inícial POPUP SPPA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        144
+      ],
+      "id": "8a5532b3-c1c6-4335-a76c-8013603a7765",
+      "name": "PG Inícial POPUP QSA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        288
+      ],
+      "id": "983bfc1d-70e6-48ad-bd54-995adb48efbd",
+      "name": "PG Inícial POPUP SEA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-popup",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        432
+      ],
+      "id": "e638251c-cf07-4e14-a142-583a72f71032",
+      "name": "PG Inícial FFORM ECA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/form-popup-bobinas",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        576
+      ],
+      "id": "8c01b4e6-b374-435a-9ef8-0fde4aac30e7",
+      "name": "PG BBEX POPUP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-contato-agora-bbex",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        720
+      ],
+      "id": "ce8337c6-0ae5-475c-a032-6299bfdfae9c",
+      "name": "PG BBEX FFORM SCA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/solicitar-proposta-agora-rc",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        864
+      ],
+      "id": "91a62d1e-2e15-420a-84ca-79ec4ba1ec84",
+      "name": "PG RC POPUP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/ressonancia-certificada",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        1008
+      ],
+      "id": "ced391a5-efc5-4ce0-8ed9-85689c3a501e",
+      "name": "PG RC FFORM SCA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/compra-de-tomografia",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        1152
+      ],
+      "id": "27b93c04-2971-42a6-ad05-9f08f7a042ab",
+      "name": "PG TC"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/desmontagem-montagem-rm",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        1296
+      ],
+      "id": "619a39f8-1b6e-493f-bb6a-8f1bd2ae85ed",
+      "name": "PG D/M RM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/consultoria",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        1440
+      ],
+      "id": "f93f1c28-fca0-48ef-a523-93e8eb12591d",
+      "name": "PG CTRIA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/diagnostico-de-ressonancia",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        1584
+      ],
+      "id": "efecfc33-b59b-42b5-bbbe-ad885967c440",
+      "name": "PG DG RM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/contratos-de-manutencao",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        1728
+      ],
+      "id": "3ab399e7-c17c-4857-962c-510e648c2167",
+      "name": "PG CT MNTÇ"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/concerto-de-bbdeex",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        1872
+      ],
+      "id": "de5a3268-68fd-4593-8c23-583f335c7816",
+      "name": "PG RP BBEX"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/projetos-sala-de-rm",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        2016
+      ],
+      "id": "77df5ec7-52dd-4bd0-b680-bf031d190e61",
+      "name": "PG PJ SRM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/site-planning",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        2160
+      ],
+      "id": "235f8f49-45a5-4643-9c8a-3b3067b054ba",
+      "name": "PG SP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/planejamento-salas-de-rm-rf",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        2320
+      ],
+      "id": "dc6b2e2e-b73a-4638-90b8-e1e433fd0805",
+      "name": "PG PLA SRM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/empresa",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        2464
+      ],
+      "id": "e3c99732-8c18-432e-bcbb-21cd786c3006",
+      "name": "PG EMP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/laudos-tecnicos",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        2608
+      ],
+      "id": "0309d7b0-194f-490d-b406-9dca0de18e10",
+      "name": "PG LD"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.medicalspin.com.br/webhook/cocerto-de-modulos",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=Nome",
+              "value": "={{ $json.Nome }}"
+            },
+            {
+              "name": "Email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "WhatsApp",
+              "value": "={{ $json.WhatsApp }}"
+            },
+            {
+              "name": "Clínica",
+              "value": "={{ $json[\"Clínica\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        2752
+      ],
+      "id": "a1fb960f-a065-474c-bff5-950cf2afe8e9",
+      "name": "PG CT MD"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5a3c7daf-12d2-4a5d-87a3-8536ca41541e",
+      "name": "Wait",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        144
+      ],
+      "id": "9951836e-f582-494b-9204-24afcea4d9a9",
+      "name": "Wait1",
+      "webhookId": "8fa82629-5606-414d-b844-3a962854b874"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        288
+      ],
+      "id": "8fc47343-d411-4d8c-bfbb-6fae9386cc35",
+      "name": "Wait2",
+      "webhookId": "5b2e93de-196c-499f-b924-45e6081ede59"
+    },
+    {
+      "parameters": {
+        "amount": 4
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        432
+      ],
+      "id": "9b827947-31b9-4037-9500-4b0e2be1e138",
+      "name": "Wait3",
+      "webhookId": "db4ce060-0c5d-4a2a-aa5b-d411dc581488"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        576
+      ],
+      "id": "afe341bf-4c33-4c49-9d8f-830d3f8431c9",
+      "name": "Wait4",
+      "webhookId": "753b4aec-9f86-4fd5-8aec-05784e07e6dc"
+    },
+    {
+      "parameters": {
+        "amount": 6
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        720
+      ],
+      "id": "76b574ee-1910-415e-b204-6a07a58c72f8",
+      "name": "Wait5",
+      "webhookId": "e56b2dc9-5b20-43ab-a84d-d4d962b7ceb1"
+    },
+    {
+      "parameters": {
+        "amount": 7
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        864
+      ],
+      "id": "6359861f-651b-4589-992b-c6af5eb676ee",
+      "name": "Wait7",
+      "webhookId": "79d058b7-0fce-476a-89bd-79fe794beb63"
+    },
+    {
+      "parameters": {
+        "amount": 8
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        1008
+      ],
+      "id": "61e13cae-9646-4252-b487-ae0707859693",
+      "name": "Wait8",
+      "webhookId": "6cafb353-8ae0-4bc6-833b-e0f5f347e437"
+    },
+    {
+      "parameters": {
+        "amount": 9
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        1152
+      ],
+      "id": "3ae62ea0-7313-496c-a41e-76882d5d9f13",
+      "name": "Wait6",
+      "webhookId": "4863914e-035a-4405-8519-c34090a5e582"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        1296
+      ],
+      "id": "d999102d-10aa-4ef3-9e21-023688ba8971",
+      "name": "Wait9",
+      "webhookId": "7301441f-db91-4256-9ca4-c2b1b7010bba"
+    },
+    {
+      "parameters": {
+        "amount": 11
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        1440
+      ],
+      "id": "b10e1e05-0db1-4e55-90bf-5a6e5597edeb",
+      "name": "Wait11",
+      "webhookId": "fe5e752f-210f-4aab-a3af-29dbfc0edb37"
+    },
+    {
+      "parameters": {
+        "amount": 12
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        1584
+      ],
+      "id": "61451504-92af-46ea-a53f-30ab4c5451d8",
+      "name": "Wait12",
+      "webhookId": "6779bf6d-7852-4faa-afae-657a2d0d1568"
+    },
+    {
+      "parameters": {
+        "amount": 13
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        1728
+      ],
+      "id": "6886b8ec-4000-44f3-8eaf-4a520259975b",
+      "name": "Wait10",
+      "webhookId": "07a50e30-569a-43eb-bfbd-dce9fb936653"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        2752
+      ],
+      "id": "56c7eaf5-1a31-4ccc-b10a-f4f443b5b6eb",
+      "name": "Wait13",
+      "webhookId": "ba69a01d-15c9-47eb-ab3c-ac832a77954b"
+    },
+    {
+      "parameters": {
+        "amount": 14
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        1872
+      ],
+      "id": "75c6832f-1eef-467b-97e3-d2f9288adb3a",
+      "name": "Wait14",
+      "webhookId": "b8413c17-d2e2-4917-b6ab-d678869a694a"
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        2016
+      ],
+      "id": "524b07af-9968-4f4d-a3de-f6f902a37ac6",
+      "name": "Wait15",
+      "webhookId": "ac3f1a97-3478-4a5c-ba33-dcf8cf062903"
+    },
+    {
+      "parameters": {
+        "amount": 16
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        2160
+      ],
+      "id": "52873658-3fb7-434c-ab91-8bef6e3a9ce6",
+      "name": "Wait16",
+      "webhookId": "fc8fd36d-c45b-4016-b971-4fe457cd6cc1"
+    },
+    {
+      "parameters": {
+        "amount": 19
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        2608
+      ],
+      "id": "ea190298-35d5-4b25-8ca9-06b625fdd8df",
+      "name": "Wait17",
+      "webhookId": "9687286a-70f7-4a71-99ac-b18c698fd50f"
+    },
+    {
+      "parameters": {
+        "amount": 18
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        2464
+      ],
+      "id": "fbe44a8b-fb3c-4548-a616-48b27ba477ed",
+      "name": "Wait18",
+      "webhookId": "2d8d2401-ef14-490e-9f9c-3ae73c9f23eb"
+    },
+    {
+      "parameters": {
+        "amount": 17
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        2320
+      ],
+      "id": "ad9087b5-d243-4a9c-888d-893122b1424b",
+      "name": "Wait19",
+      "webhookId": "f41e5904-823f-457b-ad32-331b1f568341"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        0
+      ],
+      "id": "1f0e1725-1716-4de8-97ba-ff63c3f4a767",
+      "name": "Wait20",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        0
+      ],
+      "id": "185a34c2-e050-4089-b8a1-42f66fee02f2",
+      "name": "Search a deal1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        0
+      ],
+      "id": "95a8e22f-0ffc-4dff-b9fa-4c3c0460c8ab",
+      "name": "Delete a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        0
+      ],
+      "id": "5035fa44-e6fa-4064-8c4d-efbabb7e2212",
+      "name": "Delete a person",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal1').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal1').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        0
+      ],
+      "id": "61b8b5f6-1a00-447e-8aa6-b2141379ccf1",
+      "name": "Search a person",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        0
+      ],
+      "id": "b0050a63-bc30-4e8a-88a8-22bfcfb77b19",
+      "name": "Delete an organization",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        144
+      ],
+      "id": "9b90e731-b5c0-4363-8fa7-2198b97322e9",
+      "name": "Wait21",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        144
+      ],
+      "id": "fffa4b81-7e0d-4dbb-9df0-d4d3f1d7a36d",
+      "name": "Search a deal"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        144
+      ],
+      "id": "f45d74c1-894f-4052-8608-091fca21ea03",
+      "name": "Delete a deal1"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        144
+      ],
+      "id": "bf788c22-47d8-4116-a969-65de33936db9",
+      "name": "Delete a person1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        144
+      ],
+      "id": "c5c2dcc5-4abc-424e-80df-20cd96972d49",
+      "name": "Search a person1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person1').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        144
+      ],
+      "id": "957007a6-f87b-484e-afcc-5d240ecf056b",
+      "name": "Delete an organization1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        288
+      ],
+      "id": "9f8efff6-f9a5-4265-96b8-4f9de4e786cb",
+      "name": "Wait22",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        288
+      ],
+      "id": "edf37a3b-8e30-437d-8101-191def755f99",
+      "name": "Search a deal2"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        288
+      ],
+      "id": "bfc8eca9-727a-49ab-b27b-3a2a9a782b84",
+      "name": "Delete a deal2"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        288
+      ],
+      "id": "74c955da-1e87-4d28-b3a8-03a5dfb3e5c2",
+      "name": "Delete a person2"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal2').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal2').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        288
+      ],
+      "id": "6203fcde-24f2-4675-9ccc-c2ad7076e830",
+      "name": "Search a person2"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person2').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        288
+      ],
+      "id": "dbeaeb95-581b-477e-a28e-678555c3238e",
+      "name": "Delete an organization2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        432
+      ],
+      "id": "44477525-8b2c-4ef5-b3fe-15691911931e",
+      "name": "Wait23",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        432
+      ],
+      "id": "d36a1435-d391-4b9a-b0ba-8a9f27c16aaa",
+      "name": "Search a deal3"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        432
+      ],
+      "id": "94c5c02f-195f-4758-a34c-02fe83556c16",
+      "name": "Delete a deal3"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        432
+      ],
+      "id": "36d7f7bc-d048-4876-9089-06a0d0c3c687",
+      "name": "Delete a person3"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal3').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal3').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        432
+      ],
+      "id": "2b2746e0-ff73-4260-aa8f-17b0002bb2a8",
+      "name": "Search a person3"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person3').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        432
+      ],
+      "id": "ca924273-67c4-452c-a1a7-10ce78368475",
+      "name": "Delete an organization3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        576
+      ],
+      "id": "254056b2-df61-42b2-b3b6-3a62da4e0100",
+      "name": "Wait24",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        576
+      ],
+      "id": "da15fb52-5c5d-41ab-be36-225237cd5ac1",
+      "name": "Search a deal4"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        576
+      ],
+      "id": "57abc1b9-3738-41a8-85a3-52dc8d78b7e4",
+      "name": "Delete a deal4"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        576
+      ],
+      "id": "e3daada7-6e07-42bd-a3c7-6119c19ada08",
+      "name": "Delete a person4"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal4').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal4').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        576
+      ],
+      "id": "1b3ea157-5ff3-4050-88ac-117bbd5b1ca1",
+      "name": "Search a person4"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person4').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        576
+      ],
+      "id": "2196b27b-e71d-4e0e-b4fe-3bacc5ddd136",
+      "name": "Delete an organization4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        720
+      ],
+      "id": "e536ea21-8b94-49bc-80a7-d085db6a1d52",
+      "name": "Wait25",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        720
+      ],
+      "id": "b43d486f-f5e4-487b-8917-a94e0b8c3ef0",
+      "name": "Search a deal5"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        720
+      ],
+      "id": "a55949a1-4bb0-40fd-84ca-3cd4d5443a80",
+      "name": "Delete a deal5"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        720
+      ],
+      "id": "b3a10a09-ca15-4ead-b7e4-42f977aff31f",
+      "name": "Delete a person5"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal5').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal5').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        720
+      ],
+      "id": "cf1d0ce5-e90c-424c-b802-66d5eed362e9",
+      "name": "Search a person5"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person5').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        720
+      ],
+      "id": "44244d74-84de-412a-a8ad-26e689371913",
+      "name": "Delete an organization5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        864
+      ],
+      "id": "859319ed-e790-4392-b324-82740c6f9c99",
+      "name": "Wait26",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        864
+      ],
+      "id": "0e27ff2d-517d-439d-820d-26558b3f3ec9",
+      "name": "Search a deal6"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        864
+      ],
+      "id": "c91c7ada-46d4-431f-a4b4-3945df355dc5",
+      "name": "Delete a deal6"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        864
+      ],
+      "id": "1c5f1d30-7c77-4ac9-a2a8-4d4138eae76e",
+      "name": "Delete a person6"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal6').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal6').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        864
+      ],
+      "id": "1a2e5ac8-86e7-4429-b51f-884a84c769ce",
+      "name": "Search a person6"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person6').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        864
+      ],
+      "id": "bc4d2520-b9a6-4fc2-8600-6e519c22be8f",
+      "name": "Delete an organization6"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        1008
+      ],
+      "id": "1a759695-c618-4055-9a99-57a5653d9036",
+      "name": "Wait27",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        1008
+      ],
+      "id": "af29828f-9da9-4e35-874b-dfdbfeeb77c7",
+      "name": "Search a deal7"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        1008
+      ],
+      "id": "e4e5e0ac-4972-4873-b1ca-d640d00c220b",
+      "name": "Delete a deal7"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        1008
+      ],
+      "id": "931cfe0d-e420-44bb-a888-288b285b066d",
+      "name": "Delete a person7"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal7').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal7').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        1008
+      ],
+      "id": "7cf5edb0-9594-4294-b2e9-a4947f2db57b",
+      "name": "Search a person7"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person7').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        1008
+      ],
+      "id": "675eb091-9853-403d-b4ef-a2a307461c20",
+      "name": "Delete an organization7"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        1152
+      ],
+      "id": "0375196b-b8fd-4b69-bf99-a684872ee745",
+      "name": "Wait28",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        1152
+      ],
+      "id": "d1419adc-0f56-42d1-acb7-b1172ca39545",
+      "name": "Search a deal8"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        1152
+      ],
+      "id": "a0d32394-2d14-4959-a4d2-2960f8883437",
+      "name": "Delete a deal8"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        1152
+      ],
+      "id": "b62fbc5f-aa53-47b0-829f-1952fd232a2b",
+      "name": "Delete a person8"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal8').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal8').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        1152
+      ],
+      "id": "2dd12815-d78f-4d15-a285-d04ed964a06a",
+      "name": "Search a person8"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person8').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        1152
+      ],
+      "id": "51d34b9a-521a-4c7e-a70d-f571edd2abf9",
+      "name": "Delete an organization8"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        1296
+      ],
+      "id": "bf4fcee7-6cd8-456c-890e-a4b27e3f7400",
+      "name": "Wait29",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        1296
+      ],
+      "id": "52665679-c9eb-4f0d-be89-c2844b7fa585",
+      "name": "Search a deal9"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        1296
+      ],
+      "id": "33fea43a-a7fe-4078-b6b9-6871048ce6a6",
+      "name": "Delete a deal9"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        1296
+      ],
+      "id": "9a278697-8d9d-4502-a8cc-3ac8e69fd213",
+      "name": "Delete a person9"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal9').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal9').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        1296
+      ],
+      "id": "ccdad03d-6d20-429a-af49-ba9ed971ac28",
+      "name": "Search a person9"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person9').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        1296
+      ],
+      "id": "96693f6b-4149-4d63-8ad7-2e8d0d0050e6",
+      "name": "Delete an organization9"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        1440
+      ],
+      "id": "a23d482f-d847-49dd-9187-402bb5d32e46",
+      "name": "Wait30",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        1440
+      ],
+      "id": "a42b0e8c-c481-472b-81c8-2183e40fd106",
+      "name": "Search a deal10"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        1440
+      ],
+      "id": "3c3b6c44-912c-4240-936c-3cc41efaead0",
+      "name": "Delete a deal10"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        1440
+      ],
+      "id": "f8553715-9f51-4154-951e-c0b20a2d718d",
+      "name": "Delete a person10"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal10').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal10').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        1440
+      ],
+      "id": "b9d36854-0b74-45c4-801b-56ab5ee342ad",
+      "name": "Search a person10"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person10').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        1440
+      ],
+      "id": "cfa6c3fc-4ab4-4534-b8ff-d97c3060ca70",
+      "name": "Delete an organization10"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        1584
+      ],
+      "id": "c1b255d9-4261-43ab-b1a3-c0a5c9985b42",
+      "name": "Wait31",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        1584
+      ],
+      "id": "88d2feeb-43ee-40af-9c7b-efb774bd4fef",
+      "name": "Search a deal11"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        1584
+      ],
+      "id": "bd5c9743-e243-4d40-8868-67a133433370",
+      "name": "Delete a deal11"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        1584
+      ],
+      "id": "53855cf5-c2f1-41f0-9467-96439a2a2fcb",
+      "name": "Delete a person11"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal11').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal11').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        1584
+      ],
+      "id": "0d2b4362-27e9-41d2-8047-70fdfa604686",
+      "name": "Search a person11"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person11').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        1584
+      ],
+      "id": "def427b9-92d1-45b1-bd0e-ce74804397ee",
+      "name": "Delete an organization11"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        1728
+      ],
+      "id": "9b085943-8c2d-4b2b-8032-6f63c0048937",
+      "name": "Wait32",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        1728
+      ],
+      "id": "4913145b-f0f9-4be5-9c52-54043545e9a5",
+      "name": "Search a deal12"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        1728
+      ],
+      "id": "9559bece-d69d-4622-b0a0-4587759e785a",
+      "name": "Delete a deal12"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        1728
+      ],
+      "id": "9c582dfb-9936-49f9-8a32-c8fe4ebe218a",
+      "name": "Delete a person12"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal12').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal12').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        1728
+      ],
+      "id": "0ec681e6-3c6a-44f0-bb28-ffee849036b7",
+      "name": "Search a person12"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person12').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        1728
+      ],
+      "id": "7058998c-7f92-4b24-8263-d98e6791fed3",
+      "name": "Delete an organization12"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        1872
+      ],
+      "id": "c9ab5513-7d2e-4352-a4cf-9caefd9abba0",
+      "name": "Wait33",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        1872
+      ],
+      "id": "d5f5f9d2-cc95-4a3e-a3b8-86b77aedd6fa",
+      "name": "Search a deal13"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        1872
+      ],
+      "id": "ef9450c7-ebba-4aef-b999-ea09a5e85317",
+      "name": "Delete a deal13"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        1872
+      ],
+      "id": "bb344cb0-9b2a-4460-9616-995edacf2a07",
+      "name": "Delete a person13"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal13').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal13').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        1872
+      ],
+      "id": "684f8a67-fb97-4b66-a7c7-decdc2de3d99",
+      "name": "Search a person13"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person13').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        1872
+      ],
+      "id": "c045f166-96dd-4741-a80b-a352084344e7",
+      "name": "Delete an organization13"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        2016
+      ],
+      "id": "edbe374b-56e3-476a-82b4-92fad0225cd9",
+      "name": "Wait34",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        2016
+      ],
+      "id": "0b58d44e-8696-49be-8ca7-4b9f98404130",
+      "name": "Search a deal14"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        2016
+      ],
+      "id": "381109ec-3585-47da-a450-57105474af0e",
+      "name": "Delete a deal14"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        2016
+      ],
+      "id": "45550f29-dc5b-4c1b-abd2-c9dc4a29808b",
+      "name": "Delete a person14"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal14').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal14').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        2016
+      ],
+      "id": "71114f3d-9321-4b08-8bc3-413c9dbb62d6",
+      "name": "Search a person14"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person14').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        2016
+      ],
+      "id": "30ae8486-57a1-4a8f-a2ea-a0cc9cca1277",
+      "name": "Delete an organization14"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        2160
+      ],
+      "id": "a96e6b90-0551-42d1-8f24-109f0e9934ed",
+      "name": "Wait35",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        2160
+      ],
+      "id": "48de8ad6-2e4c-46a8-8f6a-fecdff21e120",
+      "name": "Search a deal15"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        2160
+      ],
+      "id": "ddb6d223-8028-4e0a-aa26-361fa33f1cbf",
+      "name": "Delete a deal15"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        2160
+      ],
+      "id": "6705e65d-89e9-437e-8467-0a2db120a4cf",
+      "name": "Delete a person15"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal15').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal15').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        2160
+      ],
+      "id": "b448b52f-ab5c-4fbb-9b88-1f55e754253f",
+      "name": "Search a person15"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person15').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        2160
+      ],
+      "id": "4be60beb-7018-430f-bbc0-7e5f60fd4259",
+      "name": "Delete an organization15"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        2320
+      ],
+      "id": "b6f71ead-dbbd-49c4-8694-729f38a870dc",
+      "name": "Wait36",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        2320
+      ],
+      "id": "dd01ecca-3da1-4406-9aec-e6ea8123c87d",
+      "name": "Search a deal16"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        2320
+      ],
+      "id": "57f904c5-961b-416b-ab1c-d4fb113ec123",
+      "name": "Delete a deal16"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        2320
+      ],
+      "id": "77a5d86f-681f-47ca-96f0-a9be38090a15",
+      "name": "Delete a person16"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal16').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal16').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        2320
+      ],
+      "id": "cdb7dba0-c567-4d9a-82bf-6d0a0fac46a2",
+      "name": "Search a person16"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person16').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        2320
+      ],
+      "id": "06bf3e60-9ecb-4c2a-a46f-dce7528c4780",
+      "name": "Delete an organization16"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        2464
+      ],
+      "id": "1d05ee4e-b941-4094-8a5e-8abb6dcfab3d",
+      "name": "Wait37",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        2464
+      ],
+      "id": "f7c0bd1f-cd18-49f6-8056-2463d565963c",
+      "name": "Search a deal17"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        2464
+      ],
+      "id": "a3e9a9ba-cd41-4896-b18b-bbcd64ce8a88",
+      "name": "Delete a deal17"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        2464
+      ],
+      "id": "d90f8f76-f619-42a3-a38d-3cdec969a116",
+      "name": "Delete a person17"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal17').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal17').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        2464
+      ],
+      "id": "72323244-4830-4e1b-9622-daff0864c869",
+      "name": "Search a person17"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person17').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        2464
+      ],
+      "id": "6f0f5efe-f0e6-4b7e-b3d4-12132ed594e4",
+      "name": "Delete an organization17"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        2608
+      ],
+      "id": "ccfe4a24-8fd3-4b57-a025-69dd895e48bf",
+      "name": "Wait38",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        2608
+      ],
+      "id": "611d97a6-a61e-462b-9253-87d3c90c7a7a",
+      "name": "Search a deal18"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        2608
+      ],
+      "id": "f5aaa826-9d1a-464b-aeb3-dffecae9f63c",
+      "name": "Delete a deal18"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        2608
+      ],
+      "id": "c95f81da-c081-4ce2-96d2-c3c13024eea7",
+      "name": "Delete a person18"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal18').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal18').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        2608
+      ],
+      "id": "81895843-bf30-42ed-8390-44f9960b8797",
+      "name": "Search a person18"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person18').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        2608
+      ],
+      "id": "f6197ef3-c6dd-4407-b397-961db1bfeb2f",
+      "name": "Delete an organization18"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        2752
+      ],
+      "id": "f9ced764-9663-4b0f-8435-dd8c23707f75",
+      "name": "Wait39",
+      "webhookId": "3181f6d7-1d94-48c5-8f98-f664a67f253d"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $('On form submission').item.json.Nome }}\n{{ $('On form submission').item.json.Email }}\n{{ $('On form submission').item.json.WhatsApp }}\n{{ $('On form submission').item.json['Clínica'] }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        768,
+        2752
+      ],
+      "id": "c395efb8-0bbc-4d1c-9318-baa504b79251",
+      "name": "Search a deal19"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "dealId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        928,
+        2752
+      ],
+      "id": "1b709568-6c8a-4deb-ae68-daedb0dab1e4",
+      "name": "Delete a deal19"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "delete",
+        "personId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        2752
+      ],
+      "id": "d9ca5cc8-3622-4bf3-9291-b5137f6676e3",
+      "name": "Delete a person19"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $('Search a deal19').item.json.person.name }}",
+        "additionalFields": {
+          "organizationId": "={{ $('Search a deal19').item.json.organization.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        2752
+      ],
+      "id": "fe6f4a8c-74b3-4588-b85c-f3097bccee5e",
+      "name": "Search a person19"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "delete",
+        "organizationId": "={{ $('Search a person19').item.json.organization.id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        2752
+      ],
+      "id": "cf2436f1-e6c7-4976-9f7f-8700e6433bfc",
+      "name": "Delete an organization19",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 10
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2112,
+        1024
+      ],
+      "id": "410e47a2-04a6-49d9-a0a5-37e06d9d33ad",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "numberInputs": 10
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2112,
+        1456
+      ],
+      "id": "88846154-31c4-4489-b7e5-bca12f632937",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2288,
+        1360
+      ],
+      "id": "8d3a4c28-c476-41ec-9e5a-add4aa3fea7e",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "5579999801810",
+        "messageText": "=✅ Teste concluído com sucesso\n\n📅 Data: {{ $now.format('dd-LL-yyyy') }}\n🆔 ID da Execução: {{ $execution.id }}\n🌐 URL: https://n8n.medicalspin.com.br/workflow/{{\n $workflow.id }}\n⚙️ Fluxo: {{ $workflow.name }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2688,
+        1360
+      ],
+      "id": "d4d936fb-caac-4099-a576-6d275e438ec8",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ids: items.map(item => item.json.id)\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2496,
+        1360
+      ],
+      "id": "d3038a35-e831-4e6d-a471-aa3c12893754",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait14",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait15",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait16",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait17",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial POPUP SPPA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial POPUP QSA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial POPUP SEA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "PG Inícial FFORM ECA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "PG BBEX POPUP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "PG BBEX FFORM SCA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait7": {
+      "main": [
+        [
+          {
+            "node": "PG RC POPUP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait8": {
+      "main": [
+        [
+          {
+            "node": "PG RC FFORM SCA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "PG TC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait9": {
+      "main": [
+        [
+          {
+            "node": "PG D/M RM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait11": {
+      "main": [
+        [
+          {
+            "node": "PG CTRIA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait12": {
+      "main": [
+        [
+          {
+            "node": "PG DG RM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait10": {
+      "main": [
+        [
+          {
+            "node": "PG CT MNTÇ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait13": {
+      "main": [
+        [
+          {
+            "node": "PG CT MD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait14": {
+      "main": [
+        [
+          {
+            "node": "PG RP BBEX",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait15": {
+      "main": [
+        [
+          {
+            "node": "PG PJ SRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait16": {
+      "main": [
+        [
+          {
+            "node": "PG SP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait17": {
+      "main": [
+        [
+          {
+            "node": "PG LD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait18": {
+      "main": [
+        [
+          {
+            "node": "PG EMP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait19": {
+      "main": [
+        [
+          {
+            "node": "PG PLA SRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG Inícial POPUP SPPA": {
+      "main": [
+        [
+          {
+            "node": "Wait20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait20": {
+      "main": [
+        [
+          {
+            "node": "Search a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal1": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG Inícial FFORM ECA": {
+      "main": [
+        [
+          {
+            "node": "Wait23",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG Inícial POPUP SEA": {
+      "main": [
+        [
+          {
+            "node": "Wait22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG Inícial POPUP QSA": {
+      "main": [
+        [
+          {
+            "node": "Wait21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG BBEX POPUP": {
+      "main": [
+        [
+          {
+            "node": "Wait24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG BBEX FFORM SCA": {
+      "main": [
+        [
+          {
+            "node": "Wait25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG RC POPUP": {
+      "main": [
+        [
+          {
+            "node": "Wait26",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG RC FFORM SCA": {
+      "main": [
+        [
+          {
+            "node": "Wait27",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG TC": {
+      "main": [
+        [
+          {
+            "node": "Wait28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG D/M RM": {
+      "main": [
+        [
+          {
+            "node": "Wait29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG CTRIA": {
+      "main": [
+        [
+          {
+            "node": "Wait30",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG DG RM": {
+      "main": [
+        [
+          {
+            "node": "Wait31",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG CT MNTÇ": {
+      "main": [
+        [
+          {
+            "node": "Wait32",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG RP BBEX": {
+      "main": [
+        [
+          {
+            "node": "Wait33",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG PJ SRM": {
+      "main": [
+        [
+          {
+            "node": "Wait34",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal": {
+      "main": [
+        [
+          {
+            "node": "Search a person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person": {
+      "main": [
+        [
+          {
+            "node": "Delete a person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait21": {
+      "main": [
+        [
+          {
+            "node": "Search a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal1": {
+      "main": [
+        [
+          {
+            "node": "Search a person1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person1": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person1": {
+      "main": [
+        [
+          {
+            "node": "Delete a person1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait22": {
+      "main": [
+        [
+          {
+            "node": "Search a deal2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal2": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal2": {
+      "main": [
+        [
+          {
+            "node": "Search a person2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person2": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person2": {
+      "main": [
+        [
+          {
+            "node": "Delete a person2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait23": {
+      "main": [
+        [
+          {
+            "node": "Search a deal3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal3": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal3": {
+      "main": [
+        [
+          {
+            "node": "Search a person3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person3": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person3": {
+      "main": [
+        [
+          {
+            "node": "Delete a person3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait24": {
+      "main": [
+        [
+          {
+            "node": "Search a deal4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal4": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal4": {
+      "main": [
+        [
+          {
+            "node": "Search a person4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person4": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person4": {
+      "main": [
+        [
+          {
+            "node": "Delete a person4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait25": {
+      "main": [
+        [
+          {
+            "node": "Search a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal5": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal5": {
+      "main": [
+        [
+          {
+            "node": "Search a person5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person5": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person5": {
+      "main": [
+        [
+          {
+            "node": "Delete a person5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait26": {
+      "main": [
+        [
+          {
+            "node": "Search a deal6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal6": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal6": {
+      "main": [
+        [
+          {
+            "node": "Search a person6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person6": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person6": {
+      "main": [
+        [
+          {
+            "node": "Delete a person6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait27": {
+      "main": [
+        [
+          {
+            "node": "Search a deal7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal7": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal7": {
+      "main": [
+        [
+          {
+            "node": "Search a person7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person7": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person7": {
+      "main": [
+        [
+          {
+            "node": "Delete a person7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait28": {
+      "main": [
+        [
+          {
+            "node": "Search a deal8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal8": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal8": {
+      "main": [
+        [
+          {
+            "node": "Search a person8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person8": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person8": {
+      "main": [
+        [
+          {
+            "node": "Delete a person8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait29": {
+      "main": [
+        [
+          {
+            "node": "Search a deal9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal9": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal9": {
+      "main": [
+        [
+          {
+            "node": "Search a person9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person9": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person9": {
+      "main": [
+        [
+          {
+            "node": "Delete a person9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait30": {
+      "main": [
+        [
+          {
+            "node": "Search a deal10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal10": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal10": {
+      "main": [
+        [
+          {
+            "node": "Search a person10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person10": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person10": {
+      "main": [
+        [
+          {
+            "node": "Delete a person10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait31": {
+      "main": [
+        [
+          {
+            "node": "Search a deal11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal11": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal11": {
+      "main": [
+        [
+          {
+            "node": "Search a person11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person11": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person11": {
+      "main": [
+        [
+          {
+            "node": "Delete a person11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait32": {
+      "main": [
+        [
+          {
+            "node": "Search a deal12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal12": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal12": {
+      "main": [
+        [
+          {
+            "node": "Search a person12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person12": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person12": {
+      "main": [
+        [
+          {
+            "node": "Delete a person12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait33": {
+      "main": [
+        [
+          {
+            "node": "Search a deal13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal13": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal13": {
+      "main": [
+        [
+          {
+            "node": "Search a person13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person13": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person13": {
+      "main": [
+        [
+          {
+            "node": "Delete a person13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait34": {
+      "main": [
+        [
+          {
+            "node": "Search a deal14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal14": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal14": {
+      "main": [
+        [
+          {
+            "node": "Search a person14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person14": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person14": {
+      "main": [
+        [
+          {
+            "node": "Delete a person14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait35": {
+      "main": [
+        [
+          {
+            "node": "Search a deal15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal15": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal15": {
+      "main": [
+        [
+          {
+            "node": "Search a person15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person15": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person15": {
+      "main": [
+        [
+          {
+            "node": "Delete a person15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG SP": {
+      "main": [
+        [
+          {
+            "node": "Wait35",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait36": {
+      "main": [
+        [
+          {
+            "node": "Search a deal16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal16": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal16": {
+      "main": [
+        [
+          {
+            "node": "Search a person16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person16": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person16": {
+      "main": [
+        [
+          {
+            "node": "Delete a person16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait37": {
+      "main": [
+        [
+          {
+            "node": "Search a deal17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal17": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal17": {
+      "main": [
+        [
+          {
+            "node": "Search a person17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person17": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person17": {
+      "main": [
+        [
+          {
+            "node": "Delete a person17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait38": {
+      "main": [
+        [
+          {
+            "node": "Search a deal18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal18": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal18": {
+      "main": [
+        [
+          {
+            "node": "Search a person18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person18": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person18": {
+      "main": [
+        [
+          {
+            "node": "Delete a person18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait39": {
+      "main": [
+        [
+          {
+            "node": "Search a deal19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal19": {
+      "main": [
+        [
+          {
+            "node": "Delete a deal19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a deal19": {
+      "main": [
+        [
+          {
+            "node": "Search a person19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a person19": {
+      "main": [
+        [
+          {
+            "node": "Delete an organization19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person19": {
+      "main": [
+        [
+          {
+            "node": "Delete a person19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG PLA SRM": {
+      "main": [
+        [
+          {
+            "node": "Wait36",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG EMP": {
+      "main": [
+        [
+          {
+            "node": "Wait37",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG LD": {
+      "main": [
+        [
+          {
+            "node": "Wait38",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PG CT MD": {
+      "main": [
+        [
+          {
+            "node": "Wait39",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an organization": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an organization1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Delete an organization2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Delete an organization3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Delete an organization4": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Delete an organization5": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Delete an organization6": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "Delete an organization7": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 7
+          }
+        ]
+      ]
+    },
+    "Delete an organization8": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 8
+          }
+        ]
+      ]
+    },
+    "Delete an organization9": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 9
+          }
+        ]
+      ]
+    },
+    "Delete an organization10": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an organization11": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Delete an organization12": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Delete an organization13": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Delete an organization14": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Delete an organization15": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Delete an organization16": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "Delete an organization17": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 7
+          }
+        ]
+      ]
+    },
+    "Delete an organization18": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 8
+          }
+        ]
+      ]
+    },
+    "Delete an organization19": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 9
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "e48d9f89-116b-458f-ad90-c33b9f000525",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T14:33:39.373Z",
+      "createdAt": "2025-11-17T14:33:39.373Z",
+      "role": "workflow:owner",
+      "workflowId": "lL78JeqoeoJ1Vhj5",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2025-11-17T14:32:35.191Z",
+      "createdAt": "2025-11-17T14:32:35.191Z",
+      "id": "Llfmd66GWbMUHQMr",
+      "name": "Http"
+    },
+    {
+      "updatedAt": "2025-11-17T14:32:35.183Z",
+      "createdAt": "2025-11-17T14:32:35.183Z",
+      "id": "yJFwygfFzfwrx5AJ",
+      "name": "n8nForm"
+    }
+  ]
+}
