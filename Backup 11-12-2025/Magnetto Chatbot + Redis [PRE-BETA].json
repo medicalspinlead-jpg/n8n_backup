@@ -1,0 +1,5440 @@
+{
+  "updatedAt": "2025-12-05T19:19:55.066Z",
+  "createdAt": "2025-11-19T14:18:55.214Z",
+  "id": "XPdfiD70CzN7yMxS",
+  "name": "Magnetto Chatbot + Redis [PRE-BETA]",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "ordem-de-serviço",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1584,
+        -1328
+      ],
+      "id": "9c73b575-8f6b-4de9-a2a9-66c279b0885a",
+      "name": "Webhook1",
+      "webhookId": "7a6699a8-890e-4b2b-8a03-167175154a31"
+    },
+    {
+      "parameters": {
+        "html": "<!doctype html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />\n  <title>Ordem de Serviço - Medical Spin</title>\n  <style>\n    :root{\n      --bg:#f3f6fb;\n      --surface:#ffffff;\n      --muted:#6b7280;\n      --accent:#0b74ff;\n      --accent-600:#095fcc;\n      --danger:#dc2626;\n      --card-radius:12px;\n      --input-radius:8px;\n      --border:#e6e9ef;\n      --glass:rgba(11,116,255,0.06);\n      --shadow-1:0 6px 20px rgba(16,24,40,0.06);\n      --shadow-2:0 2px 8px rgba(16,24,40,0.04);\n      --font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial;\n      --max-width:980px;\n    }\n\n    *{box-sizing:border-box}\n    html,body{height:100%}\n    body{\n      margin:0;\n      font-family:var(--font-family);\n      background:linear-gradient(180deg,var(--bg),#eef4ff 120px  );\n      color:#0f172a;\n      -webkit-font-smoothing:antialiased;\n      -moz-osx-font-smoothing:grayscale;\n      line-height:1.45;\n      padding:24px 12px;\n    }\n\n    .container{\n      max-width:var(--max-width);\n      margin:0 auto;\n    }\n\n    .topbar{\n      display:flex;\n      gap:12px;\n      align-items:center;\n      justify-content:space-between;\n      margin-bottom:18px;\n    }\n\n    .brand{\n      display:flex;align-items:center;gap:12px\n    }\n\n    .logo{\n      height:44px;width:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-600));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:var(--shadow-1)\n    }\n\n    h1{font-size:18px;margin:0;font-weight:700}\n    .subtitle{font-size:13px;color:var(--muted)}\n\n    /* main form card */\n    .card{\n      background:var(--surface);\n      border-radius:var(--card-radius);\n      padding:20px;\n      box-shadow:var(--shadow-1);\n      border:1px solid transparent;\n    }\n\n    form .section{\n      margin-bottom:18px;\n    }\n\n    .section-header{\n      display:flex;align-items:center;justify-content:space-between;margin-bottom:10px\n    }\n\n    .section-title{font-size:15px;font-weight:700;color:#0f172a}\n    .section-sub{font-size:13px;color:var(--muted)}\n\n    label{display:block;font-size:13px;margin-bottom:6px;color:#334155;font-weight:600}\n\n    /* inputs */\n    .field{\n      width:100%;\n      display:block;\n    }\n\n    input[type=text], input[type=tel], input[type=date], select, textarea{\n      width:100%;\n      padding:11px 12px;\n      border-radius:var(--input-radius);\n      border:1px solid var(--border);\n      background:linear-gradient(180deg,#ffffff,#fbfdff);\n      font-size:14px;color:#0f172a;\n      transition:box-shadow .16s ease,border-color .16s ease,transform .04s ease;\n      outline:none;\n      -webkit-appearance:none;\n    }\n\n    /* remove black native outlines on some linux browsers */\n    input,select,textarea{box-shadow:none !important}\n\n    input:focus,select:focus,textarea:focus{\n      border-color:var(--accent);\n      box-shadow:0 8px 30px rgba(11,116,255,0.08), 0 0 0 4px var(--glass);\n    }\n\n    textarea{min-height:96px;resize:vertical}\n\n    /* grid */\n    .grid{display:grid;gap:12px}\n    .cols-2{grid-template-columns:1fr 1fr}\n    .cols-3{grid-template-columns:repeat(3,1fr)}\n    @media (max-width:780px){.cols-3{grid-template-columns:1fr}}\n    @media (max-width:600px){.cols-2{grid-template-columns:1fr}}\n\n    /* repeat lists */\n    .repeat-list{\n      border-radius:10px;padding:10px;border:1px dashed var(--border);background:#fbfdff\n    }\n\n    .repeat-item{padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid #eef2f7;box-shadow:var(--shadow-2);margin-bottom:10px;display:grid;gap:8px}\n\n    .repeat-item .inline{display:flex;gap:8px}\n\n    .muted{color:var(--muted);font-size:13px}\n\n    /* buttons */\n    .actions{display:flex;gap:10px;flex-wrap:wrap}\n\n    button{\n      border:0;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(11,116,255,0.12);transition:transform .12s ease, box-shadow .12s ease, background .12s;\n    }\n    button:hover{transform:translateY(-2px)}\n    button:active{transform:translateY(0)}\n\n    .btn-ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,116,255,0.18);box-shadow:none}\n    .btn-ghost:hover{background:rgba(11,116,255,0.04)}\n\n    .btn-danger{background:var(--danger);box-shadow:0 6px 18px rgba(220,38,38,0.08)}\n\n    .required{color:var(--danger);font-weight:800;margin-left:6px}\n\n    /* small helpers */\n    .help{font-size:13px;color:var(--muted)}\n    .inline-row{display:flex;gap:10px;align-items:center}\n\n    /* file input look */\n    input[type=file]{padding:8px 0}\n\n    /* result area */\n    #result{margin-top:14px}\n    #jsonOut{background:#071229;color:#dbeafe;padding:14px;border-radius:8px;overflow:auto;font-size:13px}\n\n    /* compact inputs for short fields */\n    .compact{max-width:220px}\n\n    /* responsive tweaks */\n    @media (max-width:480px){\n      body{padding:16px 8px}\n      .logo{height:40px;width:40px}\n      .topbar{flex-direction:column;align-items:flex-start;gap:8px}\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n\n    <div class=\"topbar\">\n      <div class=\"brand\">\n        <div class=\"logo\">MS</div>\n        <div>\n          <h1>Ordem de Serviço — Medical Spin</h1>\n          <div class=\"subtitle\">Formulário otimizado • Visual Corporativo</div>\n        </div>\n      </div>\n      <div class=\"help\">Salve localmente após gerar JSON</div>\n    </div>\n\n    <form id=\"osForm\" class=\"card\" autocomplete=\"off\">\n\n      <!-- 1 - Empresa -->\n      <section class=\"section\">\n        <div class=\"section-header\">\n          <div>\n            <div class=\"section-title\">1 — Dados da Empresa</div>\n            <div class=\"section-sub\">Informações básicas do cliente</div>\n          </div>\n        </div>\n\n        <div class=\"grid cols-2\">\n          <div>\n            <label>Razão Social <span class=\"required\">*</span></label>\n            <input id=\"razao\" name=\"razao\" class=\"field\" required type=\"text\" />\n          </div>\n          <div>\n            <label>CNPJ</label>\n            <input id=\"cnpj\" name=\"cnpj\" placeholder=\"Apenas números\" class=\"field compact\" type=\"text\" />\n          </div>\n\n          <div>\n            <label>Cidade <span class=\"required\">*</span></label>\n            <input id=\"cidade_empresa\" name=\"cidade_empresa\" class=\"field\" required type=\"text\" />\n          </div>\n          <div>\n            <label>UF</label>\n            <select id=\"uf_empresa\" name=\"uf_empresa\" class=\"field compact\">\n              <option value=\"\">Selecione</option>\n              <option>AC</option><option>AL</option><option>AP</option><option>AM</option>\n              <option>BA</option><option>CE</option><option>DF</option><option>ES</option>\n              <option>GO</option><option>MA</option><option>MT</option><option>MS</option>\n              <option>MG</option><option>PA</option><option>PB</option><option>PR</option>\n              <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>\n              <option>RS</option><option>RO</option><option>RR</option><option>SC</option>\n              <option>SE</option><option>SP</option><option>TO</option>\n            </select>\n          </div>\n        </div>\n\n        <div style=\"margin-top:10px\">\n          <label>Nome do Solicitante</label>\n          <input id=\"solicitante\" name=\"solicitante\" class=\"field\" type=\"text\" />\n        </div>\n      </section>\n\n      <!-- 2 - Equipamento -->\n      <section class=\"section\">\n        <div class=\"section-header\">\n          <div>\n            <div class=\"section-title\">2 — Dados do Equipamento</div>\n            <div class=\"section-sub\">Identificação do equipamento</div>\n          </div>\n        </div>\n\n        <div class=\"grid cols-2\">\n          <div>\n            <label>Fabricante <span class=\"required\">*</span></label>\n            <select id=\"fabricante\" name=\"fabricante\" class=\"field\" required>\n              <option value=\"\">Selecione</option>\n              <option>Philips</option>\n              <option>GE HealthCare</option>\n              <option>Siemens Healthineers</option>\n              <option>Canon Medical</option>\n              <option>Hitachi</option>\n              <option>Outro</option>\n            </select>\n          </div>\n\n          <div>\n            <label>Modelo <span class=\"required\">*</span></label>\n            <input id=\"modelo\" name=\"modelo\" class=\"field\" required type=\"text\" />\n          </div>\n\n          <div>\n            <label>Nº de Série (S/N) <span class=\"required\">*</span></label>\n            <input id=\"sn\" name=\"sn\" class=\"field compact\" required type=\"text\" />\n          </div>\n\n          <div>\n            <label>Cidade do Equipamento</label>\n            <input id=\"cidade_equip\" name=\"cidade_equip\" class=\"field\" type=\"text\" />\n          </div>\n        </div>\n      </section>\n\n      <!-- 3 - Motivo -->\n      <section class=\"section\">\n        <div class=\"section-header\">\n          <div class=\"section-title\">3 — Motivo e Eventos</div>\n        </div>\n\n        <label>Motivação do Serviço <span class=\"required\">*</span></label>\n        <textarea id=\"motivacao\" name=\"motivacao\" class=\"field\" required></textarea>\n\n        <div style=\"margin-top:10px\">\n          <label>Eventos Relevantes</label>\n          <textarea id=\"eventos\" name=\"eventos\" class=\"field\"></textarea>\n        </div>\n      </section>\n\n      <!-- 4 - Tipo -->\n      <section class=\"section\">\n        <div class=\"section-header\">\n          <div class=\"section-title\">4 — Tipo de Intervenção</div>\n        </div>\n\n        <label>Tipo</label>\n        <select id=\"tipo_intervencao\" name=\"tipo_intervencao\" class=\"field\">\n          <option>Manutenção Corretiva</option>\n          <option>Manutenção Preventiva</option>\n          <option>Visita Técnica</option>\n          <option>Outro</option>\n        </select>\n\n        <div style=\"margin-top:10px\">\n          <label>Descrição dos Serviços Realizados</label>\n          <textarea id=\"descricao_servicos\" name=\"descricao_servicos\" class=\"field\" required></textarea>\n        </div>\n      </section>\n\n      <!-- 5 - Peças -->\n      <section class=\"section\">\n        <div class=\"section-header\">\n          <div>\n            <div class=\"section-title\">5 — Peças</div>\n            <div class=\"section-sub\">Registre peças por categoria</div>\n          </div>\n        </div>\n\n        <div style=\"margin-bottom:8px\">\n          <div style=\"font-weight:700;margin-bottom:6px\">Peças removidas — Em posse do cliente</div>\n          <div id=\"pecas_cliente\" class=\"repeat-list\"></div>\n          <div style=\"margin-top:8px\"><button type=\"button\" class=\"btn-ghost\" onclick=\"addPeca('cliente')\">+ Adicionar</button></div>\n        </div>\n\n        <div style=\"margin-top:12px;margin-bottom:8px\">\n          <div style=\"font-weight:700;margin-bottom:6px\">Peças removidas — Em posse da Medical Spin</div>\n          <div id=\"pecas_ms\" class=\"repeat-list\"></div>\n          <div style=\"margin-top:8px\"><button type=\"button\" class=\"btn-ghost\" onclick=\"addPeca('ms')\">+ Adicionar</button></div>\n        </div>\n\n        <div style=\"margin-top:12px;margin-bottom:8px\">\n          <div style=\"font-weight:700;margin-bottom:6px\">Peças reparadas</div>\n          <div id=\"pecas_reparadas\" class=\"repeat-list\"></div>\n          <div style=\"margin-top:8px\"><button type=\"button\" class=\"btn-ghost\" onclick=\"addPeca('reparadas')\">+ Adicionar</button></div>\n        </div>\n\n        <div style=\"margin-top:12px;margin-bottom:8px\">\n          <div style=\"font-weight:700;margin-bottom:6px\">Peças inseridas</div>\n          <div id=\"pecas_inseridas\" class=\"repeat-list\"></div>\n          <div style=\"margin-top:8px\"><button type=\"button\" class=\"btn-ghost\" onclick=\"addPeca('inseridas')\">+ Adicionar</button></div>\n        </div>\n\n      </section>\n\n      <!-- 6 - Mão de obra -->\n      <section class=\"section\">\n        <div class=\"section-header\">\n          <div class=\"section-title\">6 — Mão de Obra</div>\n        </div>\n\n        <div id=\"horas_list\" class=\"repeat-list\"></div>\n        <div style=\"margin-top:8px\"><button type=\"button\" class=\"btn-ghost\" onclick=\"addHoras()\">+ Adicionar dia</button></div>\n      </section>\n\n      <!-- 7 - Pendências -->\n      <section class=\"section\">\n        <div class=\"section-header\"><div class=\"section-title\">7 — Pendências</div></div>\n\n        <label>Pendências da Medical Spin</label>\n        <textarea id=\"pendencias_ms\" name=\"pendencias_ms\" class=\"field\"></textarea>\n\n        <div style=\"margin-top:10px\">\n          <label>Pendências do Cliente</label>\n          <textarea id=\"pendencias_cliente\" name=\"pendencias_cliente\" class=\"field\"></textarea>\n        </div>\n      </section>\n\n      <!-- 8 - Estado -->\n      <section class=\"section\">\n        <div class=\"section-header\"><div class=\"section-title\">8 — Estado do Equipamento</div></div>\n\n        <div class=\"grid cols-2\">\n          <div>\n            <label>Estado Inicial</label>\n            <select id=\"estado_inicial\" name=\"estado_inicial\" class=\"field\">\n              <option>Funcional</option>\n              <option>Parcialmente Funcional</option>\n              <option>Inoperante</option>\n            </select>\n          </div>\n\n          <div>\n            <label>Estado Final</label>\n            <select id=\"estado_final\" name=\"estado_final\" class=\"field\" onchange=\"onEstadoFinalChange()\">\n              <option>Funcional</option>\n              <option>Parcialmente Funcional</option>\n              <option>Inoperante</option>\n            </select>\n          </div>\n        </div>\n\n        <div id=\"motivo_restricao\" style=\"display:none;margin-top:10px\">\n          <label>Motivo da Restrição</label>\n          <textarea id=\"motivo_restricao_text\" class=\"field\"></textarea>\n        </div>\n\n        <div id=\"motivo_inoperante\" style=\"display:none;margin-top:10px\">\n          <label>Motivo da Inoperância</label>\n          <textarea id=\"motivo_inoperante_text\" class=\"field\"></textarea>\n        </div>\n      </section>\n\n      <!-- 9 - Assinaturas -->\n      <section class=\"section\">\n        <div class=\"section-header\"><div class=\"section-title\">9 — Local e Assinaturas</div></div>\n\n        <div class=\"grid cols-2\">\n          <div>\n            <label>Cidade</label>\n            <input id=\"cidade_realizacao\" name=\"cidade_realizacao\" class=\"field\" type=\"text\" />\n          </div>\n          <div>\n            <label>UF</label>\n            <select id=\"uf_realizacao\" name=\"uf_realizacao\" class=\"field compact\">\n              <option value=\"\">Selecione</option>\n              <option>AC</option><option>AL</option><option>AP</option><option>AM</option>\n              <option>BA</option><option>CE</option><option>DF</option><option>ES</option>\n              <option>GO</option><option>MA</option><option>MT</option><option>MS</option>\n              <option>MG</option><option>PA</option><option>PB</option><option>PR</option>\n              <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>\n              <option>RS</option><option>RO</option><option>RR</option><option>SC</option>\n              <option>SE</option><option>SP</option><option>TO</option>\n            </select>\n          </div>\n        </div>\n\n        <div style=\"margin-top:10px\" class=\"grid cols-2\">\n          <div>\n            <label>Nome do Técnico</label>\n            <input id=\"nome_tecnico\" name=\"nome_tecnico\" class=\"field\" type=\"text\" />\n          </div>\n          <div>\n            <label>CFT do Técnico</label>\n            <input id=\"cft_tecnico\" name=\"cft_tecnico\" class=\"field compact\" type=\"text\" />\n          </div>\n        </div>\n\n        <div style=\"margin-top:10px\" class=\"grid cols-2\">\n          <div>\n            <label>Nome do Recebedor</label>\n            <input id=\"recebedor\" name=\"recebedor\" class=\"field\" type=\"text\" />\n          </div>\n          <div>\n            <label>CPF do Recebedor</label>\n            <input id=\"cpf_recebedor\" name=\"cpf_recebedor\" class=\"field compact\" type=\"text\" />\n          </div>\n        </div>\n      </section>\n\n      <!-- midias -->\n      <section class=\"section\">\n        <div class=\"section-header\"><div class=\"section-title\">Envio de Mídias</div></div>\n        <input type=\"file\" id=\"midias\" name=\"midias\" multiple accept=\"image/*,video/*,.pdf,.doc,.docx,.xlsx,.zip\" />\n      </section>\n\n      <!-- actions -->\n      <div class=\"actions\" style=\"margin-top:6px\">\n        <button type=\"button\" onclick=\"sendToWebhook()\">Enviar JSON</button>\n        <button type=\"button\" class=\"btn-ghost\" onclick=\"generateJSON()\">Gerar JSON</button>\n        <button type=\"button\" class=\"btn-ghost\" onclick=\"copyJSON()\">Copiar JSON</button>\n        <button type=\"button\" class=\"btn-ghost\" onclick=\"resetForm()\">Limpar</button>\n      </div>\n\n    </form>\n\n    <div id=\"result\" style=\"display:none\">\n      <div class=\"card\" style=\"margin-top:14px\">\n        <h3 style=\"margin:0 0 10px 0\">Saída (JSON)</h3>\n        <pre id=\"jsonOut\" style=\"white-space:pre-wrap;max-height:360px;overflow:auto\"></pre>\n      </div>\n    </div>\n\n  </div>\n\n  <script>\n  /* same JS logic from your original file, unchanged. Keep the dynamic pieces below */\n\n  function addPeca(tipo){\n\n    const mapa = {cliente: \"pecas_cliente\", ms: \"pecas_ms\", reparadas: \"pecas_reparadas\", inseridas: \"pecas_inseridas\"};\n    const container = document.getElementById(mapa[tipo]);\n\n    const item = document.createElement(\"div\");\n    item.className = \"repeat-item\";\n\n    item.innerHTML = `\\n      <label>Nome da peça</label>\\n      <input class=\"peca_nome\" type=\"text\">\\n\\n      <label>Modelo / Ref</label>\\n      <input class=\"peca_modelo\" type=\"text\">\\n\\n      <label>Nº de Série</label>\\n      <input class=\"peca_sn\" type=\"text\">\\n\\n      <label>Observações</label>\\n      <input class=\"peca_destino\" type=\"text\">\\n\\n      <div style=\"display:flex;gap:8px;justify-content:flex-end\">\\n        <button type=\\\"button\\\" class=\\\"btn-ghost\\\" style=\\\"background:transparent;color:#ef4444;border:1px solid rgba(239,68,68,0.06);\\\">Remover</button>\\n      </div>\\n    `;\n\n    item.querySelector(\"button\").onclick = () => container.removeChild(item);\n    container.appendChild(item);\n  }\n\n  function addHoras(){\n    const c = document.getElementById(\"horas_list\");\n    const item = document.createElement(\"div\");\n    item.className = \"repeat-item\";\n\n    item.innerHTML = `\\n      <div class=\\\"grid cols-3\\\">\\n        <div>\\n          <label>Data</label>\\n          <input class=\\\"hh_data\\\" type=\\\"date\\\">\\n        </div>\\n        <div>\\n          <label>HH efetivo</label>\\n          <input class=\\\"hh_efetivo\\\" type=\\\"text\\\">\\n        </div>\\n        <div>\\n          <label>HH contingencial</label>\\n          <input class=\\\"hh_contingencial\\\" type=\\\"text\\\">\\n        </div>\\n      </div>\\n      <div style=\\\"display:flex;justify-content:flex-end;margin-top:6px\\\">\\n        <button type=\\\"button\\\" class=\\\"btn-ghost\\\" style=\\\"background:transparent;color:#ef4444;border:1px solid rgba(239,68,68,0.06);\\\">Remover</button>\\n      </div>\\n    `;\n\n    item.querySelector(\"button\").onclick = () => c.removeChild(item);\n    c.appendChild(item);\n  }\n\n  function onEstadoFinalChange(){\n    const v = document.getElementById(\"estado_final\").value;\n\n    document.getElementById(\"motivo_restricao\").style.display = v === \"Parcialmente Funcional\" ? \"block\" : \"none\";\n    document.getElementById(\"motivo_inoperante\").style.display = v === \"Inoperante\" ? \"block\" : \"none\";\n  }\n\n  function gatherForm(){\n    const data = {};\n    const f = new FormData(document.getElementById(\"osForm\"));\n\n    for(const [k,v] of f.entries()){\n      if(k !== \"midias\") data[k] = v;\n    }\n\n    data[\"pecas_cliente\"]    = coletaPecas(\"pecas_cliente\");\n    data[\"pecas_ms\"]         = coletaPecas(\"pecas_ms\");\n    data[\"pecas_reparadas\"]  = coletaPecas(\"pecas_reparadas\");\n    data[\"pecas_inseridas\"]  = coletaPecas(\"pecas_inseridas\");\n\n    data[\"mao_de_obra\"] = coletaHoras();\n\n    data[\"motivo_restricao\"] = document.getElementById(\"motivo_restricao_text\").value || \"\";\n    data[\"motivo_inoperante\"] = document.getElementById(\"motivo_inoperante_text\").value || \"\";\n\n    return data;\n  }\n\n  function coletaPecas(id){\n    const out = [];\n    document.querySelectorAll(`#${id} .repeat-item`).forEach(it=>{\n      out.push({\n        nome: it.querySelector(\".peca_nome\").value,\n        modelo: it.querySelector(\".peca_modelo\").value,\n        sn: it.querySelector(\".peca_sn\").value,\n        detalhes: it.querySelector(\".peca_destino\").value\n      });\n    });\n    return out;\n  }\n\n  function coletaHoras(){\n    const out = [];\n    document.querySelectorAll(\"#horas_list .repeat-item\").forEach(it=>{\n      out.push({\n        data: it.querySelector(\".hh_data\").value,\n        hh_efetivo: it.querySelector(\".hh_efetivo\").value,\n        hh_contingencial: it.querySelector(\".hh_contingencial\").value\n      });\n    });\n    return out;\n  }\n\n  function filesToBase64(fileList) {\n    const promises = [];\n    for (let i = 0; i < fileList.length; i++) {\n      const file = fileList[i];\n      promises.push(new Promise((resolve, reject) => {\n        const reader = new FileReader();\n        reader.onerror = () => reject(\"Erro ao ler arquivo\");\n        reader.onload = () => {\n          const base64 = reader.result.split(\",\")[1];\n          resolve({ nome: file.name, tipo: file.type, tamanho: file.size, base64 });\n        };\n        reader.readAsDataURL(file);\n      }));\n    }\n    return Promise.all(promises);\n  }\n\n  async function generateJSON(){\n    const obj = gatherForm();\n    const files = document.getElementById(\"midias\").files;\n    obj.midias = files.length ? await filesToBase64(files) : [];\n\n    const out = JSON.stringify(obj,null,2);\n    document.getElementById(\"jsonOut\").textContent = out;\n    document.getElementById(\"result\").style.display = \"block\";\n  }\n\n  function copyJSON(){\n    navigator.clipboard.writeText(document.getElementById(\"jsonOut\").textContent);\n    alert(\"Copiado!\");\n  }\n\n  function resetForm(){\n    document.getElementById(\"osForm\").reset();\n    // remove dynamic repeat items\n    ['pecas_cliente','pecas_ms','pecas_reparadas','pecas_inseridas','horas_list'].forEach(id=>{\n      const c = document.getElementById(id);\n      if(c) c.innerHTML = '';\n    });\n    document.getElementById(\"result\").style.display = 'none';\n  }\n\n  async function sendToWebhook(){\n    await generateJSON();\n    const data = document.getElementById(\"jsonOut\").textContent;\n\n    // altere a URL abaixo para a sua webhook\n    fetch(\"https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/ordem-de-serviço-dados\",{\n      method:\"POST\",\n      headers:{ \"Content-Type\":\"application/json\" },\n      body:data\n    }).catch(()=>console.warn('Falha ao enviar'));\n\n    alert(\"Enviado!\");\n  }\n\n  </script>\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1792,
+        -1328
+      ],
+      "id": "8535c562-eb9e-4657-b079-e6f3d6a101d8",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2016,
+        -1328
+      ],
+      "id": "b4190f4c-f236-4bda-9059-f0933af6f9cd",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ordem-de-serviço-dados",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        2656,
+        -896
+      ],
+      "id": "70071431-74c7-4fcd-ad87-e397f5658e1a",
+      "name": "Webhook2",
+      "webhookId": "7a6699a8-890e-4b2b-8a03-167175154a31"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=id:{{ $json.data.key.remoteJid }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        -464
+      ],
+      "id": "b5685e85-c488-4a9f-a61c-09e0e95996af",
+      "name": "Redis6",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b0bc1622-ccd0-489e-a51e-5eaa1c4bd334",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        864,
+        -736
+      ],
+      "id": "ee05a5cc-1e63-4b5c-929a-218e66b5874e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "69886729-8e82-426c-802f-46705c3e2b3a"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "1"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "51b92b73-164e-4755-8038-d654ca87a9ea",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "2",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "2"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "18831c78-d752-417a-bd9f-c14e5d50c084",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "3",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "3"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ea852e4c-22b1-44e0-807c-e07f299d8022",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "4",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "4"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f49d14b1-0ca5-4ae9-a212-1aa50e2bada5",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "5",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "5"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "300116c1-76e1-4e14-beee-809f9b1fd295",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "6",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "6"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6d555e7e-e524-41c8-b739-2e613ec9b370",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "7",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "7"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2fcd6167-4c1f-480f-a0f1-5e3017022734",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "8",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "8"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "59be9089-0205-4c7b-9093-be0a843fc8b1",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "9",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "9"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3624ac4f-e7e0-4a0e-a559-cc9b11fd5f74",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "OS_",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "OS_"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "91e34e20-4ccf-4e9e-ab79-72ea17895df0",
+                    "leftValue": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+                    "rightValue": "DB_",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "DB_"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1088,
+        -752
+      ],
+      "id": "12945b2e-a3c7-4d17-9d25-7aaad93234c7",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "id",
+        "key": "=id:{{ $('@s.whatsapp.net').item.json.remoteJid }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        656,
+        -736
+      ],
+      "id": "003c6650-d08e-424a-b324-2be4c848e7ed",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=id:{{ $json.data.key.remoteJid }}",
+        "value": "menu_principal",
+        "expire": true,
+        "ttl": 600
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        864,
+        -896
+      ],
+      "id": "cdd843a3-c487-4304-9685-3be58d29ae82",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34998565-4754-4036-9919-919fba42692c",
+              "leftValue": "={{ $('Edit Fields3').item.json.conversation }}",
+              "rightValue": "Magnetto",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        368,
+        -880
+      ],
+      "id": "4ea1e48b-c132-45d7-9bc3-ac4404dcbc51",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "7a6699a8-890e-4b2b-8a03-167175154a31",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -256,
+        -880
+      ],
+      "id": "a99c95c7-511c-4389-87dd-05c6a1782fb5",
+      "name": "Webhook",
+      "webhookId": "7a6699a8-890e-4b2b-8a03-167175154a31"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "91e7da4f-3369-4523-aa7e-5af7625e0fe6",
+              "name": "driveId",
+              "value": "={{ $json.driveId }}",
+              "type": "string"
+            },
+            {
+              "id": "dce65960-5811-465f-b3b3-76d038f27f2e",
+              "name": "fileid",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3376,
+        -704
+      ],
+      "id": "23da6fab-541b-4aa1-b763-885d19b18c16",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Remove duplicatas').item.json.folderName }}",
+        "driveId": {
+          "__rl": true,
+          "value": "={{ $('Remove duplicatas').item.json.driveId }}",
+          "mode": "id"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Remove duplicatas').item.json.fileId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        7424,
+        -912
+      ],
+      "id": "1af88475-275d-4b92-afe8-7f2ef8ecad83",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.documentId }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        7216,
+        -912
+      ],
+      "id": "f5717ae1-ad3a-4f7e-affd-e3ea8bdd0ad0",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Entrada\nconst data = items[0].json;\n\nconst pecas_cliente = data.pecas_cliente || [];\nconst pecas_ms = data.pecas_ms || [];\nconst pecas_reparadas = data.pecas_reparadas || [];\nconst pecas_inseridas = data.pecas_inseridas || [];\nconst mao = data.mao_de_obra?.[0] || {};\n\n// ---- PROCESSAR MÃO DE OBRA ----\nlet datas = [];\nlet totalEfetivo = 0;\nlet totalContingencial = 0;\n\nfor (let i = 1; i <= 50; i++) {  // suporta até 50 registros\n  const dataKey = `data${i}`;\n  const efKey = `hh_efetivo${i}`;\n  const ctKey = `hh_contingencial${i}`;\n\n  if (mao[dataKey]) {\n    datas.push(mao[dataKey]);\n\n    totalEfetivo += Number(mao[efKey] || 0);\n    totalContingencial += Number(mao[ctKey] || 0);\n  }\n}\n\ndatas.sort((a,b) => new Date(a) - new Date(b));\n\nconst primeiraData = datas[0] || null;\nconst ultimaData = datas[datas.length - 1] || null;\n\n// ---- RETORNAR SOMENTE DADOS DIRETOS ----\nreturn [\n  {\n    json: {\n      pecas_cliente,\n      pecas_medical_spin: pecas_ms,\n      pecas_reparadas,\n      pecas_inseridas,\n      mao_de_obra: {\n        primeiraData,\n        ultimaData,\n        totalEfetivo,\n        totalContingencial,\n        totalGeral: totalEfetivo + totalContingencial\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5168,
+        -912
+      ],
+      "id": "adb83879-074e-4632-b0ca-08e0be76c0bd",
+      "name": "Soma horas"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Função para converter string JSON em array\nfunction parseArray(str) {\n  try {\n    const arr = typeof str === \"string\" ? JSON.parse(str) : str;\n    return Array.isArray(arr) ? arr : [];\n  } catch {\n    return [];\n  }\n}\n\n// Função para enumerar objetos e transformar tudo em 1 objeto dentro de um array\nfunction enumerateObjects(array, fields) {\n  const obj = {};\n\n  array.forEach((entry, index) => {\n    const i = index + 1;\n    fields.forEach(f => {\n      obj[`${f}${i}`] = entry[f] ?? \"\";\n    });\n  });\n\n  return [obj];\n}\n\n// Acumuladores\nlet pecas_cliente_all = [];\nlet pecas_ms_all = [];\nlet pecas_reparadas_all = [];\nlet pecas_inseridas_all = [];\nlet mao_de_obra_all = [];\n\n// Junta todos os itens recebidos do nó anterior\nfor (const item of items) {\n  const data = item.json;\n\n  pecas_cliente_all.push(...parseArray(data.pecas_cliente));\n  pecas_ms_all.push(...parseArray(data.pecas_ms));\n  pecas_reparadas_all.push(...parseArray(data.pecas_reparadas));\n  pecas_inseridas_all.push(...parseArray(data.pecas_inseridas));\n  mao_de_obra_all.push(...parseArray(data.mao_de_obra));\n}\n\n// Agora enumera TODOS os campos\nconst final = {\n  pecas_cliente: enumerateObjects(pecas_cliente_all, [\"nome\", \"modelo\", \"sn\", \"detalhes\"]),\n  pecas_ms: enumerateObjects(pecas_ms_all, [\"nome\", \"modelo\", \"sn\", \"detalhes\"]),\n  pecas_reparadas: enumerateObjects(pecas_reparadas_all, [\"nome\", \"modelo\", \"sn\", \"detalhes\"]),\n  pecas_inseridas: enumerateObjects(pecas_inseridas_all, [\"nome\", \"modelo\", \"sn\", \"detalhes\"]),\n  mao_de_obra: enumerateObjects(mao_de_obra_all, [\"data\", \"hh_efetivo\", \"hh_contingencial\"])\n};\n\n// Retorna tudo em UM ÚNICO ITEM\nreturn [\n  {\n    json: final\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4960,
+        -912
+      ],
+      "id": "74a3a20c-e9a1-406f-9ef0-fb7f88ed9b0e",
+      "name": "Junta itens"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "19409568-d828-48fc-896d-2eb240efc327",
+              "name": "pecas_cliente",
+              "value": "={{ $('dados').item.json.pecas_cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "bda07dd3-5584-4644-9f3c-c9cfc6fbd109",
+              "name": "pecas_ms",
+              "value": "={{ $('dados').item.json.pecas_ms }}",
+              "type": "string"
+            },
+            {
+              "id": "b63593ff-438c-4414-b251-f03a65d0b3c6",
+              "name": "pecas_reparadas",
+              "value": "={{ $('dados').item.json.pecas_reparadas }}",
+              "type": "string"
+            },
+            {
+              "id": "37f8748d-57af-40e5-95a6-4295567ea7d6",
+              "name": "pecas_inseridas",
+              "value": "={{ $('dados').item.json.pecas_inseridas }}",
+              "type": "string"
+            },
+            {
+              "id": "037c90b6-20f5-4105-b3e9-16c23926a36b",
+              "name": "mao_de_obra",
+              "value": "={{ $('dados').item.json.mao_de_obra }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4752,
+        -912
+      ],
+      "id": "79d23c7d-e255-46cf-8f46-e3d07c961fcb",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $('Pega o documento').item.json.documentId }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "={{ $('Placeholder').item.json.placeholder }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        6224,
+        -912
+      ],
+      "id": "bb6abcfd-7708-4525-b354-c10aac519df7",
+      "name": "Atualiza documento1",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $('Copia  o arquivo').item.json.id }}",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        5696,
+        -912
+      ],
+      "id": "54d6f837-ed5b-4723-a4e9-fbb096c58b32",
+      "name": "Pega o documento1",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ea726e0-f65f-40c9-8372-f35482aa393f",
+              "name": "nome",
+              "value": "={{ $('Split Out').item.json.nome }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4192,
+        -912
+      ],
+      "id": "1cb7226b-0705-497e-88f1-795ed2ba773b",
+      "name": "Nome da imagem"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14010743-1e77-4a33-8d67-19d0a442d36f",
+              "name": "Index",
+              "value": "={{ $('Pega o documento1').item.json.body.content[25].paragraph.elements[0].startIndex }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        6048,
+        -912
+      ],
+      "id": "fbe33d0e-f0a4-47e3-b5d7-f5716aaae2d7",
+      "name": "Index"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://docs.googleapis.com/v1/documents/{{ $json.documentId }}:batchUpdate",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDocsOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"requests\": [\n    {\n      \"insertInlineImage\": {\n        \"location\": {\n          \"index\": {{ $json.index }}\n        },\n        \"uri\": \"https://drive.google.com/uc?export=view&id={{ $json.id }}\",\n        \"objectSize\": {\n          \"height\": {\n            \"magnitude\": 200,\n            \"unit\": \"PT\"\n          },\n          \"width\": {\n            \"magnitude\": 200,\n            \"unit\": \"PT\"\n          }\n        }\n      }\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        7424,
+        -768
+      ],
+      "id": "87633149-80b1-43a9-86fb-4a910e9662ad",
+      "name": "Cola imagem no documento",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c6827f38-85e7-4810-b143-a5dab53ee0d9",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "929c970b-837b-4fa0-ac3e-c62b8b1aa1a0",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        7216,
+        -752
+      ],
+      "id": "fd3c5a78-5c0e-4259-a829-28820088fefb",
+      "name": "Id e Name?"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        6800,
+        -768
+      ],
+      "id": "f8ab9509-16dc-43b7-8d7e-7f4354646243",
+      "name": "Percorre os itens"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = items.map(i => i.json);\n\n// Extrai info fixa (uma vez só)\nconst placeholder = data.find(d => d.placeholder)?.placeholder || null;\nconst index = data.find(d => d.Index !== undefined)?.Index || null;\nconst documentId = data.find(d => d.documentId)?.documentId || null;\n\n// Extrai driveId e fileid (únicos)\nconst driveId = data.find(d => d.driveId)?.driveId || null;\nconst fileid = data.find(d => d.fileid)?.fileid || null;\n\n// Pega todos os blocos com id + name\nconst arquivos = data.filter(d => d.id && d.name);\n\n// Remove duplicados por id\nconst ids = new Set();\nconst unicos = arquivos.filter(a => {\n  if (ids.has(a.id)) return false;\n  ids.add(a.id);\n  return true;\n});\n\n// Cria novo array de items no formato pedido\nreturn unicos.map(a => ({\n  json: {\n    placeholder,\n    index,\n    documentId,\n    driveId,\n    fileid,\n    id: a.id,\n    name: a.name\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6640,
+        -768
+      ],
+      "id": "07d14e3c-7b4a-4301-8f4b-999105d648f8",
+      "name": "Separa itens"
+    },
+    {
+      "parameters": {
+        "numberInputs": 6
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        6464,
+        -832
+      ],
+      "id": "0c2c873d-a7af-4607-8745-0822eb508da7",
+      "name": "Unir tudo"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $('Pega o documento').item.json.documentId }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "{razao_social}",
+              "replaceText": "={{ $('dados').item.json.razao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cnpj}",
+              "replaceText": "={{ $('dados').item.json.cnpj }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cidade}",
+              "replaceText": "={{ $('dados').item.json.cidade_empresa }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{uf}",
+              "replaceText": "={{ $('dados').item.json.uf_empresa }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{nome_do_solicitante}",
+              "replaceText": "={{ $('dados').item.json.solicitante }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{fabricante}",
+              "replaceText": "={{ $('dados').item.json.fabricante }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{modelo}",
+              "replaceText": "={{ $('dados').item.json.modelo }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{serie}",
+              "replaceText": "={{ $('dados').item.json.sn }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{motivacao_servico}",
+              "replaceText": "={{ $('dados').item.json.motivacao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{eventos_r_relacionados}",
+              "replaceText": "={{ $('dados').item.json.eventos }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_removidas_cliente}",
+              "replaceText": "={{ (($('Soma horas').item.json.pecas_cliente[0] || []) ? Object.keys($('Soma horas').item.json.pecas_cliente[0]).filter(k => k.startsWith(\"nome\")).map(k => { const i = k.replace(\"nome\",\"\"); const o = $('Soma horas').item.json.pecas_cliente[0]; return `Nome: ${o['nome'+i]} | Modelo: ${o['modelo'+i]} | SN: ${o['sn'+i]} | Detalhes: ${o['detalhes'+i]}` }).join(\"\\n\") : \"\") }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_removidas_medicalspin}",
+              "replaceText": "={{ (($('Soma horas').item.json.pecas_medical_spin[0] || []) ? Object.keys($('Soma horas').item.json.pecas_medical_spin[0]).filter(k => k.startsWith(\"nome\")).map(k => { const i = k.replace(\"nome\",\"\"); const o = $('Soma horas').item.json.pecas_medical_spin[0]; return `Nome: ${o['nome'+i]} | Modelo: ${o['modelo'+i]} | SN: ${o['sn'+i]} | Detalhes: ${o['detalhes'+i]}` }).join(\"\\n\") : \"\") }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_reparadas}",
+              "replaceText": "={{ (($('Soma horas').item.json.pecas_reparadas[0] || []) ? Object.keys($('Soma horas').item.json.pecas_reparadas[0]).filter(k => k.startsWith(\"nome\")).map(k => { const i = k.replace(\"nome\",\"\"); const o = $('Soma horas').item.json.pecas_reparadas[0]; return `Nome: ${o['nome'+i]} | Modelo: ${o['modelo'+i]} | SN: ${o['sn'+i]} | Detalhes: ${o['detalhes'+i]}` }).join(\"\\n\") : \"\") }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_inseridas}",
+              "replaceText": "={{ (($('Soma horas').item.json.pecas_inseridas[0] || []) ? Object.keys($('Soma horas').item.json.pecas_inseridas[0]).filter(k => k.startsWith(\"nome\")).map(k => { const i = k.replace(\"nome\",\"\"); const o = $('Soma horas').item.json.pecas_inseridas[0]; return `Nome: ${o['nome'+i]} | Modelo: ${o['modelo'+i]} | SN: ${o['sn'+i]} | Detalhes: ${o['detalhes'+i]}` }).join(\"\\n\") : \"\") }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{tipo_intervencao}",
+              "replaceText": "={{ $('dados').item.json.tipo_intervencao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{descricao_servicos_realizados}",
+              "replaceText": "={{ $('dados').item.json.descricao_servicos }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{data0}",
+              "replaceText": "={{ $now.format('dd/LL/yyyy') }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{data}",
+              "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.primeiraData \n    ? new Date($('Soma horas').item.json.mao_de_obra.primeiraData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' \n}} - {{ $('Soma horas').item.json.mao_de_obra.ultimaData \n    ? new Date($('Soma horas').item.json.mao_de_obra.ultimaData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{medicalspin}",
+              "replaceText": "={{ $('dados').item.json.pendencias_ms }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cliente}",
+              "replaceText": "={{ $('dados').item.json.pendencias_cliente }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{antes_intervencao}",
+              "replaceText": "={{ $('dados').item.json.estado_inicial }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{apos_intervensao}",
+              "replaceText": "={{ $('dados').item.json.estado_final }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cidade_realizacao}",
+              "replaceText": "={{ $('dados').item.json.cidade_realizacao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{uf_realizacao}",
+              "replaceText": "={{ $('dados').item.json.uf_realizacao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{tecnico_responsavel}",
+              "replaceText": "={{ $('dados').item.json.nome_tecnico }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cft}",
+              "replaceText": "={{ $('dados').item.json.cft_tecnico }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{recebedor}",
+              "replaceText": "={{ $('dados').item.json.recebedor }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cpf}",
+              "replaceText": "={{ $('dados').item.json.cpf_recebedor }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{efetivo}",
+              "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.totalEfetivo.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{contingencial}",
+              "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.totalContingencial.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{total}",
+              "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.totalGeral.toString() }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        5536,
+        -912
+      ],
+      "id": "a2631dc0-413c-4af6-bc49-732db2ed42ac",
+      "name": "Atualiza documento",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6fdcebc1-c772-40a8-bfc1-22584c6c2f93",
+              "name": "placeholder",
+              "value": "{fotos}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5872,
+        -912
+      ],
+      "id": "d49ad04e-0864-4345-b3e7-7c22ac42368d",
+      "name": "Placeholder"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $('Copia  o arquivo').item.json.id }}",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        5360,
+        -912
+      ],
+      "id": "71931eef-7b1c-450b-84d4-0ea4f37c8bdb",
+      "name": "Pega o documento",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Remove duplicados pelo campo \"id\"\nconst seen = new Set();\n\nconst unique = items.filter(item => {\n  const id = item.json.id;\n  if (seen.has(id)) return false;\n  seen.add(id);\n  return true;\n});\n\n// Retorna apenas os itens únicos\nreturn unique;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4544,
+        -912
+      ],
+      "id": "f1c348cd-893c-43b5-81a7-ff7e3bd238af",
+      "name": "Junta repeticoes"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $('Cria pasta').item.json.name }}",
+        "limit": "={{ $items().filter(i => i.json.nome).length }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Cria pasta').item.json.id }}",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4368,
+        -912
+      ],
+      "id": "7d2c6c04-b747-48f7-8883-f73f95474bf3",
+      "name": "Procura imagens",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "writer",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4544,
+        -704
+      ],
+      "id": "88e2bf83-d29d-4170-9df4-b331125b47ec",
+      "name": "Torna publico",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4e8de6be-f93a-4806-897e-9cd6a0e9886a",
+              "name": "midias",
+              "value": "={{ $('dados').item.json.midias }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": true
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3312,
+        -896
+      ],
+      "id": "03301f36-1c7a-42c4-8d3e-c532aa50fa0a",
+      "name": "midia"
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1AYkd1ojpWZR2eudkBS-3jPNghCy5i9tCwp3WB5XVvTU",
+          "mode": "list",
+          "cachedResultName": "Cópia de OS_modelo",
+          "cachedResultUrl": "https://docs.google.com/document/d/1AYkd1ojpWZR2eudkBS-3jPNghCy5i9tCwp3WB5XVvTU/edit?usp=drivesdk"
+        },
+        "name": "=OS_{{ $('dados').item.json.razao }}_{{ $('dados').item.json.cnpj }}_{{ $now.format('dd-LL-yyyy T') }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "value": "={{ $json.driveId }}",
+          "mode": "id"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3152,
+        -896
+      ],
+      "id": "66659e6c-2175-491b-8014-77f6fd0c6fb5",
+      "name": "Copia  o arquivo",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "=OS_{{ $('dados').item.json.razao }}_{{ $('dados').item.json.cnpj }}_{{ $now.format('dd-LL-yyyy T') }}",
+        "driveId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/folders/1nAeEaoG6QNZq2fuonNJB7GluFIhOffL1",
+          "mode": "url"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/folders/1nAeEaoG6QNZq2fuonNJB7GluFIhOffL1",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2992,
+        -896
+      ],
+      "id": "00b810cd-f57e-41de-acf2-e2e71f7615fe",
+      "name": "Cria pasta",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.nome }}",
+        "limit": "={{ $items().filter(i => i.json.nome).length }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Cria pasta').item.json.id }}",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4368,
+        -768
+      ],
+      "id": "f3b928f9-075c-4cb4-899a-89b06193bd0a",
+      "name": "Imagens",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "midias",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        3664,
+        -912
+      ],
+      "id": "272b9f08-7f17-4a32-8261-803c63183142",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Split Out').item.json.nome }}",
+        "driveId": {
+          "__rl": true,
+          "value": "={{ $('Cria pasta').item.json.driveId }}",
+          "mode": "id"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Cria pasta').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4016,
+        -912
+      ],
+      "id": "ff73d7ff-fa70-4a91-8e58-6d957e165834",
+      "name": "Adiciona imagem",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// pega o item do webhook\nconst wh = $('Webhook2').first().json;\n\n// tenta pegar body.json (se existir)\nlet data = wh?.body?.json;\n\n// caso não exista, tenta pegar body inteiro\nif (!data && wh?.body) {\n  data = wh.body;\n}\n\n// caso o webhook tenha mandado direto no json\nif (!data) {\n  data = wh;\n}\n\n// se for string, tenta converter pra JSON\nif (typeof data === 'string') {\n  try {\n    data = JSON.parse(data);\n  } catch (err) {\n    throw new Error('JSON inválido recebido');\n  }\n}\n\nreturn [{ json: data }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2832,
+        -896
+      ],
+      "id": "d1dbdeee-0fb3-4fe9-b0f6-421890ecb19b",
+      "name": "dados"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        3840,
+        -912
+      ],
+      "id": "b35c48b7-d053-4357-89d1-f63f1a3e6618",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "jsCode": "const map = new Map();\n\n// Pega os valores externos\nconst driveId = $('Separa itens').first().json.driveId;\nconst fileId = $('Separa itens').first().json.fileid;\nconst folderName = $('Cria pasta').first().json.name;\n\nfor (const item of items) {\n  const docId = item.json.documentId;\n\n  if (!map.has(docId)) {\n    // adiciona o item + os novos campos\n    map.set(docId, {\n      ...item.json,\n      driveId,\n      fileId,\n      folderName,\n    });\n  }\n}\n\n// retorna 1 item por documentId\nreturn Array.from(map.values()).map(json => ({ json }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7024,
+        -912
+      ],
+      "id": "c91c3f49-0090-48b4-88be-8e528909f554",
+      "name": "Remove duplicatas"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4d8af4ea-6429-462d-a924-1e2a634d8775",
+              "leftValue": "={{ $json.midias[0].base64 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3488,
+        -896
+      ],
+      "id": "817a8426-6d71-43ea-ad3e-820132c56307",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $('Pega o documento2').item.json.documentId }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "{razao_social}",
+              "replaceText": "={{ $('dados').item.json.razao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cnpj}",
+              "replaceText": "={{ $('dados').item.json.cnpj }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cidade}",
+              "replaceText": "={{ $('dados').item.json.cidade_empresa }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{uf}",
+              "replaceText": "={{ $('dados').item.json.uf_empresa }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{nome_do_solicitante}",
+              "replaceText": "={{ $('dados').item.json.solicitante }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{fabricante}",
+              "replaceText": "={{ $('dados').item.json.fabricante }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{modelo}",
+              "replaceText": "={{ $('dados').item.json.modelo }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{serie}",
+              "replaceText": "={{ $('dados').item.json.sn }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{motivacao_servico}",
+              "replaceText": "={{ $('dados').item.json.motivacao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{eventos_r_relacionados}",
+              "replaceText": "={{ $('dados').item.json.eventos }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_removidas_cliente}",
+              "replaceText": "={{ (($('dados1').item.json.pecas_cliente[0] || []) ? Object.keys($('dados1').item.json.pecas_cliente[0]).filter(k => k.startsWith(\"nome\")).map(k => { const i = k.replace(\"nome\",\"\"); const o = $('dados1').item.json.pecas_cliente[0]; return `Nome: ${o['nome'+i]} | Modelo: ${o['modelo'+i]} | SN: ${o['sn'+i]} | Detalhes: ${o['detalhes'+i]}` }).join(\"\\n\") : \"\") }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_removidas_medicalspin}",
+              "replaceText": "={{ (($('dados1').item.json.pecas_medical_spin[0] || []) ? Object.keys($('dados1').item.json.pecas_medical_spin[0]).filter(k => k.startsWith(\"nome\")).map(k => { const i = k.replace(\"nome\",\"\"); const o = $('dados1').item.json.pecas_medical_spin[0]; return `Nome: ${o['nome'+i]} | Modelo: ${o['modelo'+i]} | SN: ${o['sn'+i]} | Detalhes: ${o['detalhes'+i]}` }).join(\"\\n\") : \"\") }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_reparadas}",
+              "replaceText": "={{ (($('dados1').item.json.pecas_reparadas[0] || []) ? Object.keys($('dados1').item.json.pecas_reparadas[0]).filter(k => k.startsWith(\"nome\")).map(k => { const i = k.replace(\"nome\",\"\"); const o = $('dados1').item.json.pecas_reparadas[0]; return `Nome: ${o['nome'+i]} | Modelo: ${o['modelo'+i]} | SN: ${o['sn'+i]} | Detalhes: ${o['detalhes'+i]}` }).join(\"\\n\") : \"\") }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_inseridas}",
+              "replaceText": "={{ (($('dados1').item.json.pecas_inseridas[0] || []) ? Object.keys($('dados1').item.json.pecas_inseridas[0]).filter(k => k.startsWith(\"nome\")).map(k => { const i = k.replace(\"nome\",\"\"); const o = $('dados1').item.json.pecas_inseridas[0]; return `Nome: ${o['nome'+i]} | Modelo: ${o['modelo'+i]} | SN: ${o['sn'+i]} | Detalhes: ${o['detalhes'+i]}` }).join(\"\\n\") : \"\") }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{tipo_intervencao}",
+              "replaceText": "={{ $('dados').item.json.tipo_intervencao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{descricao_servicos_realizados}",
+              "replaceText": "={{ $('dados').item.json.descricao_servicos }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{data0}",
+              "replaceText": "={{ $now.format('dd/LL/yyyy') }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{data}",
+              "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.primeiraData \n    ? new Date($('Soma horas1').item.json.mao_de_obra.primeiraData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' \n}} - {{ $('Soma horas1').item.json.mao_de_obra.ultimaData \n    ? new Date($('Soma horas1').item.json.mao_de_obra.ultimaData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' }}\n"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{medicalspin}",
+              "replaceText": "={{ $('dados').item.json.pendencias_ms }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cliente}",
+              "replaceText": "={{ $('dados').item.json.pendencias_cliente }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{antes_intervencao}",
+              "replaceText": "={{ $('dados').item.json.estado_inicial }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{apos_intervensao}",
+              "replaceText": "={{ $('dados').item.json.estado_final }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cidade_realizacao}",
+              "replaceText": "={{ $('dados').item.json.cidade_realizacao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{uf_realizacao}",
+              "replaceText": "={{ $('dados').item.json.uf_realizacao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{tecnico_responsavel}",
+              "replaceText": "={{ $('dados').item.json.nome_tecnico }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cft}",
+              "replaceText": "={{ $('dados').item.json.cft_tecnico }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{recebedor}",
+              "replaceText": "={{ $('dados').item.json.recebedor }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cpf}",
+              "replaceText": "={{ $('dados').item.json.cpf_recebedor }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{efetivo}",
+              "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.totalEfetivo.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{contingencial}",
+              "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.totalContingencial.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{total}",
+              "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.totalGeral.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{fotos}",
+              "replaceText": "Sem mídias"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        4192,
+        -560
+      ],
+      "id": "729ccad8-4fc7-4a07-bae4-ad7613f67c10",
+      "name": "Atualiza documento2",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $('Copia  o arquivo').item.json.id }}",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        4016,
+        -560
+      ],
+      "id": "282ff997-7db3-4383-b3ec-373a0bd392c2",
+      "name": "Pega o documento2",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens do nó \"dados\"\nconst dados = $('dados').all();\n\n// Retorna exatamente o que veio do nó \"dados\"\nreturn dados;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3664,
+        -560
+      ],
+      "id": "89a889ef-c0e4-401b-91b6-6d2fb83555df",
+      "name": "dados1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Entrada\nconst data = items[0].json;\n\nconst pecas_cliente = data.pecas_cliente || [];\nconst pecas_ms = data.pecas_ms || [];\nconst pecas_reparadas = data.pecas_reparadas || [];\nconst pecas_inseridas = data.pecas_inseridas || [];\nconst mao = data.mao_de_obra?.[0] || {};\n\n// ---- PROCESSAR MÃO DE OBRA ----\nlet datas = [];\nlet totalEfetivo = 0;\nlet totalContingencial = 0;\n\nfor (let i = 1; i <= 50; i++) {  // suporta até 50 registros\n  const dataKey = `data${i}`;\n  const efKey = `hh_efetivo${i}`;\n  const ctKey = `hh_contingencial${i}`;\n\n  if (mao[dataKey]) {\n    datas.push(mao[dataKey]);\n\n    totalEfetivo += Number(mao[efKey] || 0);\n    totalContingencial += Number(mao[ctKey] || 0);\n  }\n}\n\ndatas.sort((a,b) => new Date(a) - new Date(b));\n\nconst primeiraData = datas[0] || null;\nconst ultimaData = datas[datas.length - 1] || null;\n\n// ---- RETORNAR SOMENTE DADOS DIRETOS ----\nreturn [\n  {\n    json: {\n      pecas_cliente,\n      pecas_medical_spin: pecas_ms,\n      pecas_reparadas,\n      pecas_inseridas,\n      mao_de_obra: {\n        primeiraData,\n        ultimaData,\n        totalEfetivo,\n        totalContingencial,\n        totalGeral: totalEfetivo + totalContingencial\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3840,
+        -560
+      ],
+      "id": "f6223315-3092-44ac-8dcf-1ba82160d900",
+      "name": "Soma horas1"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Cria pasta').item.json.name }}",
+        "driveId": {
+          "__rl": true,
+          "value": "={{ $('Cria pasta').item.json.driveId }}",
+          "mode": "id"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Cria pasta').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4544,
+        -560
+      ],
+      "id": "42ea060e-8d5f-40d9-9d2d-abd49c10fe41",
+      "name": "Upload file1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.documentId }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4368,
+        -560
+      ],
+      "id": "c4c693d0-9a2d-4c20-84b9-eca45b95e84e",
+      "name": "Download file1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RemoteId": "={{ $json.data.key.remoteJid }}"
+          },
+          "matchingColumns": [
+            "RemoteId"
+          ],
+          "schema": [
+            {
+              "id": "RemoteId",
+              "displayName": "RemoteId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1088,
+        -896
+      ],
+      "id": "e3017c57-6865-4985-b102-5f8a23c9a5b5",
+      "name": "RemoteId",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4928,
+        -560
+      ],
+      "id": "c52d4bb1-08fd-4567-a9d2-7283baa1ce4b",
+      "name": "RemoteId1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        7824,
+        -912
+      ],
+      "id": "417ac75c-8f02-4488-bfd6-91fb0ef208d4",
+      "name": "RemoteId2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit#gid=0"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        8176,
+        -912
+      ],
+      "id": "cb507fa9-96d4-4415-991e-60f67fe0df9e",
+      "name": "Delete RemoteId",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit#gid=0"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1792,
+        -464
+      ],
+      "id": "139b3087-baf0-4433-aeb4-b0cb3ade37c8",
+      "name": "Delete RemoteId1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit#gid=0"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        5280,
+        -560
+      ],
+      "id": "39038ac2-4241-4c90-8af7-6bda352413a9",
+      "name": "Delete RemoteId2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('@s.whatsapp.net').item.json.remoteJid }}",
+        "messageText": "Olá! 👋 Eu sou o *Magnetto*, seu assistente virtual. Estou aqui para ajudar você com dúvidas, suporte e informações de forma rápida e simples. \n\nComo posso ajudar você hoje? \n\n1️⃣​-Criar OS.\n2️⃣-Consultar todas as OS.\n3️⃣-Consultar uma OS.\n4️⃣-Cadastrar lead.\n5️⃣-Consultar lista de leads.\n6️⃣-Consultar um lead.\n7️⃣-Sair",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        656,
+        -896
+      ],
+      "id": "7a7266cb-25f8-43cf-8724-99b7f5358f81",
+      "name": "Menu",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "*Por favor, preencha o formulário abaixo para gerar a ordem de serviço:*\n\nhttps://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/ordem-de-servi%C3%A7o",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -1328
+      ],
+      "id": "3553eadc-db7b-4852-9d59-ff8d7ae95104",
+      "name": "Opcao1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $json.RemoteId }}",
+        "messageText": "=OS gerada com sucesso!\nAcesse através do link abaixo:\n\n{{ $('Id e link1').item.json.name }}\n\n{{ $('Id e link1').item.json.webViewLink }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        8000,
+        -912
+      ],
+      "id": "b1bebd41-8581-4b22-b11c-6b3473059b52",
+      "name": "Envia OS",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $json.RemoteId }}",
+        "messageText": "=OS gerada com sucesso!\nAcesse através do link abaixo:\n\n{{ $('Id e link').item.json.name }}\n\n{{ $('Id e link').item.json.webViewLink }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        5104,
+        -560
+      ],
+      "id": "33b9c669-d936-45d4-9fa0-4bd6ca5590d5",
+      "name": "Envia OS1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteFile",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Id e Name?').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        7632,
+        -768
+      ],
+      "id": "cc4239c2-f7cb-4294-ba7f-471aba504e02",
+      "name": "Deleta Imagens",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "*Para consultar as Os, acesse o link abaixo:*\n\nhttps://drive.google.com/drive/folders/1nAeEaoG6QNZq2fuonNJB7GluFIhOffL1\n",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -1184
+      ],
+      "id": "e27d2b4f-c550-41fa-aa64-c7f748ba9f78",
+      "name": "Opcao2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cdd26832-a245-46f5-ae40-9c1c73ee68c5",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "9c1c92b4-c090-400c-952b-40aa56ee5824",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "a3722cd0-8dab-4ba5-9a6a-800a6e113562",
+              "name": "webViewLink",
+              "value": "={{ $json.webViewLink }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4736,
+        -560
+      ],
+      "id": "26238b31-75ae-4fee-ba45-d7b47080b531",
+      "name": "Id e link"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Id e link').item.json.name }}",
+            "LINK": "={{ $('Id e link').item.json.webViewLink }}",
+            "DATA CADASTRO": "={{ $now.format('dd/LL/yyyy T') }}",
+            "RAZAO SOCIAL": "={{ $('dados1').item.json.razao }}",
+            "CNPJ": "={{ $('dados1').item.json.cnpj.replace(/^(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})$/, \"$1.$2.$3/$4-$5\") }}",
+            "CIDADE": "={{ $('dados1').item.json.cidade_empresa }}",
+            "FABRICANTE": "={{ $('dados1').item.json.fabricante }}",
+            "MODELO": "={{ $('dados1').item.json.modelo }}",
+            "N. SERIE": "={{ $('dados1').item.json.sn }}",
+            "EQUIPAMENTO": "=Ressonância Magnética"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK",
+              "displayName": "LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "RAZAO SOCIAL",
+              "displayName": "RAZAO SOCIAL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EQUIPAMENTO",
+              "displayName": "EQUIPAMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FABRICANTE",
+              "displayName": "FABRICANTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "MODELO",
+              "displayName": "MODELO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "N. SERIE",
+              "displayName": "N. SERIE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA CADASTRO",
+              "displayName": "DATA CADASTRO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        5856,
+        -576
+      ],
+      "id": "e78bdf16-ef5e-46e7-ad04-46a7e0d9956d",
+      "name": "DB",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Id e link1').item.json.name }}",
+            "LINK": "={{ $('Id e link1').item.json.webViewLink }}",
+            "DATA CADASTRO": "={{ $now.format('dd/LL/yyyy T') }}",
+            "RAZAO SOCIAL": "={{ $json.razao }}",
+            "CNPJ": "={{ $json.cnpj.replace(/^(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})$/, \"$1.$2.$3/$4-$5\") }}",
+            "CIDADE": "={{ $json.cidade_empresa }}",
+            "EQUIPAMENTO": "=Ressonância Magnética",
+            "FABRICANTE": "={{ $json.fabricante }}",
+            "MODELO": "={{ $json.modelo }}",
+            "N. SERIE": "={{ $json.sn }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK",
+              "displayName": "LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "RAZAO SOCIAL",
+              "displayName": "RAZAO SOCIAL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EQUIPAMENTO",
+              "displayName": "EQUIPAMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FABRICANTE",
+              "displayName": "FABRICANTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "MODELO",
+              "displayName": "MODELO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "N. SERIE",
+              "displayName": "N. SERIE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA CADASTRO",
+              "displayName": "DATA CADASTRO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        8928,
+        -928
+      ],
+      "id": "7368c223-b1a4-40e3-a308-4bb40dea7106",
+      "name": "DB1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cdd26832-a245-46f5-ae40-9c1c73ee68c5",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "9c1c92b4-c090-400c-952b-40aa56ee5824",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "a3722cd0-8dab-4ba5-9a6a-800a6e113562",
+              "name": "webViewLink",
+              "value": "={{ $json.webViewLink }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        7632,
+        -912
+      ],
+      "id": "1ae2e35d-c73f-4193-b390-10bc8c93c309",
+      "name": "Id e link1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "*Para consultar uma OS, digite o nome ou cnpj no seguinte formato:*\n\nEx: OS_{nome}\nEx: OS_{cnpj}\nEx: OS_{nome}_{cnpj}\n",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -1040
+      ],
+      "id": "81dcd1ff-144e-411a-8e16-d71c770be505",
+      "name": "Opcao3",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1584,
+        -32
+      ],
+      "id": "0182b5a9-7896-4928-b7e9-c535977ee409",
+      "name": "OS consult",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ea726e0-f65f-40c9-8372-f35482aa393f",
+              "name": "message.conversation",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "403b707f-3230-4e09-bad7-3e22285eebe2",
+              "name": "body.data.key.remoteJid",
+              "value": "={{ $('@s.whatsapp.net').item.json.remoteJid }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1376,
+        -32
+      ],
+      "id": "a6b2216d-7efc-4bf2-b5ee-e7cfef0507db",
+      "name": "InputOS"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $items(\"InputOS\").map(i => i.json.body.data.key.remoteJid).join(\", \") }}",
+        "messageText": "=Encontrei🔎!!! Acesse a OS no link abaixo:\n\n{{ $json.NOME }}\n\n{{ $json.LINK }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2208,
+        -32
+      ],
+      "id": "43fb4a9b-7e23-42a0-9de5-753a488c831a",
+      "name": "OS retorno",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $items(\"InputOS\").map(i => i.json.body.data.key.remoteJid).join(\", \") }}",
+        "messageText": "Sinto muito😓. Não consegui encontrar a OS solicitada. *Tente outro parâmetro ou busque por todas as OS na opção* 2️⃣.",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2208,
+        -176
+      ],
+      "id": "0ab0c8ca-bdc8-4faa-905d-2311977fe6f6",
+      "name": "OS sem retorno",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.encontrado }}",
+                    "rightValue": "={{ $json.encontrado }}",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "14cb2cae-9efa-4301-a85d-4b9f0a205f47"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Nao encontrado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e84b75c3-aec4-4234-91de-0d9f1f51576c",
+                    "leftValue": "={{ $json.row_number }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Encontrado"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        2000,
+        -32
+      ],
+      "id": "cd0e4b7b-13f1-4ef8-a327-9345a6048cb4",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens do nó \"dados\"\nconst dados = $('dados').all();\n\n// Retorna exatamente o que veio do nó \"dados\"\nreturn dados;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8352,
+        -912
+      ],
+      "id": "b4014d58-7517-4df0-8fc9-b16526a73b48",
+      "name": "Dados"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Texto vindo do InputOS\nlet texto = $('InputOS').first().json.message.conversation || \"\";\n\n// \"OS_\" continua obrigatório\nif (!texto.includes(\"OS_\")) {\n  return [{ json: { encontrado: false, motivo: \"Texto não contém 'OS_'\" } }];\n}\n\n// Extrair conteúdo entre aspas → CNPJ\nlet match = texto.match(/\"([^\"]+)\"/);\nlet termoBusca = \"\";\n\n// Se veio \"OS_\" entre aspas → usa conteúdo das aspas\nif (match) {\n  termoBusca = match[1];\n} else {\n  // Sem aspas → pegar tudo após OS_\n  const pos = texto.indexOf(\"OS_\") + 3;\n  termoBusca = texto.slice(pos).trim();\n}\n\n// Se depois de OS_ não tiver nada → erro\nif (!termoBusca) {\n  return [{ json: { encontrado: false, motivo: \"Nenhum termo após OS_\" } }];\n}\n\n// Itens do Sheets\nconst linhas = items;\n\n// Procura termo dentro do campo NOME\nconst linhaEncontrada = linhas.find(item => {\n  const nome = item.json.NOME || \"\";\n  return nome.includes(\"OS_\") && nome.includes(termoBusca);\n});\n\n// Não encontrou → retornar falso\nif (!linhaEncontrada) {\n  return [{ json: { encontrado: false, motivo: \"Nenhuma linha encontrada\" } }];\n}\n\n// Retorna linha encontrada\nreturn [\n  {\n    json: linhaEncontrada.json\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        -32
+      ],
+      "id": "f6ec71b5-b1d6-4cf8-8854-916fc874aeae",
+      "name": "Busca Item"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "Até logo👋. Para me chamar novamente, basta digitar *Magnetto*",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -464
+      ],
+      "id": "3be0b9e1-feee-4557-ae4b-3ff10ec1932f",
+      "name": "Opcao7",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "Para cadastrar um lead preencha o formulário abaixo:\n\nhttps://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/cadastra-lead",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -896
+      ],
+      "id": "623467b7-c3bf-48f3-8cd4-d7c75f5a0534",
+      "name": "Opcao4",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "*Para consultar os leads, acesse o link abaixo:*\n\nhttps://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=sharing",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -752
+      ],
+      "id": "17336961-7ec7-47cf-9a42-ea1f29c9cca8",
+      "name": "Opcao5",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "*Para consultar um lead, digite a razão social, cnpj ou data no seguinte formato:*\n\nEx: DB_{razao_social}\nEx: DB_{cnpj}\nEx: DB_{razao_social}_{cnpj}\nEx: DB_{data}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -608
+      ],
+      "id": "b3ba67ff-8774-43a2-bee1-bb29d94598c0",
+      "name": "Opcao6",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "cadastra-lead",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1584,
+        -1184
+      ],
+      "id": "3130a5c4-8760-41a3-88e0-37049d6d5332",
+      "name": "Webhook3",
+      "webhookId": "7a6699a8-890e-4b2b-8a03-167175154a31"
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>Cadastro de Equipamento</title>\n\n  <style>\n    /* RESET */\n    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Inter, Arial, sans-serif; }\n\n    body {\n      background: #f1f3f5;\n      padding: 20px;\n      display: flex;\n      justify-content: center;\n    }\n\n    .card {\n      width: 100%;\n      max-width: 420px;\n      background: #ffffff;\n      padding: 25px;\n      border-radius: 12px;\n      box-shadow: 0 4px 20px rgba(0,0,0,0.08);\n    }\n\n    .title {\n      font-size: 20px;\n      font-weight: 700;\n      margin-bottom: 4px;\n      color: #111;\n    }\n\n    .subtitle {\n      font-size: 14px;\n      color: #666;\n      margin-bottom: 20px;\n    }\n\n    .group {\n      margin-bottom: 16px;\n    }\n\n    label {\n      font-size: 14px;\n      font-weight: 500;\n      color: #222;\n      display: block;\n      margin-bottom: 6px;\n    }\n\n    .field {\n      width: 100%;\n      padding: 12px 14px;\n      font-size: 15px;\n      border-radius: 8px;\n      border: 1px solid #d7d7d7;\n      background: #fafafa;\n      transition: 0.2s;\n    }\n\n    .field:focus {\n      background: #fff;\n      border-color: #4A90E2;\n      box-shadow: 0 0 0 3px rgba(74,144,226,0.25);\n      outline: none;\n    }\n\n    button {\n      width: 100%;\n      padding: 15px;\n      font-size: 16px;\n      font-weight: 600;\n      border: none;\n      border-radius: 8px;\n      background: #007bff;\n      color: #fff;\n      cursor: pointer;\n      transition: 0.2s;\n      margin-top: 10px;\n    }\n\n    button:hover {\n      background: #0066d3;\n    }\n\n    /* Caixa do JSON */\n    #jsonBox {\n      width: 100%;\n      background: #fafafa;\n      border: 1px solid #d7d7d7;\n      border-radius: 8px;\n      padding: 12px;\n      font-size: 14px;\n      white-space: pre-wrap;\n      margin-top: 15px;\n      display: none;\n    }\n  </style>\n</head>\n<body>\n\n<form class=\"card\" id=\"equipForm\" onsubmit=\"sendData(event)\">\n\n  <div class=\"title\">Cadastro de Equipamento</div>\n  <div class=\"subtitle\">Preencha corretamente os dados abaixo.</div>\n\n  <div class=\"group\">\n    <label>Razão Social</label>\n    <input class=\"field\" name=\"razao_social\" required />\n  </div>\n\n  <div class=\"group\">\n    <label>CNPJ</label>\n    <input class=\"field\" name=\"cnpj\" required />\n  </div>\n\n  <div class=\"group\">\n    <label>Cidade</label>\n    <input class=\"field\" name=\"cidade\" required />\n  </div>\n\n  <div class=\"group\">\n    <label>Equipamento</label>\n    <input class=\"field\" name=\"equipamento\" required />\n  </div>\n\n  <div class=\"group\">\n    <label>Fabricante</label>\n    <input class=\"field\" name=\"fabricante\" required />\n  </div>\n\n  <div class=\"group\">\n    <label>Modelo</label>\n    <input class=\"field\" name=\"modelo\" required />\n  </div>\n\n  <div class=\"group\">\n    <label>Número de Série</label>\n    <input class=\"field\" name=\"n_serie\" required />\n  </div>\n\n  <div class=\"group\">\n    <label>Data de Cadastro</label>\n    <input class=\"field\" type=\"date\" name=\"data_cadastro\" required />\n  </div>\n\n  <button>Enviar</button>\n\n  <!-- Botões Ghost -->\n  <button type=\"button\" onclick=\"gerarJson()\" \n    style=\"background:transparent;border:1px solid #007bff;color:#007bff;box-shadow:none;\">\n    Gerar JSON\n  </button>\n\n  <button type=\"button\" onclick=\"copiarJson()\" \n    style=\"background:transparent;border:1px solid #007bff;color:#007bff;box-shadow:none;\">\n    Copiar JSON\n  </button>\n\n  <button type=\"button\" onclick=\"limparJson()\" \n    style=\"background:transparent;border:1px solid #007bff;color:#007bff;box-shadow:none;\">\n    Limpar\n  </button>\n\n  <!-- Caixa onde mostra o JSON -->\n  <pre id=\"jsonBox\"></pre>\n\n</form>\n\n<script>\nasync function sendData(e) {\n  e.preventDefault();\n  const data = Object.fromEntries(new FormData(e.target));\n\n  await fetch(\"https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/dados-lead\", {\n    method: \"POST\",\n    headers: {\"Content-Type\": \"application/json\"},\n    body: JSON.stringify(data)\n  });\n\n  alert(\"Dados enviados com sucesso!\");\n  e.target.reset();\n  limparJson();\n}\n\nfunction gerarJson() {\n  const form = document.getElementById(\"equipForm\");\n  const data = Object.fromEntries(new FormData(form));\n\n  const box = document.getElementById(\"jsonBox\");\n  box.style.display = \"block\";\n  box.textContent = JSON.stringify(data, null, 2);\n}\n\nfunction copiarJson() {\n  const box = document.getElementById(\"jsonBox\");\n\n  if (box.style.display === \"none\" || box.textContent.trim() === \"\") {\n    alert(\"Nada para copiar!\");\n    return;\n  }\n\n  navigator.clipboard.writeText(box.textContent);\n  alert(\"JSON copiado!\");\n}\n\nfunction limparJson() {\n  const box = document.getElementById(\"jsonBox\");\n  box.style.display = \"none\";\n  box.textContent = \"\";\n}\n</script>\n\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1792,
+        -1184
+      ],
+      "id": "14b32c82-fbca-41a3-807e-94e7c58fd7cc",
+      "name": "HTML1"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2016,
+        -1184
+      ],
+      "id": "8e210ec8-8342-48fe-9c96-cbd3759f8c0f",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dados-lead",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1584,
+        -896
+      ],
+      "id": "83f07ea8-9e8e-4947-8857-d519a60838e9",
+      "name": "Webhook4",
+      "webhookId": "7a6699a8-890e-4b2b-8a03-167175154a31"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a6c8faeb-4778-4734-92d1-feb2fbf91bb5",
+              "name": "body.razao_social",
+              "value": "={{ $json.body.razao_social }}",
+              "type": "string"
+            },
+            {
+              "id": "85a74efd-6264-47b8-b012-e5b6939f9921",
+              "name": "body.cnpj",
+              "value": "={{ $json.body.cnpj }}",
+              "type": "string"
+            },
+            {
+              "id": "ae08c626-028e-4488-98aa-c70ee6281024",
+              "name": "body.cidade",
+              "value": "={{ $json.body.cidade }}",
+              "type": "string"
+            },
+            {
+              "id": "a3113fa8-a1c1-4c0b-8b39-6eec6728ac7c",
+              "name": "equipamento",
+              "value": "={{ $json.body.equipamento }}",
+              "type": "string"
+            },
+            {
+              "id": "e6f15d24-89be-42ef-82d5-7b6c5c8ac4fd",
+              "name": "fabricante",
+              "value": "={{ $json.body.fabricante }}",
+              "type": "string"
+            },
+            {
+              "id": "13fe66ea-19d9-4c0f-9f01-b565c361a5e5",
+              "name": "modelo",
+              "value": "={{ $json.body.modelo }}",
+              "type": "string"
+            },
+            {
+              "id": "98c41516-05d6-4369-ba09-c92bd71907d4",
+              "name": "n_serie",
+              "value": "={{ $json.body.n_serie }}",
+              "type": "string"
+            },
+            {
+              "id": "69a7af9b-049b-488e-9cfb-1a5201e54a61",
+              "name": "data_cadastro",
+              "value": "={{ $json.body.data_cadastro }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1760,
+        -896
+      ],
+      "id": "f14e490f-100f-4423-b1b9-334141ee5a52",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA CADASTRO": "={{ $json.data_cadastro.toString().split('-').reverse().join('/') + \" \" + $now.format('T') }}",
+            "RAZAO SOCIAL": "={{ $json.body.razao_social }}",
+            "CNPJ": "={{ $json.body.cnpj.replace(/^(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})$/, \"$1.$2.$3/$4-$5\") }}",
+            "CIDADE": "={{ $json.body.cidade }}",
+            "FABRICANTE": "={{ $json.fabricante }}",
+            "MODELO": "={{ $json.modelo }}",
+            "N. SERIE": "={{ $json.n_serie }}",
+            "EQUIPAMENTO": "=Ressonância Magnética"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LINK",
+              "displayName": "LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "RAZAO SOCIAL",
+              "displayName": "RAZAO SOCIAL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EQUIPAMENTO",
+              "displayName": "EQUIPAMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FABRICANTE",
+              "displayName": "FABRICANTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "MODELO",
+              "displayName": "MODELO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "N. SERIE",
+              "displayName": "N. SERIE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA CADASTRO",
+              "displayName": "DATA CADASTRO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1920,
+        -896
+      ],
+      "id": "b780237a-66aa-462c-a9af-6c72992c36e9",
+      "name": "DB2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2096,
+        -896
+      ],
+      "id": "b38a7089-51ec-43c0-8d21-741c5a291c1d",
+      "name": "RemoteId3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit#gid=0"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2448,
+        -896
+      ],
+      "id": "9600b102-5635-486b-96b4-cc7ead9b56b4",
+      "name": "Delete RemoteId3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $json.RemoteId }}",
+        "messageText": "=Lead criado com sucesso! Agora você pode consultar-ló ou criar uma OS. Deseja criar uma OS?\n\n8️⃣-Sim\n9️⃣-Não",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2272,
+        -896
+      ],
+      "id": "5e555124-e50d-49d7-bb87-13d7a24e3360",
+      "name": "Confirma lead",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=id:{{ $json.data.key.remoteJid }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        -176
+      ],
+      "id": "6a369b60-75ad-4a3b-a3c3-df1a3d96b376",
+      "name": "Redis7",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "dbRedis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nu-QI4I3ktzsPL5JgNJuW8lRTOsnHOyMOjDRiiIxS7s/edit#gid=0"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1792,
+        -176
+      ],
+      "id": "91eec2ef-ac03-47d7-bb8b-3670edbf4d88",
+      "name": "Delete RemoteId4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "Até logo👋. Para me chamar novamente, basta digitar *Magnetto*",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -176
+      ],
+      "id": "e43d8f2f-7fd4-4e26-ac1b-22ebe6da94bc",
+      "name": "Opcao9",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "*Por favor, preencha o formulário abaixo para gerar a ordem de serviço:*\n\nhttps://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/ordem-de-servi%C3%A7o",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -320
+      ],
+      "id": "40b3be3a-7b96-4044-a528-b7e19a8406d4",
+      "name": "Opcao8",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1584,
+        112
+      ],
+      "id": "7590bb77-adb6-4946-a108-b27837266237",
+      "name": "OS consult1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ea726e0-f65f-40c9-8372-f35482aa393f",
+              "name": "message.conversation",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "403b707f-3230-4e09-bad7-3e22285eebe2",
+              "name": "body.data.key.remoteJid",
+              "value": "={{ $('@s.whatsapp.net').item.json.remoteJid }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1376,
+        112
+      ],
+      "id": "551d7808-da6c-4a75-a137-4cb0f0d2ef98",
+      "name": "InputDB"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "989fde67-1a9e-44e0-9d64-5b9573512070",
+                    "leftValue": "={{ $json.message }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Nao encontrado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e84b75c3-aec4-4234-91de-0d9f1f51576c",
+                    "leftValue": "={{ $json.row_number }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Encontrado"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        2000,
+        112
+      ],
+      "id": "6f0802d4-1113-4f23-80dc-dba71acc75fe",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Pegar o texto vindo do InputDB\nconst conversation = $('InputDB').first().json.message.conversation || \"\";\n\n// 2. Extrair tudo após o primeiro \"_\"\nif (!conversation.includes(\"_\")) {\n    return [{ message: \"Nenhum '_' encontrado no parâmetro recebido.\" }];\n}\n\nconst searchKey = conversation.split(\"_\")[1]; // tudo após o primeiro \"_\"\n\n\n// 3. Dados vindos do nó 'sheets'\nconst rows = $('OS consult1').all();\n\nlet found = null;\n\nfor (const row of rows) {\n    const data = row.json;\n\n    // Criar objeto somente com as colunas permitidas\n    const searchableFields = { ...data };\n    delete searchableFields[\"NOME\"];\n    delete searchableFields[\"LINK\"];\n\n    // verificar se algum dos valores contém o searchKey\n    const values = Object.values(searchableFields);\n\n    for (const value of values) {\n        if (value && value.toString().includes(searchKey)) {\n            found = data; // retorna a linha inteira original\n            break;\n        }\n    }\n\n    if (found) break;\n}\n\n\n// 4. Caso não encontre nada\nif (!found) {\n    return [{\n        message: `Nenhuma correspondência encontrada para: ${searchKey}`\n    }];\n}\n\n\n// 5. Retorna a primeira linha encontrada\nreturn [ found ];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        112
+      ],
+      "id": "81752fb3-3b12-452a-8d88-ca0504b79b2d",
+      "name": "Busca Item1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $items(\"InputDB\").map(i => i.json.body.data.key.remoteJid).join(\", \") }}",
+        "messageText": "Sinto muito😓. Não consegui encontrar o Lead solicitado. *Tente outro parâmetro ou busque por todos os leads na opção* 5️⃣.",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2208,
+        112
+      ],
+      "id": "ccf2df79-7e21-4d8f-ad52-dd48fd3018f5",
+      "name": "Lead sem retorno",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $items(\"InputDB\").map(i => i.json.body.data.key.remoteJid).join(\", \") }}",
+        "messageText": "=Encontrei🔎!!! \n\nRazão Social: {{ $json['RAZAO SOCIAL'] }}\nCNPJ: {{ $json.CNPJ }}\nCidade: {{ $json.CIDADE }}\nEquipamento: {{ $json.EQUIPAMENTO }}\nFabricante: {{ $json.FABRICANTE }}\nModelo: {{ $json.MODELO }}\nN. Série: {{ $json['N. SERIE'] }}\nData: {{ $json['DATA CADASTRO'] }}\n\nAcesse a lista completa no link abaixo:\n\nhttps://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=sharing",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2448,
+        240
+      ],
+      "id": "3c24911d-6d08-40aa-851d-52e843c8733c",
+      "name": "Lead retorno",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d781a289-6d68-40eb-96c7-ec1447d05d67",
+              "name": "remoteJid",
+              "value": "={{ $json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "f4a7fedc-08c2-44af-a786-12dc2d32e1c2",
+              "name": "remoteJidAlt",
+              "value": "={{ $json.body.data.key.remoteJidAlt }}",
+              "type": "string"
+            },
+            {
+              "id": "ec3f6212-f64c-456f-b6e5-a14d7d2f70b9",
+              "name": "conversation",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        -880
+      ],
+      "id": "4889c0c2-d64b-4b52-be41-16ec5305cd1c",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega o primeiro item\nconst data = $input.first().json;\n\n// Lista de campos possíveis\nconst campos = [\n  data.remoteJid,\n  data.remoteJidAlt,\n  data.conversation\n];\n\n// Filtra e pega somente o que contém \"@s.whatsapp.net\"\nconst result = campos.find(v => typeof v === 'string' && v.includes('@s.whatsapp.net'));\n\n// Retorna o resultado\nreturn [\n  {\n    json: {\n      remoteJid: result || null\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        -880
+      ],
+      "id": "78d28951-5e00-44e9-8abb-7c078dc3cace",
+      "name": "@s.whatsapp.net"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5ecd2b45-de95-487d-b9e3-f4c0c143670b",
+              "leftValue": "={{ $json.NOME }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "73ec34c8-1482-44f4-97a4-ff5fd394e3dc",
+              "leftValue": "={{ $json.LINK }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2208,
+        256
+      ],
+      "id": "b9a219a1-c594-47b9-86fc-0c4531b0022a",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $items(\"InputDB\").map(i => i.json.body.data.key.remoteJid).join(\", \") }}",
+        "messageText": "=Encontrei🔎!!! \n\nRazão Social: {{ $json['RAZAO SOCIAL'] }}\nCNPJ: {{ $json.CNPJ }}\nCidade: {{ $json.CIDADE }}\nEquipamento: {{ $json.EQUIPAMENTO }}\nFabricante: {{ $json.FABRICANTE }}\nModelo: {{ $json.MODELO }}\nN. Série: {{ $json['N. SERIE'] }}\nData: {{ $json['DATA CADASTRO'] }}\n\nAcesse a lista completa no link abaixo:\n\nhttps://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=sharing",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2448,
+        400
+      ],
+      "id": "c89d074b-da1e-4ae1-a801-495e88bd7e2f",
+      "name": "Lead retorno1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "={{ $items(\"InputDB\").map(i => i.json.body.data.key.remoteJid).join(\", \") }}",
+        "messageText": "={{ $('If3').item.json['RAZAO SOCIAL'] }} já possui uma OS cadastrada. Acesse no link abaixo:\n\n{{ $('If3').item.json['LINK'] }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2624,
+        240
+      ],
+      "id": "429b7bfb-73cb-41a7-83f7-e3a2ab07650b",
+      "name": "Lead retorno2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "RAZAO SOCIAL",
+              "lookupValue": "={{ $('dados1').item.json.razao }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        5456,
+        -560
+      ],
+      "id": "bc3cc8bd-dc07-4e90-9354-f5560fac7d6d",
+      "name": "DB3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5e2471a5-2ad8-459c-8ad2-dbf8f5586aa9",
+              "leftValue": "={{ $json.NOME }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        5664,
+        -560
+      ],
+      "id": "22f7d27e-c504-4108-8707-604ac34f3620",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Id e link').item.json.name }}",
+            "LINK": "={{ $('Id e link').item.json.webViewLink }}",
+            "DATA CADASTRO": "={{ $now.format('dd/LL/yyyy T') }}",
+            "RAZAO SOCIAL": "={{ $('dados1').item.json.razao }}",
+            "CNPJ": "={{ $('dados1').item.json.cnpj.replace(/^(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})$/, \"$1.$2.$3/$4-$5\") }}",
+            "CIDADE": "={{ $('dados1').item.json.cidade_empresa }}",
+            "FABRICANTE": "={{ $('dados1').item.json.fabricante }}",
+            "MODELO": "={{ $('dados1').item.json.modelo }}",
+            "N. SERIE": "={{ $('dados1').item.json.sn }}",
+            "EQUIPAMENTO": "=Ressonância Magnética"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK",
+              "displayName": "LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "RAZAO SOCIAL",
+              "displayName": "RAZAO SOCIAL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EQUIPAMENTO",
+              "displayName": "EQUIPAMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FABRICANTE",
+              "displayName": "FABRICANTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "MODELO",
+              "displayName": "MODELO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "N. SERIE",
+              "displayName": "N. SERIE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA CADASTRO",
+              "displayName": "DATA CADASTRO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        5856,
+        -432
+      ],
+      "id": "f1a824bf-9354-427a-9f5e-4d4750237bc2",
+      "name": "DB4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "RAZAO SOCIAL",
+              "lookupValue": "={{ $('dados').item.json.razao }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        8528,
+        -912
+      ],
+      "id": "5061754d-9501-446c-923b-2f08b0797ae4",
+      "name": "DB5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5e2471a5-2ad8-459c-8ad2-dbf8f5586aa9",
+              "leftValue": "={{ $json.NOME }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        8720,
+        -912
+      ],
+      "id": "d78541d1-771a-4690-98d8-a5e9303b51cb",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "OS_consult",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UOKUJUAfGqgLoukUSzf38ceTzDY5b9KCfnB6nifpkF8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Id e link1').item.json.name }}",
+            "LINK": "={{ $('Id e link1').item.json.webViewLink }}",
+            "DATA CADASTRO": "={{ $now.format('dd/LL/yyyy T') }}",
+            "RAZAO SOCIAL": "={{ $json.razao }}",
+            "CNPJ": "={{ $json.cnpj.replace(/^(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})$/, \"$1.$2.$3/$4-$5\") }}",
+            "CIDADE": "={{ $json.cidade_empresa }}",
+            "EQUIPAMENTO": "=Ressonância Magnética",
+            "FABRICANTE": "={{ $json.fabricante }}",
+            "MODELO": "={{ $json.modelo }}",
+            "N. SERIE": "={{ $json.sn }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK",
+              "displayName": "LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "RAZAO SOCIAL",
+              "displayName": "RAZAO SOCIAL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CIDADE",
+              "displayName": "CIDADE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EQUIPAMENTO",
+              "displayName": "EQUIPAMENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FABRICANTE",
+              "displayName": "FABRICANTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "MODELO",
+              "displayName": "MODELO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "N. SERIE",
+              "displayName": "N. SERIE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA CADASTRO",
+              "displayName": "DATA CADASTRO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        8928,
+        -784
+      ],
+      "id": "0573e234-a4ef-442c-97e9-fc69cab7dff2",
+      "name": "DB6",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook2": {
+      "main": [
+        [
+          {
+            "node": "dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Opcao1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Opcao2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Opcao3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Opcao4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Opcao5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Opcao6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Opcao7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Opcao8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Opcao9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "InputOS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "InputDB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Menu",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Id e link1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Soma horas": {
+      "main": [
+        [
+          {
+            "node": "Pega o documento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Junta itens": {
+      "main": [
+        [
+          {
+            "node": "Soma horas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Junta itens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pega o documento1": {
+      "main": [
+        [
+          {
+            "node": "Placeholder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nome da imagem": {
+      "main": [
+        [
+          {
+            "node": "Procura imagens",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Imagens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Index": {
+      "main": [
+        [
+          {
+            "node": "Atualiza documento1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Cola imagem no documento": {
+      "main": [
+        [
+          {
+            "node": "Percorre os itens",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Deleta Imagens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Id e Name?": {
+      "main": [
+        [
+          {
+            "node": "Cola imagem no documento",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Percorre os itens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Percorre os itens": {
+      "main": [
+        [
+          {
+            "node": "Remove duplicatas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Id e Name?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Separa itens": {
+      "main": [
+        [
+          {
+            "node": "Percorre os itens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Atualiza documento1": {
+      "main": [
+        [
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Unir tudo": {
+      "main": [
+        [
+          {
+            "node": "Separa itens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza documento": {
+      "main": [
+        [
+          {
+            "node": "Pega o documento1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Placeholder": {
+      "main": [
+        [
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Index",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pega o documento": {
+      "main": [
+        [
+          {
+            "node": "Atualiza documento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Junta repeticoes": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procura imagens": {
+      "main": [
+        [
+          {
+            "node": "Junta repeticoes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Torna publico": {
+      "main": [
+        [
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "midia": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copia  o arquivo": {
+      "main": [
+        [
+          {
+            "node": "midia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria pasta": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Copia  o arquivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Imagens": {
+      "main": [
+        [
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 3
+          },
+          {
+            "node": "Torna publico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adiciona imagem": {
+      "main": [
+        [
+          {
+            "node": "Nome da imagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados": {
+      "main": [
+        [
+          {
+            "node": "Cria pasta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Adiciona imagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove duplicatas": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "dados1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pega o documento2": {
+      "main": [
+        [
+          {
+            "node": "Atualiza documento2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados1": {
+      "main": [
+        [
+          {
+            "node": "Soma horas1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Soma horas1": {
+      "main": [
+        [
+          {
+            "node": "Pega o documento2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza documento2": {
+      "main": [
+        [
+          {
+            "node": "Download file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file1": {
+      "main": [
+        [
+          {
+            "node": "Upload file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file1": {
+      "main": [
+        [
+          {
+            "node": "Id e link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "RemoteId",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis6": {
+      "main": [
+        [
+          {
+            "node": "Delete RemoteId1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RemoteId1": {
+      "main": [
+        [
+          {
+            "node": "Envia OS1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RemoteId2": {
+      "main": [
+        [
+          {
+            "node": "Envia OS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Menu": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Opcao1": {
+      "main": [
+        []
+      ]
+    },
+    "Envia OS": {
+      "main": [
+        [
+          {
+            "node": "Delete RemoteId",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia OS1": {
+      "main": [
+        [
+          {
+            "node": "Delete RemoteId2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete RemoteId2": {
+      "main": [
+        [
+          {
+            "node": "DB3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete RemoteId": {
+      "main": [
+        [
+          {
+            "node": "Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deleta Imagens": {
+      "main": [
+        []
+      ]
+    },
+    "Id e link": {
+      "main": [
+        [
+          {
+            "node": "RemoteId1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Id e link1": {
+      "main": [
+        [
+          {
+            "node": "RemoteId2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OS consult": {
+      "main": [
+        [
+          {
+            "node": "Busca Item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "InputOS": {
+      "main": [
+        [
+          {
+            "node": "OS consult",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OS sem retorno": {
+      "main": [
+        []
+      ]
+    },
+    "OS retorno": {
+      "main": [
+        []
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "OS sem retorno",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OS retorno",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados": {
+      "main": [
+        [
+          {
+            "node": "DB5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busca Item": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Opcao7": {
+      "main": [
+        [
+          {
+            "node": "Redis6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook3": {
+      "main": [
+        [
+          {
+            "node": "HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "DB2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DB2": {
+      "main": [
+        [
+          {
+            "node": "RemoteId3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RemoteId3": {
+      "main": [
+        [
+          {
+            "node": "Confirma lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirma lead": {
+      "main": [
+        [
+          {
+            "node": "Delete RemoteId3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis7": {
+      "main": [
+        [
+          {
+            "node": "Delete RemoteId4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Opcao9": {
+      "main": [
+        [
+          {
+            "node": "Redis7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "InputDB": {
+      "main": [
+        [
+          {
+            "node": "OS consult1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "Lead sem retorno",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busca Item1": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OS consult1": {
+      "main": [
+        [
+          {
+            "node": "Busca Item1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "@s.whatsapp.net",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "@s.whatsapp.net": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Lead retorno",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Lead retorno1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead retorno": {
+      "main": [
+        [
+          {
+            "node": "Lead retorno2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DB3": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "DB",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "DB4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DB5": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "DB1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "DB6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook4": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+            "content-length": "135",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "null",
+            "priority": "u=1, i",
+            "sec-ch-ua": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "45.233.97.72",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.97.72"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "razao_social": "d",
+            "cnpj": "12345678000199",
+            "cidade": "d",
+            "equipamento": "d",
+            "fabricante": "d",
+            "modelo": "d",
+            "n_serie": "d",
+            "data_cadastro": "2025-12-11"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/dados-lead",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "axios/1.12.2",
+            "content-length": "1498",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "10.0.1.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "teste",
+            "data": {
+              "key": {
+                "remoteJid": "42898804498527@lid",
+                "remoteJidAlt": "557991054765@s.whatsapp.net",
+                "fromMe": false,
+                "id": "A50185970B4BB7090315FE9B9034A5FE",
+                "participant": "",
+                "addressingMode": "lid"
+              },
+              "pushName": "Konnectaai",
+              "status": "DELIVERY_ACK",
+              "message": {
+                "conversation": "DB_juno",
+                "messageContextInfo": {
+                  "deviceListMetadata": {
+                    "senderKeyIndexes": [],
+                    "recipientKeyIndexes": [],
+                    "senderKeyHash": {
+                      "0": 32,
+                      "1": 137,
+                      "2": 121,
+                      "3": 226,
+                      "4": 14,
+                      "5": 244,
+                      "6": 238,
+                      "7": 208,
+                      "8": 87,
+                      "9": 22
+                    },
+                    "senderTimestamp": {
+                      "low": 1764936555,
+                      "high": 0,
+                      "unsigned": true
+                    },
+                    "recipientKeyHash": {
+                      "0": 234,
+                      "1": 255,
+                      "2": 107,
+                      "3": 107,
+                      "4": 248,
+                      "5": 183,
+                      "6": 134,
+                      "7": 85,
+                      "8": 24,
+                      "9": 211
+                    },
+                    "recipientTimestamp": {
+                      "low": 1764340088,
+                      "high": 0,
+                      "unsigned": true
+                    }
+                  },
+                  "deviceListMetadataVersion": 2,
+                  "messageSecret": {
+                    "0": 238,
+                    "1": 115,
+                    "2": 251,
+                    "3": 252,
+                    "4": 83,
+                    "5": 169,
+                    "6": 78,
+                    "7": 184,
+                    "8": 5,
+                    "9": 119,
+                    "10": 136,
+                    "11": 97,
+                    "12": 23,
+                    "13": 46,
+                    "14": 55,
+                    "15": 207,
+                    "16": 73,
+                    "17": 65,
+                    "18": 111,
+                    "19": 0,
+                    "20": 27,
+                    "21": 223,
+                    "22": 193,
+                    "23": 85,
+                    "24": 246,
+                    "25": 231,
+                    "26": 170,
+                    "27": 134,
+                    "28": 244,
+                    "29": 177,
+                    "30": 195,
+                    "31": 189
+                  }
+                }
+              },
+              "messageType": "conversation",
+              "messageTimestamp": 1764957943,
+              "instanceId": "a67cc44b-8277-4434-924c-42708131588f",
+              "source": "android"
+            },
+            "destination": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/7a6699a8-890e-4b2b-8a03-167175154a31",
+            "date_time": "2025-12-05T15:05:43.404Z",
+            "sender": "557999801810@s.whatsapp.net",
+            "server_url": "http://evo-j0o08ok8sgwc4cog04w0owok.95.217.164.173.sslip.io",
+            "apikey": "70B682D69733-4725-9C71-961DCF9A99C0"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/7a6699a8-890e-4b2b-8a03-167175154a31",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "InputDB": [
+      {
+        "json": {
+          "message": {
+            "conversation": "DB_Teste"
+          },
+          "body": {
+            "data": {
+              "key": {
+                "remoteJid": "557991054765@s.whatsapp.net"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "Webhook2": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+            "content-length": "742",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "null",
+            "priority": "u=1, i",
+            "sec-ch-ua": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "45.233.97.72",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.97.72"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "razao": "Uma qualquer",
+            "cnpj": "12345678000199",
+            "cidade_empresa": "Aratuba",
+            "uf_empresa": "",
+            "solicitante": "",
+            "fabricante": "",
+            "modelo": "",
+            "sn": "",
+            "cidade_equip": "",
+            "motivacao": "",
+            "eventos": "",
+            "tipo_intervencao": "Manutenção Corretiva",
+            "descricao_servicos": "",
+            "pendencias_ms": "",
+            "pendencias_cliente": "",
+            "estado_inicial": "Funcional",
+            "estado_final": "Funcional",
+            "cidade_realizacao": "",
+            "uf_realizacao": "",
+            "nome_tecnico": "",
+            "cft_tecnico": "",
+            "recebedor": "",
+            "cpf_recebedor": "",
+            "pecas_cliente": [],
+            "pecas_ms": [],
+            "pecas_reparadas": [],
+            "pecas_inseridas": [],
+            "mao_de_obra": [],
+            "motivo_restricao": "",
+            "motivo_inoperante": "",
+            "midias": []
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/ordem-de-serviço-dados",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "cabae404-2856-4452-9a56-84d0b9a71a39",
+  "triggerCount": 5,
+  "shared": [
+    {
+      "updatedAt": "2025-11-19T14:18:55.214Z",
+      "createdAt": "2025-11-19T14:18:55.214Z",
+      "role": "workflow:owner",
+      "workflowId": "XPdfiD70CzN7yMxS",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2025-12-05T19:19:48.809Z",
+      "createdAt": "2025-12-05T19:19:48.809Z",
+      "id": "p4l8XjzFeaIlUTS2",
+      "name": "Redis"
+    },
+    {
+      "updatedAt": "2025-11-17T14:00:11.395Z",
+      "createdAt": "2025-11-17T14:00:11.395Z",
+      "id": "BiXlsIc9sGawCxiS",
+      "name": "EvolutionAPI"
+    },
+    {
+      "updatedAt": "2025-11-17T14:30:41.341Z",
+      "createdAt": "2025-11-17T14:30:41.341Z",
+      "id": "a1SiyDS4bAShAsoW",
+      "name": "html"
+    },
+    {
+      "updatedAt": "2025-11-17T14:46:49.579Z",
+      "createdAt": "2025-11-17T14:46:49.579Z",
+      "id": "9yuumwfUmri83S1w",
+      "name": "Javascript"
+    },
+    {
+      "updatedAt": "2025-11-17T14:09:04.153Z",
+      "createdAt": "2025-11-17T14:09:04.153Z",
+      "id": "32ehNS7DwOBedRQc",
+      "name": "Sheets"
+    },
+    {
+      "updatedAt": "2025-11-27T17:41:23.357Z",
+      "createdAt": "2025-11-27T17:41:23.357Z",
+      "id": "qlhMLSlMQRcl50k1",
+      "name": "Drive"
+    },
+    {
+      "updatedAt": "2025-11-27T17:41:52.963Z",
+      "createdAt": "2025-11-27T17:41:52.963Z",
+      "id": "6elHMTsvW5UeAGVv",
+      "name": "Docs"
+    },
+    {
+      "updatedAt": "2025-11-17T14:32:35.191Z",
+      "createdAt": "2025-11-17T14:32:35.191Z",
+      "id": "Llfmd66GWbMUHQMr",
+      "name": "Http"
+    },
+    {
+      "updatedAt": "2025-12-01T11:29:55.381Z",
+      "createdAt": "2025-12-01T11:29:55.381Z",
+      "id": "N9rn00900k2JE58V",
+      "name": "css"
+    }
+  ]
+}
