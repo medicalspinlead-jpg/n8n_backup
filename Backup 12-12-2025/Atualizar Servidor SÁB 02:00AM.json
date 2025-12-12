@@ -1,0 +1,215 @@
+{
+  "updatedAt": "2025-12-12T10:14:53.384Z",
+  "createdAt": "2025-11-17T14:11:01.556Z",
+  "id": "yWv6lyB5rVxmn8Ho",
+  "name": "Atualizar Servidor SÁB 02:00AM",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months",
+              "triggerAtDayOfMonth": 15,
+              "triggerAtHour": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4c8e07e4-bdf5-409d-8b61-3a3b5bbbfa46",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "command": "sudo apt update && sudo apt upgrade -y"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0dec2eb9-3cd3-41eb-a5f5-3357827b033c",
+      "name": "Atualizar",
+      "credentials": {
+        "sshPassword": {
+          "id": "gmZEvPFpOOfL26ym",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "sudo reboot"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        384,
+        0
+      ],
+      "id": "09a50679-1502-440b-b0f6-8861c7769856",
+      "name": "Reiniciar",
+      "credentials": {
+        "sshPassword": {
+          "id": "gmZEvPFpOOfL26ym",
+          "name": "SSH Password account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Atualizar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualizar": {
+      "main": [
+        [
+          {
+            "node": "Reiniciar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "241ccc83-e6c6-40e0-a5d7-28b5669209cd",
+  "activeVersionId": "241ccc83-e6c6-40e0-a5d7-28b5669209cd",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T14:11:01.556Z",
+      "createdAt": "2025-11-17T14:11:01.556Z",
+      "role": "workflow:owner",
+      "workflowId": "yWv6lyB5rVxmn8Ho",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2025-12-12T10:01:16.115Z",
+    "createdAt": "2025-12-12T10:01:16.115Z",
+    "versionId": "241ccc83-e6c6-40e0-a5d7-28b5669209cd",
+    "workflowId": "yWv6lyB5rVxmn8Ho",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "months",
+                "triggerAtDayOfMonth": 15,
+                "triggerAtHour": 2
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          0
+        ],
+        "id": "4c8e07e4-bdf5-409d-8b61-3a3b5bbbfa46",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "command": "sudo apt update && sudo apt upgrade -y"
+        },
+        "type": "n8n-nodes-base.ssh",
+        "typeVersion": 1,
+        "position": [
+          208,
+          0
+        ],
+        "id": "0dec2eb9-3cd3-41eb-a5f5-3357827b033c",
+        "name": "Atualizar",
+        "credentials": {
+          "sshPassword": {
+            "id": "gmZEvPFpOOfL26ym",
+            "name": "SSH Password account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "command": "sudo reboot"
+        },
+        "type": "n8n-nodes-base.ssh",
+        "typeVersion": 1,
+        "position": [
+          384,
+          0
+        ],
+        "id": "09a50679-1502-440b-b0f6-8861c7769856",
+        "name": "Reiniciar",
+        "credentials": {
+          "sshPassword": {
+            "id": "gmZEvPFpOOfL26ym",
+            "name": "SSH Password account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Atualizar",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Atualizar": {
+        "main": [
+          [
+            {
+              "node": "Reiniciar",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "tags": []
+}
