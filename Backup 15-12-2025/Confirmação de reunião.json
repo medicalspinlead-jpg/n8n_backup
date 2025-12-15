@@ -1,0 +1,549 @@
+{
+  "updatedAt": "2025-12-12T10:12:18.640Z",
+  "createdAt": "2025-11-17T13:42:48.924Z",
+  "id": "9qGUfHJeGCWDtn76",
+  "name": "Confirmação de reunião",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "c_4b5412053daffc30e3e802e37a6d478e40c201e1dc95e0d9b911fcf86197d693@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Automação de Reuniões MS"
+        },
+        "returnAll": true,
+        "timeMin": "=",
+        "timeMax": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        144
+      ],
+      "id": "8eb50f90-64a5-4790-8763-dd016a0e6d5e",
+      "name": "Get many events1",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "2WPRgLdjwLeWcqDK",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ddfd83aa-3e43-4d46-ac0a-9574bb28369f",
+              "leftValue": "={{ $json.start.dateTime }}",
+              "rightValue": "2025-",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "07b16cda-09ea-4d45-9e32-8e4766453bca",
+              "leftValue": "={{ $json.end.dateTime }}",
+              "rightValue": "2025-",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "4f888aea-fb4e-471c-9fdd-7777466cd7c1",
+              "leftValue": "={{ $json.description }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "25c6afbe-ca75-4c09-9653-3167932f71f3",
+              "leftValue": "={{ new Date($json.start.dateTime).toDateString() }}",
+              "rightValue": "={{ new Date().toDateString() }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        144
+      ],
+      "id": "253746ed-4289-4a57-844d-c74360000063",
+      "name": "Filter1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a4336fd5-69ba-4509-b798-c21df528ade4",
+              "name": "inicio",
+              "value": "={{ $json.start.dateTime }}",
+              "type": "string"
+            },
+            {
+              "id": "537709a4-f4b6-45b8-a73c-297593f42ac4",
+              "name": "fim",
+              "value": "={{ $json.end.dateTime }}",
+              "type": "string"
+            },
+            {
+              "id": "aa3cd834-b346-4778-96ec-f9270dfad7e8",
+              "name": "participantes",
+              "value": "={{ $json.attendees }}",
+              "type": "array"
+            },
+            {
+              "id": "d01d6bed-dcce-4205-a7ed-a5e5114bcf86",
+              "name": "numero",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "8c5831a9-dfac-4f5e-ad74-5c7d67d4436d",
+              "name": "url",
+              "value": "={{ $json.conferenceData.entryPoints[0].uri }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        768,
+        144
+      ],
+      "id": "d668ef2c-0e6b-4d17-b3b4-3f80d14b3394",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.contato }}",
+        "messageText": "=Dr {{ $json.nome }}, Bom dia!\nSeu horário está confirmado para *hoje, às {{ $('Edit Fields1').item.json.inicio.match(/T(\\d{2}:\\d{2})/)[1] }}*, horário de Brasilia.\n\n{{ $('Edit Fields1').item.json.url }}\nO *link do Meet* está no seu e-mail e também acima.\n\nNosso engenheiro se preparou especialmente para o seu projeto.\n\n*Preciso apenas da sua confirmação*. \nPode responder com “ *ok* ”, por aqui?",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        144
+      ],
+      "id": "51c933c2-e52a-486a-8de6-f363e2211c28",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        144,
+        144
+      ],
+      "id": "ea15be6f-75b8-4b7b-8fdd-16d7ba0a4a63",
+      "name": "Todo dia 7:30AM1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const texto = $json.numero;\n\n// Regex que captura todas as variações de \"nome\" e \"contato\"\nconst regex = /(n[úu]mero|numero|nome|n)\\s*:\\s*([^:\\n]+)[\\s\\S]*?(telefone|t[ée]lefone|t|contato)\\s*:\\s*([+\\d\\s-]+)/gi;\n\nconst resultados = [];\nlet match;\n\nwhile ((match = regex.exec(texto)) !== null) {\n  let nome = match[2].trim();\n  let contato = match[4].trim();\n\n  // Remove tudo que não for número\n  contato = contato.replace(/\\D/g, '');\n\n  // Adiciona o 55 se não tiver\n  if (!contato.startsWith('55')) {\n    contato = '55' + contato;\n  }\n\n  resultados.push({\n    nome,\n    contato\n  });\n}\n\n// Caso não encontre nenhum, retorna item vazio pra não quebrar fluxo\nif (resultados.length === 0) {\n  return [{ json: { nome: null, contato: null } }];\n}\n\n// Retorna cada par nome/contato como item separado\nreturn resultados.map(r => ({ json: r }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        976,
+        144
+      ],
+      "id": "80d7d2a1-5a4e-45e6-94e0-25ac7def8934",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "connections": {
+    "Get many events1": {
+      "main": [
+        [
+          {
+            "node": "Filter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Todo dia 7:30AM1": {
+      "main": [
+        [
+          {
+            "node": "Get many events1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": {
+    "node:Todo dia 7:30AM1": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "6615c201-40a2-4006-a3f4-d6659c234aa6",
+  "activeVersionId": "6615c201-40a2-4006-a3f4-d6659c234aa6",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T13:42:48.924Z",
+      "createdAt": "2025-11-17T13:42:48.924Z",
+      "role": "workflow:owner",
+      "workflowId": "9qGUfHJeGCWDtn76",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2025-12-12T10:01:16.115Z",
+    "createdAt": "2025-12-12T10:01:16.115Z",
+    "versionId": "6615c201-40a2-4006-a3f4-d6659c234aa6",
+    "workflowId": "9qGUfHJeGCWDtn76",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "value": "c_4b5412053daffc30e3e802e37a6d478e40c201e1dc95e0d9b911fcf86197d693@group.calendar.google.com",
+            "mode": "list",
+            "cachedResultName": "Automação de Reuniões MS"
+          },
+          "returnAll": true,
+          "timeMin": "=",
+          "timeMax": "=",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendar",
+        "typeVersion": 1.3,
+        "position": [
+          352,
+          144
+        ],
+        "id": "8eb50f90-64a5-4790-8763-dd016a0e6d5e",
+        "name": "Get many events1",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "2WPRgLdjwLeWcqDK",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "ddfd83aa-3e43-4d46-ac0a-9574bb28369f",
+                "leftValue": "={{ $json.start.dateTime }}",
+                "rightValue": "2025-",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              },
+              {
+                "id": "07b16cda-09ea-4d45-9e32-8e4766453bca",
+                "leftValue": "={{ $json.end.dateTime }}",
+                "rightValue": "2025-",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              },
+              {
+                "id": "4f888aea-fb4e-471c-9fdd-7777466cd7c1",
+                "leftValue": "={{ $json.description }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "25c6afbe-ca75-4c09-9653-3167932f71f3",
+                "leftValue": "={{ new Date($json.start.dateTime).toDateString() }}",
+                "rightValue": "={{ new Date().toDateString() }}",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          560,
+          144
+        ],
+        "id": "253746ed-4289-4a57-844d-c74360000063",
+        "name": "Filter1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "a4336fd5-69ba-4509-b798-c21df528ade4",
+                "name": "inicio",
+                "value": "={{ $json.start.dateTime }}",
+                "type": "string"
+              },
+              {
+                "id": "537709a4-f4b6-45b8-a73c-297593f42ac4",
+                "name": "fim",
+                "value": "={{ $json.end.dateTime }}",
+                "type": "string"
+              },
+              {
+                "id": "aa3cd834-b346-4778-96ec-f9270dfad7e8",
+                "name": "participantes",
+                "value": "={{ $json.attendees }}",
+                "type": "array"
+              },
+              {
+                "id": "d01d6bed-dcce-4205-a7ed-a5e5114bcf86",
+                "name": "numero",
+                "value": "={{ $json.description }}",
+                "type": "string"
+              },
+              {
+                "id": "8c5831a9-dfac-4f5e-ad74-5c7d67d4436d",
+                "name": "url",
+                "value": "={{ $json.conferenceData.entryPoints[0].uri }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          768,
+          144
+        ],
+        "id": "d668ef2c-0e6b-4d17-b3b4-3f80d14b3394",
+        "name": "Edit Fields1"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{ $json.contato }}",
+          "messageText": "=Dr {{ $json.nome }}, Bom dia!\nSeu horário está confirmado para *hoje, às {{ $('Edit Fields1').item.json.inicio.match(/T(\\d{2}:\\d{2})/)[1] }}*, horário de Brasilia.\n\n{{ $('Edit Fields1').item.json.url }}\nO *link do Meet* está no seu e-mail e também acima.\n\nNosso engenheiro se preparou especialmente para o seu projeto.\n\n*Preciso apenas da sua confirmação*. \nPode responder com “ *ok* ”, por aqui?",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          1200,
+          144
+        ],
+        "id": "51c933c2-e52a-486a-8de6-f363e2211c28",
+        "name": "Enviar texto1",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "triggerAtHour": 7,
+                "triggerAtMinute": 30
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          144,
+          144
+        ],
+        "id": "ea15be6f-75b8-4b7b-8fdd-16d7ba0a4a63",
+        "name": "Todo dia 7:30AM1"
+      },
+      {
+        "parameters": {
+          "jsCode": "const texto = $json.numero;\n\n// Regex que captura todas as variações de \"nome\" e \"contato\"\nconst regex = /(n[úu]mero|numero|nome|n)\\s*:\\s*([^:\\n]+)[\\s\\S]*?(telefone|t[ée]lefone|t|contato)\\s*:\\s*([+\\d\\s-]+)/gi;\n\nconst resultados = [];\nlet match;\n\nwhile ((match = regex.exec(texto)) !== null) {\n  let nome = match[2].trim();\n  let contato = match[4].trim();\n\n  // Remove tudo que não for número\n  contato = contato.replace(/\\D/g, '');\n\n  // Adiciona o 55 se não tiver\n  if (!contato.startsWith('55')) {\n    contato = '55' + contato;\n  }\n\n  resultados.push({\n    nome,\n    contato\n  });\n}\n\n// Caso não encontre nenhum, retorna item vazio pra não quebrar fluxo\nif (resultados.length === 0) {\n  return [{ json: { nome: null, contato: null } }];\n}\n\n// Retorna cada par nome/contato como item separado\nreturn resultados.map(r => ({ json: r }));\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          976,
+          144
+        ],
+        "id": "80d7d2a1-5a4e-45e6-94e0-25ac7def8934",
+        "name": "Code in JavaScript1"
+      }
+    ],
+    "connections": {
+      "Get many events1": {
+        "main": [
+          [
+            {
+              "node": "Filter1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter1": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Todo dia 7:30AM1": {
+        "main": [
+          [
+            {
+              "node": "Get many events1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript1": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "tags": []
+}
