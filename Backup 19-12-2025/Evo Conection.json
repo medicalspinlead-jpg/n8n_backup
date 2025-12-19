@@ -1,0 +1,1549 @@
+{
+  "updatedAt": "2025-11-18T11:27:28.215Z",
+  "createdAt": "2025-11-17T14:00:18.205Z",
+  "id": "JQxnWZsYYRGoIjT2",
+  "name": "Evo Conection",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "atualizar-qr-code",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        1008,
+        160
+      ],
+      "id": "61893b27-ff70-485f-8171-9d5f9f72e2a6",
+      "name": "Atualiza qr code",
+      "webhookId": "f3988766-f52b-4be0-b0bd-254e485671a3"
+    },
+    {
+      "parameters": {
+        "content": "Subistitua o Endpoint dentro do \"Campos Dinâmicos\" para os seus !",
+        "height": 460,
+        "width": 860,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "90c0d6c8-59ca-4e68-8af8-85629ecc2aa6",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>Gerador de QR Code WhatsApp</title>\n  <script src=\"https://cdn.tailwindcss.com\"></script>\n  <style>\n    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');\n    \n    * {\n      font-family: 'Inter', system-ui, sans-serif;\n    }\n    \n    .fade-in {\n      animation: fadeIn 0.4s ease-out;\n    }\n    \n    @keyframes fadeIn {\n      from { opacity: 0; transform: translateY(16px); }\n      to { opacity: 1; transform: translateY(0); }\n    }\n    \n    .spinner {\n      width: 20px;\n      height: 20px;\n      border: 2px solid #e5e7eb;\n      border-radius: 50%;\n      border-top-color: #3b82f6;\n      animation: spin 1s linear infinite;\n    }\n    \n    @keyframes spin {\n      to { transform: rotate(360deg); }\n    }\n    \n    .progress-circle {\n      transform: rotate(-90deg);\n    }\n    \n    .progress-path {\n      stroke-dasharray: 157;\n      stroke-dashoffset: 157;\n      transition: stroke-dashoffset 1s linear;\n    }\n    \n    .feature-card {\n      transition: all 0.2s ease;\n    }\n    \n    .feature-card:hover {\n      transform: translateY(-2px);\n    }\n    \n    .input-focus {\n      transition: all 0.2s ease;\n    }\n    \n    .input-focus:focus {\n      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);\n    }\n    \n    .btn-primary {\n      transition: all 0.2s ease;\n    }\n    \n    .btn-primary:hover:not(:disabled) {\n      transform: translateY(-1px);\n      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);\n    }\n    \n    .btn-secondary {\n      transition: all 0.2s ease;\n    }\n    \n    .btn-secondary:hover {\n      background-color: #f9fafb;\n      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);\n    }\n  </style>\n</head>\n<body class=\"min-h-screen bg-gray-50\">\n  <!-- Main Content -->\n  <div class=\"min-h-screen flex items-center justify-center p-4\">\n    <div class=\"w-full max-w-md\">\n      <!-- Header -->\n      <div class=\"text-center mb-8 fade-in\">\n        <img src=\"https://medicalspin.com.br/wp-content/uploads/2025/08/Certified-1.png\" alt=\"medicalspin\">\n        <h1 class=\"text-2xl font-semibold text-gray-900 mb-2\">Gerador de QR Code</h1>\n        <p class=\"text-gray-600\">Conecte sua instância WhatsApp rapidamente</p>\n      </div>\n\n      <!-- Main Card -->\n      <div class=\"bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden fade-in\">\n        <div class=\"p-6\">\n          <!-- Features Grid -->\n          <div class=\"grid grid-cols-3 gap-4 mb-8\">\n            <div class=\"feature-card text-center p-4 bg-gray-50 rounded-xl\">\n              <div class=\"w-10 h-10 bg-blue-100 text-blue-600 rounded-lg mx-auto mb-3 flex items-center justify-center\">\n                <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M13 10V3L4 14h7v7l9-11h-7z\"/>\n                </svg>\n              </div>\n              <p class=\"text-sm font-medium text-gray-700\">Rápido</p>\n            </div>\n            <div class=\"feature-card text-center p-4 bg-gray-50 rounded-xl\">\n              <div class=\"w-10 h-10 bg-green-100 text-green-600 rounded-lg mx-auto mb-3 flex items-center justify-center\">\n                <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z\"/>\n                </svg>\n              </div>\n              <p class=\"text-sm font-medium text-gray-700\">Seguro</p>\n            </div>\n            <div class=\"feature-card text-center p-4 bg-gray-50 rounded-xl\">\n              <div class=\"w-10 h-10 bg-purple-100 text-purple-600 rounded-lg mx-auto mb-3 flex items-center justify-center\">\n                <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z\"/>\n                </svg>\n              </div>\n              <p class=\"text-sm font-medium text-gray-700\">Simples</p>\n            </div>\n          </div>\n\n          <!-- Input Section -->\n          <div class=\"space-y-6\">\n            <div>\n              <label for=\"instanceName\" class=\"block text-sm font-medium text-gray-900 mb-3\">\n                Nome da Instância\n              </label>\n              <div class=\"relative\">\n                <input\n                  id=\"instanceName\"\n                  type=\"text\"\n                  placeholder=\"Digite o nome da sua instância\"\n                  class=\"input-focus w-full px-4 py-4 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-0 outline-none text-gray-900 placeholder-gray-500 bg-white\"\n                />\n                <div class=\"absolute inset-y-0 right-4 flex items-center text-gray-400\">\n                  <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z\"/>\n                  </svg>\n                </div>\n              </div>\n              <p class=\"text-sm text-gray-500 mt-2\">Escolha um nome único para identificar sua conexão</p>\n            </div>\n\n            <!-- Generate Button -->\n            <button\n              id=\"generateButton\"\n              onclick=\"generateQRCode()\"\n              class=\"btn-primary w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl disabled:opacity-50 disabled:pointer-events-none disabled:transform-none relative overflow-hidden\"\n            >\n              <div class=\"flex items-center justify-center space-x-2\">\n                <div id=\"buttonIcon\">\n                  <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5\"/>\n                  </svg>\n                </div>\n                <span id=\"buttonText\">Gerar QR Code</span>\n              </div>\n            </button>\n          </div>\n\n          <!-- Loading State -->\n          <div id=\"loader\" class=\"hidden text-center py-12\">\n            <div class=\"inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-xl mb-4\">\n              <div class=\"spinner\"></div>\n            </div>\n            <p class=\"text-gray-900 font-medium mb-1\">Gerando QR Code</p>\n            <p class=\"text-sm text-gray-500\">Aguarde um momento...</p>\n          </div>\n\n          <!-- QR Code Display -->\n          <div id=\"qrcode\" class=\"hidden text-center py-6\">\n            <div class=\"bg-gray-50 rounded-xl p-6 border border-gray-200\">\n              <div id=\"qrImage\" class=\"mb-6\"></div>\n              \n              <!-- Instructions -->\n              <div class=\"space-y-4\">\n                <h3 class=\"text-sm font-medium text-gray-900 mb-4\">Como conectar:</h3>\n                <div class=\"space-y-3 text-left max-w-xs mx-auto\">\n                  <div class=\"flex items-start space-x-3\">\n                    <div class=\"flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-medium\">1</div>\n                    <p class=\"text-sm text-gray-600\">Abra o WhatsApp no celular</p>\n                  </div>\n                  <div class=\"flex items-start space-x-3\">\n                    <div class=\"flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-medium\">2</div>\n                    <p class=\"text-sm text-gray-600\">Acesse \"Aparelhos conectados\"</p>\n                  </div>\n                  <div class=\"flex items-start space-x-3\">\n                    <div class=\"flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-medium\">3</div>\n                    <p class=\"text-sm text-gray-600\">Escaneie este código</p>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n\n          <!-- Timer -->\n          <div id=\"timer\" class=\"hidden\">\n            <div class=\"bg-amber-50 border border-amber-200 rounded-xl p-4 mt-6\">\n              <div class=\"flex items-center justify-center space-x-3\">\n                <div class=\"relative w-8 h-8\">\n                  <svg class=\"progress-circle w-8 h-8\" viewBox=\"0 0 50 50\">\n                    <circle\n                      class=\"progress-path\"\n                      stroke=\"#f59e0b\"\n                      stroke-width=\"2\"\n                      fill=\"transparent\"\n                      r=\"25\"\n                      cx=\"25\"\n                      cy=\"25\"\n                    />\n                  </svg>\n                  <div class=\"absolute inset-0 flex items-center justify-center\">\n                    <svg class=\"w-3 h-3 text-amber-600\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                      <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z\"/>\n                    </svg>\n                  </div>\n                </div>\n                <div class=\"text-center\">\n                  <p id=\"timerText\" class=\"text-sm font-medium text-amber-800\"></p>\n                  <p class=\"text-xs text-amber-600\">Tempo restante</p>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <!-- Footer -->\n      <div class=\"text-center mt-8 fade-in\">\n        <div class=\"flex items-center justify-center space-x-2 text-sm text-gray-500\">\n          <svg class=\"w-4 h-4 text-green-500\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n            <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z\"/>\n          </svg>\n          <span>Conexão segura</span>\n          <span>•</span>\n          <span class=\"font-medium text-gray-600\">WhatsApp Business API</span>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <script>\n    let timerInterval;\n    let timeLeft = 30;\n\n    async function generateQRCode() {\n      const input = document.getElementById('instanceName');\n      const name = input.value.trim();\n      \n      if (!name) {\n        input.focus();\n        input.classList.add('border-red-400', 'ring-4', 'ring-red-100');\n        setTimeout(() => {\n          input.classList.remove('border-red-400', 'ring-4', 'ring-red-100');\n        }, 2500);\n        return;\n      }\n\n      await fetchQRCode(name);\n    }\n\n    async function fetchQRCode(name) {\n      const loader = document.getElementById('loader');\n      const button = document.getElementById('generateButton');\n      const buttonText = document.getElementById('buttonText');\n      const buttonIcon = document.getElementById('buttonIcon');\n      const qrSection = document.getElementById('qrcode');\n      const qrImageContainer = document.getElementById('qrImage');\n      const timerSection = document.getElementById('timer');\n\n      // Show loading state\n      qrSection.classList.add('hidden');\n      timerSection.classList.add('hidden');\n      loader.classList.remove('hidden');\n      button.disabled = true;\n      buttonText.textContent = 'Gerando...';\n      buttonIcon.innerHTML = '<div class=\"spinner\"></div>';\n\n      try {\n        const endpoint = '{{ $json.endpoint }}'; \n\n        const res = await fetch(endpoint, {\n          method: 'POST',\n          headers: { 'Content-Type': 'application/json' },\n          body: JSON.stringify({ instance: name })\n        });\n\n        if (!res.ok) {\n          let errorMsg = `Erro HTTP: ${res.status}`;\n          try {\n            const errorData = await res.json();\n            if (errorData && errorData.message) {\n              errorMsg = errorData.message;\n            }\n          } catch (e) {\n            errorMsg = res.statusText || errorMsg;\n          }\n          throw new Error(errorMsg);\n        }\n        \n        const blob = await res.blob();\n        if (blob.type.startsWith('image/')) {\n          const url = URL.createObjectURL(blob);\n          qrImageContainer.innerHTML = `<img src=\"${url}\" alt=\"QR Code WhatsApp\" class=\"rounded-xl max-w-64 mx-auto\" />`;\n        } else {\n          const textResponse = await blob.text();\n          console.error(\"Resposta inesperada:\", textResponse);\n          throw new Error('Resposta inesperada do servidor. Verifique o console.');\n        }\n\n        // Show QR code\n        loader.classList.add('hidden');\n        qrSection.classList.remove('hidden');\n        timerSection.classList.remove('hidden');\n        resetTimer();\n\n      } catch (error) {\n        console.error('Erro ao gerar QR Code:', error);\n        loader.classList.add('hidden');\n        qrSection.classList.add('hidden');\n        timerSection.classList.add('hidden');\n        showError(error.message || 'Erro ao gerar QR Code. Tente novamente.');\n      } finally {\n        button.disabled = false;\n        buttonText.textContent = 'Gerar QR Code';\n        buttonIcon.innerHTML = `\n          <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n            <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5\"/>\n          </svg>\n        `;\n      }\n    }\n\n    function resetTimer() {\n      clearInterval(timerInterval);\n      timeLeft = 30;\n      updateTimerDisplay();\n      timerInterval = setInterval(updateTimerDisplay, 1000);\n    }\n\n    function updateTimerDisplay() {\n      const timerTextEl = document.getElementById('timerText');\n      const progressPath = document.querySelector('.progress-path');\n      const timerSection = document.getElementById('timer');\n      const qrSection = document.getElementById('qrcode');\n      \n      if (timeLeft <= 0) {\n        clearInterval(timerInterval);\n        timerTextEl.textContent = 'Código expirado!';\n        progressPath.style.strokeDashoffset = 157;\n        setTimeout(() => {\n          timerSection.classList.add('hidden');\n          qrSection.classList.add('hidden');\n          showError('QR Code expirado. Gere um novo código.');\n        }, 1000);\n        return;\n      }\n      \n      timerTextEl.textContent = `${timeLeft}s`;\n      \n      const circumference = 2 * Math.PI * 25;\n      const offset = circumference - (timeLeft / 30) * circumference;\n      progressPath.style.strokeDashoffset = offset;\n      \n      timeLeft--;\n    }\n\n    function showError(message) {\n      const errorDiv = document.createElement('div');\n      errorDiv.className = 'fixed top-6 right-6 bg-red-500 text-white px-6 py-4 rounded-xl shadow-lg z-50 text-sm font-medium max-w-sm';\n      errorDiv.textContent = message;\n      document.body.appendChild(errorDiv);\n      \n      setTimeout(() => {\n        errorDiv.style.animation = 'fadeIn 0.3s ease-out reverse';\n        setTimeout(() => errorDiv.remove(), 300);\n      }, 4000);\n    }\n\n    // Event listeners\n    document.getElementById('instanceName').addEventListener('keypress', function(e) {\n      if (e.key === 'Enter') {\n        e.preventDefault();\n        generateQRCode();\n      }\n    });\n\n    window.addEventListener('load', () => {\n      document.getElementById('instanceName').focus();\n    });\n  </script>\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        160
+      ],
+      "id": "07838fc1-7efa-4b0f-b168-5443b903e809",
+      "name": "somente buscar a instancia já criada"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bf738f9-c439-46fc-911f-96d521ce7ea8",
+              "name": "endpoint",
+              "value": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/atualizar-qr-code",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        160
+      ],
+      "id": "15da74f0-e2b8-4542-b619-7bb52c55d2f7",
+      "name": "Campos Dinâmicos"
+    },
+    {
+      "parameters": {
+        "content": "Gerador de QrCode",
+        "height": 460,
+        "width": 1440,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        912,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "4949d72a-847f-4440-9594-e65124438a0b",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7997d699-2380-48aa-8dc3-b1eac974e16e",
+              "name": "base64",
+              "value": "={{ $json.data.base64.split(',').last() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1664,
+        32
+      ],
+      "id": "aa1ed451-7bec-4ce8-a7a7-35d814462c47",
+      "name": "Limpa o código base64"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1872,
+        32
+      ],
+      "id": "2df11dbd-2225-44af-9aa1-5fef9648a8a2",
+      "name": "Converte para base64"
+    },
+    {
+      "parameters": {
+        "respondWith": "noData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1664,
+        272
+      ],
+      "id": "ceca79a1-7d44-4a74-8702-8dcfe6734db3",
+      "name": "gera mensagem de conectado!",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "04bcabd0-34f6-4e7d-8329-0852b8593d8e",
+              "leftValue": "={{ $json.data.instance.state }}",
+              "rightValue": "open",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1408,
+        160
+      ],
+      "id": "cc21b463-fdab-48fe-a284-6be46f14b5ef",
+      "name": "validação se está conectado"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        160
+      ],
+      "id": "7f89bee4-9545-4b58-a94d-16dd864a1f45",
+      "name": "Gera Html Dinâmico"
+    },
+    {
+      "parameters": {
+        "path": "medicalspin",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        64,
+        160
+      ],
+      "id": "633e17d4-ddf8-4b29-ade8-e46407e5f437",
+      "name": "Inicializa a pagina",
+      "webhookId": "cce5e6b5-f99a-48a3-8b18-cf524f03c4ce"
+    },
+    {
+      "parameters": {
+        "operation": "instance-connect",
+        "instanceName": "={{ $json.body.instance }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        160
+      ],
+      "id": "f298702b-26ae-49dc-90bc-56d78acc396b",
+      "name": "Conexão EVO",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2080,
+        32
+      ],
+      "id": "413da43b-14f1-4217-82ea-97671db2974a",
+      "name": "gerar dinamicamente qrcode",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"UTF-8\" />\n    <title>Painel de Instâncias</title>\n\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            background: #f4f4f7;\n            padding: 20px;\n            color: #222;\n        }\n        h1 {\n            text-align: center;\n            margin-bottom: 25px;\n        }\n        table {\n            width: 100%;\n            background: #fff;\n            border-radius: 10px;\n            overflow: hidden;\n            border-collapse: collapse;\n            box-shadow: 0 3px 12px rgba(0,0,0,0.12);\n        }\n        th, td {\n            padding: 12px 15px;\n            border-bottom: 1px solid #e2e2e2;\n            text-align: left;\n        }\n        th {\n            background: #2e7dff;\n            color: #fff;\n        }\n        tr:hover {\n            background: #f1f7ff;\n        }\n        .avatar {\n            width: 48px;\n            height: 48px;\n            border-radius: 50%;\n            object-fit: cover;\n        }\n        .status-open {\n            color: #0f8a00;\n            font-weight: bold;\n        }\n        .status-closed {\n            color: #b00000;\n            font-weight: bold;\n        }\n        .btn-connect {\n            background: #2e7dff;\n            color: white;\n            padding: 8px 14px;\n            border: none;\n            border-radius: 6px;\n            cursor: pointer;\n            font-weight: bold;\n        }\n        .btn-connect:hover {\n            background: #1d5cd8;\n        }\n\n        /* Área do QR Code */\n        #qrcode-box {\n            margin-top: 30px;\n            padding: 20px;\n            background: white;\n            border-radius: 12px;\n            box-shadow: 0 3px 12px rgba(0,0,0,0.12);\n            text-align: center;\n            display: none;\n        }\n        #qrcode-box img {\n            width: 280px;\n            margin-top: 15px;\n        }\n    </style>\n\n</head>\n<body>\n\n<h1>📋 Painel de Instâncias</h1>\n\n<table id=\"instanciasTable\">\n    <thead>\n        <tr>\n            <th>ID</th>\n            <th>Nome</th>\n            <th>Status</th>\n            <th>Dono</th>\n            <th>Perfil</th>\n            <th>Foto</th>\n            <th>Integração</th>\n            <th>Ações</th>\n        </tr>\n    </thead>\n    <tbody></tbody>\n</table>\n\n<!-- Caixa onde o QR Code será exibido -->\n<div id=\"qrcode-box\">\n    <h2>🔐 Escaneie o QR Code para conectar</h2>\n    <img id=\"qrImage\" src=\"\" />\n</div>\n\n<script>\n\nconst WEBHOOK_URL = \"https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/atualizar-qr-code1\";\n\nasync function conectarInstancia(instancia) {\n\n    // Envia o JSON da instância para o webhook\n    const response = await fetch(WEBHOOK_URL, {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify(instancia)\n    });\n\n    // Espera o QR code que vem como imagem binária\n    const blob = await response.blob();\n\n    // Converte Blob → imagem na tela\n    const imgUrl = URL.createObjectURL(blob);\n\n    document.getElementById(\"qrImage\").src = imgUrl;\n    document.getElementById(\"qrcode-box\").style.display = \"block\";\n}\n\nasync function carregarPainel() {\n    const url = \"https://evo-j0o08ok8sgwc4cog04w0owok.95.217.164.173.sslip.io/instance/fetchInstances\";\n\n    try {\n        const response = await fetch(url, {\n            headers: { \"apikey\": \"VbO79UdpuRJbP6ijBCLzxs9wVTxQsYb6\" }\n        });\n\n        const data = await response.json();\n        const tbody = document.querySelector(\"#instanciasTable tbody\");\n\n        data.forEach(inst => {\n            const row = document.createElement(\"tr\");\n\n            row.innerHTML = `\n                <td>${inst.id}</td>\n                <td>${inst.name}</td>\n                <td class=\"${inst.connectionStatus === 'open' ? 'status-open' : 'status-closed'}\">\n                    ${inst.connectionStatus}\n                </td>\n                <td>${inst.ownerJid || \"-\"}</td>\n                <td>${inst.profileName || \"-\"}</td>\n                <td>\n                    ${inst.profilePicUrl \n                        ? `<img src=\"${inst.profilePicUrl}\" class=\"avatar\" />`\n                        : \"Sem foto\"}\n                </td>\n                <td>${inst.integration || \"-\"}</td>\n                <td>\n                    <button class=\"btn-connect\" onclick='conectarInstancia(${JSON.stringify(inst)})'>\n                        Conectar\n                    </button>\n                </td>\n            `;\n\n            tbody.appendChild(row);\n        });\n\n    } catch (err) {\n        document.body.innerHTML = `<h2>Erro ao carregar painel</h2><pre>${err}</pre>`;\n    }\n}\n\ncarregarPainel();\n</script>\n\n</body>\n</html>\n"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        368,
+        704
+      ],
+      "id": "446e6986-3e51-4092-96f7-75bafb0a0f35",
+      "name": "somente buscar a instancia já criada1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bf738f9-c439-46fc-911f-96d521ce7ea8",
+              "name": "endpoint",
+              "value": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/atualizar-qr-code",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        176,
+        704
+      ],
+      "id": "55ad9f73-f5c9-4e95-800f-8f17b392ff53",
+      "name": "Campos Dinâmicos1"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        576,
+        704
+      ],
+      "id": "ada0f09a-38cd-490f-8162-4b794d6462b6",
+      "name": "Gera Html Dinâmico1"
+    },
+    {
+      "parameters": {
+        "path": "medicalspin1",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        704
+      ],
+      "id": "ea90ea49-3779-4c71-b11e-63ccf492668b",
+      "name": "Inicializa a pagina1",
+      "webhookId": "cce5e6b5-f99a-48a3-8b18-cf524f03c4ce"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "atualizar-qr-code1",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        800,
+        704
+      ],
+      "id": "8d7e286a-b66e-4c4b-8637-98fe3844a285",
+      "name": "Atualiza qr code1",
+      "webhookId": "f3988766-f52b-4be0-b0bd-254e485671a3"
+    },
+    {
+      "parameters": {
+        "operation": "instance-connect",
+        "instanceName": "={{ $json.body.name }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        704
+      ],
+      "id": "95e56cac-e49d-4b15-a5fe-af135e245225",
+      "name": "Conexão EVO1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7997d699-2380-48aa-8dc3-b1eac974e16e",
+              "name": "base64",
+              "value": "={{ $json.data.base64.split(',').last() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1728,
+        656
+      ],
+      "id": "b74569f7-02b0-40e5-9115-98957e5fe96a",
+      "name": "Limpa o código base"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1936,
+        656
+      ],
+      "id": "cfec2e2d-a4d2-4bd5-b723-b717777f6fee",
+      "name": "Converte para base"
+    },
+    {
+      "parameters": {
+        "respondWith": "noData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1728,
+        896
+      ],
+      "id": "9dd2cfc5-4bd4-480a-8621-bc5523b92696",
+      "name": "gera mensagem de conectado!1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "04bcabd0-34f6-4e7d-8329-0852b8593d8e",
+              "leftValue": "={{ $json.data.instance.state }}",
+              "rightValue": "open",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1472,
+        704
+      ],
+      "id": "4a7c7e2e-be90-4cfe-980b-1061a48c9d3e",
+      "name": "validação se está conectado1"
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2160,
+        656
+      ],
+      "id": "fa624d8a-b338-45c6-9e78-1d1f9d4c1490",
+      "name": "gerar dinamicamente qrcode1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7dfb0ca-c012-4726-a1f4-2f9d57fe81f7",
+              "name": "body.name",
+              "value": "={{ $json.body.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1008,
+        704
+      ],
+      "id": "89958022-ccc9-4c2f-a3ae-05bac89bd3da",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "somente buscar a instancia já criada": {
+      "main": [
+        [
+          {
+            "node": "Gera Html Dinâmico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Campos Dinâmicos": {
+      "main": [
+        [
+          {
+            "node": "somente buscar a instancia já criada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limpa o código base64": {
+      "main": [
+        [
+          {
+            "node": "Converte para base64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Converte para base64": {
+      "main": [
+        [
+          {
+            "node": "gerar dinamicamente qrcode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "validação se está conectado": {
+      "main": [
+        [
+          {
+            "node": "Limpa o código base64",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "gera mensagem de conectado!",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inicializa a pagina": {
+      "main": [
+        [
+          {
+            "node": "Campos Dinâmicos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conexão EVO": {
+      "main": [
+        [
+          {
+            "node": "validação se está conectado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza qr code": {
+      "main": [
+        [
+          {
+            "node": "Conexão EVO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "somente buscar a instancia já criada1": {
+      "main": [
+        [
+          {
+            "node": "Gera Html Dinâmico1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Campos Dinâmicos1": {
+      "main": [
+        [
+          {
+            "node": "somente buscar a instancia já criada1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inicializa a pagina1": {
+      "main": [
+        [
+          {
+            "node": "Campos Dinâmicos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza qr code1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limpa o código base": {
+      "main": [
+        [
+          {
+            "node": "Converte para base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Converte para base": {
+      "main": [
+        [
+          {
+            "node": "gerar dinamicamente qrcode1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "validação se está conectado1": {
+      "main": [
+        [
+          {
+            "node": "Limpa o código base",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "gera mensagem de conectado!1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conexão EVO1": {
+      "main": [
+        [
+          {
+            "node": "validação se está conectado1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Conexão EVO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Inicializa a pagina": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-w40cgcwsckg40sgooggkgg80.95.217.210.195.sslip.io",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "cache-control": "max-age=0",
+            "cookie": "rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX183BFuPV51CCKRMUSAs%2FLBbETE4oY%2BEbaRuz0nxi%2FnIyAUFQQJ2LDht; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX19FBo%2FLP5z81njXAfVmTjk9vnUzE%2F14KUDdyBc2BkduWKam8o18EnbX; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX19qf9lMWX7b%2B%2BrYjIwNWKqyV9Pl4Cxa8xWydj90nl1Tx76cYO4dkULu84U8bOt5IIRVAxV76Jv3pg%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX1%2BqBYEDkdRfOxvDcTAxx1OYt4yjfkJp2Xs8TILVX5QQMKRksZK5kzzoeihmM1WWN3WJCLtbTu4UdSrwyo6TlJpk2tbSGaNYugU7euy3%2B8mt7ycsv6kHU5doDoJrX5ViQLEuVh5q4kvSSndqGYn8%2BV2TsN%2B1QIBiLsk%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX1%2FLv9TFl9k%2BPk4At0KONsnoBM7pmQxO%2BPp5TbZBYTo6%2BioQDyjY3JuINb2BQLImso2t9INt5o5QrZnloW%2BLMK9jVNwgMszB7iUejfegI3gd24xuzBeUxNdYYjfrDmxB39EUx3XxyOD7Ig%3D%3D; ph_phc_4URIAm1uYfJO7j8kWSe0J8lc8IqnstRLS7Jx8NcakHo_posthog=%7B%22distinct_id%22%3A%22f2ffad83d8618b218920f7bf6ba1622bda14ed0ccd7cb5d723768d934b8b4849%237d787a51-0399-40a8-9246-1c607684a236%22%2C%22%24sesid%22%3A%5B1758623580899%2C%220199761c-4aae-7320-b33c-8a4c77ecf3e0%22%2C1758623189678%5D%2C%22%24epp%22%3Atrue%2C%22%24initial_person_info%22%3A%7B%22r%22%3A%22http%3A%2F%2F95.217.210.195%3A8000%2F%22%2C%22u%22%3A%22https%3A%2F%2Fn8n-w40cgcwsckg40sgooggkgg80.95.217.210.195.sslip.io%2Fsetup%22%7D%7D; rl_session=RudderEncrypt%3AU2FsdGVkX18wTHvLrjbzCYrVgEzaP3J0NVjkV4qoWVyzvblEmpHxALqh9vlIxFfGdAYY9SE6taZHzO16QTaAIWZEIcmWy6zUTN8ByjSjRtiOYnmmfLSjBjsQSxtkMUEwAUClEZS%2BIMDlmZV4TblNgA%3D%3D",
+            "if-none-match": "W/\"41bd-ocgtitzz8R3efBAC7hu+WpGYAW8\"",
+            "priority": "u=0, i",
+            "sec-ch-ua": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "document",
+            "sec-fetch-mode": "navigate",
+            "sec-fetch-site": "none",
+            "sec-fetch-user": "?1",
+            "upgrade-insecure-requests": "1",
+            "x-forwarded-for": "45.233.97.30",
+            "x-forwarded-host": "n8n-w40cgcwsckg40sgooggkgg80.95.217.210.195.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "45.233.97.30"
+          },
+          "params": {},
+          "query": {},
+          "body": {},
+          "webhookUrl": "https://n8n-w40cgcwsckg40sgooggkgg80.95.217.210.195.sslip.io/webhook/ninelabs",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Inicializa a pagina1": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "cache-control": "max-age=0",
+            "cookie": "rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX19uX1uGWMFKWfubleffq3tNPCb3%2FjK8lBo%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX19aeZh3VMnI3WLLlYTjAOzxtQ45%2By8Xdkc%3D; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX19CnYa%2BcF5QshrI2VH13Ka2%2Br37GgOkIdKSjckVE6IbjacFUqPyGcgzKEZ3%2Bc9Gww0FWOJgOVXDMg%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX1%2BnU1jlQHI29XN%2FwCa%2FpOspsOCTyzjHTNDlrssUujAYDBtzGZSQQe6owq%2FTiTkpfyMTGjqxhIZfUBG8CU0p8ozhjaS9j19eCOoic0FuapADoGWSU3qOo6M3ju2pV4A5qMOoxzu2yzR0UqG5Z7JWoJLR%2FwLPcJMxxL8%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX19JY9neZ1S20lBrj6J6h%2F6j5U%2BlHmlVlwFGlJSYz4S%2FBuf8lwTb%2Bz2jPhZ3btddWXPTnTw8mtReAgtMfX5nnuVaT0HdlFy87tybxAYXg1jgOJj0EBOkhZ3hWFY%2FfTcpegMMpElO6BfGI4oLRFhvNo%2FVSxqk%2FCnHyDA%3D; ph_phc_4URIAm1uYfJO7j8kWSe0J8lc8IqnstRLS7Jx8NcakHo_posthog=%7B%22distinct_id%22%3A%22a8ca9db8f365895dea8e9a74bf89e78eb5f5ec482599edebf62592a864d74708%23efab0b6d-d70d-4205-bdcf-84f23a513867%22%2C%22%24sesid%22%3A%5B1763464147553%2C%22019a9695-478d-772b-9cce-4335e1dbdf94%22%2C1763462956933%5D%2C%22%24epp%22%3Atrue%2C%22%24initial_person_info%22%3A%7B%22r%22%3A%22%24direct%22%2C%22u%22%3A%22http%3A%2F%2Fn8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io%2Fsetup%22%7D%7D; rl_session=RudderEncrypt%3AU2FsdGVkX19rnUZW0RRrWiBFXSAJwCC35sGFt8mC9Q16bEwCx0NjQWEUhs8KfkeblBWpqhsx0mNNMPd7f7V%2BqSw3ZPLb36jg31341yLOdmWkse2YCjIlRqalWuWFwTPrgGNyW5qwvBRDKCN%2FU%2FLjPA%3D%3D",
+            "if-none-match": "W/\"1009-nx9T/OdPco+uyKZIwg22QLSIcLw\"",
+            "priority": "u=0, i",
+            "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "document",
+            "sec-fetch-mode": "navigate",
+            "sec-fetch-site": "none",
+            "sec-fetch-user": "?1",
+            "upgrade-insecure-requests": "1",
+            "x-forwarded-for": "45.233.97.64",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.97.64"
+          },
+          "params": {},
+          "query": {},
+          "body": {},
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/medicalspin1",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Atualiza qr code1": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+            "content-length": "913",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "null",
+            "priority": "u=1, i",
+            "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "45.233.97.64",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.97.64"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": "bcc5247d-0d0a-4ce6-bf8b-65138c70c5d0",
+            "name": "OrigemVoxfree",
+            "connectionStatus": "connecting",
+            "ownerJid": null,
+            "profileName": null,
+            "profilePicUrl": null,
+            "integration": "WHATSAPP-BAILEYS",
+            "number": null,
+            "businessId": null,
+            "token": "D4B99BE1C4B4-488F-9154-B5D984F391EA",
+            "clientName": "evolution_v2",
+            "disconnectionReasonCode": null,
+            "disconnectionObject": null,
+            "disconnectionAt": null,
+            "createdAt": "2025-11-17T13:51:09.921Z",
+            "updatedAt": "2025-11-18T10:36:35.473Z",
+            "Chatwoot": null,
+            "Proxy": null,
+            "Rabbitmq": null,
+            "Nats": null,
+            "Sqs": null,
+            "Websocket": null,
+            "Setting": {
+              "id": "cmi37dbvp0bpxk84kuwvgalo0",
+              "rejectCall": false,
+              "msgCall": "",
+              "groupsIgnore": false,
+              "alwaysOnline": false,
+              "readMessages": false,
+              "readStatus": false,
+              "syncFullHistory": false,
+              "wavoipToken": "",
+              "createdAt": "2025-11-17T13:51:09.925Z",
+              "updatedAt": "2025-11-17T13:51:09.925Z",
+              "instanceId": "bcc5247d-0d0a-4ce6-bf8b-65138c70c5d0"
+            },
+            "_count": {
+              "Message": 0,
+              "Contact": 0,
+              "Chat": 0
+            }
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/atualizar-qr-code1",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "1fef3fb3-b72b-4dc7-bbe9-311ff1662927",
+  "activeVersionId": "1fef3fb3-b72b-4dc7-bbe9-311ff1662927",
+  "triggerCount": 4,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T14:00:18.205Z",
+      "createdAt": "2025-11-17T14:00:18.205Z",
+      "role": "workflow:owner",
+      "workflowId": "JQxnWZsYYRGoIjT2",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2025-12-12T10:01:16.115Z",
+    "createdAt": "2025-12-12T10:01:16.115Z",
+    "versionId": "1fef3fb3-b72b-4dc7-bbe9-311ff1662927",
+    "workflowId": "JQxnWZsYYRGoIjT2",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "atualizar-qr-code",
+          "responseMode": "responseNode",
+          "options": {
+            "allowedOrigins": "*"
+          }
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          1008,
+          160
+        ],
+        "id": "61893b27-ff70-485f-8171-9d5f9f72e2a6",
+        "name": "Atualiza qr code",
+        "webhookId": "f3988766-f52b-4be0-b0bd-254e485671a3"
+      },
+      {
+        "parameters": {
+          "content": "Subistitua o Endpoint dentro do \"Campos Dinâmicos\" para os seus !",
+          "height": 460,
+          "width": 860,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          0,
+          0
+        ],
+        "typeVersion": 1,
+        "id": "90c0d6c8-59ca-4e68-8af8-85629ecc2aa6",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "html": "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>Gerador de QR Code WhatsApp</title>\n  <script src=\"https://cdn.tailwindcss.com\"></script>\n  <style>\n    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');\n    \n    * {\n      font-family: 'Inter', system-ui, sans-serif;\n    }\n    \n    .fade-in {\n      animation: fadeIn 0.4s ease-out;\n    }\n    \n    @keyframes fadeIn {\n      from { opacity: 0; transform: translateY(16px); }\n      to { opacity: 1; transform: translateY(0); }\n    }\n    \n    .spinner {\n      width: 20px;\n      height: 20px;\n      border: 2px solid #e5e7eb;\n      border-radius: 50%;\n      border-top-color: #3b82f6;\n      animation: spin 1s linear infinite;\n    }\n    \n    @keyframes spin {\n      to { transform: rotate(360deg); }\n    }\n    \n    .progress-circle {\n      transform: rotate(-90deg);\n    }\n    \n    .progress-path {\n      stroke-dasharray: 157;\n      stroke-dashoffset: 157;\n      transition: stroke-dashoffset 1s linear;\n    }\n    \n    .feature-card {\n      transition: all 0.2s ease;\n    }\n    \n    .feature-card:hover {\n      transform: translateY(-2px);\n    }\n    \n    .input-focus {\n      transition: all 0.2s ease;\n    }\n    \n    .input-focus:focus {\n      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);\n    }\n    \n    .btn-primary {\n      transition: all 0.2s ease;\n    }\n    \n    .btn-primary:hover:not(:disabled) {\n      transform: translateY(-1px);\n      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);\n    }\n    \n    .btn-secondary {\n      transition: all 0.2s ease;\n    }\n    \n    .btn-secondary:hover {\n      background-color: #f9fafb;\n      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);\n    }\n  </style>\n</head>\n<body class=\"min-h-screen bg-gray-50\">\n  <!-- Main Content -->\n  <div class=\"min-h-screen flex items-center justify-center p-4\">\n    <div class=\"w-full max-w-md\">\n      <!-- Header -->\n      <div class=\"text-center mb-8 fade-in\">\n        <img src=\"https://medicalspin.com.br/wp-content/uploads/2025/08/Certified-1.png\" alt=\"medicalspin\">\n        <h1 class=\"text-2xl font-semibold text-gray-900 mb-2\">Gerador de QR Code</h1>\n        <p class=\"text-gray-600\">Conecte sua instância WhatsApp rapidamente</p>\n      </div>\n\n      <!-- Main Card -->\n      <div class=\"bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden fade-in\">\n        <div class=\"p-6\">\n          <!-- Features Grid -->\n          <div class=\"grid grid-cols-3 gap-4 mb-8\">\n            <div class=\"feature-card text-center p-4 bg-gray-50 rounded-xl\">\n              <div class=\"w-10 h-10 bg-blue-100 text-blue-600 rounded-lg mx-auto mb-3 flex items-center justify-center\">\n                <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M13 10V3L4 14h7v7l9-11h-7z\"/>\n                </svg>\n              </div>\n              <p class=\"text-sm font-medium text-gray-700\">Rápido</p>\n            </div>\n            <div class=\"feature-card text-center p-4 bg-gray-50 rounded-xl\">\n              <div class=\"w-10 h-10 bg-green-100 text-green-600 rounded-lg mx-auto mb-3 flex items-center justify-center\">\n                <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z\"/>\n                </svg>\n              </div>\n              <p class=\"text-sm font-medium text-gray-700\">Seguro</p>\n            </div>\n            <div class=\"feature-card text-center p-4 bg-gray-50 rounded-xl\">\n              <div class=\"w-10 h-10 bg-purple-100 text-purple-600 rounded-lg mx-auto mb-3 flex items-center justify-center\">\n                <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z\"/>\n                </svg>\n              </div>\n              <p class=\"text-sm font-medium text-gray-700\">Simples</p>\n            </div>\n          </div>\n\n          <!-- Input Section -->\n          <div class=\"space-y-6\">\n            <div>\n              <label for=\"instanceName\" class=\"block text-sm font-medium text-gray-900 mb-3\">\n                Nome da Instância\n              </label>\n              <div class=\"relative\">\n                <input\n                  id=\"instanceName\"\n                  type=\"text\"\n                  placeholder=\"Digite o nome da sua instância\"\n                  class=\"input-focus w-full px-4 py-4 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-0 outline-none text-gray-900 placeholder-gray-500 bg-white\"\n                />\n                <div class=\"absolute inset-y-0 right-4 flex items-center text-gray-400\">\n                  <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z\"/>\n                  </svg>\n                </div>\n              </div>\n              <p class=\"text-sm text-gray-500 mt-2\">Escolha um nome único para identificar sua conexão</p>\n            </div>\n\n            <!-- Generate Button -->\n            <button\n              id=\"generateButton\"\n              onclick=\"generateQRCode()\"\n              class=\"btn-primary w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl disabled:opacity-50 disabled:pointer-events-none disabled:transform-none relative overflow-hidden\"\n            >\n              <div class=\"flex items-center justify-center space-x-2\">\n                <div id=\"buttonIcon\">\n                  <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5\"/>\n                  </svg>\n                </div>\n                <span id=\"buttonText\">Gerar QR Code</span>\n              </div>\n            </button>\n          </div>\n\n          <!-- Loading State -->\n          <div id=\"loader\" class=\"hidden text-center py-12\">\n            <div class=\"inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-xl mb-4\">\n              <div class=\"spinner\"></div>\n            </div>\n            <p class=\"text-gray-900 font-medium mb-1\">Gerando QR Code</p>\n            <p class=\"text-sm text-gray-500\">Aguarde um momento...</p>\n          </div>\n\n          <!-- QR Code Display -->\n          <div id=\"qrcode\" class=\"hidden text-center py-6\">\n            <div class=\"bg-gray-50 rounded-xl p-6 border border-gray-200\">\n              <div id=\"qrImage\" class=\"mb-6\"></div>\n              \n              <!-- Instructions -->\n              <div class=\"space-y-4\">\n                <h3 class=\"text-sm font-medium text-gray-900 mb-4\">Como conectar:</h3>\n                <div class=\"space-y-3 text-left max-w-xs mx-auto\">\n                  <div class=\"flex items-start space-x-3\">\n                    <div class=\"flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-medium\">1</div>\n                    <p class=\"text-sm text-gray-600\">Abra o WhatsApp no celular</p>\n                  </div>\n                  <div class=\"flex items-start space-x-3\">\n                    <div class=\"flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-medium\">2</div>\n                    <p class=\"text-sm text-gray-600\">Acesse \"Aparelhos conectados\"</p>\n                  </div>\n                  <div class=\"flex items-start space-x-3\">\n                    <div class=\"flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-medium\">3</div>\n                    <p class=\"text-sm text-gray-600\">Escaneie este código</p>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n\n          <!-- Timer -->\n          <div id=\"timer\" class=\"hidden\">\n            <div class=\"bg-amber-50 border border-amber-200 rounded-xl p-4 mt-6\">\n              <div class=\"flex items-center justify-center space-x-3\">\n                <div class=\"relative w-8 h-8\">\n                  <svg class=\"progress-circle w-8 h-8\" viewBox=\"0 0 50 50\">\n                    <circle\n                      class=\"progress-path\"\n                      stroke=\"#f59e0b\"\n                      stroke-width=\"2\"\n                      fill=\"transparent\"\n                      r=\"25\"\n                      cx=\"25\"\n                      cy=\"25\"\n                    />\n                  </svg>\n                  <div class=\"absolute inset-0 flex items-center justify-center\">\n                    <svg class=\"w-3 h-3 text-amber-600\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                      <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z\"/>\n                    </svg>\n                  </div>\n                </div>\n                <div class=\"text-center\">\n                  <p id=\"timerText\" class=\"text-sm font-medium text-amber-800\"></p>\n                  <p class=\"text-xs text-amber-600\">Tempo restante</p>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <!-- Footer -->\n      <div class=\"text-center mt-8 fade-in\">\n        <div class=\"flex items-center justify-center space-x-2 text-sm text-gray-500\">\n          <svg class=\"w-4 h-4 text-green-500\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n            <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z\"/>\n          </svg>\n          <span>Conexão segura</span>\n          <span>•</span>\n          <span class=\"font-medium text-gray-600\">WhatsApp Business API</span>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <script>\n    let timerInterval;\n    let timeLeft = 30;\n\n    async function generateQRCode() {\n      const input = document.getElementById('instanceName');\n      const name = input.value.trim();\n      \n      if (!name) {\n        input.focus();\n        input.classList.add('border-red-400', 'ring-4', 'ring-red-100');\n        setTimeout(() => {\n          input.classList.remove('border-red-400', 'ring-4', 'ring-red-100');\n        }, 2500);\n        return;\n      }\n\n      await fetchQRCode(name);\n    }\n\n    async function fetchQRCode(name) {\n      const loader = document.getElementById('loader');\n      const button = document.getElementById('generateButton');\n      const buttonText = document.getElementById('buttonText');\n      const buttonIcon = document.getElementById('buttonIcon');\n      const qrSection = document.getElementById('qrcode');\n      const qrImageContainer = document.getElementById('qrImage');\n      const timerSection = document.getElementById('timer');\n\n      // Show loading state\n      qrSection.classList.add('hidden');\n      timerSection.classList.add('hidden');\n      loader.classList.remove('hidden');\n      button.disabled = true;\n      buttonText.textContent = 'Gerando...';\n      buttonIcon.innerHTML = '<div class=\"spinner\"></div>';\n\n      try {\n        const endpoint = '{{ $json.endpoint }}'; \n\n        const res = await fetch(endpoint, {\n          method: 'POST',\n          headers: { 'Content-Type': 'application/json' },\n          body: JSON.stringify({ instance: name })\n        });\n\n        if (!res.ok) {\n          let errorMsg = `Erro HTTP: ${res.status}`;\n          try {\n            const errorData = await res.json();\n            if (errorData && errorData.message) {\n              errorMsg = errorData.message;\n            }\n          } catch (e) {\n            errorMsg = res.statusText || errorMsg;\n          }\n          throw new Error(errorMsg);\n        }\n        \n        const blob = await res.blob();\n        if (blob.type.startsWith('image/')) {\n          const url = URL.createObjectURL(blob);\n          qrImageContainer.innerHTML = `<img src=\"${url}\" alt=\"QR Code WhatsApp\" class=\"rounded-xl max-w-64 mx-auto\" />`;\n        } else {\n          const textResponse = await blob.text();\n          console.error(\"Resposta inesperada:\", textResponse);\n          throw new Error('Resposta inesperada do servidor. Verifique o console.');\n        }\n\n        // Show QR code\n        loader.classList.add('hidden');\n        qrSection.classList.remove('hidden');\n        timerSection.classList.remove('hidden');\n        resetTimer();\n\n      } catch (error) {\n        console.error('Erro ao gerar QR Code:', error);\n        loader.classList.add('hidden');\n        qrSection.classList.add('hidden');\n        timerSection.classList.add('hidden');\n        showError(error.message || 'Erro ao gerar QR Code. Tente novamente.');\n      } finally {\n        button.disabled = false;\n        buttonText.textContent = 'Gerar QR Code';\n        buttonIcon.innerHTML = `\n          <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n            <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5\"/>\n          </svg>\n        `;\n      }\n    }\n\n    function resetTimer() {\n      clearInterval(timerInterval);\n      timeLeft = 30;\n      updateTimerDisplay();\n      timerInterval = setInterval(updateTimerDisplay, 1000);\n    }\n\n    function updateTimerDisplay() {\n      const timerTextEl = document.getElementById('timerText');\n      const progressPath = document.querySelector('.progress-path');\n      const timerSection = document.getElementById('timer');\n      const qrSection = document.getElementById('qrcode');\n      \n      if (timeLeft <= 0) {\n        clearInterval(timerInterval);\n        timerTextEl.textContent = 'Código expirado!';\n        progressPath.style.strokeDashoffset = 157;\n        setTimeout(() => {\n          timerSection.classList.add('hidden');\n          qrSection.classList.add('hidden');\n          showError('QR Code expirado. Gere um novo código.');\n        }, 1000);\n        return;\n      }\n      \n      timerTextEl.textContent = `${timeLeft}s`;\n      \n      const circumference = 2 * Math.PI * 25;\n      const offset = circumference - (timeLeft / 30) * circumference;\n      progressPath.style.strokeDashoffset = offset;\n      \n      timeLeft--;\n    }\n\n    function showError(message) {\n      const errorDiv = document.createElement('div');\n      errorDiv.className = 'fixed top-6 right-6 bg-red-500 text-white px-6 py-4 rounded-xl shadow-lg z-50 text-sm font-medium max-w-sm';\n      errorDiv.textContent = message;\n      document.body.appendChild(errorDiv);\n      \n      setTimeout(() => {\n        errorDiv.style.animation = 'fadeIn 0.3s ease-out reverse';\n        setTimeout(() => errorDiv.remove(), 300);\n      }, 4000);\n    }\n\n    // Event listeners\n    document.getElementById('instanceName').addEventListener('keypress', function(e) {\n      if (e.key === 'Enter') {\n        e.preventDefault();\n        generateQRCode();\n      }\n    });\n\n    window.addEventListener('load', () => {\n      document.getElementById('instanceName').focus();\n    });\n  </script>\n</body>\n</html>"
+        },
+        "type": "n8n-nodes-base.html",
+        "typeVersion": 1.2,
+        "position": [
+          432,
+          160
+        ],
+        "id": "07838fc1-7efa-4b0f-b168-5443b903e809",
+        "name": "somente buscar a instancia já criada"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bf738f9-c439-46fc-911f-96d521ce7ea8",
+                "name": "endpoint",
+                "value": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/atualizar-qr-code",
+                "type": "string"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          240,
+          160
+        ],
+        "id": "15da74f0-e2b8-4542-b619-7bb52c55d2f7",
+        "name": "Campos Dinâmicos"
+      },
+      {
+        "parameters": {
+          "content": "Gerador de QrCode",
+          "height": 460,
+          "width": 1440,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          912,
+          0
+        ],
+        "typeVersion": 1,
+        "id": "4949d72a-847f-4440-9594-e65124438a0b",
+        "name": "Sticky Note1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "7997d699-2380-48aa-8dc3-b1eac974e16e",
+                "name": "base64",
+                "value": "={{ $json.data.base64.split(',').last() }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1664,
+          32
+        ],
+        "id": "aa1ed451-7bec-4ce8-a7a7-35d814462c47",
+        "name": "Limpa o código base64"
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "base64",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1872,
+          32
+        ],
+        "id": "2df11dbd-2225-44af-9aa1-5fef9648a8a2",
+        "name": "Converte para base64"
+      },
+      {
+        "parameters": {
+          "respondWith": "noData",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1664,
+          272
+        ],
+        "id": "ceca79a1-7d44-4a74-8702-8dcfe6734db3",
+        "name": "gera mensagem de conectado!",
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "04bcabd0-34f6-4e7d-8329-0852b8593d8e",
+                "leftValue": "={{ $json.data.instance.state }}",
+                "rightValue": "open",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEquals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1408,
+          160
+        ],
+        "id": "cc21b463-fdab-48fe-a284-6be46f14b5ef",
+        "name": "validação se está conectado"
+      },
+      {
+        "parameters": {
+          "respondWith": "text",
+          "responseBody": "={{ $json.html }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          640,
+          160
+        ],
+        "id": "7f89bee4-9545-4b58-a94d-16dd864a1f45",
+        "name": "Gera Html Dinâmico"
+      },
+      {
+        "parameters": {
+          "path": "medicalspin",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          64,
+          160
+        ],
+        "id": "633e17d4-ddf8-4b29-ade8-e46407e5f437",
+        "name": "Inicializa a pagina",
+        "webhookId": "cce5e6b5-f99a-48a3-8b18-cf524f03c4ce"
+      },
+      {
+        "parameters": {
+          "operation": "instance-connect",
+          "instanceName": "={{ $json.body.instance }}"
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          1200,
+          160
+        ],
+        "id": "f298702b-26ae-49dc-90bc-56d78acc396b",
+        "name": "Conexão EVO",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "respondWith": "binary",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          2080,
+          32
+        ],
+        "id": "413da43b-14f1-4217-82ea-97671db2974a",
+        "name": "gerar dinamicamente qrcode",
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "html": "<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"UTF-8\" />\n    <title>Painel de Instâncias</title>\n\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            background: #f4f4f7;\n            padding: 20px;\n            color: #222;\n        }\n        h1 {\n            text-align: center;\n            margin-bottom: 25px;\n        }\n        table {\n            width: 100%;\n            background: #fff;\n            border-radius: 10px;\n            overflow: hidden;\n            border-collapse: collapse;\n            box-shadow: 0 3px 12px rgba(0,0,0,0.12);\n        }\n        th, td {\n            padding: 12px 15px;\n            border-bottom: 1px solid #e2e2e2;\n            text-align: left;\n        }\n        th {\n            background: #2e7dff;\n            color: #fff;\n        }\n        tr:hover {\n            background: #f1f7ff;\n        }\n        .avatar {\n            width: 48px;\n            height: 48px;\n            border-radius: 50%;\n            object-fit: cover;\n        }\n        .status-open {\n            color: #0f8a00;\n            font-weight: bold;\n        }\n        .status-closed {\n            color: #b00000;\n            font-weight: bold;\n        }\n        .btn-connect {\n            background: #2e7dff;\n            color: white;\n            padding: 8px 14px;\n            border: none;\n            border-radius: 6px;\n            cursor: pointer;\n            font-weight: bold;\n        }\n        .btn-connect:hover {\n            background: #1d5cd8;\n        }\n\n        /* Área do QR Code */\n        #qrcode-box {\n            margin-top: 30px;\n            padding: 20px;\n            background: white;\n            border-radius: 12px;\n            box-shadow: 0 3px 12px rgba(0,0,0,0.12);\n            text-align: center;\n            display: none;\n        }\n        #qrcode-box img {\n            width: 280px;\n            margin-top: 15px;\n        }\n    </style>\n\n</head>\n<body>\n\n<h1>📋 Painel de Instâncias</h1>\n\n<table id=\"instanciasTable\">\n    <thead>\n        <tr>\n            <th>ID</th>\n            <th>Nome</th>\n            <th>Status</th>\n            <th>Dono</th>\n            <th>Perfil</th>\n            <th>Foto</th>\n            <th>Integração</th>\n            <th>Ações</th>\n        </tr>\n    </thead>\n    <tbody></tbody>\n</table>\n\n<!-- Caixa onde o QR Code será exibido -->\n<div id=\"qrcode-box\">\n    <h2>🔐 Escaneie o QR Code para conectar</h2>\n    <img id=\"qrImage\" src=\"\" />\n</div>\n\n<script>\n\nconst WEBHOOK_URL = \"https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/atualizar-qr-code1\";\n\nasync function conectarInstancia(instancia) {\n\n    // Envia o JSON da instância para o webhook\n    const response = await fetch(WEBHOOK_URL, {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify(instancia)\n    });\n\n    // Espera o QR code que vem como imagem binária\n    const blob = await response.blob();\n\n    // Converte Blob → imagem na tela\n    const imgUrl = URL.createObjectURL(blob);\n\n    document.getElementById(\"qrImage\").src = imgUrl;\n    document.getElementById(\"qrcode-box\").style.display = \"block\";\n}\n\nasync function carregarPainel() {\n    const url = \"https://evo-j0o08ok8sgwc4cog04w0owok.95.217.164.173.sslip.io/instance/fetchInstances\";\n\n    try {\n        const response = await fetch(url, {\n            headers: { \"apikey\": \"VbO79UdpuRJbP6ijBCLzxs9wVTxQsYb6\" }\n        });\n\n        const data = await response.json();\n        const tbody = document.querySelector(\"#instanciasTable tbody\");\n\n        data.forEach(inst => {\n            const row = document.createElement(\"tr\");\n\n            row.innerHTML = `\n                <td>${inst.id}</td>\n                <td>${inst.name}</td>\n                <td class=\"${inst.connectionStatus === 'open' ? 'status-open' : 'status-closed'}\">\n                    ${inst.connectionStatus}\n                </td>\n                <td>${inst.ownerJid || \"-\"}</td>\n                <td>${inst.profileName || \"-\"}</td>\n                <td>\n                    ${inst.profilePicUrl \n                        ? `<img src=\"${inst.profilePicUrl}\" class=\"avatar\" />`\n                        : \"Sem foto\"}\n                </td>\n                <td>${inst.integration || \"-\"}</td>\n                <td>\n                    <button class=\"btn-connect\" onclick='conectarInstancia(${JSON.stringify(inst)})'>\n                        Conectar\n                    </button>\n                </td>\n            `;\n\n            tbody.appendChild(row);\n        });\n\n    } catch (err) {\n        document.body.innerHTML = `<h2>Erro ao carregar painel</h2><pre>${err}</pre>`;\n    }\n}\n\ncarregarPainel();\n</script>\n\n</body>\n</html>\n"
+        },
+        "type": "n8n-nodes-base.html",
+        "typeVersion": 1.2,
+        "position": [
+          368,
+          704
+        ],
+        "id": "446e6986-3e51-4092-96f7-75bafb0a0f35",
+        "name": "somente buscar a instancia já criada1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bf738f9-c439-46fc-911f-96d521ce7ea8",
+                "name": "endpoint",
+                "value": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/atualizar-qr-code",
+                "type": "string"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          176,
+          704
+        ],
+        "id": "55ad9f73-f5c9-4e95-800f-8f17b392ff53",
+        "name": "Campos Dinâmicos1"
+      },
+      {
+        "parameters": {
+          "respondWith": "text",
+          "responseBody": "={{ $json.html }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          576,
+          704
+        ],
+        "id": "ada0f09a-38cd-490f-8162-4b794d6462b6",
+        "name": "Gera Html Dinâmico1"
+      },
+      {
+        "parameters": {
+          "path": "medicalspin1",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          0,
+          704
+        ],
+        "id": "ea90ea49-3779-4c71-b11e-63ccf492668b",
+        "name": "Inicializa a pagina1",
+        "webhookId": "cce5e6b5-f99a-48a3-8b18-cf524f03c4ce"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "atualizar-qr-code1",
+          "responseMode": "responseNode",
+          "options": {
+            "allowedOrigins": "*"
+          }
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          800,
+          704
+        ],
+        "id": "8d7e286a-b66e-4c4b-8637-98fe3844a285",
+        "name": "Atualiza qr code1",
+        "webhookId": "f3988766-f52b-4be0-b0bd-254e485671a3"
+      },
+      {
+        "parameters": {
+          "operation": "instance-connect",
+          "instanceName": "={{ $json.body.name }}"
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          1248,
+          704
+        ],
+        "id": "95e56cac-e49d-4b15-a5fe-af135e245225",
+        "name": "Conexão EVO1",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "7997d699-2380-48aa-8dc3-b1eac974e16e",
+                "name": "base64",
+                "value": "={{ $json.data.base64.split(',').last() }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1728,
+          656
+        ],
+        "id": "b74569f7-02b0-40e5-9115-98957e5fe96a",
+        "name": "Limpa o código base"
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "base64",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1936,
+          656
+        ],
+        "id": "cfec2e2d-a4d2-4bd5-b723-b717777f6fee",
+        "name": "Converte para base"
+      },
+      {
+        "parameters": {
+          "respondWith": "noData",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1728,
+          896
+        ],
+        "id": "9dd2cfc5-4bd4-480a-8621-bc5523b92696",
+        "name": "gera mensagem de conectado!1",
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "04bcabd0-34f6-4e7d-8329-0852b8593d8e",
+                "leftValue": "={{ $json.data.instance.state }}",
+                "rightValue": "open",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEquals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1472,
+          704
+        ],
+        "id": "4a7c7e2e-be90-4cfe-980b-1061a48c9d3e",
+        "name": "validação se está conectado1"
+      },
+      {
+        "parameters": {
+          "respondWith": "binary",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          2160,
+          656
+        ],
+        "id": "fa624d8a-b338-45c6-9e78-1d1f9d4c1490",
+        "name": "gerar dinamicamente qrcode1",
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d7dfb0ca-c012-4726-a1f4-2f9d57fe81f7",
+                "name": "body.name",
+                "value": "={{ $json.body.name }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1008,
+          704
+        ],
+        "id": "89958022-ccc9-4c2f-a3ae-05bac89bd3da",
+        "name": "Edit Fields"
+      }
+    ],
+    "connections": {
+      "somente buscar a instancia já criada": {
+        "main": [
+          [
+            {
+              "node": "Gera Html Dinâmico",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Campos Dinâmicos": {
+        "main": [
+          [
+            {
+              "node": "somente buscar a instancia já criada",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limpa o código base64": {
+        "main": [
+          [
+            {
+              "node": "Converte para base64",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Converte para base64": {
+        "main": [
+          [
+            {
+              "node": "gerar dinamicamente qrcode",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "validação se está conectado": {
+        "main": [
+          [
+            {
+              "node": "Limpa o código base64",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "gera mensagem de conectado!",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Inicializa a pagina": {
+        "main": [
+          [
+            {
+              "node": "Campos Dinâmicos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Conexão EVO": {
+        "main": [
+          [
+            {
+              "node": "validação se está conectado",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Atualiza qr code": {
+        "main": [
+          [
+            {
+              "node": "Conexão EVO",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "somente buscar a instancia já criada1": {
+        "main": [
+          [
+            {
+              "node": "Gera Html Dinâmico1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Campos Dinâmicos1": {
+        "main": [
+          [
+            {
+              "node": "somente buscar a instancia já criada1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Inicializa a pagina1": {
+        "main": [
+          [
+            {
+              "node": "Campos Dinâmicos1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Atualiza qr code1": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limpa o código base": {
+        "main": [
+          [
+            {
+              "node": "Converte para base",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Converte para base": {
+        "main": [
+          [
+            {
+              "node": "gerar dinamicamente qrcode1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "validação se está conectado1": {
+        "main": [
+          [
+            {
+              "node": "Limpa o código base",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "gera mensagem de conectado!1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Conexão EVO1": {
+        "main": [
+          [
+            {
+              "node": "validação se está conectado1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Conexão EVO1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "tags": [
+    {
+      "updatedAt": "2025-11-17T14:00:11.395Z",
+      "createdAt": "2025-11-17T14:00:11.395Z",
+      "id": "BiXlsIc9sGawCxiS",
+      "name": "EvolutionAPI"
+    }
+  ]
+}
