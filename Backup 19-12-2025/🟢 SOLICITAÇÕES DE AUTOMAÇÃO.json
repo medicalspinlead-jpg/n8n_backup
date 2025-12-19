@@ -1,0 +1,698 @@
+{
+  "updatedAt": "2025-11-17T19:18:37.951Z",
+  "createdAt": "2025-11-17T14:31:07.952Z",
+  "id": "MGTrOuhSR7VVLoyz",
+  "name": "🟢 SOLICITAÇÕES DE AUTOMAÇÃO",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "id": "1fe36fcb-160a-439b-8c2a-e28fdc07624b",
+      "name": "Responder ao Usuário1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        352,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Solicitação de Automação</title>\n  <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap\" rel=\"stylesheet\">\n  <style>\n    * { box-sizing: border-box; margin: 0; padding: 0; }\n    body {\n      font-family: 'Inter', sans-serif;\n      background: linear-gradient(135deg, #e0f7fa, #e8eaf6);\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      min-height: 100vh;\n      padding: 20px;\n    }\n    .container {\n      background: #fff;\n      padding: 40px 35px;\n      border-radius: 15px;\n      max-width: 480px;\n      width: 100%;\n      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);\n      transition: all 0.3s ease;\n    }\n    .container:hover {\n      transform: translateY(-3px);\n      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);\n    }\n    h2 {\n      text-align: center;\n      margin-bottom: 25px;\n      color: #333;\n      font-weight: 700;\n      font-size: 24px;\n    }\n    label {\n      display: block;\n      margin-top: 15px;\n      margin-bottom: 5px;\n      font-weight: 600;\n      color: #555;\n      font-size: 14px;\n    }\n    input, textarea, select {\n      width: 100%;\n      padding: 12px 15px;\n      border: 1px solid #ccc;\n      border-radius: 10px;\n      font-size: 15px;\n      transition: all 0.2s ease;\n      outline: none;\n    }\n    input:focus, textarea:focus, select:focus {\n      border-color: #007bff;\n      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);\n    }\n    textarea { resize: vertical; min-height: 100px; }\n    button {\n      width: 100%;\n      padding: 14px;\n      margin-top: 20px;\n      background: #007bff;\n      color: #fff;\n      border: none;\n      border-radius: 12px;\n      font-size: 16px;\n      font-weight: 600;\n      cursor: pointer;\n      transition: all 0.3s ease;\n    }\n    button:hover {\n      background: #0056b3;\n      transform: translateY(-2px);\n    }\n    #mensagem {\n      margin-top: 15px;\n      text-align: center;\n      font-weight: 600;\n      font-size: 15px;\n    }\n    .success { color: #28a745; }\n    .error { color: #dc3545; }\n    @media(max-width: 520px){\n      .container { padding: 30px 20px; }\n      h2 { font-size: 20px; }\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <img src=\"https://medicalspin.com.br/wp-content/uploads/2025/08/Certified-1.png\" alt=\"medicalspin\">\n    <h2>Solicitação de Automação</h2>\n    <form id=\"taskForm\">\n      <label for=\"nome\">Nome</label>\n      <input type=\"text\" id=\"nome\" name=\"nome\" placeholder=\"Digite seu nome\" required>\n\n      <label for=\"email\">E-mail</label>\n      <input type=\"email\" id=\"email\" name=\"email\" placeholder=\"Digite seu e-mail\" required>\n\n      <label for=\"tipo\">Tipo de Automação</label>\n      <select id=\"tipo\" name=\"tipo\" required>\n        <option value=\"\">Selecione</option>\n        <option value=\"Manutencao\">Manutenção</option>\n        <option value=\"Interna\">Interna</option>\n        <option value=\"Externa\">Externa</option>\n      </select>\n\n      <label for=\"descricao\">Descrição da Tarefa</label>\n      <textarea id=\"descricao\" name=\"descricao\" placeholder=\"Descreva a tarefa detalhadamente\" required></textarea>\n\n      <button type=\"submit\">Solicitar</button>\n    </form>\n    <div id=\"mensagem\"></div>\n  </div>\n\n  <script>\n    document.getElementById(\"taskForm\").addEventListener(\"submit\", async (e) => {\n      e.preventDefault();\n      const formData = new FormData(e.target);\n      const data = Object.fromEntries(formData.entries());\n      const msgDiv = document.getElementById(\"mensagem\");\n\n      try {\n        const response = await fetch(\"https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/solicitar-tarefa\", {\n          method: \"POST\",\n          headers: { \"Content-Type\": \"application/json\" },\n          body: JSON.stringify(data)\n        });\n\n        if (response.ok) {\n          const result = await response.json();\n          msgDiv.innerHTML = `<p class=\"success\">✅ Tarefa solicitada com Sucesso!</p>`;\n          e.target.reset();\n        } else {\n          msgDiv.innerHTML = `<p class=\"error\">❌ Erro ao enviar solicitação.</p>`;\n        }\n      } catch (err) {\n        msgDiv.innerHTML = `<p class=\"error\">⚠️ Falha de conexão com o servidor.</p>`;\n      }\n    });\n  </script>\n</body>\n</html>\n"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        176,
+        208
+      ],
+      "id": "6d18a93a-21db-4243-ba82-9202e391beb8",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "path": "solicitar-tarefa",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "7bb72db7-31f4-44b1-a06d-3c0b13a6d0a9",
+      "name": "Webhook Solicitar Tarefa",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        16,
+        208
+      ],
+      "webhookId": "solicitar-tarefa"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "solicitar-tarefa",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        576,
+        208
+      ],
+      "id": "bd26ea03-4645-4660-a9e1-43dafa97803f",
+      "name": "Webhook",
+      "webhookId": "78e5c7ff-93de-4813-8563-ce277f8b8477"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "aad922d0-b0fb-4618-b10f-c921e7498ba2",
+              "name": "Nome",
+              "value": "={{ $json.body.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "747d3d3f-5aa7-4f9f-8f37-f0e9ec99123b",
+              "name": "Email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "99106628-d8ad-4db5-9dc2-ee74adbbe3f3",
+              "name": "Tipo de Automação",
+              "value": "={{ $json.body.tipo }}",
+              "type": "string"
+            },
+            {
+              "id": "853c5586-fb0d-4c0f-a5f0-02770fdb5ec5",
+              "name": "Descrição",
+              "value": "={{ $json.body.descricao.replace(/[\"\\\\;\\n\\r]/g, '').trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        208
+      ],
+      "id": "28e4f90d-c959-49bd-b2fb-303f98403d82",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## Página Web",
+        "height": 208,
+        "width": 560,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        160
+      ],
+      "id": "010550f7-54cb-42bc-acbe-f8ecc860fb96",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Envio do Email",
+        "height": 208,
+        "width": 768,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        544,
+        160
+      ],
+      "id": "88b4f1b5-3ead-448f-9046-143ded9b3ed3",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://medicalspin.atlassian.net/rest/api/3/issue",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"project\": {\n      \"key\": \"AMS\"\n    },\n    \"summary\": \"Nova Tarefa Para Avaliação - {{ $json.Nome }}\",\n    \"description\": {\n      \"type\": \"doc\",\n      \"version\": 1,\n      \"content\": [\n        {\n          \"type\": \"paragraph\",\n          \"content\": [\n            {\"type\": \"text\", \"text\": \"Nome: {{ $json.Nome }}\"},\n            {\"type\": \"text\", \"text\": \"\\nEmail: {{ $json.Email }}\"},\n            {\"type\": \"text\", \"text\": \"\\nTipo de Automação: {{ $json['Tipo de Automação'] }}\"},\n            {\"type\": \"text\", \"text\": \"\\nDescrição: {{ $json['Descrição'] }}\"}\n          ]\n        }\n      ]\n    },\n    \"issuetype\": {\n      \"name\": \"Task\"\n    }\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        944,
+        208
+      ],
+      "id": "5c8aed09-c84a-4438-aa5e-3f9242d11862",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://medicalspin.atlassian.net/rest/api/3/issue",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"project\": {\n      \"key\": \"AMS\"\n    },\n    \"summary\": \"Nova Tarefa Para Avaliação - {{ $json.Nome }}\",\n    \"description\": {\n      \"type\": \"doc\",\n      \"version\": 1,\n      \"content\": [\n        {\n          \"type\": \"paragraph\",\n          \"content\": [\n            {\n              \"type\": \"text\",\n              \"text\": \"{{ $json['Descrição'] }}\"\n            }\n          ]\n        }\n      ]\n    },\n    \"issuetype\": {\n      \"name\": \"Task\"\n    }\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "972e3d2e-7908-4674-b4a3-808d450aa376",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "5579999801810",
+        "messageText": "=🆕 Nova tarefa cadastrada no Jira\n\n👤 Nome: {{ $('Edit Fields').item.json.Nome }}\n📧 E-mail: {{ $('Edit Fields').item.json.Email }}\n⚙️ Tipo de Automação: {{ $('Edit Fields').item.json['Tipo de Automação'] }}\n📝 Descrição: {{ $('Edit Fields').item.json['Descrição'] }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        208
+      ],
+      "id": "dd6a2514-b6f5-436b-860c-afbd496dedb1",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Responder ao Usuário1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Solicitar Tarefa": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook Solicitar Tarefa": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.medicalspin.com.br",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "cookie": "_gcl_au=1.1.1383250246.1758119141; _fbp=fb.2.1758119141470.136042174706432798; rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX19a62mLYJeJpjfwBdqs5sFm7ySCDczkIkTWjPgkz%2Bx47LpHFo5V%2FBtDDUBiW%2B9HSBzwkS4FRsQmzA%3D%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX1%2BYPkgdvOEsRUHKYFtq6x%2BAkam%2B20%2BZxdP%2BsdM%2Fq8u5PvSyr6gCYTuc; _clck=1yrfv8e%5E2%5Efzs%5E0%5E2086; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX19dAsdCZY9J84pBahjhvkXEi%2Bcn91sBudLflnZaGCPL%2FJGKxthdjeDdyGAuWp7YDi2GucAOishb5w%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX1%2BdraY7kl%2Bl%2FFNtcsfnGpdMqTqOGzNrSGhiTvZy0D%2FQdRlrCUqGPRCg%2FJ8WsNNL9VV%2BoxFsWdSMS%2FufbZJBvM6j%2Fgo5xCcZ%2FwXv320wH%2BQidHNT0B4vTGExnPolY2Bn7YqRmSanlsB4KnRHOEoXxryb9dYKBKt4DF0%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX18%2BEqrckafyvCHr9Tfs3ha7NNj%2FlzQXJ3TeQPBpF25c7Rjx4L3la8So4e35l9l%2FHDGtlq7cQaG%2FqXocQ8dAgyaudN0wsslxNcagEqwdEwpOiTDLbMZUGNhmC7N%2BRNUQ1%2Ff3WHBJ4o4qzSiGQ2C03oyUZtirRBt7gro%3D; ph_phc_4URIAm1uYfJO7j8kWSe0J8lc8IqnstRLS7Jx8NcakHo_posthog=%7B%22distinct_id%22%3A%22f2ffad83d8618b218920f7bf6ba1622bda14ed0ccd7cb5d723768d934b8b4849%237d787a51-0399-40a8-9246-1c607684a236%22%2C%22%24sesid%22%3A%5B1759840846733%2C%220199beb0-3304-766c-a57d-cf12727dfb72%22%2C1759840842498%5D%2C%22%24epp%22%3Atrue%2C%22%24initial_person_info%22%3A%7B%22r%22%3A%22https%3A%2F%2Fcoolify.medicalspin.com.br%2F%22%2C%22u%22%3A%22https%3A%2F%2Fn8n.medicalspin.com.br%2Fsignin%3Fredirect%3D%25252F%22%7D%7D; rl_session=RudderEncrypt%3AU2FsdGVkX181CvC%2Frmh6oZqjmhTCle2Dn8jRqtkL9P%2B9jEpRTtGQXTglwDLXNI6POtmf3adFsXjIhSxYuGWpvS2q5YC%2FzmVvrpnW9VLqGLg7O%2BLJvB3qJ0on0rLv5n%2Ba7LzU4t0Z%2FRJARQ1scfK%2Big%3D%3D",
+            "if-none-match": "W/\"1201-zTB2IRJewmhb8TqbraQ3y8uTjQ4\"",
+            "priority": "u=0, i",
+            "sec-ch-ua": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "document",
+            "sec-fetch-mode": "navigate",
+            "sec-fetch-site": "none",
+            "sec-fetch-user": "?1",
+            "upgrade-insecure-requests": "1",
+            "x-forwarded-for": "45.233.97.30",
+            "x-forwarded-host": "n8n.medicalspin.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "45.233.97.30"
+          },
+          "params": {},
+          "query": {},
+          "webhookUrl": "https://n8n.medicalspin.com.br/webhook/solicitar-tarefa",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.medicalspin.com.br",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+            "content-length": "336",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "null",
+            "priority": "u=1, i",
+            "sec-ch-ua": "\"Google Chrome\";v=\"141\", \"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"141\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "177.9.192.170",
+            "x-forwarded-host": "n8n.medicalspin.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "177.9.192.170"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "nome": "Rodrigo Galhardo",
+            "email": "rodrigo.galhardo@medicalspin.com.br",
+            "tipo": "Manutencao",
+            "descricao": "Podemos adicionar a Camila no campo \"Responsável\" quando um novo lead Inbound entrar no pipedrive?\nEla está encarregada de fazer uma verificação inicial e usa um filtro para ver somente os leads que estão em seu filtro. "
+          },
+          "webhookUrl": "https://n8n.medicalspin.com.br/webhook/solicitar-tarefa",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "ce912757-adb9-4357-9bef-542c16396433",
+  "activeVersionId": "ce912757-adb9-4357-9bef-542c16396433",
+  "triggerCount": 2,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T14:31:07.952Z",
+      "createdAt": "2025-11-17T14:31:07.952Z",
+      "role": "workflow:owner",
+      "workflowId": "MGTrOuhSR7VVLoyz",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2025-12-12T10:01:16.115Z",
+    "createdAt": "2025-12-12T10:01:16.115Z",
+    "versionId": "ce912757-adb9-4357-9bef-542c16396433",
+    "workflowId": "MGTrOuhSR7VVLoyz",
+    "nodes": [
+      {
+        "parameters": {
+          "respondWith": "text",
+          "responseBody": "={{ $json.html }}",
+          "options": {}
+        },
+        "id": "1fe36fcb-160a-439b-8c2a-e28fdc07624b",
+        "name": "Responder ao Usuário1",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1,
+        "position": [
+          352,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "html": "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Solicitação de Automação</title>\n  <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap\" rel=\"stylesheet\">\n  <style>\n    * { box-sizing: border-box; margin: 0; padding: 0; }\n    body {\n      font-family: 'Inter', sans-serif;\n      background: linear-gradient(135deg, #e0f7fa, #e8eaf6);\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      min-height: 100vh;\n      padding: 20px;\n    }\n    .container {\n      background: #fff;\n      padding: 40px 35px;\n      border-radius: 15px;\n      max-width: 480px;\n      width: 100%;\n      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);\n      transition: all 0.3s ease;\n    }\n    .container:hover {\n      transform: translateY(-3px);\n      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);\n    }\n    h2 {\n      text-align: center;\n      margin-bottom: 25px;\n      color: #333;\n      font-weight: 700;\n      font-size: 24px;\n    }\n    label {\n      display: block;\n      margin-top: 15px;\n      margin-bottom: 5px;\n      font-weight: 600;\n      color: #555;\n      font-size: 14px;\n    }\n    input, textarea, select {\n      width: 100%;\n      padding: 12px 15px;\n      border: 1px solid #ccc;\n      border-radius: 10px;\n      font-size: 15px;\n      transition: all 0.2s ease;\n      outline: none;\n    }\n    input:focus, textarea:focus, select:focus {\n      border-color: #007bff;\n      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);\n    }\n    textarea { resize: vertical; min-height: 100px; }\n    button {\n      width: 100%;\n      padding: 14px;\n      margin-top: 20px;\n      background: #007bff;\n      color: #fff;\n      border: none;\n      border-radius: 12px;\n      font-size: 16px;\n      font-weight: 600;\n      cursor: pointer;\n      transition: all 0.3s ease;\n    }\n    button:hover {\n      background: #0056b3;\n      transform: translateY(-2px);\n    }\n    #mensagem {\n      margin-top: 15px;\n      text-align: center;\n      font-weight: 600;\n      font-size: 15px;\n    }\n    .success { color: #28a745; }\n    .error { color: #dc3545; }\n    @media(max-width: 520px){\n      .container { padding: 30px 20px; }\n      h2 { font-size: 20px; }\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <img src=\"https://medicalspin.com.br/wp-content/uploads/2025/08/Certified-1.png\" alt=\"medicalspin\">\n    <h2>Solicitação de Automação</h2>\n    <form id=\"taskForm\">\n      <label for=\"nome\">Nome</label>\n      <input type=\"text\" id=\"nome\" name=\"nome\" placeholder=\"Digite seu nome\" required>\n\n      <label for=\"email\">E-mail</label>\n      <input type=\"email\" id=\"email\" name=\"email\" placeholder=\"Digite seu e-mail\" required>\n\n      <label for=\"tipo\">Tipo de Automação</label>\n      <select id=\"tipo\" name=\"tipo\" required>\n        <option value=\"\">Selecione</option>\n        <option value=\"Manutencao\">Manutenção</option>\n        <option value=\"Interna\">Interna</option>\n        <option value=\"Externa\">Externa</option>\n      </select>\n\n      <label for=\"descricao\">Descrição da Tarefa</label>\n      <textarea id=\"descricao\" name=\"descricao\" placeholder=\"Descreva a tarefa detalhadamente\" required></textarea>\n\n      <button type=\"submit\">Solicitar</button>\n    </form>\n    <div id=\"mensagem\"></div>\n  </div>\n\n  <script>\n    document.getElementById(\"taskForm\").addEventListener(\"submit\", async (e) => {\n      e.preventDefault();\n      const formData = new FormData(e.target);\n      const data = Object.fromEntries(formData.entries());\n      const msgDiv = document.getElementById(\"mensagem\");\n\n      try {\n        const response = await fetch(\"https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/solicitar-tarefa\", {\n          method: \"POST\",\n          headers: { \"Content-Type\": \"application/json\" },\n          body: JSON.stringify(data)\n        });\n\n        if (response.ok) {\n          const result = await response.json();\n          msgDiv.innerHTML = `<p class=\"success\">✅ Tarefa solicitada com Sucesso!</p>`;\n          e.target.reset();\n        } else {\n          msgDiv.innerHTML = `<p class=\"error\">❌ Erro ao enviar solicitação.</p>`;\n        }\n      } catch (err) {\n        msgDiv.innerHTML = `<p class=\"error\">⚠️ Falha de conexão com o servidor.</p>`;\n      }\n    });\n  </script>\n</body>\n</html>\n"
+        },
+        "type": "n8n-nodes-base.html",
+        "typeVersion": 1.2,
+        "position": [
+          176,
+          208
+        ],
+        "id": "6d18a93a-21db-4243-ba82-9202e391beb8",
+        "name": "HTML"
+      },
+      {
+        "parameters": {
+          "path": "solicitar-tarefa",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "7bb72db7-31f4-44b1-a06d-3c0b13a6d0a9",
+        "name": "Webhook Solicitar Tarefa",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [
+          16,
+          208
+        ],
+        "webhookId": "solicitar-tarefa"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "solicitar-tarefa",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          576,
+          208
+        ],
+        "id": "bd26ea03-4645-4660-a9e1-43dafa97803f",
+        "name": "Webhook",
+        "webhookId": "78e5c7ff-93de-4813-8563-ce277f8b8477"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "aad922d0-b0fb-4618-b10f-c921e7498ba2",
+                "name": "Nome",
+                "value": "={{ $json.body.nome }}",
+                "type": "string"
+              },
+              {
+                "id": "747d3d3f-5aa7-4f9f-8f37-f0e9ec99123b",
+                "name": "Email",
+                "value": "={{ $json.body.email }}",
+                "type": "string"
+              },
+              {
+                "id": "99106628-d8ad-4db5-9dc2-ee74adbbe3f3",
+                "name": "Tipo de Automação",
+                "value": "={{ $json.body.tipo }}",
+                "type": "string"
+              },
+              {
+                "id": "853c5586-fb0d-4c0f-a5f0-02770fdb5ec5",
+                "name": "Descrição",
+                "value": "={{ $json.body.descricao.replace(/[\"\\\\;\\n\\r]/g, '').trim() }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          752,
+          208
+        ],
+        "id": "28e4f90d-c959-49bd-b2fb-303f98403d82",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "content": "## Página Web",
+          "height": 208,
+          "width": 560,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -32,
+          160
+        ],
+        "id": "010550f7-54cb-42bc-acbe-f8ecc860fb96",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "content": "## Envio do Email",
+          "height": 208,
+          "width": 768,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          544,
+          160
+        ],
+        "id": "88b4f1b5-3ead-448f-9046-143ded9b3ed3",
+        "name": "Sticky Note1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://medicalspin.atlassian.net/rest/api/3/issue",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"fields\": {\n    \"project\": {\n      \"key\": \"AMS\"\n    },\n    \"summary\": \"Nova Tarefa Para Avaliação - {{ $json.Nome }}\",\n    \"description\": {\n      \"type\": \"doc\",\n      \"version\": 1,\n      \"content\": [\n        {\n          \"type\": \"paragraph\",\n          \"content\": [\n            {\"type\": \"text\", \"text\": \"Nome: {{ $json.Nome }}\"},\n            {\"type\": \"text\", \"text\": \"\\nEmail: {{ $json.Email }}\"},\n            {\"type\": \"text\", \"text\": \"\\nTipo de Automação: {{ $json['Tipo de Automação'] }}\"},\n            {\"type\": \"text\", \"text\": \"\\nDescrição: {{ $json['Descrição'] }}\"}\n          ]\n        }\n      ]\n    },\n    \"issuetype\": {\n      \"name\": \"Task\"\n    }\n  }\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          944,
+          208
+        ],
+        "id": "5c8aed09-c84a-4438-aa5e-3f9242d11862",
+        "name": "HTTP Request"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://medicalspin.atlassian.net/rest/api/3/issue",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"fields\": {\n    \"project\": {\n      \"key\": \"AMS\"\n    },\n    \"summary\": \"Nova Tarefa Para Avaliação - {{ $json.Nome }}\",\n    \"description\": {\n      \"type\": \"doc\",\n      \"version\": 1,\n      \"content\": [\n        {\n          \"type\": \"paragraph\",\n          \"content\": [\n            {\n              \"type\": \"text\",\n              \"text\": \"{{ $json['Descrição'] }}\"\n            }\n          ]\n        }\n      ]\n    },\n    \"issuetype\": {\n      \"name\": \"Task\"\n    }\n  }\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          0,
+          0
+        ],
+        "id": "972e3d2e-7908-4674-b4a3-808d450aa376",
+        "name": "HTTP Request1"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "5579999801810",
+          "messageText": "=🆕 Nova tarefa cadastrada no Jira\n\n👤 Nome: {{ $('Edit Fields').item.json.Nome }}\n📧 E-mail: {{ $('Edit Fields').item.json.Email }}\n⚙️ Tipo de Automação: {{ $('Edit Fields').item.json['Tipo de Automação'] }}\n📝 Descrição: {{ $('Edit Fields').item.json['Descrição'] }}",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          1136,
+          208
+        ],
+        "id": "dd6a2514-b6f5-436b-860c-afbd496dedb1",
+        "name": "Enviar texto",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "HTML": {
+        "main": [
+          [
+            {
+              "node": "Responder ao Usuário1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook Solicitar Tarefa": {
+        "main": [
+          [
+            {
+              "node": "HTML",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "tags": [
+    {
+      "updatedAt": "2025-11-17T14:30:14.174Z",
+      "createdAt": "2025-11-17T14:30:14.174Z",
+      "id": "moijdFGlY2w64Ect",
+      "name": "Jira"
+    },
+    {
+      "updatedAt": "2025-11-17T14:30:41.341Z",
+      "createdAt": "2025-11-17T14:30:41.341Z",
+      "id": "a1SiyDS4bAShAsoW",
+      "name": "html"
+    }
+  ]
+}
