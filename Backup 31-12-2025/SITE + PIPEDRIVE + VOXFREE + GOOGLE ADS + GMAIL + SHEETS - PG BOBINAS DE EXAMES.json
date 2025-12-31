@@ -1,0 +1,6435 @@
+{
+  "updatedAt": "2025-12-12T10:09:53.856Z",
+  "createdAt": "2025-11-17T14:59:33.234Z",
+  "id": "QTstNemqI45TNyW9",
+  "name": "SITE + PIPEDRIVE + VOXFREE + GOOGLE ADS + GMAIL + SHEETS - PG BOBINAS DE EXAMES",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "form-popup-bobinas",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        48,
+        272
+      ],
+      "id": "95cb0ea5-4d63-4742-9769-07e461a6f192",
+      "name": "Webhook5",
+      "webhookId": "449b7690-9b51-4e9f-bb58-eb2e6a43b5b1"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Webhook5').item.json.body.Nome }}",
+        "additionalFields": {
+          "email": [
+            "={{ $('Webhook5').item.json.body.Email }}"
+          ],
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Webhook5').item.json.body.WhatsApp }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        736,
+        416
+      ],
+      "id": "d31c5c32-cd5d-4169-bea9-017dae9ad037",
+      "name": "Create a person5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {
+          "organization_id": "={{ $('Create an organization2').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        912,
+        416
+      ],
+      "id": "71498fc4-e20f-4502-86ce-540c37d0cc50",
+      "name": "Create a lead5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person5').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Site"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "Inbound"
+              },
+              {
+                "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                "value": "Camila"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization2').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        416
+      ],
+      "id": "2a6fdcb1-f132-4e4b-a2d2-099bd76cb588",
+      "name": "Create a deal5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## FORM PUP-UP",
+        "height": 608,
+        "width": 2896,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        32,
+        80
+      ],
+      "id": "b047d387-e866-4446-a369-9fa1e81cc0e0",
+      "name": "Sticky Note7",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "solicitar-contato-agora-bbex",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        48,
+        880
+      ],
+      "id": "08dbdcca-c2ad-496b-8c03-a85bfefd18a5",
+      "name": "Webhook6",
+      "webhookId": "449b7690-9b51-4e9f-bb58-eb2e6a43b5b1"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Webhook6').item.json.body.Nome }}",
+        "additionalFields": {
+          "email": [],
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Webhook6').item.json.body.WhatsApp }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        736,
+        1024
+      ],
+      "id": "0a6d693e-bb89-4a89-9e8a-0f159069254e",
+      "name": "Create a person6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {
+          "organization_id": "={{ $('Create an organization1').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        912,
+        1024
+      ],
+      "id": "0ecdeec5-fbcb-4457-af61-5927a773b4c7",
+      "name": "Create a lead6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person6').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Site"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "Inbound"
+              },
+              {
+                "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                "value": "Camila"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization1').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        1024
+      ],
+      "id": "9a420d91-703f-416d-a24d-ef6e405f727e",
+      "name": "Create a deal6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Solicitar Contato Agora",
+        "height": 608,
+        "width": 2896,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        32,
+        720
+      ],
+      "id": "189ae732-62ce-44fa-9174-244b689a8ed8",
+      "name": "Sticky Note8",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $json.body['Clínica'] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        560,
+        1024
+      ],
+      "id": "b27d05de-ead6-4c51-b920-978d3cf56abc",
+      "name": "Create an organization1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Página de Bobinas de Exames",
+        "height": 1360,
+        "width": 2960,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a2c0f54f-cacb-4c93-8374-6efd4542596e",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🚀LEAD SITE PG BOBINAS DE EXAMES POP-UP\n\n🔹Nome: {{ $('Create a person5').item.json.name }}\n🔹Telefone: {{ $('Create a person5').item.json.phone[0].value }}\n🔹Email: {{ $('Create a person5').item.json.email[0].value }}\n🔹Clínica: {{ $('Create an organization2').item.json.name }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "org_id": "={{ $('Create an organization2').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        416
+      ],
+      "id": "7dc10dbf-4830-455c-9283-c4eb0f5996d1",
+      "name": "Create a note5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🚀LEAD SITE PG BOBINAS DE EXAMES FOOTER FORM SOLICITAR CONTATO AGORA\n\n🔹Nome: {{ $('Create a person6').item.json.name }}\n🔹Telefone: {{ $('Create a person6').item.json.phone[0].value }}\n🔹Email: {{ $('Create a person6').item.json.email[0].value }}\n🔹Clínica: {{ $('Create an organization1').item.json.name }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "org_id": "={{ $('Create an organization1').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        1024
+      ],
+      "id": "aea445bf-1dcf-48cd-aa63-ffad053f90a6",
+      "name": "Create a note6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Code in JavaScript2').item.json.phone }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields3').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* ⚡\\n🔧 Um especialista já foi avisado!\\n\\n🧪 *Em nosso lab certificado*, restauramos bobinas condenadas com *100% de sucesso nos testes de IQT* ✅\\n\\n📍 Pode informar *modelo, marca da RM* e o que está buscando?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🚀LEAD SITE PG BOBINAS DE EXAMES POP-UP\\n🔹Nome: {{ $('Create a person5').item.json.name }}\\n🔹Telefone: {{ $('Create a person5').item.json.phone[0].value }}\\n🔹Email: {{ $('Create a person5').item.json.email[0].value }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2144,
+        416
+      ],
+      "id": "5a62f12e-7997-469d-9d14-f1490815a914",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b88d8ef2-8461-4b65-95b9-da090f997910",
+              "name": "dp_id",
+              "value": "1668",
+              "type": "string"
+            },
+            {
+              "id": "8cbecb4a-8bc0-42ff-9357-c33f317c50cd",
+              "name": "form",
+              "value": "Reparo de bobina",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1968,
+        416
+      ],
+      "id": "c283efee-cb6e-4298-8b18-a5ab724af816",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "sendTo": "contato@medicalspin.com.br",
+        "subject": "Novo Lead Interessado em Bobinas de Exames - POP-UP",
+        "emailType": "text",
+        "message": "=Nome: {{ $('Webhook5').item.json.body.Nome }}\nEmail: {{ $('Webhook5').item.json.body.Email }}\nTelefone: {{ $('Webhook5').item.json.body.WhatsApp }}\nClínica: {{ $('Create an organization2').item.json.name }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1440,
+        416
+      ],
+      "id": "dfa15300-b5f3-48a0-962e-ee6f5008fadd",
+      "name": "Send a message2",
+      "webhookId": "ad16df43-332a-4dc9-bd05-20ae94929cec",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+              "name": "name",
+              "value": "={{ $('Create a person5').item.json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+              "name": "email",
+              "value": "={{ $('Create a person5').item.json.email[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+              "name": "phone",
+              "value": "={{ $('Create a person5').item.json.phone[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "937af5e8-81b8-40cf-b352-8f2cbb1b9095",
+              "name": "org",
+              "value": "={{ $('Create an organization2').item.json.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        416
+      ],
+      "id": "a56fe180-98c5-499f-bf1c-07df66d7fb13",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega o telefone do node Edit Fields1\nlet phone = $('Edit Fields3').item.json.phone || '';\n\n// Remove tudo que não é número\nphone = phone.replace(/\\D/g, '');\n\n// Adiciona 55 na frente se não começar com 55\nif (!phone.startsWith('55')) {\n    phone = '55' + phone;\n}\n\n// Retorna o item com o telefone atualizado\nreturn {\n    json: {\n        phone: phone\n    }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        416
+      ],
+      "id": "ce6a0f0a-bc19-4d04-9842-edcf24a5a4e5",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Code in JavaScript3').item.json.phone }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields4').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* ⚡\\n🔧 Um especialista já foi avisado!\\n\\n🧪 *Em nosso lab certificado*, restauramos bobinas condenadas com *100% de sucesso nos testes de IQT* ✅\\n\\n📍 Pode informar *modelo, marca da RM* e o que está buscando?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🚀LEAD SITE PG BOBINAS DE EXAMES FOOTER FORM SOLICITAR CONTATO AGORA\\n🔹Nome: {{ $('Create a person6').item.json.name }}\\n🔹Telefone: {{ $('Create a person6').item.json.phone[0].value }}\\n🔹Email: {{ $('Create a person6').item.json.email[0].value }}\\n🔹Clínica: {{ $('Edit Fields4').item.json.org }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2144,
+        1024
+      ],
+      "id": "9bf93076-b354-4a14-a978-af7834e0d6e8",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b88d8ef2-8461-4b65-95b9-da090f997910",
+              "name": "dp_id",
+              "value": "1668",
+              "type": "string"
+            },
+            {
+              "id": "8cbecb4a-8bc0-42ff-9357-c33f317c50cd",
+              "name": "form",
+              "value": "Reparo de bobina",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1968,
+        1024
+      ],
+      "id": "e8f3017b-b519-4393-8358-7cb9ccf80016",
+      "name": "Edit Fields8"
+    },
+    {
+      "parameters": {
+        "sendTo": "contato@medicalspin.com.br",
+        "subject": "Novo Lead Interessado em Bobinas de Exames - Solicitar Contato Agora",
+        "emailType": "text",
+        "message": "=Nome: {{ $('Webhook6').item.json.body.Nome }}\nTelefone: {{ $('Webhook6').item.json.body.WhatsApp }}\nClínica: {{ $('Create an organization1').item.json.name }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1440,
+        1024
+      ],
+      "id": "64e22bdd-e071-404c-a6f8-f023fdaa4902",
+      "name": "Send a message3",
+      "webhookId": "ad16df43-332a-4dc9-bd05-20ae94929cec",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+              "name": "name",
+              "value": "={{ $('Create a person6').item.json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+              "name": "email",
+              "value": "={{ $('Create a person6').item.json.email[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+              "name": "phone",
+              "value": "={{ $('Create a person6').item.json.phone[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "a08dd801-3c79-4a51-bfe6-70ef29bfbfbb",
+              "name": "org",
+              "value": "={{ $('Create an organization1').item.json.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        1024
+      ],
+      "id": "3e59a430-6f86-487c-ae55-b827a09e0bcc",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega o telefone do node Edit Fields1\nlet phone = $('Edit Fields4').item.json.phone || '';\n\n// Remove tudo que não é número\nphone = phone.replace(/\\D/g, '');\n\n// Adiciona 55 na frente se não começar com 55\nif (!phone.startsWith('55')) {\n    phone = '55' + phone;\n}\n\n// Retorna o item com o telefone atualizado\nreturn {\n    json: {\n        phone: phone\n    }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        1024
+      ],
+      "id": "73a809c3-3be4-419b-b17c-989485179d20",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $json.body[\"Clínica\"] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        560,
+        416
+      ],
+      "id": "68a3b08a-49ff-4dc7-8f14-3c4db176de8a",
+      "name": "Create an organization2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c530bcc4-b650-41bf-8425-16ffbfec6a4c",
+              "leftValue": "={{ $json.body['Page URL'] }}",
+              "rightValue": "https://bobinasdeexames.medicalspin.com.br/?gad_source=1&",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        368,
+        880
+      ],
+      "id": "a9d2d051-bbc0-4217-a728-e5481bc5951f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c530bcc4-b650-41bf-8425-16ffbfec6a4c",
+              "leftValue": "={{ $json.body['Page URL'] }}",
+              "rightValue": "https://bobinasdeexames.medicalspin.com.br/?gad_source=1&",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        384,
+        272
+      ],
+      "id": "17b2b6ea-781b-4319-a45f-81d50542887a",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Webhook6').item.json.body.Nome }}",
+        "additionalFields": {
+          "email": [],
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('If').item.json.body.WhatsApp }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        736,
+        864
+      ],
+      "id": "4cc6fef0-aca5-45bd-84c1-753325dcb59d",
+      "name": "Create a person",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {
+          "organization_id": "={{ $('Create an organization').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        912,
+        864
+      ],
+      "id": "d5e82c05-6354-482c-8f08-aab3a931508b",
+      "name": "Create a lead",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Site"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "Inbound"
+              },
+              {
+                "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                "value": "Camila"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        864
+      ],
+      "id": "29bcc704-0ae8-4948-8735-2a26d376e153",
+      "name": "Create a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $json.body['Clínica'] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        560,
+        864
+      ],
+      "id": "5ea0d457-6726-4ef4-9d35-08750346b5a7",
+      "name": "Create an organization",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🚀LEAD SITE PG BOBINAS DE EXAMES FOOTER FORM SOLICITAR CONTATO AGORA - ANÚNCIO DO GOOGLE ADS\n\n🔹Nome: {{ $('Create a person').item.json.name }}\n🔹Telefone: {{ $('Create a person').item.json.phone[0].value }}\n🔹Email: {{ $('Create a person').item.json.email[0].value }}\n🔹Clínica: {{ $('Create an organization').item.json.name }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "org_id": "={{ $('Create an organization').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        864
+      ],
+      "id": "d430e3ee-ba3f-41a5-bc6d-a878440c52e0",
+      "name": "Create a note",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Code in JavaScript').item.json.phone }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields5').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* ⚡\\n🔧 Um especialista já foi avisado!\\n\\n🧪 *Em nosso lab certificado*, restauramos bobinas condenadas com *100% de sucesso nos testes de IQT* ✅\\n\\n📍 Pode informar *modelo, marca da RM* e o que está buscando?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🚀LEAD SITE PG BOBINAS DE EXAMES FOOTER FORM SOLICITAR CONTATO AGORA - ANÚNCIO DO GOOGLE ADS\\n🔹Nome: {{ $('Create a person').item.json.name }}\\n🔹Telefone: {{ $('Create a person').item.json.phone[0].value }}\\n🔹Email: {{ $('Create a person').item.json.email[0].value }}\\n🔹Clínica: {{ $('Edit Fields5').item.json.org }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2144,
+        864
+      ],
+      "id": "616680f3-3ef3-4b0b-b481-7e2d1c21d430",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b88d8ef2-8461-4b65-95b9-da090f997910",
+              "name": "dp_id",
+              "value": "1668",
+              "type": "string"
+            },
+            {
+              "id": "8cbecb4a-8bc0-42ff-9357-c33f317c50cd",
+              "name": "form",
+              "value": "Reparo de bobina",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1968,
+        864
+      ],
+      "id": "0bb55146-c846-4d63-80a9-2ac5f19fe6d2",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "sendTo": "contato@medicalspin.com.br",
+        "subject": "Novo Lead Interessado em Bobinas de Exames - Solicitar Contato Agora - Google ADS",
+        "emailType": "text",
+        "message": "=Nome: {{ $('Webhook6').item.json.body.Nome }}\nTelefone: {{ $('Webhook6').item.json.body.WhatsApp }}\nClínica: {{ $('Create an organization').item.json.name }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1440,
+        864
+      ],
+      "id": "fc213c7c-3172-46ee-abf7-8a80bd41eba5",
+      "name": "Send a message",
+      "webhookId": "ad16df43-332a-4dc9-bd05-20ae94929cec",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+              "name": "name",
+              "value": "={{ $('Create a person').item.json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+              "name": "email",
+              "value": "={{ $('Create a person').item.json.email[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+              "name": "phone",
+              "value": "={{ $('Create a person').item.json.phone[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "a08dd801-3c79-4a51-bfe6-70ef29bfbfbb",
+              "name": "org",
+              "value": "={{ $('Create an organization').item.json.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        864
+      ],
+      "id": "f6537dc7-56bc-47c7-9ea2-e7384f5a2be7",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega o telefone do node Edit Fields1\nlet phone = $('Edit Fields5').item.json.phone || '';\n\n// Remove tudo que não é número\nphone = phone.replace(/\\D/g, '');\n\n// Adiciona 55 na frente se não começar com 55\nif (!phone.startsWith('55')) {\n    phone = '55' + phone;\n}\n\n// Retorna o item com o telefone atualizado\nreturn {\n    json: {\n        phone: phone\n    }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        864
+      ],
+      "id": "eff8211a-7cb4-45dc-9a73-ee569ce6358e",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Webhook5').item.json.body.Nome }}",
+        "additionalFields": {
+          "email": [
+            "={{ $('Webhook5').item.json.body.Email }}"
+          ],
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('If1').item.json.body.WhatsApp }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        736,
+        256
+      ],
+      "id": "d9c4cc4b-ea21-48f0-acc8-93e11e8b9d91",
+      "name": "Create a person7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {
+          "organization_id": "={{ $('Create an organization3').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        912,
+        256
+      ],
+      "id": "2e1f0233-9810-4b77-88ce-61e535745aa3",
+      "name": "Create a lead7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person7').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Site"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "Inbound"
+              },
+              {
+                "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                "value": "Camila"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization3').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        256
+      ],
+      "id": "c929dfd6-f942-4f18-b8e7-3d685d36e4ae",
+      "name": "Create a deal7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🚀LEAD SITE PG BOBINAS DE EXAMES POP-UP - ANÚNCIO DO GOOGLE ADS\n\n🔹Nome: {{ $('Create a person7').item.json.name }}\n🔹Telefone: {{ $('Create a person7').item.json.phone[0].value }}\n🔹Email: {{ $('Create a person7').item.json.email[0].value }}\n🔹Clínica: {{ $('Create an organization3').item.json.name }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "org_id": "={{ $('Create an organization3').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        256
+      ],
+      "id": "01db43de-c08d-4eb4-b3ae-ca009ba18d53",
+      "name": "Create a note7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Code in JavaScript4').item.json.phone }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields9').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* ⚡\\n🔧 Um especialista já foi avisado!\\n\\n🧪 *Em nosso lab certificado*, restauramos bobinas condenadas com *100% de sucesso nos testes de IQT* ✅\\n\\n📍 Pode informar *modelo, marca da RM* e o que está buscando?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🚀LEAD SITE PG BOBINAS DE EXAMES POP-UP - ANÚNCIO DO GOOGLE ADS\\n🔹Nome: {{ $('Create a person7').item.json.name }}\\n🔹Telefone: {{ $('Create a person7').item.json.phone[0].value }}\\n🔹Email: {{ $('Create a person7').item.json.email[0].value }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2144,
+        256
+      ],
+      "id": "0d0d670d-fbd3-461e-a370-25e1453c6e54",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b88d8ef2-8461-4b65-95b9-da090f997910",
+              "name": "dp_id",
+              "value": "1668",
+              "type": "string"
+            },
+            {
+              "id": "8cbecb4a-8bc0-42ff-9357-c33f317c50cd",
+              "name": "form",
+              "value": "Reparo de bobina",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1968,
+        256
+      ],
+      "id": "2b1f7d45-1a04-4fb8-975f-c6f56057ca21",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "sendTo": "contato@medicalspin.com.br",
+        "subject": "Novo Lead Interessado em Bobinas de Exames - POP-UP - Google ADS",
+        "emailType": "text",
+        "message": "=Nome: {{ $('Webhook5').item.json.body.Nome }}\nEmail: {{ $('Webhook5').item.json.body.Email }}\nTelefone: {{ $('Webhook5').item.json.body.WhatsApp }}\nClínica: {{ $('Create an organization3').item.json.name }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1440,
+        256
+      ],
+      "id": "8921a048-f278-4c16-972c-936185dc13ee",
+      "name": "Send a message4",
+      "webhookId": "ad16df43-332a-4dc9-bd05-20ae94929cec",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+              "name": "name",
+              "value": "={{ $('Create a person7').item.json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+              "name": "email",
+              "value": "={{ $('Create a person7').item.json.email[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+              "name": "phone",
+              "value": "={{ $('Create a person7').item.json.phone[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "6e246d30-a02f-43a9-9efc-2301b8b580b2",
+              "name": "org",
+              "value": "={{ $('Create an organization3').item.json.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        256
+      ],
+      "id": "047ad2ea-7131-43fc-a2de-7822fb69372c",
+      "name": "Edit Fields9"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega o telefone do node Edit Fields1\nlet phone = $('Edit Fields9').item.json.phone || '';\n\n// Remove tudo que não é número\nphone = phone.replace(/\\D/g, '');\n\n// Adiciona 55 na frente se não começar com 55\nif (!phone.startsWith('55')) {\n    phone = '55' + phone;\n}\n\n// Retorna o item com o telefone atualizado\nreturn {\n    json: {\n        phone: phone\n    }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        256
+      ],
+      "id": "fa2e2157-6c44-45b8-9dc3-f2224132875a",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $json.body[\"Clínica\"] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        560,
+        256
+      ],
+      "id": "3d4a0c4f-77c2-481c-9cb2-188bf8aa3684",
+      "name": "Create an organization3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8",
+          "mode": "list",
+          "cachedResultName": "PLANILHA 2025 SOLARO - LEADS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 139886296,
+          "mode": "list",
+          "cachedResultName": "GoogleAds",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit#gid=139886296"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "E-mail": "={{ $('Edit Fields9').item.json.email }}",
+            "Telefone ": "={{ $('Code in JavaScript4').item.json.phone }}",
+            "Nome": "={{ $('Edit Fields9').item.json.name }}",
+            "Empresa": "={{ $('Edit Fields9').item.json.org }}",
+            "Tipo de Serviço": "=Google ADS PG Boninas de Exames POP-UP",
+            "Data do Cadastro": "={{ $now.format('dd-LL-yyyy T') }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "Contato",
+              "displayName": "Contato",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data do Cadastro",
+              "displayName": "Data do Cadastro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tipo de Serviço",
+              "displayName": "Tipo de Serviço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Telefone ",
+              "displayName": "Telefone ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Observações",
+              "displayName": "Observações",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2560,
+        96
+      ],
+      "id": "ad697e01-3d3d-4b3a-8830-cec861617c44",
+      "name": "SUCESSO",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads Medical Spin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978480406,
+          "mode": "list",
+          "cachedResultName": "SITE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Edit Fields3').item.json.name }}",
+            "EMAIL": "={{ $('Edit Fields3').item.json.email }}",
+            "TELEFONE": "={{ $('Code in JavaScript2').item.json.phone }}",
+            "DATA": "={{$now.format('dd-LL-yyyy T')}}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLÍNICA",
+              "displayName": "CLÍNICA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OBSERVAÇÕES",
+              "displayName": "OBSERVAÇÕES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2560,
+        384
+      ],
+      "id": "97d6e685-0710-4038-8eb3-cc259078b958",
+      "name": "SUCESSO1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8",
+          "mode": "list",
+          "cachedResultName": "PLANILHA 2025 SOLARO - LEADS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 139886296,
+          "mode": "list",
+          "cachedResultName": "GoogleAds",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit#gid=139886296"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data do Cadastro": "={{ $now.format('dd-LL-yyyy T') }}",
+            "Tipo de Serviço": "=Google ADS PG Boninas de Exames Footer Form Solicitar Contato Agora",
+            "Empresa": "={{ $('Edit Fields5').item.json.org }}",
+            "Nome": "={{ $('Edit Fields5').item.json.name }}",
+            "Telefone ": "={{ $('Code in JavaScript').item.json.phone }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "Contato",
+              "displayName": "Contato",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data do Cadastro",
+              "displayName": "Data do Cadastro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tipo de Serviço",
+              "displayName": "Tipo de Serviço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Telefone ",
+              "displayName": "Telefone ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Observações",
+              "displayName": "Observações",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2560,
+        736
+      ],
+      "id": "1a5b4486-1bbc-40f1-b212-a75f2960f3df",
+      "name": "SUCESSO2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads Medical Spin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978480406,
+          "mode": "list",
+          "cachedResultName": "SITE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Edit Fields4').item.json.name }}",
+            "EMAIL": "={{ $('Edit Fields4').item.json.email }}",
+            "TELEFONE": "={{ $('Code in JavaScript3').item.json.phone }}",
+            "CLÍNICA": "={{ $('Edit Fields4').item.json.org }}",
+            "DATA": "={{$now.format('dd-LL-yyyy T')}}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLÍNICA",
+              "displayName": "CLÍNICA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OBSERVAÇÕES",
+              "displayName": "OBSERVAÇÕES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2560,
+        1024
+      ],
+      "id": "0087194a-e383-4968-8cb5-0f776c8ec449",
+      "name": "SUCESSO3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8",
+          "mode": "list",
+          "cachedResultName": "PLANILHA 2025 SOLARO - LEADS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 139886296,
+          "mode": "list",
+          "cachedResultName": "GoogleAds",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit#gid=139886296"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "E-mail": "={{ $('Edit Fields9').item.json.email }}",
+            "Telefone ": "={{ $('Code in JavaScript4').item.json.phone }}",
+            "Nome": "={{ $('Edit Fields9').item.json.name }}",
+            "Empresa": "={{ $('Edit Fields9').item.json.org }}",
+            "Tipo de Serviço": "=Google ADS PG Boninas de Exames POP-UP",
+            "Data do Cadastro": "={{ $now.format('dd-LL-yyyy T') }}",
+            "Observações": "Forneceu um contato sem WhatsApp"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "Contato",
+              "displayName": "Contato",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data do Cadastro",
+              "displayName": "Data do Cadastro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tipo de Serviço",
+              "displayName": "Tipo de Serviço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Telefone ",
+              "displayName": "Telefone ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Observações",
+              "displayName": "Observações",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2752,
+        256
+      ],
+      "id": "78492c2a-b074-468c-898a-edd9ce7a0e3c",
+      "name": "ERRO",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads Medical Spin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978480406,
+          "mode": "list",
+          "cachedResultName": "SITE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Edit Fields3').item.json.name }}",
+            "EMAIL": "={{ $('Edit Fields3').item.json.email }}",
+            "TELEFONE": "={{ $('Code in JavaScript2').item.json.phone }}",
+            "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+            "OBSERVAÇÕES": "Forneceu um contato sem WhatsApp"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLÍNICA",
+              "displayName": "CLÍNICA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OBSERVAÇÕES",
+              "displayName": "OBSERVAÇÕES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2752,
+        528
+      ],
+      "id": "121f779a-7460-41a0-be73-21eb65b7f78d",
+      "name": "ERRO1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8",
+          "mode": "list",
+          "cachedResultName": "PLANILHA 2025 SOLARO - LEADS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 139886296,
+          "mode": "list",
+          "cachedResultName": "GoogleAds",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit#gid=139886296"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data do Cadastro": "={{ $now.format('dd-LL-yyyy T') }}",
+            "Tipo de Serviço": "=Google ADS PG Boninas de Exames Footer Form Solicitar Contato Agora",
+            "Empresa": "={{ $('Edit Fields5').item.json.org }}",
+            "Nome": "={{ $('Edit Fields5').item.json.name }}",
+            "Telefone ": "={{ $('Code in JavaScript').item.json.phone }}",
+            "Observações": "Forneceu um contato sem WhatsApp"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "Contato",
+              "displayName": "Contato",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data do Cadastro",
+              "displayName": "Data do Cadastro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tipo de Serviço",
+              "displayName": "Tipo de Serviço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Telefone ",
+              "displayName": "Telefone ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Observações",
+              "displayName": "Observações",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2752,
+        880
+      ],
+      "id": "722297a3-f91f-4d77-be56-e8bd3448b842",
+      "name": "ERRO2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads Medical Spin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978480406,
+          "mode": "list",
+          "cachedResultName": "SITE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Edit Fields4').item.json.name }}",
+            "EMAIL": "={{ $('Edit Fields4').item.json.email }}",
+            "TELEFONE": "={{ $('Code in JavaScript3').item.json.phone }}",
+            "CLÍNICA": "={{ $('Edit Fields4').item.json.org }}",
+            "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+            "OBSERVAÇÕES": "Forneceu um contato sem WhatsApp"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLÍNICA",
+              "displayName": "CLÍNICA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OBSERVAÇÕES",
+              "displayName": "OBSERVAÇÕES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2752,
+        1168
+      ],
+      "id": "b6cab545-f869-481f-948c-2251ca36925e",
+      "name": "ERRO3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "902b0a95-c3a9-441d-a179-45bed61ad9c3",
+              "leftValue": "={{ /\\d/.test($json.body['Clínica']) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        272
+      ],
+      "id": "0e962601-99c7-4228-9f28-c20833742d5a",
+      "name": "If3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        384,
+        416
+      ],
+      "id": "c0f21756-2b2d-4a46-a893-fc6ce28ef9fd",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "902b0a95-c3a9-441d-a179-45bed61ad9c3",
+              "leftValue": "={{ /\\d/.test($json.body['Clínica']) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        192,
+        880
+      ],
+      "id": "aa5d3ecb-296e-4c62-93b0-99ffc914d985",
+      "name": "If4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        368,
+        1024
+      ],
+      "id": "72b89a9b-bf39-4f76-aa26-0fbfa9d0d97b",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Remove duplicatas com base no campo 'resultado'\nconst vistos = new Set();\nconst unicos = [];\n\nfor (const item of items) {\n  if (!vistos.has(item.json.resultado)) {\n    vistos.add(item.json.resultado);\n    unicos.push(item);\n  }\n}\n\nreturn unicos;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2560,
+        256
+      ],
+      "id": "89a3b586-406b-4ffa-ae76-708fb77d83c2",
+      "name": "Code in JavaScript5"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Remove duplicatas com base no campo 'resultado'\nconst vistos = new Set();\nconst unicos = [];\n\nfor (const item of items) {\n  if (!vistos.has(item.json.resultado)) {\n    vistos.add(item.json.resultado);\n    unicos.push(item);\n  }\n}\n\nreturn unicos;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2560,
+        528
+      ],
+      "id": "13af3ac9-8b29-4ed2-898d-0ea4510ee1eb",
+      "name": "Code in JavaScript6"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Remove duplicatas com base no campo 'resultado'\nconst vistos = new Set();\nconst unicos = [];\n\nfor (const item of items) {\n  if (!vistos.has(item.json.resultado)) {\n    vistos.add(item.json.resultado);\n    unicos.push(item);\n  }\n}\n\nreturn unicos;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2560,
+        880
+      ],
+      "id": "525886a6-4dc3-4d2d-9e33-3a0d78ce0f82",
+      "name": "Code in JavaScript7"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Remove duplicatas com base no campo 'resultado'\nconst vistos = new Set();\nconst unicos = [];\n\nfor (const item of items) {\n  if (!vistos.has(item.json.resultado)) {\n    vistos.add(item.json.resultado);\n    unicos.push(item);\n  }\n}\n\nreturn unicos;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2560,
+        1168
+      ],
+      "id": "835021b3-cc69-4776-832f-e1655771ec16",
+      "name": "Code in JavaScript8"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34238324-b70c-4d50-9e30-f84b1dc0dea7",
+              "leftValue": "={{ $json.resultado }}",
+              "rightValue": "Iniciando conversa",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "728cb7bb-230f-4391-93e3-78ba55b5daae",
+              "leftValue": "={{ $json.resultado }}",
+              "rightValue": "Ja possui conversa ativa",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2336,
+        256
+      ],
+      "id": "53784a50-5d35-4e85-be40-7e63736d2ec5",
+      "name": "If18"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34238324-b70c-4d50-9e30-f84b1dc0dea7",
+              "leftValue": "={{ $json.resultado }}",
+              "rightValue": "Iniciando conversa",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "728cb7bb-230f-4391-93e3-78ba55b5daae",
+              "leftValue": "={{ $json.resultado }}",
+              "rightValue": "Ja possui conversa ativa",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2336,
+        416
+      ],
+      "id": "3dcd9189-b501-4de0-835d-7937564016b5",
+      "name": "If19"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34238324-b70c-4d50-9e30-f84b1dc0dea7",
+              "leftValue": "={{ $json.resultado }}",
+              "rightValue": "Iniciando conversa",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "728cb7bb-230f-4391-93e3-78ba55b5daae",
+              "leftValue": "={{ $json.resultado }}",
+              "rightValue": "Ja possui conversa ativa",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2320,
+        864
+      ],
+      "id": "b374063d-f627-4fc6-b97e-d405c8b1bde8",
+      "name": "If20"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34238324-b70c-4d50-9e30-f84b1dc0dea7",
+              "leftValue": "={{ $json.resultado }}",
+              "rightValue": "Iniciando conversa",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "728cb7bb-230f-4391-93e3-78ba55b5daae",
+              "leftValue": "={{ $json.resultado }}",
+              "rightValue": "Ja possui conversa ativa",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2320,
+        1024
+      ],
+      "id": "ffea99c5-4423-4e61-b174-13b6cd2326a3",
+      "name": "If21"
+    }
+  ],
+  "connections": {
+    "Webhook5": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person5": {
+      "main": [
+        [
+          {
+            "node": "Create a lead5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead5": {
+      "main": [
+        [
+          {
+            "node": "Create a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal5": {
+      "main": [
+        [
+          {
+            "node": "Create a note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook6": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person6": {
+      "main": [
+        [
+          {
+            "node": "Create a lead6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead6": {
+      "main": [
+        [
+          {
+            "node": "Create a deal6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal6": {
+      "main": [
+        [
+          {
+            "node": "Create a note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization1": {
+      "main": [
+        [
+          {
+            "node": "Create a person6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note5": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note6": {
+      "main": [
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "If19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "If21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization2": {
+      "main": [
+        [
+          {
+            "node": "Create a person5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create an organization",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create an organization1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Create an organization3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create an organization2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person": {
+      "main": [
+        [
+          {
+            "node": "Create a lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead": {
+      "main": [
+        [
+          {
+            "node": "Create a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal": {
+      "main": [
+        [
+          {
+            "node": "Create a note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization": {
+      "main": [
+        [
+          {
+            "node": "Create a person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person7": {
+      "main": [
+        [
+          {
+            "node": "Create a lead7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead7": {
+      "main": [
+        [
+          {
+            "node": "Create a deal7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal7": {
+      "main": [
+        [
+          {
+            "node": "Create a note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note7": {
+      "main": [
+        [
+          {
+            "node": "Send a message4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "If18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields9": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization3": {
+      "main": [
+        [
+          {
+            "node": "Create a person7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript5": {
+      "main": [
+        [
+          {
+            "node": "ERRO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript6": {
+      "main": [
+        [
+          {
+            "node": "ERRO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript7": {
+      "main": [
+        [
+          {
+            "node": "ERRO2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript8": {
+      "main": [
+        [
+          {
+            "node": "ERRO3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If18": {
+      "main": [
+        [
+          {
+            "node": "SUCESSO",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If19": {
+      "main": [
+        [
+          {
+            "node": "SUCESSO1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If21": {
+      "main": [
+        [
+          {
+            "node": "SUCESSO3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If20": {
+      "main": [
+        [
+          {
+            "node": "SUCESSO2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook5": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.medicalspin.com.br",
+            "user-agent": "WordPress/6.8.3; https://bobinasdeexames.medicalspin.com.br",
+            "content-length": "587",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip, br",
+            "content-type": "application/x-www-form-urlencoded",
+            "x-forwarded-for": "162.241.63.31",
+            "x-forwarded-host": "n8n.medicalspin.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "162.241.63.31"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "Nome": "Desenv - MedicalSpin",
+            "Email": "teste@gmail.com",
+            "WhatsApp": "(79) 99980-1810",
+            "Date": "outubro 21, 2025",
+            "Time": "2:04 pm",
+            "Page URL": "https://bobinasdeexames.medicalspin.com.br/?gad_source=1&gad_campaignid=22923302374&gbraid=0AAAAABLtXTe1Rc_nOKMs01YHH6Tbe_h4Q&gclid=CjwKCAjw3tzHBhBREiwAlMJoUsYUAsKXTAWsIGoMVNoG6a5IK4lqi7EM0uuxuj1C_P3rPzodtb9sohoCGfMQAvD_BwE",
+            "User Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+            "Remote IP": "45.233.97.30",
+            "Powered by": "Elementor",
+            "form_id": "1879e02c",
+            "form_name": "New Form"
+          },
+          "webhookUrl": "https://n8n.medicalspin.com.br/webhook/form-popup-bobinas",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook6": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.medicalspin.com.br",
+            "user-agent": "WordPress/6.8.3; https://bobinasdeexames.medicalspin.com.br",
+            "content-length": "646",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip, br",
+            "content-type": "application/x-www-form-urlencoded",
+            "x-forwarded-for": "162.241.63.31",
+            "x-forwarded-host": "n8n.medicalspin.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "62404067f457",
+            "x-real-ip": "162.241.63.31"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "Nome": "Desenv - MedicalSpin",
+            "WhatsApp": "(79) 99980-1810",
+            "Clínica": "teste",
+            "Modelo da Bobina": "teste",
+            "Tipo de serviço": "Resolver um problema",
+            "Date": "outubro 21, 2025",
+            "Time": "2:04 pm",
+            "Page URL": "https://bobinasdeexames.medicalspin.com.br/?gad_source=1&gad_campaignid=22923302374&gbraid=0AAAAABLtXTe1Rc_nOKMs01YHH6Tbe_h4Q&gclid=CjwKCAjw3tzHBhBREiwAlMJoUsYUAsKXTAWsIGoMVNoG6a5IK4lqi7EM0uuxuj1C_P3rPzodtb9sohoCGfMQAvD_BwE",
+            "User Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+            "Remote IP": "45.233.97.30",
+            "Powered by": "Elementor",
+            "form_id": "b33910a",
+            "form_name": "New Form"
+          },
+          "webhookUrl": "https://n8n.medicalspin.com.br/webhook/solicitar-contato-agora-bbex",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "bbfaee5c-49eb-4820-84bb-b1ef7420ebee",
+  "activeVersionId": "bbfaee5c-49eb-4820-84bb-b1ef7420ebee",
+  "triggerCount": 2,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T14:59:33.234Z",
+      "createdAt": "2025-11-17T14:59:33.234Z",
+      "role": "workflow:owner",
+      "workflowId": "QTstNemqI45TNyW9",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2025-12-12T10:01:16.115Z",
+    "createdAt": "2025-12-12T10:01:16.115Z",
+    "versionId": "bbfaee5c-49eb-4820-84bb-b1ef7420ebee",
+    "workflowId": "QTstNemqI45TNyW9",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "form-popup-bobinas",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          48,
+          272
+        ],
+        "id": "95cb0ea5-4d63-4742-9769-07e461a6f192",
+        "name": "Webhook5",
+        "webhookId": "449b7690-9b51-4e9f-bb58-eb2e6a43b5b1"
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "name": "={{ $('Webhook5').item.json.body.Nome }}",
+          "additionalFields": {
+            "email": [
+              "={{ $('Webhook5').item.json.body.Email }}"
+            ],
+            "org_id": "={{ $json.id }}",
+            "phone": [
+              "={{ $('Webhook5').item.json.body.WhatsApp }}"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          736,
+          416
+        ],
+        "id": "d31c5c32-cd5d-4169-bea9-017dae9ad037",
+        "name": "Create a person5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "title": "={{ $json.name }}",
+          "associateWith": "person",
+          "person_id": "={{ $json.id }}",
+          "additionalFields": {
+            "organization_id": "={{ $('Create an organization2').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          912,
+          416
+        ],
+        "id": "71498fc4-e20f-4502-86ce-540c37d0cc50",
+        "name": "Create a lead5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $json.title }}",
+          "associateWith": "person",
+          "person_id": "={{ $('Create a person5').item.json.id }}",
+          "additionalFields": {
+            "customProperties": {
+              "property": [
+                {
+                  "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                  "value": "Site"
+                },
+                {
+                  "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                  "value": "Inbound"
+                },
+                {
+                  "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                  "value": "Camila"
+                }
+              ]
+            },
+            "org_id": "={{ $('Create an organization2').item.json.id }}",
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1088,
+          416
+        ],
+        "id": "2a6fdcb1-f132-4e4b-a2d2-099bd76cb588",
+        "name": "Create a deal5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## FORM PUP-UP",
+          "height": 608,
+          "width": 2896,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          32,
+          80
+        ],
+        "id": "b047d387-e866-4446-a369-9fa1e81cc0e0",
+        "name": "Sticky Note7",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "solicitar-contato-agora-bbex",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          48,
+          880
+        ],
+        "id": "08dbdcca-c2ad-496b-8c03-a85bfefd18a5",
+        "name": "Webhook6",
+        "webhookId": "449b7690-9b51-4e9f-bb58-eb2e6a43b5b1"
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "name": "={{ $('Webhook6').item.json.body.Nome }}",
+          "additionalFields": {
+            "email": [],
+            "org_id": "={{ $json.id }}",
+            "phone": [
+              "={{ $('Webhook6').item.json.body.WhatsApp }}"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          736,
+          1024
+        ],
+        "id": "0a6d693e-bb89-4a89-9e8a-0f159069254e",
+        "name": "Create a person6",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "title": "={{ $json.name }}",
+          "associateWith": "person",
+          "person_id": "={{ $json.id }}",
+          "additionalFields": {
+            "organization_id": "={{ $('Create an organization1').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          912,
+          1024
+        ],
+        "id": "0ecdeec5-fbcb-4457-af61-5927a773b4c7",
+        "name": "Create a lead6",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $json.title }}",
+          "associateWith": "person",
+          "person_id": "={{ $('Create a person6').item.json.id }}",
+          "additionalFields": {
+            "customProperties": {
+              "property": [
+                {
+                  "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                  "value": "Site"
+                },
+                {
+                  "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                  "value": "Inbound"
+                },
+                {
+                  "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                  "value": "Camila"
+                }
+              ]
+            },
+            "org_id": "={{ $('Create an organization1').item.json.id }}",
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1088,
+          1024
+        ],
+        "id": "9a420d91-703f-416d-a24d-ef6e405f727e",
+        "name": "Create a deal6",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Solicitar Contato Agora",
+          "height": 608,
+          "width": 2896,
+          "color": 2
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          32,
+          720
+        ],
+        "id": "189ae732-62ce-44fa-9174-244b689a8ed8",
+        "name": "Sticky Note8",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "name": "={{ $json.body['Clínica'] }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          560,
+          1024
+        ],
+        "id": "b27d05de-ead6-4c51-b920-978d3cf56abc",
+        "name": "Create an organization1",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Página de Bobinas de Exames",
+          "height": 1360,
+          "width": 2960,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "a2c0f54f-cacb-4c93-8374-6efd4542596e",
+        "name": "Sticky Note9"
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=🚀LEAD SITE PG BOBINAS DE EXAMES POP-UP\n\n🔹Nome: {{ $('Create a person5').item.json.name }}\n🔹Telefone: {{ $('Create a person5').item.json.phone[0].value }}\n🔹Email: {{ $('Create a person5').item.json.email[0].value }}\n🔹Clínica: {{ $('Create an organization2').item.json.name }}",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}",
+            "org_id": "={{ $('Create an organization2').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1264,
+          416
+        ],
+        "id": "7dc10dbf-4830-455c-9283-c4eb0f5996d1",
+        "name": "Create a note5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=🚀LEAD SITE PG BOBINAS DE EXAMES FOOTER FORM SOLICITAR CONTATO AGORA\n\n🔹Nome: {{ $('Create a person6').item.json.name }}\n🔹Telefone: {{ $('Create a person6').item.json.phone[0].value }}\n🔹Email: {{ $('Create a person6').item.json.email[0].value }}\n🔹Clínica: {{ $('Create an organization1').item.json.name }}",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}",
+            "org_id": "={{ $('Create an organization1').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1264,
+          1024
+        ],
+        "id": "aea445bf-1dcf-48cd-aa63-ffad053f90a6",
+        "name": "Create a note6",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Code in JavaScript2').item.json.phone }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields3').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* ⚡\\n🔧 Um especialista já foi avisado!\\n\\n🧪 *Em nosso lab certificado*, restauramos bobinas condenadas com *100% de sucesso nos testes de IQT* ✅\\n\\n📍 Pode informar *modelo, marca da RM* e o que está buscando?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🚀LEAD SITE PG BOBINAS DE EXAMES POP-UP\\n🔹Nome: {{ $('Create a person5').item.json.name }}\\n🔹Telefone: {{ $('Create a person5').item.json.phone[0].value }}\\n🔹Email: {{ $('Create a person5').item.json.email[0].value }}\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2144,
+          416
+        ],
+        "id": "5a62f12e-7997-469d-9d14-f1490815a914",
+        "name": "HTTP Request1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "b88d8ef2-8461-4b65-95b9-da090f997910",
+                "name": "dp_id",
+                "value": "1668",
+                "type": "string"
+              },
+              {
+                "id": "8cbecb4a-8bc0-42ff-9357-c33f317c50cd",
+                "name": "form",
+                "value": "Reparo de bobina",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1968,
+          416
+        ],
+        "id": "c283efee-cb6e-4298-8b18-a5ab724af816",
+        "name": "Edit Fields6"
+      },
+      {
+        "parameters": {
+          "sendTo": "contato@medicalspin.com.br",
+          "subject": "Novo Lead Interessado em Bobinas de Exames - POP-UP",
+          "emailType": "text",
+          "message": "=Nome: {{ $('Webhook5').item.json.body.Nome }}\nEmail: {{ $('Webhook5').item.json.body.Email }}\nTelefone: {{ $('Webhook5').item.json.body.WhatsApp }}\nClínica: {{ $('Create an organization2').item.json.name }}",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          1440,
+          416
+        ],
+        "id": "dfa15300-b5f3-48a0-962e-ee6f5008fadd",
+        "name": "Send a message2",
+        "webhookId": "ad16df43-332a-4dc9-bd05-20ae94929cec",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+                "name": "name",
+                "value": "={{ $('Create a person5').item.json.first_name }}",
+                "type": "string"
+              },
+              {
+                "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+                "name": "email",
+                "value": "={{ $('Create a person5').item.json.email[0].value }}",
+                "type": "string"
+              },
+              {
+                "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+                "name": "phone",
+                "value": "={{ $('Create a person5').item.json.phone[0].value }}",
+                "type": "string"
+              },
+              {
+                "id": "937af5e8-81b8-40cf-b352-8f2cbb1b9095",
+                "name": "org",
+                "value": "={{ $('Create an organization2').item.json.name }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1616,
+          416
+        ],
+        "id": "a56fe180-98c5-499f-bf1c-07df66d7fb13",
+        "name": "Edit Fields3"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Pega o telefone do node Edit Fields1\nlet phone = $('Edit Fields3').item.json.phone || '';\n\n// Remove tudo que não é número\nphone = phone.replace(/\\D/g, '');\n\n// Adiciona 55 na frente se não começar com 55\nif (!phone.startsWith('55')) {\n    phone = '55' + phone;\n}\n\n// Retorna o item com o telefone atualizado\nreturn {\n    json: {\n        phone: phone\n    }\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1792,
+          416
+        ],
+        "id": "ce6a0f0a-bc19-4d04-9842-edcf24a5a4e5",
+        "name": "Code in JavaScript2"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Code in JavaScript3').item.json.phone }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields4').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* ⚡\\n🔧 Um especialista já foi avisado!\\n\\n🧪 *Em nosso lab certificado*, restauramos bobinas condenadas com *100% de sucesso nos testes de IQT* ✅\\n\\n📍 Pode informar *modelo, marca da RM* e o que está buscando?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🚀LEAD SITE PG BOBINAS DE EXAMES FOOTER FORM SOLICITAR CONTATO AGORA\\n🔹Nome: {{ $('Create a person6').item.json.name }}\\n🔹Telefone: {{ $('Create a person6').item.json.phone[0].value }}\\n🔹Email: {{ $('Create a person6').item.json.email[0].value }}\\n🔹Clínica: {{ $('Edit Fields4').item.json.org }}\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2144,
+          1024
+        ],
+        "id": "9bf93076-b354-4a14-a978-af7834e0d6e8",
+        "name": "HTTP Request2"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "b88d8ef2-8461-4b65-95b9-da090f997910",
+                "name": "dp_id",
+                "value": "1668",
+                "type": "string"
+              },
+              {
+                "id": "8cbecb4a-8bc0-42ff-9357-c33f317c50cd",
+                "name": "form",
+                "value": "Reparo de bobina",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1968,
+          1024
+        ],
+        "id": "e8f3017b-b519-4393-8358-7cb9ccf80016",
+        "name": "Edit Fields8"
+      },
+      {
+        "parameters": {
+          "sendTo": "contato@medicalspin.com.br",
+          "subject": "Novo Lead Interessado em Bobinas de Exames - Solicitar Contato Agora",
+          "emailType": "text",
+          "message": "=Nome: {{ $('Webhook6').item.json.body.Nome }}\nTelefone: {{ $('Webhook6').item.json.body.WhatsApp }}\nClínica: {{ $('Create an organization1').item.json.name }}",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          1440,
+          1024
+        ],
+        "id": "64e22bdd-e071-404c-a6f8-f023fdaa4902",
+        "name": "Send a message3",
+        "webhookId": "ad16df43-332a-4dc9-bd05-20ae94929cec",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+                "name": "name",
+                "value": "={{ $('Create a person6').item.json.first_name }}",
+                "type": "string"
+              },
+              {
+                "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+                "name": "email",
+                "value": "={{ $('Create a person6').item.json.email[0].value }}",
+                "type": "string"
+              },
+              {
+                "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+                "name": "phone",
+                "value": "={{ $('Create a person6').item.json.phone[0].value }}",
+                "type": "string"
+              },
+              {
+                "id": "a08dd801-3c79-4a51-bfe6-70ef29bfbfbb",
+                "name": "org",
+                "value": "={{ $('Create an organization1').item.json.name }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1616,
+          1024
+        ],
+        "id": "3e59a430-6f86-487c-ae55-b827a09e0bcc",
+        "name": "Edit Fields4"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Pega o telefone do node Edit Fields1\nlet phone = $('Edit Fields4').item.json.phone || '';\n\n// Remove tudo que não é número\nphone = phone.replace(/\\D/g, '');\n\n// Adiciona 55 na frente se não começar com 55\nif (!phone.startsWith('55')) {\n    phone = '55' + phone;\n}\n\n// Retorna o item com o telefone atualizado\nreturn {\n    json: {\n        phone: phone\n    }\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1792,
+          1024
+        ],
+        "id": "73a809c3-3be4-419b-b17c-989485179d20",
+        "name": "Code in JavaScript3"
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "name": "={{ $json.body[\"Clínica\"] }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          560,
+          416
+        ],
+        "id": "68a3b08a-49ff-4dc7-8f14-3c4db176de8a",
+        "name": "Create an organization2",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "c530bcc4-b650-41bf-8425-16ffbfec6a4c",
+                "leftValue": "={{ $json.body['Page URL'] }}",
+                "rightValue": "https://bobinasdeexames.medicalspin.com.br/?gad_source=1&",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          368,
+          880
+        ],
+        "id": "a9d2d051-bbc0-4217-a728-e5481bc5951f",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "c530bcc4-b650-41bf-8425-16ffbfec6a4c",
+                "leftValue": "={{ $json.body['Page URL'] }}",
+                "rightValue": "https://bobinasdeexames.medicalspin.com.br/?gad_source=1&",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          384,
+          272
+        ],
+        "id": "17b2b6ea-781b-4319-a45f-81d50542887a",
+        "name": "If1"
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "name": "={{ $('Webhook6').item.json.body.Nome }}",
+          "additionalFields": {
+            "email": [],
+            "org_id": "={{ $json.id }}",
+            "phone": [
+              "={{ $('If').item.json.body.WhatsApp }}"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          736,
+          864
+        ],
+        "id": "4cc6fef0-aca5-45bd-84c1-753325dcb59d",
+        "name": "Create a person",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "title": "={{ $json.name }}",
+          "associateWith": "person",
+          "person_id": "={{ $json.id }}",
+          "additionalFields": {
+            "organization_id": "={{ $('Create an organization').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          912,
+          864
+        ],
+        "id": "d5e82c05-6354-482c-8f08-aab3a931508b",
+        "name": "Create a lead",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $json.title }}",
+          "associateWith": "person",
+          "person_id": "={{ $('Create a person').item.json.id }}",
+          "additionalFields": {
+            "customProperties": {
+              "property": [
+                {
+                  "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                  "value": "Site"
+                },
+                {
+                  "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                  "value": "Inbound"
+                },
+                {
+                  "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                  "value": "Camila"
+                }
+              ]
+            },
+            "org_id": "={{ $('Create an organization').item.json.id }}",
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1088,
+          864
+        ],
+        "id": "29bcc704-0ae8-4948-8735-2a26d376e153",
+        "name": "Create a deal",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "name": "={{ $json.body['Clínica'] }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          560,
+          864
+        ],
+        "id": "5ea0d457-6726-4ef4-9d35-08750346b5a7",
+        "name": "Create an organization",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=🚀LEAD SITE PG BOBINAS DE EXAMES FOOTER FORM SOLICITAR CONTATO AGORA - ANÚNCIO DO GOOGLE ADS\n\n🔹Nome: {{ $('Create a person').item.json.name }}\n🔹Telefone: {{ $('Create a person').item.json.phone[0].value }}\n🔹Email: {{ $('Create a person').item.json.email[0].value }}\n🔹Clínica: {{ $('Create an organization').item.json.name }}",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}",
+            "org_id": "={{ $('Create an organization').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1264,
+          864
+        ],
+        "id": "d430e3ee-ba3f-41a5-bc6d-a878440c52e0",
+        "name": "Create a note",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Code in JavaScript').item.json.phone }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields5').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* ⚡\\n🔧 Um especialista já foi avisado!\\n\\n🧪 *Em nosso lab certificado*, restauramos bobinas condenadas com *100% de sucesso nos testes de IQT* ✅\\n\\n📍 Pode informar *modelo, marca da RM* e o que está buscando?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🚀LEAD SITE PG BOBINAS DE EXAMES FOOTER FORM SOLICITAR CONTATO AGORA - ANÚNCIO DO GOOGLE ADS\\n🔹Nome: {{ $('Create a person').item.json.name }}\\n🔹Telefone: {{ $('Create a person').item.json.phone[0].value }}\\n🔹Email: {{ $('Create a person').item.json.email[0].value }}\\n🔹Clínica: {{ $('Edit Fields5').item.json.org }}\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2144,
+          864
+        ],
+        "id": "616680f3-3ef3-4b0b-b481-7e2d1c21d430",
+        "name": "HTTP Request"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "b88d8ef2-8461-4b65-95b9-da090f997910",
+                "name": "dp_id",
+                "value": "1668",
+                "type": "string"
+              },
+              {
+                "id": "8cbecb4a-8bc0-42ff-9357-c33f317c50cd",
+                "name": "form",
+                "value": "Reparo de bobina",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1968,
+          864
+        ],
+        "id": "0bb55146-c846-4d63-80a9-2ac5f19fe6d2",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "sendTo": "contato@medicalspin.com.br",
+          "subject": "Novo Lead Interessado em Bobinas de Exames - Solicitar Contato Agora - Google ADS",
+          "emailType": "text",
+          "message": "=Nome: {{ $('Webhook6').item.json.body.Nome }}\nTelefone: {{ $('Webhook6').item.json.body.WhatsApp }}\nClínica: {{ $('Create an organization').item.json.name }}",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          1440,
+          864
+        ],
+        "id": "fc213c7c-3172-46ee-abf7-8a80bd41eba5",
+        "name": "Send a message",
+        "webhookId": "ad16df43-332a-4dc9-bd05-20ae94929cec",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+                "name": "name",
+                "value": "={{ $('Create a person').item.json.first_name }}",
+                "type": "string"
+              },
+              {
+                "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+                "name": "email",
+                "value": "={{ $('Create a person').item.json.email[0].value }}",
+                "type": "string"
+              },
+              {
+                "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+                "name": "phone",
+                "value": "={{ $('Create a person').item.json.phone[0].value }}",
+                "type": "string"
+              },
+              {
+                "id": "a08dd801-3c79-4a51-bfe6-70ef29bfbfbb",
+                "name": "org",
+                "value": "={{ $('Create an organization').item.json.name }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1616,
+          864
+        ],
+        "id": "f6537dc7-56bc-47c7-9ea2-e7384f5a2be7",
+        "name": "Edit Fields5"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Pega o telefone do node Edit Fields1\nlet phone = $('Edit Fields5').item.json.phone || '';\n\n// Remove tudo que não é número\nphone = phone.replace(/\\D/g, '');\n\n// Adiciona 55 na frente se não começar com 55\nif (!phone.startsWith('55')) {\n    phone = '55' + phone;\n}\n\n// Retorna o item com o telefone atualizado\nreturn {\n    json: {\n        phone: phone\n    }\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1792,
+          864
+        ],
+        "id": "eff8211a-7cb4-45dc-9a73-ee569ce6358e",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "name": "={{ $('Webhook5').item.json.body.Nome }}",
+          "additionalFields": {
+            "email": [
+              "={{ $('Webhook5').item.json.body.Email }}"
+            ],
+            "org_id": "={{ $json.id }}",
+            "phone": [
+              "={{ $('If1').item.json.body.WhatsApp }}"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          736,
+          256
+        ],
+        "id": "d9c4cc4b-ea21-48f0-acc8-93e11e8b9d91",
+        "name": "Create a person7",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "title": "={{ $json.name }}",
+          "associateWith": "person",
+          "person_id": "={{ $json.id }}",
+          "additionalFields": {
+            "organization_id": "={{ $('Create an organization3').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          912,
+          256
+        ],
+        "id": "2e1f0233-9810-4b77-88ce-61e535745aa3",
+        "name": "Create a lead7",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $json.title }}",
+          "associateWith": "person",
+          "person_id": "={{ $('Create a person7').item.json.id }}",
+          "additionalFields": {
+            "customProperties": {
+              "property": [
+                {
+                  "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                  "value": "Site"
+                },
+                {
+                  "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                  "value": "Inbound"
+                },
+                {
+                  "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                  "value": "Camila"
+                }
+              ]
+            },
+            "org_id": "={{ $('Create an organization3').item.json.id }}",
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1088,
+          256
+        ],
+        "id": "c929dfd6-f942-4f18-b8e7-3d685d36e4ae",
+        "name": "Create a deal7",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=🚀LEAD SITE PG BOBINAS DE EXAMES POP-UP - ANÚNCIO DO GOOGLE ADS\n\n🔹Nome: {{ $('Create a person7').item.json.name }}\n🔹Telefone: {{ $('Create a person7').item.json.phone[0].value }}\n🔹Email: {{ $('Create a person7').item.json.email[0].value }}\n🔹Clínica: {{ $('Create an organization3').item.json.name }}",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}",
+            "org_id": "={{ $('Create an organization3').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1264,
+          256
+        ],
+        "id": "01db43de-c08d-4eb4-b3ae-ca009ba18d53",
+        "name": "Create a note7",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"{{ $('Code in JavaScript4').item.json.phone }}\",\n    \"mensagem\": \"👋 Olá, {{ $('Edit Fields9').item.json.name }}!\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* ⚡\\n🔧 Um especialista já foi avisado!\\n\\n🧪 *Em nosso lab certificado*, restauramos bobinas condenadas com *100% de sucesso nos testes de IQT* ✅\\n\\n📍 Pode informar *modelo, marca da RM* e o que está buscando?\",\n    \"direcionamento\": \"{{ $json.dp_id }}\",\n    \"msg_operador\": \"🚀LEAD SITE PG BOBINAS DE EXAMES POP-UP - ANÚNCIO DO GOOGLE ADS\\n🔹Nome: {{ $('Create a person7').item.json.name }}\\n🔹Telefone: {{ $('Create a person7').item.json.phone[0].value }}\\n🔹Email: {{ $('Create a person7').item.json.email[0].value }}\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2144,
+          256
+        ],
+        "id": "0d0d670d-fbd3-461e-a370-25e1453c6e54",
+        "name": "HTTP Request3"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "b88d8ef2-8461-4b65-95b9-da090f997910",
+                "name": "dp_id",
+                "value": "1668",
+                "type": "string"
+              },
+              {
+                "id": "8cbecb4a-8bc0-42ff-9357-c33f317c50cd",
+                "name": "form",
+                "value": "Reparo de bobina",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1968,
+          256
+        ],
+        "id": "2b1f7d45-1a04-4fb8-975f-c6f56057ca21",
+        "name": "Edit Fields7"
+      },
+      {
+        "parameters": {
+          "sendTo": "contato@medicalspin.com.br",
+          "subject": "Novo Lead Interessado em Bobinas de Exames - POP-UP - Google ADS",
+          "emailType": "text",
+          "message": "=Nome: {{ $('Webhook5').item.json.body.Nome }}\nEmail: {{ $('Webhook5').item.json.body.Email }}\nTelefone: {{ $('Webhook5').item.json.body.WhatsApp }}\nClínica: {{ $('Create an organization3').item.json.name }}",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          1440,
+          256
+        ],
+        "id": "8921a048-f278-4c16-972c-936185dc13ee",
+        "name": "Send a message4",
+        "webhookId": "ad16df43-332a-4dc9-bd05-20ae94929cec",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "3b443d88-1037-491a-8d04-908a0fc6403c",
+                "name": "name",
+                "value": "={{ $('Create a person7').item.json.first_name }}",
+                "type": "string"
+              },
+              {
+                "id": "3435c046-8ef1-4c3c-bd84-b70bc893678d",
+                "name": "email",
+                "value": "={{ $('Create a person7').item.json.email[0].value }}",
+                "type": "string"
+              },
+              {
+                "id": "b1e992d4-e686-4460-9d88-86bfc763cbc8",
+                "name": "phone",
+                "value": "={{ $('Create a person7').item.json.phone[0].value }}",
+                "type": "string"
+              },
+              {
+                "id": "6e246d30-a02f-43a9-9efc-2301b8b580b2",
+                "name": "org",
+                "value": "={{ $('Create an organization3').item.json.name }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1616,
+          256
+        ],
+        "id": "047ad2ea-7131-43fc-a2de-7822fb69372c",
+        "name": "Edit Fields9"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Pega o telefone do node Edit Fields1\nlet phone = $('Edit Fields9').item.json.phone || '';\n\n// Remove tudo que não é número\nphone = phone.replace(/\\D/g, '');\n\n// Adiciona 55 na frente se não começar com 55\nif (!phone.startsWith('55')) {\n    phone = '55' + phone;\n}\n\n// Retorna o item com o telefone atualizado\nreturn {\n    json: {\n        phone: phone\n    }\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1792,
+          256
+        ],
+        "id": "fa2e2157-6c44-45b8-9dc3-f2224132875a",
+        "name": "Code in JavaScript4"
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "name": "={{ $json.body[\"Clínica\"] }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          560,
+          256
+        ],
+        "id": "3d4a0c4f-77c2-481c-9cb2-188bf8aa3684",
+        "name": "Create an organization3",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8",
+            "mode": "list",
+            "cachedResultName": "PLANILHA 2025 SOLARO - LEADS INBOUND",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 139886296,
+            "mode": "list",
+            "cachedResultName": "GoogleAds",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit#gid=139886296"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "E-mail": "={{ $('Edit Fields9').item.json.email }}",
+              "Telefone ": "={{ $('Code in JavaScript4').item.json.phone }}",
+              "Nome": "={{ $('Edit Fields9').item.json.name }}",
+              "Empresa": "={{ $('Edit Fields9').item.json.org }}",
+              "Tipo de Serviço": "=Google ADS PG Boninas de Exames POP-UP",
+              "Data do Cadastro": "={{ $now.format('dd-LL-yyyy T') }}"
+            },
+            "matchingColumns": [
+              "ID"
+            ],
+            "schema": [
+              {
+                "id": "Contato",
+                "displayName": "Contato",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "Data do Cadastro",
+                "displayName": "Data do Cadastro",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Tipo de Serviço",
+                "displayName": "Tipo de Serviço",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Empresa",
+                "displayName": "Empresa",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Nome",
+                "displayName": "Nome",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Telefone ",
+                "displayName": "Telefone ",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "E-mail",
+                "displayName": "E-mail",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Observações",
+                "displayName": "Observações",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2560,
+          96
+        ],
+        "id": "ad697e01-3d3d-4b3a-8830-cec861617c44",
+        "name": "SUCESSO",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+            "mode": "list",
+            "cachedResultName": "Leads Medical Spin",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 1978480406,
+            "mode": "list",
+            "cachedResultName": "SITE",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "NOME": "={{ $('Edit Fields3').item.json.name }}",
+              "EMAIL": "={{ $('Edit Fields3').item.json.email }}",
+              "TELEFONE": "={{ $('Code in JavaScript2').item.json.phone }}",
+              "DATA": "={{$now.format('dd-LL-yyyy T')}}"
+            },
+            "matchingColumns": [
+              "ID"
+            ],
+            "schema": [
+              {
+                "id": "NOME",
+                "displayName": "NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "EMAIL",
+                "displayName": "EMAIL",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "TELEFONE",
+                "displayName": "TELEFONE",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "CLÍNICA",
+                "displayName": "CLÍNICA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "OBSERVAÇÕES",
+                "displayName": "OBSERVAÇÕES",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2560,
+          384
+        ],
+        "id": "97d6e685-0710-4038-8eb3-cc259078b958",
+        "name": "SUCESSO1",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8",
+            "mode": "list",
+            "cachedResultName": "PLANILHA 2025 SOLARO - LEADS INBOUND",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 139886296,
+            "mode": "list",
+            "cachedResultName": "GoogleAds",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit#gid=139886296"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Data do Cadastro": "={{ $now.format('dd-LL-yyyy T') }}",
+              "Tipo de Serviço": "=Google ADS PG Boninas de Exames Footer Form Solicitar Contato Agora",
+              "Empresa": "={{ $('Edit Fields5').item.json.org }}",
+              "Nome": "={{ $('Edit Fields5').item.json.name }}",
+              "Telefone ": "={{ $('Code in JavaScript').item.json.phone }}"
+            },
+            "matchingColumns": [
+              "ID"
+            ],
+            "schema": [
+              {
+                "id": "Contato",
+                "displayName": "Contato",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "Data do Cadastro",
+                "displayName": "Data do Cadastro",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Tipo de Serviço",
+                "displayName": "Tipo de Serviço",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Empresa",
+                "displayName": "Empresa",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Nome",
+                "displayName": "Nome",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Telefone ",
+                "displayName": "Telefone ",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "E-mail",
+                "displayName": "E-mail",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "Observações",
+                "displayName": "Observações",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2560,
+          736
+        ],
+        "id": "1a5b4486-1bbc-40f1-b212-a75f2960f3df",
+        "name": "SUCESSO2",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+            "mode": "list",
+            "cachedResultName": "Leads Medical Spin",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 1978480406,
+            "mode": "list",
+            "cachedResultName": "SITE",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "NOME": "={{ $('Edit Fields4').item.json.name }}",
+              "EMAIL": "={{ $('Edit Fields4').item.json.email }}",
+              "TELEFONE": "={{ $('Code in JavaScript3').item.json.phone }}",
+              "CLÍNICA": "={{ $('Edit Fields4').item.json.org }}",
+              "DATA": "={{$now.format('dd-LL-yyyy T')}}"
+            },
+            "matchingColumns": [
+              "ID"
+            ],
+            "schema": [
+              {
+                "id": "NOME",
+                "displayName": "NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "EMAIL",
+                "displayName": "EMAIL",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "TELEFONE",
+                "displayName": "TELEFONE",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "CLÍNICA",
+                "displayName": "CLÍNICA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "OBSERVAÇÕES",
+                "displayName": "OBSERVAÇÕES",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2560,
+          1024
+        ],
+        "id": "0087194a-e383-4968-8cb5-0f776c8ec449",
+        "name": "SUCESSO3",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8",
+            "mode": "list",
+            "cachedResultName": "PLANILHA 2025 SOLARO - LEADS INBOUND",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 139886296,
+            "mode": "list",
+            "cachedResultName": "GoogleAds",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit#gid=139886296"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "E-mail": "={{ $('Edit Fields9').item.json.email }}",
+              "Telefone ": "={{ $('Code in JavaScript4').item.json.phone }}",
+              "Nome": "={{ $('Edit Fields9').item.json.name }}",
+              "Empresa": "={{ $('Edit Fields9').item.json.org }}",
+              "Tipo de Serviço": "=Google ADS PG Boninas de Exames POP-UP",
+              "Data do Cadastro": "={{ $now.format('dd-LL-yyyy T') }}",
+              "Observações": "Forneceu um contato sem WhatsApp"
+            },
+            "matchingColumns": [
+              "ID"
+            ],
+            "schema": [
+              {
+                "id": "Contato",
+                "displayName": "Contato",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "Data do Cadastro",
+                "displayName": "Data do Cadastro",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Tipo de Serviço",
+                "displayName": "Tipo de Serviço",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Empresa",
+                "displayName": "Empresa",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Nome",
+                "displayName": "Nome",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Telefone ",
+                "displayName": "Telefone ",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "E-mail",
+                "displayName": "E-mail",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Observações",
+                "displayName": "Observações",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2752,
+          256
+        ],
+        "id": "78492c2a-b074-468c-898a-edd9ce7a0e3c",
+        "name": "ERRO",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+            "mode": "list",
+            "cachedResultName": "Leads Medical Spin",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 1978480406,
+            "mode": "list",
+            "cachedResultName": "SITE",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "NOME": "={{ $('Edit Fields3').item.json.name }}",
+              "EMAIL": "={{ $('Edit Fields3').item.json.email }}",
+              "TELEFONE": "={{ $('Code in JavaScript2').item.json.phone }}",
+              "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+              "OBSERVAÇÕES": "Forneceu um contato sem WhatsApp"
+            },
+            "matchingColumns": [
+              "ID"
+            ],
+            "schema": [
+              {
+                "id": "NOME",
+                "displayName": "NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "EMAIL",
+                "displayName": "EMAIL",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "TELEFONE",
+                "displayName": "TELEFONE",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "CLÍNICA",
+                "displayName": "CLÍNICA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "OBSERVAÇÕES",
+                "displayName": "OBSERVAÇÕES",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2752,
+          528
+        ],
+        "id": "121f779a-7460-41a0-be73-21eb65b7f78d",
+        "name": "ERRO1",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8",
+            "mode": "list",
+            "cachedResultName": "PLANILHA 2025 SOLARO - LEADS INBOUND",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 139886296,
+            "mode": "list",
+            "cachedResultName": "GoogleAds",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14zSKXrbz_wQ0t-oHmK4C2avg52WYueeJYi7mksYqbd8/edit#gid=139886296"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Data do Cadastro": "={{ $now.format('dd-LL-yyyy T') }}",
+              "Tipo de Serviço": "=Google ADS PG Boninas de Exames Footer Form Solicitar Contato Agora",
+              "Empresa": "={{ $('Edit Fields5').item.json.org }}",
+              "Nome": "={{ $('Edit Fields5').item.json.name }}",
+              "Telefone ": "={{ $('Code in JavaScript').item.json.phone }}",
+              "Observações": "Forneceu um contato sem WhatsApp"
+            },
+            "matchingColumns": [
+              "ID"
+            ],
+            "schema": [
+              {
+                "id": "Contato",
+                "displayName": "Contato",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "Data do Cadastro",
+                "displayName": "Data do Cadastro",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Tipo de Serviço",
+                "displayName": "Tipo de Serviço",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Empresa",
+                "displayName": "Empresa",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Nome",
+                "displayName": "Nome",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Telefone ",
+                "displayName": "Telefone ",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "E-mail",
+                "displayName": "E-mail",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "Observações",
+                "displayName": "Observações",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2752,
+          880
+        ],
+        "id": "722297a3-f91f-4d77-be56-e8bd3448b842",
+        "name": "ERRO2",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+            "mode": "list",
+            "cachedResultName": "Leads Medical Spin",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 1978480406,
+            "mode": "list",
+            "cachedResultName": "SITE",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "NOME": "={{ $('Edit Fields4').item.json.name }}",
+              "EMAIL": "={{ $('Edit Fields4').item.json.email }}",
+              "TELEFONE": "={{ $('Code in JavaScript3').item.json.phone }}",
+              "CLÍNICA": "={{ $('Edit Fields4').item.json.org }}",
+              "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+              "OBSERVAÇÕES": "Forneceu um contato sem WhatsApp"
+            },
+            "matchingColumns": [
+              "ID"
+            ],
+            "schema": [
+              {
+                "id": "NOME",
+                "displayName": "NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "EMAIL",
+                "displayName": "EMAIL",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "TELEFONE",
+                "displayName": "TELEFONE",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "CLÍNICA",
+                "displayName": "CLÍNICA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "OBSERVAÇÕES",
+                "displayName": "OBSERVAÇÕES",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2752,
+          1168
+        ],
+        "id": "b6cab545-f869-481f-948c-2251ca36925e",
+        "name": "ERRO3",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "902b0a95-c3a9-441d-a179-45bed61ad9c3",
+                "leftValue": "={{ /\\d/.test($json.body['Clínica']) }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "false",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          208,
+          272
+        ],
+        "id": "0e962601-99c7-4228-9f28-c20833742d5a",
+        "name": "If3"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          384,
+          416
+        ],
+        "id": "c0f21756-2b2d-4a46-a893-fc6ce28ef9fd",
+        "name": "No Operation, do nothing"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "902b0a95-c3a9-441d-a179-45bed61ad9c3",
+                "leftValue": "={{ /\\d/.test($json.body['Clínica']) }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "false",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          192,
+          880
+        ],
+        "id": "aa5d3ecb-296e-4c62-93b0-99ffc914d985",
+        "name": "If4"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          368,
+          1024
+        ],
+        "id": "72b89a9b-bf39-4f76-aa26-0fbfa9d0d97b",
+        "name": "No Operation, do nothing1"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Remove duplicatas com base no campo 'resultado'\nconst vistos = new Set();\nconst unicos = [];\n\nfor (const item of items) {\n  if (!vistos.has(item.json.resultado)) {\n    vistos.add(item.json.resultado);\n    unicos.push(item);\n  }\n}\n\nreturn unicos;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2560,
+          256
+        ],
+        "id": "89a3b586-406b-4ffa-ae76-708fb77d83c2",
+        "name": "Code in JavaScript5"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Remove duplicatas com base no campo 'resultado'\nconst vistos = new Set();\nconst unicos = [];\n\nfor (const item of items) {\n  if (!vistos.has(item.json.resultado)) {\n    vistos.add(item.json.resultado);\n    unicos.push(item);\n  }\n}\n\nreturn unicos;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2560,
+          528
+        ],
+        "id": "13af3ac9-8b29-4ed2-898d-0ea4510ee1eb",
+        "name": "Code in JavaScript6"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Remove duplicatas com base no campo 'resultado'\nconst vistos = new Set();\nconst unicos = [];\n\nfor (const item of items) {\n  if (!vistos.has(item.json.resultado)) {\n    vistos.add(item.json.resultado);\n    unicos.push(item);\n  }\n}\n\nreturn unicos;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2560,
+          880
+        ],
+        "id": "525886a6-4dc3-4d2d-9e33-3a0d78ce0f82",
+        "name": "Code in JavaScript7"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Remove duplicatas com base no campo 'resultado'\nconst vistos = new Set();\nconst unicos = [];\n\nfor (const item of items) {\n  if (!vistos.has(item.json.resultado)) {\n    vistos.add(item.json.resultado);\n    unicos.push(item);\n  }\n}\n\nreturn unicos;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2560,
+          1168
+        ],
+        "id": "835021b3-cc69-4776-832f-e1655771ec16",
+        "name": "Code in JavaScript8"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "34238324-b70c-4d50-9e30-f84b1dc0dea7",
+                "leftValue": "={{ $json.resultado }}",
+                "rightValue": "Iniciando conversa",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "728cb7bb-230f-4391-93e3-78ba55b5daae",
+                "leftValue": "={{ $json.resultado }}",
+                "rightValue": "Ja possui conversa ativa",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2336,
+          256
+        ],
+        "id": "53784a50-5d35-4e85-be40-7e63736d2ec5",
+        "name": "If18"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "34238324-b70c-4d50-9e30-f84b1dc0dea7",
+                "leftValue": "={{ $json.resultado }}",
+                "rightValue": "Iniciando conversa",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "728cb7bb-230f-4391-93e3-78ba55b5daae",
+                "leftValue": "={{ $json.resultado }}",
+                "rightValue": "Ja possui conversa ativa",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2336,
+          416
+        ],
+        "id": "3dcd9189-b501-4de0-835d-7937564016b5",
+        "name": "If19"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "34238324-b70c-4d50-9e30-f84b1dc0dea7",
+                "leftValue": "={{ $json.resultado }}",
+                "rightValue": "Iniciando conversa",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "728cb7bb-230f-4391-93e3-78ba55b5daae",
+                "leftValue": "={{ $json.resultado }}",
+                "rightValue": "Ja possui conversa ativa",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2320,
+          864
+        ],
+        "id": "b374063d-f627-4fc6-b97e-d405c8b1bde8",
+        "name": "If20"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "34238324-b70c-4d50-9e30-f84b1dc0dea7",
+                "leftValue": "={{ $json.resultado }}",
+                "rightValue": "Iniciando conversa",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "728cb7bb-230f-4391-93e3-78ba55b5daae",
+                "leftValue": "={{ $json.resultado }}",
+                "rightValue": "Ja possui conversa ativa",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2320,
+          1024
+        ],
+        "id": "ffea99c5-4423-4e61-b174-13b6cd2326a3",
+        "name": "If21"
+      }
+    ],
+    "connections": {
+      "Webhook5": {
+        "main": [
+          [
+            {
+              "node": "If3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a person5": {
+        "main": [
+          [
+            {
+              "node": "Create a lead5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a lead5": {
+        "main": [
+          [
+            {
+              "node": "Create a deal5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a deal5": {
+        "main": [
+          [
+            {
+              "node": "Create a note5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook6": {
+        "main": [
+          [
+            {
+              "node": "If4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a person6": {
+        "main": [
+          [
+            {
+              "node": "Create a lead6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a lead6": {
+        "main": [
+          [
+            {
+              "node": "Create a deal6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a deal6": {
+        "main": [
+          [
+            {
+              "node": "Create a note6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an organization1": {
+        "main": [
+          [
+            {
+              "node": "Create a person6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note5": {
+        "main": [
+          [
+            {
+              "node": "Send a message2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note6": {
+        "main": [
+          [
+            {
+              "node": "Send a message3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request1": {
+        "main": [
+          [
+            {
+              "node": "If19",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields6": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a message2": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields3": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript2": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request2": {
+        "main": [
+          [
+            {
+              "node": "If21",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields8": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a message3": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields4": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript3": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields8",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an organization2": {
+        "main": [
+          [
+            {
+              "node": "Create a person5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Create an organization",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Create an organization1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Create an organization3",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Create an organization2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a person": {
+        "main": [
+          [
+            {
+              "node": "Create a lead",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a lead": {
+        "main": [
+          [
+            {
+              "node": "Create a deal",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a deal": {
+        "main": [
+          [
+            {
+              "node": "Create a note",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an organization": {
+        "main": [
+          [
+            {
+              "node": "Create a person",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note": {
+        "main": [
+          [
+            {
+              "node": "Send a message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "If20",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a message": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields5": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a person7": {
+        "main": [
+          [
+            {
+              "node": "Create a lead7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a lead7": {
+        "main": [
+          [
+            {
+              "node": "Create a deal7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a deal7": {
+        "main": [
+          [
+            {
+              "node": "Create a note7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note7": {
+        "main": [
+          [
+            {
+              "node": "Send a message4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request3": {
+        "main": [
+          [
+            {
+              "node": "If18",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields7": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a message4": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields9",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields9": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript4": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an organization3": {
+        "main": [
+          [
+            {
+              "node": "Create a person7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If3": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If4": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript5": {
+        "main": [
+          [
+            {
+              "node": "ERRO",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript6": {
+        "main": [
+          [
+            {
+              "node": "ERRO1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript7": {
+        "main": [
+          [
+            {
+              "node": "ERRO2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript8": {
+        "main": [
+          [
+            {
+              "node": "ERRO3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If18": {
+        "main": [
+          [
+            {
+              "node": "SUCESSO",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Code in JavaScript5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If19": {
+        "main": [
+          [
+            {
+              "node": "SUCESSO1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Code in JavaScript6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If21": {
+        "main": [
+          [
+            {
+              "node": "SUCESSO3",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Code in JavaScript8",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If20": {
+        "main": [
+          [
+            {
+              "node": "SUCESSO2",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Code in JavaScript7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "tags": [
+    {
+      "updatedAt": "2025-11-17T14:48:08.205Z",
+      "createdAt": "2025-11-17T14:48:08.205Z",
+      "id": "70kddg0bRQM2CGVY",
+      "name": "GoogleAds"
+    },
+    {
+      "updatedAt": "2025-11-17T14:48:08.204Z",
+      "createdAt": "2025-11-17T14:48:08.204Z",
+      "id": "uO0uf6z2emeG4Xy4",
+      "name": "Gmail"
+    },
+    {
+      "updatedAt": "2025-11-17T14:48:08.195Z",
+      "createdAt": "2025-11-17T14:48:08.195Z",
+      "id": "tWCrFViPj858W1pE",
+      "name": "Site"
+    },
+    {
+      "updatedAt": "2025-11-17T14:42:35.258Z",
+      "createdAt": "2025-11-17T14:42:35.258Z",
+      "id": "XcOvDRXTYzj650Vd",
+      "name": "Voxfree"
+    },
+    {
+      "updatedAt": "2025-11-17T14:34:30.644Z",
+      "createdAt": "2025-11-17T14:34:30.644Z",
+      "id": "ro1Seq0NGEH7zm0y",
+      "name": "Pipedrive"
+    },
+    {
+      "updatedAt": "2025-11-17T14:09:04.153Z",
+      "createdAt": "2025-11-17T14:09:04.153Z",
+      "id": "32ehNS7DwOBedRQc",
+      "name": "Sheets"
+    }
+  ]
+}
