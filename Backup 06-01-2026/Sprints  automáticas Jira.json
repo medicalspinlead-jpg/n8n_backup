@@ -1,0 +1,746 @@
+{
+  "updatedAt": "2026-01-06T10:17:59.041Z",
+  "createdAt": "2025-11-17T14:30:24.102Z",
+  "id": "QO22wYp4du2fLbvQ",
+  "name": "Sprints  automáticas Jira",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Basic {{ $json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"Nova Sprint {{ $now.format('dd-LL')}} - {{ $now.plus({ days: 7 }).format('dd-LL') }}\",\n  \"startDate\": \"{{ $json.startDate }}\",\n  \"endDate\": \"{{ $json.endDate }}\",\n  \"originBoardId\": 4\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "55bba049-d401-47a1-8d91-c7ca720e3cc4",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                2
+              ],
+              "triggerAtHour": 17
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -416,
+        144
+      ],
+      "id": "afffc2a5-ea54-4dda-9dfc-e738d3f9d8b2",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7ba64de1-f2b0-4d35-8796-cb29319f3bb5",
+              "name": "startDate",
+              "value": "={{ $now }}",
+              "type": "string"
+            },
+            {
+              "id": "3da78947-b46d-49ad-9d52-869cdcbd7da1",
+              "name": "endDate",
+              "value": "={{ $now.plus({ days: 7 }) }}",
+              "type": "string"
+            },
+            {
+              "id": "5de1417a-1208-4861-8477-595ffd5ba0c5",
+              "name": "token",
+              "value": "ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHU2b0VCbDlTcHdsNGFPYmo3 OXIzc3F0b1hxWkxQOUp5OWJiWlFOQ29seEtBX1FxLXNHb2lLdXFPS1lMTWJqT2swUE45QldNSS02 ZlhkLXJuTlhmRERHZmt1SzU4X0VwazQyVXZ3VjN1YUJFdC1xeFE3UXRaWWZuMEl5cUZBbEZqRU05 OWFLbk5JWVIzQVZNZ2xSZHVHallIY2ZNV2ZzNXBDdXBPamh6N25oYz0zQTk5QUE2NQ==",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -224,
+        144
+      ],
+      "id": "a333f9a6-1f99-4674-a33c-a277b5d9ff36",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://medicalspin.atlassian.net/rest/agile/1.0/sprint/{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Basic {{ $('Edit Fields').item.json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"state\": \"active\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "6b94b516-5f2c-4e24-80bc-efbafa212599",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"Nova Sprint {{ $now.format('dd-LL')}} - {{ $now.plus({ days: 7 }).format('dd-LL') }}\n\",\n  \"startDate\": \"{{ $json.startDate }}\",\n  \"endDate\": \"{{ $json.endDate }}\",\n  \"originBoardId\": 5\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        144
+      ],
+      "id": "7dac0ea1-dac4-4a01-bc82-aca6e61974ba",
+      "name": "HTTP Request2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://medicalspin.atlassian.net/rest/agile/1.0/sprint/{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"state\": \"active\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        144
+      ],
+      "id": "99453a3d-4146-4ea5-86f8-4359a32a5971",
+      "name": "HTTP Request3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Basic {{ $json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"Nova Sprint {{ $now.format('dd-LL')}} - {{ $now.plus({ days: 7 }).format('dd-LL') }}\",\n  \"startDate\": \"{{ $json.startDate }}\",\n  \"endDate\": \"{{ $json.endDate }}\",\n  \"originBoardId\": 40\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        288
+      ],
+      "id": "2cbe8049-22c2-44ed-ba38-2da81abbb4f5",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://medicalspin.atlassian.net/rest/agile/1.0/sprint/{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Basic {{ $('Edit Fields').item.json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"state\": \"active\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        288
+      ],
+      "id": "249257fd-2425-4cd0-ae38-b0a826439686",
+      "name": "HTTP Request5"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": null,
+  "pinData": {
+    "Schedule Trigger": [
+      {
+        "json": {
+          "timestamp": "2025-11-11T17:00:21.010-03:00",
+          "Readable date": "November 11th 2025, 5:00:21 pm",
+          "Readable time": "5:00:21 pm",
+          "Day of week": "Tuesday",
+          "Year": "2025",
+          "Month": "November",
+          "Day of month": "11",
+          "Hour": "17",
+          "Minute": "00",
+          "Second": "21",
+          "Timezone": "America/Sao_Paulo (UTC-03:00)"
+        }
+      }
+    ]
+  },
+  "versionId": "4052fc76-fd2e-4e41-bbcf-df9638025808",
+  "activeVersionId": "4052fc76-fd2e-4e41-bbcf-df9638025808",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T14:30:24.102Z",
+      "createdAt": "2025-11-17T14:30:24.102Z",
+      "role": "workflow:owner",
+      "workflowId": "QO22wYp4du2fLbvQ",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-01-06T10:17:59.044Z",
+    "createdAt": "2026-01-06T10:17:59.044Z",
+    "versionId": "4052fc76-fd2e-4e41-bbcf-df9638025808",
+    "workflowId": "QO22wYp4du2fLbvQ",
+    "nodes": [
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Basic {{ $json.token }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"name\": \"Nova Sprint {{ $now.format('dd-LL')}} - {{ $now.plus({ days: 7 }).format('dd-LL') }}\",\n  \"startDate\": \"{{ $json.startDate }}\",\n  \"endDate\": \"{{ $json.endDate }}\",\n  \"originBoardId\": 4\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          0,
+          0
+        ],
+        "id": "55bba049-d401-47a1-8d91-c7ca720e3cc4",
+        "name": "HTTP Request"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "weeks",
+                "triggerAtDay": [
+                  2
+                ],
+                "triggerAtHour": 17
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -416,
+          144
+        ],
+        "id": "afffc2a5-ea54-4dda-9dfc-e738d3f9d8b2",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "7ba64de1-f2b0-4d35-8796-cb29319f3bb5",
+                "name": "startDate",
+                "value": "={{ $now }}",
+                "type": "string"
+              },
+              {
+                "id": "3da78947-b46d-49ad-9d52-869cdcbd7da1",
+                "name": "endDate",
+                "value": "={{ $now.plus({ days: 7 }) }}",
+                "type": "string"
+              },
+              {
+                "id": "5de1417a-1208-4861-8477-595ffd5ba0c5",
+                "name": "token",
+                "value": "ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHU2b0VCbDlTcHdsNGFPYmo3 OXIzc3F0b1hxWkxQOUp5OWJiWlFOQ29seEtBX1FxLXNHb2lLdXFPS1lMTWJqT2swUE45QldNSS02 ZlhkLXJuTlhmRERHZmt1SzU4X0VwazQyVXZ3VjN1YUJFdC1xeFE3UXRaWWZuMEl5cUZBbEZqRU05 OWFLbk5JWVIzQVZNZ2xSZHVHallIY2ZNV2ZzNXBDdXBPamh6N25oYz0zQTk5QUE2NQ==",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -224,
+          144
+        ],
+        "id": "a333f9a6-1f99-4674-a33c-a277b5d9ff36",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://medicalspin.atlassian.net/rest/agile/1.0/sprint/{{ $json.id }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Basic {{ $('Edit Fields').item.json.token }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"state\": \"active\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          208,
+          0
+        ],
+        "id": "6b94b516-5f2c-4e24-80bc-efbafa212599",
+        "name": "HTTP Request1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"name\": \"Nova Sprint {{ $now.format('dd-LL')}} - {{ $now.plus({ days: 7 }).format('dd-LL') }}\n\",\n  \"startDate\": \"{{ $json.startDate }}\",\n  \"endDate\": \"{{ $json.endDate }}\",\n  \"originBoardId\": 5\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          0,
+          144
+        ],
+        "id": "7dac0ea1-dac4-4a01-bc82-aca6e61974ba",
+        "name": "HTTP Request2",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://medicalspin.atlassian.net/rest/agile/1.0/sprint/{{ $json.id }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "Basic ZGVzZW52bWVkaWNhbHNwaW5AZ21haWwuY29tOkFUQVRUM3hGZkdGMHNfbWdCNUlfSkN2SUlZSm82 MkN0eUQtY0hYeFpnZGtzMVg4MzctWThjQ2tQQ19hd3VidTdMeTJlb0pMN3pVYzdnQnlWekZSOGVE dVZvZ0FuVmc1Z25oU0VmLUpkQTdUYmR3eEJBcUkwMXNSaFdVU2pVUHpxWmJ0VGttRnNzVF9aR082 dWhqbmNWdEVfNUptZEFCVWxzUGJkY05VZUlMcUZaRDFfRW1qcExUWT1FNTM0MDhDOQ=="
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"state\": \"active\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          208,
+          144
+        ],
+        "id": "99453a3d-4146-4ea5-86f8-4359a32a5971",
+        "name": "HTTP Request3",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://medicalspin.atlassian.net/rest/agile/1.0/sprint",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Basic {{ $json.token }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"name\": \"Nova Sprint {{ $now.format('dd-LL')}} - {{ $now.plus({ days: 7 }).format('dd-LL') }}\",\n  \"startDate\": \"{{ $json.startDate }}\",\n  \"endDate\": \"{{ $json.endDate }}\",\n  \"originBoardId\": 40\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          0,
+          288
+        ],
+        "id": "2cbe8049-22c2-44ed-ba38-2da81abbb4f5",
+        "name": "HTTP Request4"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://medicalspin.atlassian.net/rest/agile/1.0/sprint/{{ $json.id }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Basic {{ $('Edit Fields').item.json.token }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"state\": \"active\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          208,
+          288
+        ],
+        "id": "249257fd-2425-4cd0-ae38-b0a826439686",
+        "name": "HTTP Request5"
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "HTTP Request2",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "HTTP Request4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request2": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request4": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Automações  Medical Spin",
+    "name": null,
+    "description": null
+  },
+  "tags": [
+    {
+      "updatedAt": "2025-11-17T14:30:14.174Z",
+      "createdAt": "2025-11-17T14:30:14.174Z",
+      "id": "moijdFGlY2w64Ect",
+      "name": "Jira"
+    }
+  ]
+}
