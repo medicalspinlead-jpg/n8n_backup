@@ -1,0 +1,258 @@
+{
+  "updatedAt": "2026-01-12T13:02:56.375Z",
+  "createdAt": "2026-01-12T12:56:29.168Z",
+  "id": "6S7VBGXIThgmcuCK",
+  "name": "API-TEST OS MEDICALSPIN",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0",
+          "mode": "list",
+          "cachedResultName": "OS_DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1955323770,
+          "mode": "list",
+          "cachedResultName": "DB_cliente",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit#gid=1955323770"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "8e903702-2ac8-4a8c-892f-ce3ed4875e70",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "3fde7373-3216-4eeb-9dc6-78c7b82b5deb",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://os.medicalspin.com.br/api/clientes",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "medicalspin2026"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n      \"razaoSocial\": \"{{ $json['RAZAO SOCIAL'] }}\",\n      \"nomeFantasia\": \"{{ $json['NOME FANTASIA'] }}\",\n      \"cnpj\": \"{{ $json.CNPJ }}\",\n      \"cidade\": \"{{ $json.CIDADE }}\",\n      \"uf\": \"{{ $json.UF }}\",\n      \"telefone\": \"{{ $json.TELEFONE }}\",\n      \"email\": \"{{ $json.EMAIL }}\",\n      \"responsavel\": \"{{ $json.RESPONSAVEL }}\",\n      \"equipamentos\": [\n        {\n          \"tipo\": \"Ressonância Magnética\",\n          \"fabricante\": \"Philips\",\n          \"modelo\": \"Achieva 1.5T\",\n          \"numeroSerie\": \"MR12345\"\n        }\n      ]\n    }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        832,
+        96
+      ],
+      "id": "ab47400f-9382-4e8f-93a4-75fe209138b8",
+      "name": "HTTP Request",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "84a0c857-9531-4444-8d27-881fecd4fb78",
+              "name": "RAZAO SOCIAL",
+              "value": "={{ $json[\"RAZAO SOCIAL\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "47657505-ac0d-4bc1-bf68-b9b4a49d9c7b",
+              "name": "NOME FANTASIA",
+              "value": "={{ $json[\"NOME FANTASIA\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "f2020a1b-8237-4e4f-aed5-bdf7182520c0",
+              "name": "CNPJ",
+              "value": "={{ $json.CNPJ }}",
+              "type": "string"
+            },
+            {
+              "id": "9644735c-14e2-42cc-bb9d-6e11498a3eaa",
+              "name": "CIDADE",
+              "value": "={{ $json.CIDADE }}",
+              "type": "string"
+            },
+            {
+              "id": "08ba9cb9-d594-4272-8ee2-55e9c31957ae",
+              "name": "UF",
+              "value": "={{ $json.UF }}",
+              "type": "string"
+            },
+            {
+              "id": "ca876400-23eb-4272-8732-949050c34f57",
+              "name": "TELEFONE",
+              "value": "={{ $json.TELEFONE }}",
+              "type": "number"
+            },
+            {
+              "id": "08ed7d3a-0e22-4cc3-8e06-676c9a627ac0",
+              "name": "EMAIL",
+              "value": "={{ $json.EMAIL }}",
+              "type": "string"
+            },
+            {
+              "id": "16d20fee-6939-486a-a267-24fa352b692a",
+              "name": "RESPONSAVEL",
+              "value": "={{ $json.RESPONSAVEL }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        96
+      ],
+      "id": "8d2bebb9-6518-4856-a0e8-551127e26b2e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        32,
+        0
+      ],
+      "id": "209380e5-6385-4a56-87da-27af1c08418d",
+      "name": "Schedule Trigger",
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "fe62bc19-c58c-4265-a02e-3620c5a44b27",
+  "activeVersionId": null,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-01-12T12:56:29.168Z",
+      "createdAt": "2026-01-12T12:56:29.168Z",
+      "role": "workflow:owner",
+      "workflowId": "6S7VBGXIThgmcuCK",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
