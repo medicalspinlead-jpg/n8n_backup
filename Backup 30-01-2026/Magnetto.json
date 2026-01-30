@@ -1,0 +1,849 @@
+{
+  "updatedAt": "2025-11-27T12:51:55.005Z",
+  "createdAt": "2025-11-27T12:47:22.182Z",
+  "id": "XUobVKBLFLwDW7bv",
+  "name": "Magnetto",
+  "active": true,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "send-text",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Start').item.json.body_data_key_remoteJid }}",
+        "messageText": "Até logo. Para me chamar novamente, basta digitar *Magnetto*",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        928,
+        256
+      ],
+      "id": "3be0b9e1-feee-4557-ae4b-3ff10ec1932f",
+      "name": "Enviar texto5",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=id:{{ $json.data.key.remoteJid }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        256
+      ],
+      "id": "b5685e85-c488-4a9f-a61c-09e0e95996af",
+      "name": "Redis6",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "id",
+        "key": "=id:{{ $json.body.data.key.remoteJid }}",
+        "keyType": "automatic",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        256,
+        192
+      ],
+      "id": "003c6650-d08e-424a-b324-2be4c848e7ed",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b0bc1622-ccd0-489e-a51e-5eaa1c4bd334",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        464,
+        192
+      ],
+      "id": "ee05a5cc-1e63-4b5c-929a-218e66b5874e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "mode": "rules",
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Start').item.json.body_data_message_conversation }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "69886729-8e82-426c-802f-46705c3e2b3a"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "1"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "18831c78-d752-417a-bd9f-c14e5d50c084",
+                    "leftValue": "={{ $('Start').item.json.body_data_message_conversation }}",
+                    "rightValue": "2",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "2"
+            }
+          ]
+        },
+        "looseTypeValidation": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        688,
+        176
+      ],
+      "id": "12945b2e-a3c7-4d17-9d25-7aaad93234c7",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "send-text",
+        "instanceName": "teste",
+        "remoteJid": "={{ $('Start').item.json.body_data_key_remoteJid }}",
+        "messageText": "*Por favor, preencha o formulário abaixo para gerar a ordem de serviço:*\n\nhttps://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/ordem-de-servi%C3%A7o",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        928,
+        112
+      ],
+      "id": "3553eadc-db7b-4852-9d59-ff8d7ae95104",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34998565-4754-4036-9919-919fba42692c",
+              "leftValue": "={{ $json.body_data_message_conversation }}",
+              "rightValue": "Magnetto",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -32,
+        48
+      ],
+      "id": "4ea1e48b-c132-45d7-9bc3-ac4404dcbc51",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "send-text",
+        "instanceName": "teste",
+        "remoteJid": "={{ $json.body.data.key.remoteJid }}",
+        "messageText": "Olá! 👋 Eu sou o *Magnetto*, seu assistente virtual. Estou aqui para ajudar você com dúvidas, suporte e informações de forma rápida e simples. \n\nComo posso ajudar você hoje? \n\n1-Criar Ordem de serviço\n2-Sair",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        256,
+        32
+      ],
+      "id": "7a7266cb-25f8-43cf-8724-99b7f5358f81",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=id:{{ $json.data.key.remoteJid }}",
+        "value": "menu_principal",
+        "keyType": "automatic",
+        "expire": true,
+        "ttl": 600
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        464,
+        32
+      ],
+      "id": "cdd843a3-c487-4304-9685-3be58d29ae82",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "id": "7c6ff5e1-b843-4f1b-ac29-fdeb26dc57aa",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -240,
+        48
+      ],
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "body_data_message_conversation",
+              "type": "any"
+            },
+            {
+              "name": "body_data_key_remoteJid",
+              "type": "any"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        []
+      ]
+    },
+    "Redis1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar texto5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto1": {
+      "main": [
+        []
+      ]
+    },
+    "Enviar texto5": {
+      "main": [
+        [
+          {
+            "node": "Redis6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": null,
+  "versionId": "97832cf2-836b-474e-8596-f34376417459",
+  "activeVersionId": "97832cf2-836b-474e-8596-f34376417459",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-11-27T12:47:22.182Z",
+      "createdAt": "2025-11-27T12:47:22.182Z",
+      "role": "workflow:owner",
+      "workflowId": "XUobVKBLFLwDW7bv",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2025-12-12T10:01:16.115Z",
+    "createdAt": "2025-12-12T10:01:16.115Z",
+    "versionId": "97832cf2-836b-474e-8596-f34376417459",
+    "workflowId": "XUobVKBLFLwDW7bv",
+    "nodes": [
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "operation": "send-text",
+          "instanceName": "teste",
+          "remoteJid": "={{ $('Start').item.json.body_data_key_remoteJid }}",
+          "messageText": "Até logo. Para me chamar novamente, basta digitar *Magnetto*",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          928,
+          256
+        ],
+        "id": "3be0b9e1-feee-4557-ae4b-3ff10ec1932f",
+        "name": "Enviar texto5",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "delete",
+          "key": "=id:{{ $json.data.key.remoteJid }}"
+        },
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          1136,
+          256
+        ],
+        "id": "b5685e85-c488-4a9f-a61c-09e0e95996af",
+        "name": "Redis6",
+        "credentials": {
+          "redis": {
+            "id": "zxoKZ2hHG1VotLrg",
+            "name": "Redis account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "propertyName": "id",
+          "key": "=id:{{ $json.body.data.key.remoteJid }}",
+          "keyType": "automatic",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          256,
+          192
+        ],
+        "id": "003c6650-d08e-424a-b324-2be4c848e7ed",
+        "name": "Redis1",
+        "credentials": {
+          "redis": {
+            "id": "zxoKZ2hHG1VotLrg",
+            "name": "Redis account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "b0bc1622-ccd0-489e-a51e-5eaa1c4bd334",
+                "leftValue": "={{ $json.id }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "looseTypeValidation": false,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          464,
+          192
+        ],
+        "id": "ee05a5cc-1e63-4b5c-929a-218e66b5874e",
+        "name": "If1"
+      },
+      {
+        "parameters": {
+          "mode": "rules",
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $('Start').item.json.body_data_message_conversation }}",
+                      "rightValue": "1",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "69886729-8e82-426c-802f-46705c3e2b3a"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "1"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "18831c78-d752-417a-bd9f-c14e5d50c084",
+                      "leftValue": "={{ $('Start').item.json.body_data_message_conversation }}",
+                      "rightValue": "2",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "2"
+              }
+            ]
+          },
+          "looseTypeValidation": false,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.3,
+        "position": [
+          688,
+          176
+        ],
+        "id": "12945b2e-a3c7-4d17-9d25-7aaad93234c7",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "operation": "send-text",
+          "instanceName": "teste",
+          "remoteJid": "={{ $('Start').item.json.body_data_key_remoteJid }}",
+          "messageText": "*Por favor, preencha o formulário abaixo para gerar a ordem de serviço:*\n\nhttps://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/ordem-de-servi%C3%A7o",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          928,
+          112
+        ],
+        "id": "3553eadc-db7b-4852-9d59-ff8d7ae95104",
+        "name": "Enviar texto1",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "34998565-4754-4036-9919-919fba42692c",
+                "leftValue": "={{ $json.body_data_message_conversation }}",
+                "rightValue": "Magnetto",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "looseTypeValidation": false,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -32,
+          48
+        ],
+        "id": "4ea1e48b-c132-45d7-9bc3-ac4404dcbc51",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "operation": "send-text",
+          "instanceName": "teste",
+          "remoteJid": "={{ $json.body.data.key.remoteJid }}",
+          "messageText": "Olá! 👋 Eu sou o *Magnetto*, seu assistente virtual. Estou aqui para ajudar você com dúvidas, suporte e informações de forma rápida e simples. \n\nComo posso ajudar você hoje? \n\n1-Criar Ordem de serviço\n2-Sair",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          256,
+          32
+        ],
+        "id": "7a7266cb-25f8-43cf-8724-99b7f5358f81",
+        "name": "Enviar texto",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "set",
+          "key": "=id:{{ $json.data.key.remoteJid }}",
+          "value": "menu_principal",
+          "keyType": "automatic",
+          "expire": true,
+          "ttl": 600
+        },
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          464,
+          32
+        ],
+        "id": "cdd843a3-c487-4304-9685-3be58d29ae82",
+        "name": "Redis",
+        "credentials": {
+          "redis": {
+            "id": "zxoKZ2hHG1VotLrg",
+            "name": "Redis account"
+          }
+        }
+      },
+      {
+        "id": "7c6ff5e1-b843-4f1b-ac29-fdeb26dc57aa",
+        "typeVersion": 1.1,
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          -240,
+          48
+        ],
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "body_data_message_conversation",
+                "type": "any"
+              },
+              {
+                "name": "body_data_key_remoteJid",
+                "type": "any"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "connections": {
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Redis1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Enviar texto": {
+        "main": [
+          [
+            {
+              "node": "Redis",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Redis": {
+        "main": [
+          []
+        ]
+      },
+      "Redis1": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Enviar texto5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Enviar texto1": {
+        "main": [
+          []
+        ]
+      },
+      "Enviar texto5": {
+        "main": [
+          [
+            {
+              "node": "Redis6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "tags": []
+}
