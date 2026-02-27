@@ -1,0 +1,5518 @@
+{
+  "updatedAt": "2026-02-26T11:40:44.552Z",
+  "createdAt": "2026-01-06T10:33:49.394Z",
+  "id": "4ELlNa9icHFz6Rus",
+  "name": "MEDICALSPIN OS APP",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c419cbce-7e20-4472-bcd9-577c1903e22f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -752,
+        -176
+      ],
+      "id": "dd7a5733-f334-4542-b959-9c4baef79430",
+      "name": "Webhook",
+      "webhookId": "c419cbce-7e20-4472-bcd9-577c1903e22f"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "91e7da4f-3369-4523-aa7e-5af7625e0fe6",
+              "name": "driveId",
+              "value": "={{ $json.driveId }}",
+              "type": "string"
+            },
+            {
+              "id": "dce65960-5811-465f-b3b3-76d038f27f2e",
+              "name": "fileid",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        16
+      ],
+      "id": "776f44a6-4a06-404d-aa54-bb22a161a123",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Remove duplicatas').item.json.folderName }}",
+        "driveId": {
+          "__rl": true,
+          "value": "={{ $('Remove duplicatas').item.json.driveId }}",
+          "mode": "id"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Remove duplicatas').item.json.fileId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4192,
+        -192
+      ],
+      "id": "dc82433f-cc0a-4854-81e3-4d3fd9ab038b",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.documentId }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3984,
+        -192
+      ],
+      "id": "837a12c3-6141-4f55-9079-df1e86c1dce7",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Entrada\nconst data = items[0].json;\n\n// Função utilitária para aplicar \"N/A\"\nconst na = v => {\n  if (v === undefined || v === null) return \"N/A\";\n  if (typeof v === \"string\" && v.trim() === \"\") return \"N/A\";\n  if (Array.isArray(v)) {\n    if (v.length === 0) return \"N/A\";\n    if (v.every(item => typeof item === \"object\" && Object.keys(item).length === 0)) return \"N/A\";\n  }\n  if (typeof v === \"object\" && Object.keys(v).length === 0) return \"N/A\";\n  return v;\n};\n\n// Arrays de peças\nconst pecas_cliente = na(data.pecas_cliente);\nconst pecas_ms = na(data.pecas_ms);\n\n// ---- MÃO DE OBRA (AGORA CORRETA) ----\nconst mao = data.mao_de_obra || {};\n\nlet datas = [];\nlet totalEfetivo = 0;\nlet totalContingencial = 0;\n\n// Suporta até 50 registros\nfor (let i = 1; i <= 50; i++) {\n  const dataKey = `data${i}`;\n  const efKey = `hh_efetivo${i}`;\n  const ctKey = `hh_contingencial${i}`;\n\n  if (mao[dataKey]) {\n    datas.push(mao[dataKey]);\n    totalEfetivo += Number(mao[efKey] || 0);\n    totalContingencial += Number(mao[ctKey] || 0);\n  }\n}\n\n// Ordena datas corretamente\ndatas.sort((a, b) => new Date(a) - new Date(b));\n\nconst primeiraData = na(datas[0]);\nconst ultimaData = na(datas[datas.length - 1]);\n\nconst totalEfetivoFinal = datas.length > 0 ? totalEfetivo : \"N/A\";\nconst totalContingencialFinal = datas.length > 0 ? totalContingencial : \"N/A\";\nconst totalGeralFinal =\n  datas.length > 0 ? totalEfetivo + totalContingencial : \"N/A\";\n\n// ---- RETORNO FINAL ----\nreturn [\n  {\n    json: {\n      pecas_cliente,\n      pecas_medical_spin: pecas_ms,\n      mao_de_obra: {\n        primeiraData,\n        ultimaData,\n        totalEfetivo: totalEfetivoFinal,\n        totalContingencial: totalContingencialFinal,\n        totalGeral: totalGeralFinal\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1952,
+        -192
+      ],
+      "id": "31ea9d1d-f9e0-4e70-bd9a-388b94366ec6",
+      "name": "Soma horas"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "19409568-d828-48fc-896d-2eb240efc327",
+              "name": "pecas_cliente",
+              "value": "={{ \n  $('dados').item.json.pecas_cliente.reduce((acc, item, index) => {\n    const i = index + 1;\n    acc['nome' + i] = item.nome || '';\n    acc['modelo' + i] = item.modeloRef || '';\n    acc['sn' + i] = item.numeroSerie || '';\n    acc['detalhes' + i] = item.observacoes || '';\n    return acc;\n  }, {})\n}}",
+              "type": "array"
+            },
+            {
+              "id": "bda07dd3-5584-4644-9f3c-c9cfc6fbd109",
+              "name": "pecas_ms",
+              "value": "={{ \n  $('dados').item.json.pecas_ms.reduce((acc, item, index) => {\n    const i = index + 1;\n    acc['nome' + i] = item.nome || '';\n    acc['modelo' + i] = item.modeloRef || '';\n    acc['sn' + i] = item.numeroSerie || '';\n    acc['detalhes' + i] = item.observacoes || '';\n    return acc;\n  }, {})\n}}",
+              "type": "array"
+            },
+            {
+              "id": "037c90b6-20f5-4105-b3e9-16c23926a36b",
+              "name": "mao_de_obra",
+              "value": "={{ \n  $('dados').item.json.mao_de_obra.reduce((acc, item, index) => {\n    const i = index + 1;\n\n    acc['data' + i] = item.data || '';\n    acc['hh_efetivo' + i] = item.horas || '';\n    acc['hh_contingencial' + i] = item.horas || '';\n\n    return acc;\n  }, {})\n}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": true
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1760,
+        -192
+      ],
+      "id": "4f6f7a26-523d-4010-9d63-35a2ac77c710",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $('Pega o documento').item.json.documentId }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "={{ $('Placeholder').item.json.placeholder }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        2992,
+        -192
+      ],
+      "id": "e031c9e8-e15a-4282-b503-549694d096db",
+      "name": "Atualiza documento1",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $('Copia  o arquivo').item.json.id }}",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        2464,
+        -192
+      ],
+      "id": "b72582a8-f081-423f-8432-0cfe9b727cf3",
+      "name": "Pega o documento1",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ea726e0-f65f-40c9-8372-f35482aa393f",
+              "name": "nome",
+              "value": "={{ $('Split Out').item.json.nome }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        -192
+      ],
+      "id": "ebbbbf04-eaf4-46ed-89b7-de4b09e2e2f6",
+      "name": "Nome da imagem"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14010743-1e77-4a33-8d67-19d0a442d36f",
+              "name": "Index",
+              "value": "={{ $('Pega o documento1').item.json.body.content[25].paragraph.elements[0].startIndex }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2816,
+        -192
+      ],
+      "id": "401f9320-8da0-487c-b0ef-bc154f4e7b20",
+      "name": "Index"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://docs.googleapis.com/v1/documents/{{ $json.documentId }}:batchUpdate",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDocsOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"requests\": [\n    {\n      \"insertInlineImage\": {\n        \"location\": {\n          \"index\": {{ $json.index }}\n        },\n        \"uri\": \"https://drive.google.com/uc?export=view&id={{ $json.id }}\",\n        \"objectSize\": {\n          \"height\": {\n            \"magnitude\": 200,\n            \"unit\": \"PT\"\n          },\n          \"width\": {\n            \"magnitude\": 200,\n            \"unit\": \"PT\"\n          }\n        }\n      }\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3984,
+        -48
+      ],
+      "id": "aa5a3416-0ddc-44e2-8239-30f6a04dd1cd",
+      "name": "Cola imagem no documento",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c6827f38-85e7-4810-b143-a5dab53ee0d9",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "929c970b-837b-4fa0-ac3e-c62b8b1aa1a0",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3792,
+        -32
+      ],
+      "id": "d66acf8b-6ba1-430b-aa80-b386ce959908",
+      "name": "Id e Name?"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3568,
+        -48
+      ],
+      "id": "57ec2d10-bb63-4378-8427-e537ef0f1b0a",
+      "name": "Percorre os itens"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = items.map(i => i.json);\n\n// Extrai info fixa (uma vez só)\nconst placeholder = data.find(d => d.placeholder)?.placeholder || null;\nconst index = data.find(d => d.Index !== undefined)?.Index || null;\nconst documentId = data.find(d => d.documentId)?.documentId || null;\n\n// Extrai driveId e fileid (únicos)\nconst driveId = data.find(d => d.driveId)?.driveId || null;\nconst fileid = data.find(d => d.fileid)?.fileid || null;\n\n// Pega todos os blocos com id + name\nconst arquivos = data.filter(d => d.id && d.name);\n\n// Remove duplicados por id\nconst ids = new Set();\nconst unicos = arquivos.filter(a => {\n  if (ids.has(a.id)) return false;\n  ids.add(a.id);\n  return true;\n});\n\n// Cria novo array de items no formato pedido\nreturn unicos.map(a => ({\n  json: {\n    placeholder,\n    index,\n    documentId,\n    driveId,\n    fileid,\n    id: a.id,\n    name: a.name\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3408,
+        -48
+      ],
+      "id": "8e3ab6b2-0275-41f4-ba26-4095de48a6bd",
+      "name": "Separa itens"
+    },
+    {
+      "parameters": {
+        "numberInputs": 6
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3232,
+        -112
+      ],
+      "id": "2f72ccc7-ab9b-4e6c-ab0f-3d50e55cae70",
+      "name": "Unir tudo"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $('Pega o documento').item.json.documentId }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "object": "=text",
+              "action": "replaceAll",
+              "text": "{razao_social}",
+              "replaceText": "={{ $('dados').item.json.razao_social }}",
+              "index": 0
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cnpj}",
+              "replaceText": "={{ $('dados').item.json.cnpj }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cidade}",
+              "replaceText": "={{ $('dados').item.json.cidade }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{uf}",
+              "replaceText": "={{ $('dados').item.json.uf }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{nome_do_solicitante}",
+              "replaceText": "={{ $('dados').item.json.responsavel }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{fabricante}",
+              "replaceText": "={{ $('dados').item.json.fabricante }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{modelo}",
+              "replaceText": "={{ $('dados').item.json.modelo }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{serie}",
+              "replaceText": "={{ $('dados').item.json.serie }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{motivacao_servico}",
+              "replaceText": "={{ $('dados').item.json.motivacao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{eventos_r_relacionados}",
+              "replaceText": "={{ $('dados').item.json.eventos }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_removidas_cliente}",
+              "replaceText": "={{ \n  $('dados').item.json.pecas_cliente.removidas && $('dados').item.json.pecas_cliente.removidas.length\n    ? $('dados').item.json.pecas_cliente.removidas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_removidas_medicalspin}",
+              "replaceText": "={{ \n  $('dados').item.json.pecas_medical_spin.removidas && $('dados').item.json.pecas_medical_spin.removidas.length\n    ? $('dados').item.json.pecas_medical_spin.removidas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{tipo_intervencao}",
+              "replaceText": "={{ $('dados').item.json.tipo_intervencao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{descricao_servicos_realizados}",
+              "replaceText": "={{ $('dados').item.json.descricao_servicos }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{data0}",
+              "replaceText": "={{ $now.format('dd/LL/yyyy') }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{data}",
+              "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.primeiraData \n    ? new Date($('Soma horas').item.json.mao_de_obra.primeiraData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' \n}} - {{ $('Soma horas').item.json.mao_de_obra.ultimaData \n    ? new Date($('Soma horas').item.json.mao_de_obra.ultimaData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{medicalspin}",
+              "replaceText": "={{ $('dados').item.json.pendencias_ms }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cliente}",
+              "replaceText": "={{ $('dados').item.json.pendencias_cliente }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{antes_intervencao}",
+              "replaceText": "={{ $('dados').item.json.estado_inicial }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{apos_intervensao}",
+              "replaceText": "={{ $('dados').item.json.estado_final }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cidade_realizacao}",
+              "replaceText": "={{ $('dados').item.json.cidade_assinatura }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{uf_realizacao}",
+              "replaceText": "={{ $('dados').item.json.uf_assinatura }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{tecnico_responsavel}",
+              "replaceText": "={{ $('dados').item.json.nome_tecnico }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cft}",
+              "replaceText": "={{ $('dados').item.json.cft_tecnico }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{recebedor}",
+              "replaceText": "={{ $('dados').item.json.responsavel_assinatura }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{efetivo}",
+              "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.totalEfetivo.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{contingencial}",
+              "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.totalContingencial.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{total}",
+              "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.totalGeral.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{fantasia}",
+              "replaceText": "={{ $('dados').item.json.nome_fantasia }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{tipo_equipamento}",
+              "replaceText": "={{ $('dados').item.json.tipo_equipamento }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_inseridas_cliente}",
+              "replaceText": "={{ \n  $('dados').item.json.pecas_cliente.inclusas && $('dados').item.json.pecas_cliente.inclusas.length\n    ? $('dados').item.json.pecas_cliente.inclusas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}\n"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_inseridas_medicalspin}",
+              "replaceText": "={{ \n  $('dados').item.json.pecas_medical_spin.inclusas && $('dados').item.json.pecas_medical_spin.inclusas.length\n    ? $('dados').item.json.pecas_medical_spin.inclusas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        2304,
+        -192
+      ],
+      "id": "7f6c2759-90f1-46f0-89f1-c6efeb44df41",
+      "name": "Atualiza documento",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6fdcebc1-c772-40a8-bfc1-22584c6c2f93",
+              "name": "placeholder",
+              "value": "{fotos}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2640,
+        -192
+      ],
+      "id": "8d740cbc-aeb9-4871-93fa-6296e6567f8c",
+      "name": "Placeholder"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $('Copia  o arquivo').item.json.id }}",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        2128,
+        -192
+      ],
+      "id": "66a021d1-a04c-4ade-a6d5-07b36558cbf1",
+      "name": "Pega o documento",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Remove duplicados pelo campo \"id\"\nconst seen = new Set();\n\nconst unique = items.filter(item => {\n  const id = item.json.id;\n  if (seen.has(id)) return false;\n  seen.add(id);\n  return true;\n});\n\n// Retorna apenas os itens únicos\nreturn unique;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        -192
+      ],
+      "id": "a7e3fb9e-6c3f-4b8a-a40e-b1ecb298a54b",
+      "name": "Junta repeticoes"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $('Cria pasta1').item.json.name }}",
+        "limit": "={{ $items().filter(i => i.json.nome).length }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Cria pasta').item.json.id }}",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1376,
+        -192
+      ],
+      "id": "65ad52d3-715d-49a4-bfb5-3f073e584d96",
+      "name": "Procura imagens",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "writer",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1552,
+        16
+      ],
+      "id": "96b6ac61-b0de-4dfc-a210-657966c72ac8",
+      "name": "Torna publico",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4e8de6be-f93a-4806-897e-9cd6a0e9886a",
+              "name": "midias",
+              "value": "={{ $('dados').item.json.midias }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": true
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        -176
+      ],
+      "id": "e7fdae49-3011-4001-9751-a11757227766",
+      "name": "midia"
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1zyQzlhzDDsDONuzHqaT8Kql0riKMl2uPk79so4DXtYs",
+          "mode": "list",
+          "cachedResultName": "OS_modelo",
+          "cachedResultUrl": "https://docs.google.com/document/d/1zyQzlhzDDsDONuzHqaT8Kql0riKMl2uPk79so4DXtYs/edit?usp=drivesdk"
+        },
+        "name": "=OS_{{ $('dados').item.json.razao_social }}_{{ $('dados').item.json.cnpj }}_{{ $now.format('dd-LL-yyyy') }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/folders/1OQHRuBKVD3WypEIhvQmiq5B8rh7bvsoS",
+          "mode": "url"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Cria pasta').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        160,
+        -176
+      ],
+      "id": "6a3b185f-7505-4b8f-8f97-5bb11e7fad87",
+      "name": "Copia  o arquivo",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{\n  'OS_' +\n  $json.razao_social\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .replace(/[^A-Za-z0-9 ]/g, '')\n    .trim()\n    .replace(/\\s+/g, '_')\n    .toUpperCase()\n    .substring(0, 30)\n  + '_' +\n  $json.cnpj.replace(/\\D/g, '') +\n  '_' +\n  $now.format('dd-MM-yyyy')\n}}",
+        "driveId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/folders/1nAeEaoG6QNZq2fuonNJB7GluFIhOffL1",
+          "mode": "url"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/folders/1nAeEaoG6QNZq2fuonNJB7GluFIhOffL1",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -192,
+        -176
+      ],
+      "id": "48ec6e51-53cf-4fda-bbd2-e4760d8974e2",
+      "name": "Cria pasta",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.nome }}",
+        "limit": "={{ $items().filter(i => i.json.nome).length }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Cria pasta1').item.json.id }}",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1376,
+        -48
+      ],
+      "id": "af033bd1-26c9-4192-8700-8623142e45db",
+      "name": "Imagens",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "midias",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        672,
+        -192
+      ],
+      "id": "ff48f387-3c97-40f4-a019-e274282f60a5",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Split Out').item.json.nome }}",
+        "driveId": {
+          "__rl": true,
+          "value": "={{ $('Cria pasta1').item.json.driveId }}",
+          "mode": "id"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Cria pasta1').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1024,
+        -192
+      ],
+      "id": "af28c939-f9d3-4278-8521-90e5df324829",
+      "name": "Adiciona imagem",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = items[0].json.body;\n\n// normaliza peças\nconst pecas = (input.pecas || []).map(p => ({\n  nome: p.nome,\n  modelo_ref: p.modeloRef,\n  numero_serie: p.numeroSerie,\n  observacoes: p.observacoes,\n  quantidade: p.quantidade,\n  categoria: p.categoria, // cliente | medical-spin\n  tipo: p.tipo           // removida | inclusa\n}));\n\n// separação por categoria + tipo\nconst pecasCliente = {\n  removidas: pecas.filter(p => p.categoria === 'cliente' && p.tipo === 'removida'),\n  inclusas:  pecas.filter(p => p.categoria === 'cliente' && p.tipo === 'inclusa'),\n};\n\nconst pecasMs = {\n  removidas: pecas.filter(p => p.categoria === 'medical-spin' && p.tipo === 'removida'),\n  inclusas:  pecas.filter(p => p.categoria === 'medical-spin' && p.tipo === 'inclusa'),\n};\n\n// imagens já processadas (jpg + base64)\nconst midias = (input.imagens || []).map(img => ({\n  nome: img.fileName || img.nome,\n  tipo: img.mimeType || img.tipo,\n  tamanho: img.fileSize || img.tamanho,\n  base64: img.base64\n}));\n\nreturn [\n  {\n    json: {\n      id: input.os.id,\n      razao_social: input.empresa.razaoSocial,\n      nome_fantasia: input.empresa.nomeFantasia,\n      cnpj: input.empresa.cnpj,\n      cidade: input.empresa.cidade,\n      uf: input.empresa.uf,\n      telefone: input.empresa.telefone,\n      email: input.empresa.email,\n      responsavel: input.empresa.responsavel,\n\n      tipo_equipamento: input.equipamento.tipo,\n      fabricante: input.equipamento.fabricante,\n      modelo: input.equipamento.modelo,\n      serie: input.equipamento.numeroSerie,\n\n      motivacao: input.motivo.motivacaoServico,\n      eventos: input.motivo.eventosRelevantes,\n\n      tipo_intervencao: input.intervencao.tipo,\n      descricao_servicos: input.intervencao.descricaoServicos,\n\n      pendencias_ms: input.pendencias.medicalSpin,\n      pendencias_cliente: input.pendencias.cliente,\n\n      estado_inicial: input.estadoEquipamento.estadoInicial,\n      estado_final: input.estadoEquipamento.estadoFinal,\n\n      cidade_assinatura: input.finalizacao.cidade,\n      uf_assinatura: input.finalizacao.uf,\n      nome_tecnico: input.finalizacao.nomeEngenheiro,\n      cft_tecnico: input.finalizacao.cftEngenheiro,\n      responsavel_assinatura: input.finalizacao.nomeRecebedor,\n\n      midias,\n\n      pecas_cliente: pecasCliente,\n      pecas_medical_spin: pecasMs,\n\n      mao_de_obra: input.maoDeObra || []\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -352,
+        -176
+      ],
+      "id": "462ba989-9fea-4ba7-9f95-009ed50e92e8",
+      "name": "dados"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        848,
+        -192
+      ],
+      "id": "d9c6559a-c25a-4864-8b99-d2c9d1cfb5dc",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "jsCode": "const map = new Map();\n\n// Pega os valores externos\nconst driveId = $('Separa itens').first().json.driveId;\nconst fileId = $('Separa itens').first().json.fileid;\nconst folderName = $('Cria pasta').first().json.name;\n\nfor (const item of items) {\n  const docId = item.json.documentId;\n\n  if (!map.has(docId)) {\n    // adiciona o item + os novos campos\n    map.set(docId, {\n      ...item.json,\n      driveId,\n      fileId,\n      folderName,\n    });\n  }\n}\n\n// retorna 1 item por documentId\nreturn Array.from(map.values()).map(json => ({ json }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3792,
+        -192
+      ],
+      "id": "feb8a107-c68f-4b74-acbd-b748aa1f40d8",
+      "name": "Remove duplicatas"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4d8af4ea-6429-462d-a924-1e2a634d8775",
+              "leftValue": "={{ $json.midias }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        496,
+        -176
+      ],
+      "id": "c26a370b-bcf1-4541-966e-fa566291a137",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $('Pega o documento2').item.json.documentId }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "{razao_social}",
+              "replaceText": "={{ $('dados').item.json.razao_social }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cnpj}",
+              "replaceText": "={{ $('dados').item.json.cnpj }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cidade}",
+              "replaceText": "={{ $('dados').item.json.cidade }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{uf}",
+              "replaceText": "={{ $('dados').item.json.uf }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{nome_do_solicitante}",
+              "replaceText": "={{ $('dados').item.json.responsavel }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{fabricante}",
+              "replaceText": "={{ $('dados').item.json.fabricante }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{modelo}",
+              "replaceText": "={{ $('dados').item.json.modelo }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{serie}",
+              "replaceText": "={{ $('dados').item.json.serie }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{motivacao_servico}",
+              "replaceText": "={{ $('dados').item.json.motivacao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{eventos_r_relacionados}",
+              "replaceText": "={{ $('dados').item.json.eventos }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_removidas_cliente}",
+              "replaceText": "={{ \n  $('dados').item.json.pecas_cliente.removidas && $('dados').item.json.pecas_cliente.removidas.length\n    ? $('dados').item.json.pecas_cliente.removidas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_removidas_medicalspin}",
+              "replaceText": "={{ \n  $('dados').item.json.pecas_medical_spin.removidas && $('dados').item.json.pecas_medical_spin.removidas.length\n    ? $('dados').item.json.pecas_medical_spin.removidas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{tipo_intervencao}",
+              "replaceText": "={{ $('dados').item.json.tipo_intervencao }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{descricao_servicos_realizados}",
+              "replaceText": "={{ $('dados').item.json.descricao_servicos }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{data0}",
+              "replaceText": "={{ $now.format('dd/LL/yyyy') }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{data}",
+              "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.primeiraData \n    ? new Date($('Soma horas1').item.json.mao_de_obra.primeiraData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' \n}} - {{ $('Soma horas1').item.json.mao_de_obra.ultimaData \n    ? new Date($('Soma horas1').item.json.mao_de_obra.ultimaData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{medicalspin}",
+              "replaceText": "={{ $('dados').item.json.pendencias_ms }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cliente}",
+              "replaceText": "={{ $('dados').item.json.pendencias_cliente }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{antes_intervencao}",
+              "replaceText": "={{ $('dados').item.json.estado_inicial }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{apos_intervensao}",
+              "replaceText": "={{ $('dados').item.json.estado_final }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cidade_realizacao}",
+              "replaceText": "={{ $('dados1').item.json.cidade_assinatura }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{uf_realizacao}",
+              "replaceText": "={{ $('dados1').item.json.uf_assinatura }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{tecnico_responsavel}",
+              "replaceText": "={{ $('dados').item.json.nome_tecnico }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{cft}",
+              "replaceText": "={{ $('dados').item.json.cft_tecnico }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{recebedor}",
+              "replaceText": "={{ $('dados1').item.json.responsavel_assinatura }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{efetivo}",
+              "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.totalEfetivo.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{contingencial}",
+              "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.totalContingencial.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{total}",
+              "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.totalGeral.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{fotos}",
+              "replaceText": "N/A"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{fantasia}",
+              "replaceText": "={{ $('dados').item.json.nome_fantasia }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{tipo_equipamento}",
+              "replaceText": "={{ $('dados').item.json.tipo_equipamento }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_inseridas_cliente}",
+              "replaceText": "={{ \n  $('dados').item.json.pecas_cliente.inclusas && $('dados').item.json.pecas_cliente.inclusas.length\n    ? $('dados').item.json.pecas_cliente.inclusas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{partes_inseridas_medicalspin}",
+              "replaceText": "={{ \n  $('dados').item.json.pecas_medical_spin.inclusas && $('dados').item.json.pecas_medical_spin.inclusas.length\n    ? $('dados').item.json.pecas_medical_spin.inclusas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1376,
+        160
+      ],
+      "id": "4217395b-3272-41bf-a298-8322688542b9",
+      "name": "Atualiza documento2",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $('Copia  o arquivo').item.json.id }}",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        160
+      ],
+      "id": "0bbc1381-6a6f-4a2b-9b39-27944b49138e",
+      "name": "Pega o documento2",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7uUks2OM1WgLSPNJ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens do nó \"dados\"\nconst dados = $('dados').all();\n\n// Retorna exatamente o que veio do nó \"dados\"\nreturn dados;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        160
+      ],
+      "id": "62f83f12-ca98-401c-a1e2-ec10ee86dea0",
+      "name": "dados1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Entrada\nconst data = items[0].json;\n\n// Função utilitária para aplicar \"N/A\"\nconst na = v => {\n  if (v === undefined || v === null) return \"N/A\";\n  if (typeof v === \"string\" && v.trim() === \"\") return \"N/A\";\n  if (Array.isArray(v)) {\n    if (v.length === 0) return \"N/A\";\n    if (v.every(item => typeof item === \"object\" && Object.keys(item).length === 0)) return \"N/A\";\n  }\n  if (typeof v === \"object\" && Object.keys(v).length === 0) return \"N/A\";\n  return v;\n};\n\n// Arrays de peças\nconst pecas_cliente = na(data.pecas_cliente);\nconst pecas_ms = na(data.pecas_ms);\n\n// ---- MÃO DE OBRA (AGORA CORRETA) ----\nconst mao = data.mao_de_obra || {};\n\nlet datas = [];\nlet totalEfetivo = 0;\nlet totalContingencial = 0;\n\n// Suporta até 50 registros\nfor (let i = 1; i <= 50; i++) {\n  const dataKey = `data${i}`;\n  const efKey = `hh_efetivo${i}`;\n  const ctKey = `hh_contingencial${i}`;\n\n  if (mao[dataKey]) {\n    datas.push(mao[dataKey]);\n    totalEfetivo += Number(mao[efKey] || 0);\n    totalContingencial += Number(mao[ctKey] || 0);\n  }\n}\n\n// Ordena datas corretamente\ndatas.sort((a, b) => new Date(a) - new Date(b));\n\nconst primeiraData = na(datas[0]);\nconst ultimaData = na(datas[datas.length - 1]);\n\nconst totalEfetivoFinal = datas.length > 0 ? totalEfetivo : \"N/A\";\nconst totalContingencialFinal = datas.length > 0 ? totalContingencial : \"N/A\";\nconst totalGeralFinal =\n  datas.length > 0 ? totalEfetivo + totalContingencial : \"N/A\";\n\n// ---- RETORNO FINAL ----\nreturn [\n  {\n    json: {\n      pecas_cliente,\n      pecas_medical_spin: pecas_ms,\n      mao_de_obra: {\n        primeiraData,\n        ultimaData,\n        totalEfetivo: totalEfetivoFinal,\n        totalContingencial: totalContingencialFinal,\n        totalGeral: totalGeralFinal\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1024,
+        160
+      ],
+      "id": "0c671e06-412e-4f4b-a0aa-49b576d1f449",
+      "name": "Soma horas1"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Cria pasta').item.json.name }}",
+        "driveId": {
+          "__rl": true,
+          "value": "={{ $('Cria pasta').item.json.driveId }}",
+          "mode": "id"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Cria pasta').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1728,
+        160
+      ],
+      "id": "0e5c61e8-8e12-47da-8505-ff8e4e7eb59a",
+      "name": "Upload file1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.documentId }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1552,
+        160
+      ],
+      "id": "c8b5c876-6bf6-4e09-a747-f2bd9fc32952",
+      "name": "Download file1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cdd26832-a245-46f5-ae40-9c1c73ee68c5",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "9c1c92b4-c090-400c-952b-40aa56ee5824",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "a3722cd0-8dab-4ba5-9a6a-800a6e113562",
+              "name": "Visualizar",
+              "value": "={{ $json.webViewLink }}",
+              "type": "string"
+            },
+            {
+              "id": "8af2696c-a413-4cea-afd2-e98ad4e9037b",
+              "name": "Download",
+              "value": "={{ $json.webContentLink }}",
+              "type": "string"
+            },
+            {
+              "id": "86bdeb1c-bfe5-4e0d-9169-ab0386314e01",
+              "name": "idOs",
+              "value": "={{ $('dados1').item.json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1920,
+        160
+      ],
+      "id": "fb32d3e8-10a8-4f79-b300-603eb4f86a3b",
+      "name": "Id e link"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cdd26832-a245-46f5-ae40-9c1c73ee68c5",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "9c1c92b4-c090-400c-952b-40aa56ee5824",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "a3722cd0-8dab-4ba5-9a6a-800a6e113562",
+              "name": "Visualizar",
+              "value": "={{ $json.webViewLink }}",
+              "type": "string"
+            },
+            {
+              "id": "0aa0aaf6-4eba-4b20-a2b4-c09723f5bfb9",
+              "name": "Download",
+              "value": "={{ $json.webContentLink }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4400,
+        -192
+      ],
+      "id": "af9030b9-89f7-4e78-afc1-929e08380ee6",
+      "name": "Id e link1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0",
+          "mode": "list",
+          "cachedResultName": "OS_DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 824063472,
+          "mode": "list",
+          "cachedResultName": "DB_OS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit#gid=824063472"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "OS NOME": "={{ $('Id e link').item.json.name }}",
+            "OS LINK": "={{ $('Id e link').item.json.Download }}",
+            "DATA CADASTRO OS": "={{ $now.format('dd/LL/yyyy T') }}",
+            "ID": "={{ $json.idOs }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OS NOME",
+              "displayName": "OS NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OS LINK",
+              "displayName": "OS LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA CADASTRO OS",
+              "displayName": "DATA CADASTRO OS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2128,
+        160
+      ],
+      "id": "e1726742-d288-4bb3-a238-949b5bef332e",
+      "name": "DB7",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens do nó \"dados\"\nconst dados = $('dados').all();\n\n// Retorna exatamente o que veio do nó \"dados\"\nreturn dados;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4576,
+        -192
+      ],
+      "id": "5ab47815-680d-45a4-840e-e35001303cc8",
+      "name": "dados2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0",
+          "mode": "list",
+          "cachedResultName": "OS_DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 824063472,
+          "mode": "list",
+          "cachedResultName": "DB_OS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit#gid=824063472"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "OS NOME": "={{ $('Id e link1').item.json.name }}",
+            "OS LINK": "={{ $('Id e link1').item.json.Download }}",
+            "DATA CADASTRO OS": "={{ $now.format('dd/LL/yyyy T') }}",
+            "ID": "={{ $json.id }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OS NOME",
+              "displayName": "OS NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OS LINK",
+              "displayName": "OS LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA CADASTRO OS",
+              "displayName": "DATA CADASTRO OS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4768,
+        -192
+      ],
+      "id": "f9998d69-7438-4cc2-9363-cb3032b88960",
+      "name": "DB10",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "writer",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -192,
+        -32
+      ],
+      "id": "06d414e7-32d8-4756-8102-dc0e896e1d76",
+      "name": "Torna publico1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "writer",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1920,
+        304
+      ],
+      "id": "5410b5d3-20fc-4b10-8237-fb8c705c25ec",
+      "name": "Torna publico2",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{\n  'IMG_' +\n  $('dados').item.json.razao_social\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .replace(/[^A-Za-z0-9 ]/g, '')\n    .trim()\n    .replace(/\\s+/g, '_')\n    .toUpperCase()\n    .substring(0, 30)\n  + '_' +\n  $('dados').item.json.cnpj.replace(/\\D/g, '') +\n  '_' +\n  $now.format('dd-MM-yyyy')\n}}",
+        "driveId": {
+          "__rl": true,
+          "value": "={{ $json.driveId }}",
+          "mode": "id"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        0,
+        -176
+      ],
+      "id": "b5c85180-795f-4d60-bcc4-230ab14694e3",
+      "name": "Cria pasta1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "writer",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        0,
+        -32
+      ],
+      "id": "e55dafa8-4159-4f44-9b61-d2c5efa64a36",
+      "name": "Torna publico3",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "037c90b6-20f5-4105-b3e9-16c23926a36b",
+              "name": "mao_de_obra",
+              "value": "={{ \n  $('dados1').item.json.mao_de_obra.reduce((acc, item, index) => {\n    const i = index + 1;\n\n    acc['data' + i] = item.data || '';\n    acc['hh_efetivo' + i] = item.horas || '';\n    acc['hh_contingencial' + i] = item.horas || '';\n\n    return acc;\n  }, {})\n}}",
+              "type": "array"
+            },
+            {
+              "id": "1d6d9cf1-86bb-4d7a-8862-e6bc3cf12462",
+              "name": "pecas_cliente_removidas",
+              "value": "={{ $json.pecas_cliente.removidas.map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`).join(' / ') }}",
+              "type": "object"
+            },
+            {
+              "id": "b4a6d67c-7e76-4aa1-a1ef-7c26756c98c5",
+              "name": "pecas_cliente_inclusas",
+              "value": "={{ $json.pecas_cliente.inclusas.map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`).join(' / ') }}",
+              "type": "string"
+            },
+            {
+              "id": "59321d2a-6bde-4b9f-a466-e295035bbfa1",
+              "name": "pecas_medical_spin_removidas",
+              "value": "={{ $json.pecas_medical_spin.removidas.map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`).join(' / ') }}",
+              "type": "string"
+            },
+            {
+              "id": "f842c07a-359d-4d45-acca-5fcf51b60065",
+              "name": "pecas_medical_spin_inclusas",
+              "value": "={{ $json.pecas_medical_spin.inclusas.map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`).join(' / ') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": true
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        848,
+        160
+      ],
+      "id": "21cb5c16-814a-4276-a37a-a01d3cc52456",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "operation": "deleteFile",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Cria pasta1').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2128,
+        304
+      ],
+      "id": "ff51c205-67b5-4bca-ac43-8aeb7da5b972",
+      "name": "Deleta",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Yg0MqWhsgxFkLHnh",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "6c58efc2-699c-4c59-8be2-2b7169900363",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -608,
+        -784
+      ],
+      "id": "d314cde6-46e2-4178-99d3-46917eb3af10",
+      "name": "Webhook1",
+      "webhookId": "6c58efc2-699c-4c59-8be2-2b7169900363"
+    },
+    {
+      "parameters": {
+        "sendTo": "=suporte@medicalspin.com.br",
+        "subject": "={{ $json.body.assunto }}",
+        "emailType": "text",
+        "message": "=Olá {{ $json.body.cliente }}! Sua ordem de serviço foi gerada e está disponível no link abaixo:\n\n{{ $json.body.linkDownload }}",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -416,
+        -912
+      ],
+      "id": "754bf2c7-8d2a-4156-b7ca-c69121f99124",
+      "name": "Send a message2",
+      "webhookId": "f2423354-0a17-4996-b6c3-7512ca3b739f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json[\"body.emails\"] }}",
+        "subject": "={{ $('Webhook1').item.json.body.assunto }}",
+        "emailType": "text",
+        "message": "=Olá {{ $('Webhook1').item.json.body.cliente }}! Sua ordem de serviço foi gerada e está disponível no link abaixo:\n\n{{ $('Webhook1').item.json.body.linkDownload }}",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        240,
+        -768
+      ],
+      "id": "560560cf-e755-4b52-be57-aeb8b779ac9f",
+      "name": "Send a message3",
+      "webhookId": "f2423354-0a17-4996-b6c3-7512ca3b739f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body.emails",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -768
+      ],
+      "id": "6faf396b-0e9b-4b9e-9f5e-939f630df780",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "899992a6-03c3-4b24-a8c8-6193fff0a853",
+              "leftValue": "={{ $json.body.emails }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "array",
+                "operation": "lengthEquals",
+                "rightType": "number"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -288,
+        -784
+      ],
+      "id": "6721f7b7-23a4-4c91-b51b-a5556d8d0f50",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.body.emails[0] }}",
+        "subject": "={{ $('Webhook1').item.json.body.assunto }}",
+        "emailType": "text",
+        "message": "=Olá {{ $json.body.cliente }}! Sua ordem de serviço foi gerada e está disponível no link abaixo:\n\n{{ $json.body.linkDownload }}",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -80,
+        -912
+      ],
+      "id": "b1d9dc68-448a-4b3b-84e6-121be008598b",
+      "name": "Send a message4",
+      "webhookId": "f2423354-0a17-4996-b6c3-7512ca3b739f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "40aa4c15-e9ff-4960-a1ee-94a8b6fdf64b",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -784,
+        -432
+      ],
+      "id": "6b4f68a9-4081-4713-ba3e-36a2ff23caa5",
+      "name": "Webhook2",
+      "webhookId": "40aa4c15-e9ff-4960-a1ee-94a8b6fdf64b"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0",
+          "mode": "list",
+          "cachedResultName": "OS_DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 824063472,
+          "mode": "list",
+          "cachedResultName": "DB_OS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit#gid=824063472"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "ID",
+              "lookupValue": "={{ $json.body.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -576,
+        -432
+      ],
+      "id": "5575d7f6-d335-4c89-8fe6-80241a22f954",
+      "name": "DB",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0",
+          "mode": "list",
+          "cachedResultName": "OS_DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 824063472,
+          "mode": "list",
+          "cachedResultName": "DB_OS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit#gid=824063472"
+        },
+        "startIndex": "={{ $json.row_number }}"
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -384,
+        -432
+      ],
+      "id": "0a0efc1a-d1fb-4f90-93f4-ceaa95241152",
+      "name": "DB1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.linkDownload }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -608,
+        -912
+      ],
+      "id": "9fce30a8-e967-455a-b824-1689caaa6b3a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Webhook1').item.json.body.linkDownload }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        80,
+        -768
+      ],
+      "id": "7319fea7-a6d8-4538-845e-3784e2f69454",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.linkDownload }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -224,
+        -912
+      ],
+      "id": "953628bf-3fdd-446f-88ae-756e035ab4cf",
+      "name": "HTTP Request2"
+    }
+  ],
+  "connections": {
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Id e link1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Soma horas": {
+      "main": [
+        [
+          {
+            "node": "Pega o documento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Soma horas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza documento1": {
+      "main": [
+        [
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Pega o documento1": {
+      "main": [
+        [
+          {
+            "node": "Placeholder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nome da imagem": {
+      "main": [
+        [
+          {
+            "node": "Procura imagens",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Imagens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Index": {
+      "main": [
+        [
+          {
+            "node": "Atualiza documento1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Cola imagem no documento": {
+      "main": [
+        [
+          {
+            "node": "Percorre os itens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Id e Name?": {
+      "main": [
+        [
+          {
+            "node": "Cola imagem no documento",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Percorre os itens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Percorre os itens": {
+      "main": [
+        [
+          {
+            "node": "Remove duplicatas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Id e Name?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Separa itens": {
+      "main": [
+        [
+          {
+            "node": "Percorre os itens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unir tudo": {
+      "main": [
+        [
+          {
+            "node": "Separa itens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza documento": {
+      "main": [
+        [
+          {
+            "node": "Pega o documento1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Placeholder": {
+      "main": [
+        [
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Index",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pega o documento": {
+      "main": [
+        [
+          {
+            "node": "Atualiza documento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Junta repeticoes": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procura imagens": {
+      "main": [
+        [
+          {
+            "node": "Junta repeticoes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Torna publico": {
+      "main": [
+        [
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "midia": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copia  o arquivo": {
+      "main": [
+        [
+          {
+            "node": "midia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria pasta": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Torna publico1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Cria pasta1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Imagens": {
+      "main": [
+        [
+          {
+            "node": "Unir tudo",
+            "type": "main",
+            "index": 3
+          },
+          {
+            "node": "Torna publico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adiciona imagem": {
+      "main": [
+        [
+          {
+            "node": "Nome da imagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados": {
+      "main": [
+        [
+          {
+            "node": "Cria pasta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Adiciona imagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove duplicatas": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "dados1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza documento2": {
+      "main": [
+        [
+          {
+            "node": "Download file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pega o documento2": {
+      "main": [
+        [
+          {
+            "node": "Atualiza documento2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Soma horas1": {
+      "main": [
+        [
+          {
+            "node": "Pega o documento2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file1": {
+      "main": [
+        [
+          {
+            "node": "Id e link",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Torna publico2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file1": {
+      "main": [
+        [
+          {
+            "node": "Upload file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Id e link": {
+      "main": [
+        [
+          {
+            "node": "DB7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Id e link1": {
+      "main": [
+        [
+          {
+            "node": "dados2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados2": {
+      "main": [
+        [
+          {
+            "node": "DB10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria pasta1": {
+      "main": [
+        [
+          {
+            "node": "Copia  o arquivo",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Torna publico3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Soma horas1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Torna publico2": {
+      "main": [
+        [
+          {
+            "node": "Deleta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        []
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook2": {
+      "main": [
+        [
+          {
+            "node": "DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DB": {
+      "main": [
+        [
+          {
+            "node": "DB1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DB1": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Send a message4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+            "content-length": "399",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "http://localhost:3000",
+            "priority": "u=1, i",
+            "referer": "http://localhost:3000/",
+            "sec-ch-ua": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "45.233.99.27",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.99.27"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "email": "lwendel003@gmail.com",
+            "emails": [
+              "lwendel003@gmail.com"
+            ],
+            "assunto": "Ordem de Servico OS_teste_12345678910111_09-02-2026_12h15 - teste",
+            "osNumero": "OS_teste_12345678910111_09-02-2026_12h15",
+            "cliente": "teste",
+            "equipamento": "Ressonância Magnética",
+            "dataFinalizacao": "2026-02-09T12:15:04.839Z",
+            "linkDownload": "https://drive.google.com/uc?id=10w1jzPEbtH6xQdZv9w9xUHdioqFOpaDf&export=download"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/6c58efc2-699c-4c59-8be2-2b7169900363",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+            "content-length": "18544",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "http://localhost:3000",
+            "priority": "u=1, i",
+            "referer": "http://localhost:3000/",
+            "sec-ch-ua": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "45.233.99.27",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.99.27"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "os": {
+              "id": "c0648ed8-0803-473c-90d7-7519d65a2205",
+              "numero": "OS_teste_12345678910111_09-02-2026_09h39",
+              "status": "finalizada",
+              "criadoEm": "2026-02-09T12:37:56.274Z",
+              "finalizadoEm": "2026-02-09T12:40:03.607Z"
+            },
+            "empresa": {
+              "razaoSocial": "teste",
+              "nomeFantasia": "teste",
+              "cnpj": "12.345.678/9101-11",
+              "cidade": "Aracaju",
+              "uf": "SE",
+              "telefone": "79999801810",
+              "email": "lwendel003@gmail.com",
+              "emails": [
+                "lwendel003@gmail.com",
+                "desenvmedicalspin@gmail.com"
+              ],
+              "responsavel": "teste"
+            },
+            "equipamento": {
+              "tipo": "Ressonância Magnética",
+              "fabricante": "Philips",
+              "modelo": "Achieva 1.5T",
+              "numeroSerie": "MR12345"
+            },
+            "motivo": {
+              "motivacaoServico": "d",
+              "eventosRelevantes": "d"
+            },
+            "intervencao": {
+              "tipo": "Outro",
+              "descricaoServicos": "d"
+            },
+            "pecas": [
+              {
+                "nome": "d",
+                "modeloRef": "d",
+                "numeroSerie": "d",
+                "observacoes": "",
+                "quantidade": 1,
+                "categoria": "cliente",
+                "tipo": "removida"
+              },
+              {
+                "nome": "d",
+                "modeloRef": "d",
+                "numeroSerie": "d",
+                "observacoes": "",
+                "quantidade": 1,
+                "categoria": "medical-spin",
+                "tipo": "removida"
+              },
+              {
+                "nome": "d",
+                "modeloRef": "d",
+                "numeroSerie": "d",
+                "observacoes": "",
+                "quantidade": 1,
+                "categoria": "cliente",
+                "tipo": "inclusa"
+              },
+              {
+                "nome": "d",
+                "modeloRef": "d",
+                "numeroSerie": "d",
+                "observacoes": "",
+                "quantidade": 1,
+                "categoria": "medical-spin",
+                "tipo": "inclusa"
+              }
+            ],
+            "maoDeObra": [
+              {
+                "data": "2026-02-09",
+                "descricao": "",
+                "horas": 1
+              }
+            ],
+            "pendencias": {
+              "medicalSpin": "d",
+              "cliente": "d"
+            },
+            "estadoEquipamento": {
+              "estadoInicial": "Funcional",
+              "estadoFinal": "Funcional"
+            },
+            "finalizacao": {
+              "cidade": "Aracaju",
+              "uf": "SE",
+              "nomeEngenheiro": "Julio Cesar",
+              "cftEngenheiro": "2000103820",
+              "nomeRecebedor": "teste",
+              "responsavel": "teste"
+            },
+            "imagens": [
+              {
+                "nome": "download.jpg",
+                "tipo": "image/jpeg",
+                "tamanho": 12702,
+                "base64": "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"
+              }
+            ]
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/c419cbce-7e20-4472-bcd9-577c1903e22f",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Webhook2": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+            "content-length": "170",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "http://localhost:3000",
+            "priority": "u=1, i",
+            "referer": "http://localhost:3000/",
+            "sec-ch-ua": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "45.233.99.27",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.99.27"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": "29243318-ddca-42fe-b2cf-2c2c2c339c59",
+            "idUnico": null,
+            "numero": "OS_teste_12345678910111_09-02-2026_10h24",
+            "cliente": "teste",
+            "excluidoEm": "2026-02-09T13:52:47.215Z"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/40aa4c15-e9ff-4960-a1ee-94a8b6fdf64b",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "versionId": "f76b94b5-5420-4359-86c6-35564aad2cdd",
+  "activeVersionId": "f76b94b5-5420-4359-86c6-35564aad2cdd",
+  "triggerCount": 3,
+  "shared": [
+    {
+      "updatedAt": "2026-01-06T10:33:49.394Z",
+      "createdAt": "2026-01-06T10:33:49.394Z",
+      "role": "workflow:owner",
+      "workflowId": "4ELlNa9icHFz6Rus",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-02-11T11:26:41.799Z",
+    "createdAt": "2026-02-11T11:26:39.168Z",
+    "versionId": "f76b94b5-5420-4359-86c6-35564aad2cdd",
+    "workflowId": "4ELlNa9icHFz6Rus",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "c419cbce-7e20-4472-bcd9-577c1903e22f",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -752,
+          -176
+        ],
+        "id": "dd7a5733-f334-4542-b959-9c4baef79430",
+        "name": "Webhook",
+        "webhookId": "c419cbce-7e20-4472-bcd9-577c1903e22f"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "91e7da4f-3369-4523-aa7e-5af7625e0fe6",
+                "name": "driveId",
+                "value": "={{ $json.driveId }}",
+                "type": "string"
+              },
+              {
+                "id": "dce65960-5811-465f-b3b3-76d038f27f2e",
+                "name": "fileid",
+                "value": "={{ $json.id }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          384,
+          16
+        ],
+        "id": "776f44a6-4a06-404d-aa54-bb22a161a123",
+        "name": "Edit Fields1"
+      },
+      {
+        "parameters": {
+          "name": "={{ $('Remove duplicatas').item.json.folderName }}",
+          "driveId": {
+            "__rl": true,
+            "value": "={{ $('Remove duplicatas').item.json.driveId }}",
+            "mode": "id"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Remove duplicatas').item.json.fileId }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          4192,
+          -192
+        ],
+        "id": "dc82433f-cc0a-4854-81e3-4d3fd9ab038b",
+        "name": "Upload file",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "download",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.documentId }}",
+            "mode": "id"
+          },
+          "options": {
+            "googleFileConversion": {
+              "conversion": {
+                "docsToFormat": "application/pdf"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          3984,
+          -192
+        ],
+        "id": "837a12c3-6141-4f55-9079-df1e86c1dce7",
+        "name": "Download file",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Entrada\nconst data = items[0].json;\n\n// Função utilitária para aplicar \"N/A\"\nconst na = v => {\n  if (v === undefined || v === null) return \"N/A\";\n  if (typeof v === \"string\" && v.trim() === \"\") return \"N/A\";\n  if (Array.isArray(v)) {\n    if (v.length === 0) return \"N/A\";\n    if (v.every(item => typeof item === \"object\" && Object.keys(item).length === 0)) return \"N/A\";\n  }\n  if (typeof v === \"object\" && Object.keys(v).length === 0) return \"N/A\";\n  return v;\n};\n\n// Arrays de peças\nconst pecas_cliente = na(data.pecas_cliente);\nconst pecas_ms = na(data.pecas_ms);\n\n// ---- MÃO DE OBRA (AGORA CORRETA) ----\nconst mao = data.mao_de_obra || {};\n\nlet datas = [];\nlet totalEfetivo = 0;\nlet totalContingencial = 0;\n\n// Suporta até 50 registros\nfor (let i = 1; i <= 50; i++) {\n  const dataKey = `data${i}`;\n  const efKey = `hh_efetivo${i}`;\n  const ctKey = `hh_contingencial${i}`;\n\n  if (mao[dataKey]) {\n    datas.push(mao[dataKey]);\n    totalEfetivo += Number(mao[efKey] || 0);\n    totalContingencial += Number(mao[ctKey] || 0);\n  }\n}\n\n// Ordena datas corretamente\ndatas.sort((a, b) => new Date(a) - new Date(b));\n\nconst primeiraData = na(datas[0]);\nconst ultimaData = na(datas[datas.length - 1]);\n\nconst totalEfetivoFinal = datas.length > 0 ? totalEfetivo : \"N/A\";\nconst totalContingencialFinal = datas.length > 0 ? totalContingencial : \"N/A\";\nconst totalGeralFinal =\n  datas.length > 0 ? totalEfetivo + totalContingencial : \"N/A\";\n\n// ---- RETORNO FINAL ----\nreturn [\n  {\n    json: {\n      pecas_cliente,\n      pecas_medical_spin: pecas_ms,\n      mao_de_obra: {\n        primeiraData,\n        ultimaData,\n        totalEfetivo: totalEfetivoFinal,\n        totalContingencial: totalContingencialFinal,\n        totalGeral: totalGeralFinal\n      }\n    }\n  }\n];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1952,
+          -192
+        ],
+        "id": "31ea9d1d-f9e0-4e70-bd9a-388b94366ec6",
+        "name": "Soma horas"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "19409568-d828-48fc-896d-2eb240efc327",
+                "name": "pecas_cliente",
+                "value": "={{ \n  $('dados').item.json.pecas_cliente.reduce((acc, item, index) => {\n    const i = index + 1;\n    acc['nome' + i] = item.nome || '';\n    acc['modelo' + i] = item.modeloRef || '';\n    acc['sn' + i] = item.numeroSerie || '';\n    acc['detalhes' + i] = item.observacoes || '';\n    return acc;\n  }, {})\n}}",
+                "type": "array"
+              },
+              {
+                "id": "bda07dd3-5584-4644-9f3c-c9cfc6fbd109",
+                "name": "pecas_ms",
+                "value": "={{ \n  $('dados').item.json.pecas_ms.reduce((acc, item, index) => {\n    const i = index + 1;\n    acc['nome' + i] = item.nome || '';\n    acc['modelo' + i] = item.modeloRef || '';\n    acc['sn' + i] = item.numeroSerie || '';\n    acc['detalhes' + i] = item.observacoes || '';\n    return acc;\n  }, {})\n}}",
+                "type": "array"
+              },
+              {
+                "id": "037c90b6-20f5-4105-b3e9-16c23926a36b",
+                "name": "mao_de_obra",
+                "value": "={{ \n  $('dados').item.json.mao_de_obra.reduce((acc, item, index) => {\n    const i = index + 1;\n\n    acc['data' + i] = item.data || '';\n    acc['hh_efetivo' + i] = item.horas || '';\n    acc['hh_contingencial' + i] = item.horas || '';\n\n    return acc;\n  }, {})\n}}",
+                "type": "array"
+              }
+            ]
+          },
+          "options": {
+            "ignoreConversionErrors": true
+          }
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1760,
+          -192
+        ],
+        "id": "4f6f7a26-523d-4010-9d63-35a2ac77c710",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "documentURL": "={{ $('Pega o documento').item.json.documentId }}",
+          "actionsUi": {
+            "actionFields": [
+              {
+                "action": "replaceAll",
+                "text": "={{ $('Placeholder').item.json.placeholder }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.googleDocs",
+        "typeVersion": 2,
+        "position": [
+          2992,
+          -192
+        ],
+        "id": "e031c9e8-e15a-4282-b503-549694d096db",
+        "name": "Atualiza documento1",
+        "credentials": {
+          "googleDocsOAuth2Api": {
+            "id": "7uUks2OM1WgLSPNJ",
+            "name": "Google Docs account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "documentURL": "={{ $('Copia  o arquivo').item.json.id }}",
+          "simple": false
+        },
+        "type": "n8n-nodes-base.googleDocs",
+        "typeVersion": 2,
+        "position": [
+          2464,
+          -192
+        ],
+        "id": "b72582a8-f081-423f-8432-0cfe9b727cf3",
+        "name": "Pega o documento1",
+        "credentials": {
+          "googleDocsOAuth2Api": {
+            "id": "7uUks2OM1WgLSPNJ",
+            "name": "Google Docs account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "9ea726e0-f65f-40c9-8372-f35482aa393f",
+                "name": "nome",
+                "value": "={{ $('Split Out').item.json.nome }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1200,
+          -192
+        ],
+        "id": "ebbbbf04-eaf4-46ed-89b7-de4b09e2e2f6",
+        "name": "Nome da imagem"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "14010743-1e77-4a33-8d67-19d0a442d36f",
+                "name": "Index",
+                "value": "={{ $('Pega o documento1').item.json.body.content[25].paragraph.elements[0].startIndex }}",
+                "type": "number"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2816,
+          -192
+        ],
+        "id": "401f9320-8da0-487c-b0ef-bc154f4e7b20",
+        "name": "Index"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://docs.googleapis.com/v1/documents/{{ $json.documentId }}:batchUpdate",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googleDocsOAuth2Api",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"requests\": [\n    {\n      \"insertInlineImage\": {\n        \"location\": {\n          \"index\": {{ $json.index }}\n        },\n        \"uri\": \"https://drive.google.com/uc?export=view&id={{ $json.id }}\",\n        \"objectSize\": {\n          \"height\": {\n            \"magnitude\": 200,\n            \"unit\": \"PT\"\n          },\n          \"width\": {\n            \"magnitude\": 200,\n            \"unit\": \"PT\"\n          }\n        }\n      }\n    }\n  ]\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          3984,
+          -48
+        ],
+        "id": "aa5a3416-0ddc-44e2-8239-30f6a04dd1cd",
+        "name": "Cola imagem no documento",
+        "credentials": {
+          "googleDocsOAuth2Api": {
+            "id": "7uUks2OM1WgLSPNJ",
+            "name": "Google Docs account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "c6827f38-85e7-4810-b143-a5dab53ee0d9",
+                "leftValue": "={{ $json.id }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "929c970b-837b-4fa0-ac3e-c62b8b1aa1a0",
+                "leftValue": "={{ $json.name }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          3792,
+          -32
+        ],
+        "id": "d66acf8b-6ba1-430b-aa80-b386ce959908",
+        "name": "Id e Name?"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          3568,
+          -48
+        ],
+        "id": "57ec2d10-bb63-4378-8427-e537ef0f1b0a",
+        "name": "Percorre os itens"
+      },
+      {
+        "parameters": {
+          "jsCode": "const data = items.map(i => i.json);\n\n// Extrai info fixa (uma vez só)\nconst placeholder = data.find(d => d.placeholder)?.placeholder || null;\nconst index = data.find(d => d.Index !== undefined)?.Index || null;\nconst documentId = data.find(d => d.documentId)?.documentId || null;\n\n// Extrai driveId e fileid (únicos)\nconst driveId = data.find(d => d.driveId)?.driveId || null;\nconst fileid = data.find(d => d.fileid)?.fileid || null;\n\n// Pega todos os blocos com id + name\nconst arquivos = data.filter(d => d.id && d.name);\n\n// Remove duplicados por id\nconst ids = new Set();\nconst unicos = arquivos.filter(a => {\n  if (ids.has(a.id)) return false;\n  ids.add(a.id);\n  return true;\n});\n\n// Cria novo array de items no formato pedido\nreturn unicos.map(a => ({\n  json: {\n    placeholder,\n    index,\n    documentId,\n    driveId,\n    fileid,\n    id: a.id,\n    name: a.name\n  }\n}));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3408,
+          -48
+        ],
+        "id": "8e3ab6b2-0275-41f4-ba26-4095de48a6bd",
+        "name": "Separa itens"
+      },
+      {
+        "parameters": {
+          "numberInputs": 6
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          3232,
+          -112
+        ],
+        "id": "2f72ccc7-ab9b-4e6c-ab0f-3d50e55cae70",
+        "name": "Unir tudo"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "documentURL": "={{ $('Pega o documento').item.json.documentId }}",
+          "actionsUi": {
+            "actionFields": [
+              {
+                "object": "=text",
+                "action": "replaceAll",
+                "text": "{razao_social}",
+                "replaceText": "={{ $('dados').item.json.razao_social }}",
+                "index": 0
+              },
+              {
+                "action": "replaceAll",
+                "text": "{cnpj}",
+                "replaceText": "={{ $('dados').item.json.cnpj }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{cidade}",
+                "replaceText": "={{ $('dados').item.json.cidade }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{uf}",
+                "replaceText": "={{ $('dados').item.json.uf }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{nome_do_solicitante}",
+                "replaceText": "={{ $('dados').item.json.responsavel }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{fabricante}",
+                "replaceText": "={{ $('dados').item.json.fabricante }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{modelo}",
+                "replaceText": "={{ $('dados').item.json.modelo }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{serie}",
+                "replaceText": "={{ $('dados').item.json.serie }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{motivacao_servico}",
+                "replaceText": "={{ $('dados').item.json.motivacao }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{eventos_r_relacionados}",
+                "replaceText": "={{ $('dados').item.json.eventos }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{partes_removidas_cliente}",
+                "replaceText": "={{ \n  $('dados').item.json.pecas_cliente.removidas && $('dados').item.json.pecas_cliente.removidas.length\n    ? $('dados').item.json.pecas_cliente.removidas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{partes_removidas_medicalspin}",
+                "replaceText": "={{ \n  $('dados').item.json.pecas_medical_spin.removidas && $('dados').item.json.pecas_medical_spin.removidas.length\n    ? $('dados').item.json.pecas_medical_spin.removidas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{tipo_intervencao}",
+                "replaceText": "={{ $('dados').item.json.tipo_intervencao }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{descricao_servicos_realizados}",
+                "replaceText": "={{ $('dados').item.json.descricao_servicos }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{data0}",
+                "replaceText": "={{ $now.format('dd/LL/yyyy') }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{data}",
+                "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.primeiraData \n    ? new Date($('Soma horas').item.json.mao_de_obra.primeiraData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' \n}} - {{ $('Soma horas').item.json.mao_de_obra.ultimaData \n    ? new Date($('Soma horas').item.json.mao_de_obra.ultimaData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{medicalspin}",
+                "replaceText": "={{ $('dados').item.json.pendencias_ms }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{cliente}",
+                "replaceText": "={{ $('dados').item.json.pendencias_cliente }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{antes_intervencao}",
+                "replaceText": "={{ $('dados').item.json.estado_inicial }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{apos_intervensao}",
+                "replaceText": "={{ $('dados').item.json.estado_final }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{cidade_realizacao}",
+                "replaceText": "={{ $('dados').item.json.cidade_assinatura }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{uf_realizacao}",
+                "replaceText": "={{ $('dados').item.json.uf_assinatura }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{tecnico_responsavel}",
+                "replaceText": "={{ $('dados').item.json.nome_tecnico }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{cft}",
+                "replaceText": "={{ $('dados').item.json.cft_tecnico }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{recebedor}",
+                "replaceText": "={{ $('dados').item.json.responsavel_assinatura }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{efetivo}",
+                "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.totalEfetivo.toString() }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{contingencial}",
+                "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.totalContingencial.toString() }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{total}",
+                "replaceText": "={{ $('Soma horas').item.json.mao_de_obra.totalGeral.toString() }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{fantasia}",
+                "replaceText": "={{ $('dados').item.json.nome_fantasia }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{tipo_equipamento}",
+                "replaceText": "={{ $('dados').item.json.tipo_equipamento }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{partes_inseridas_cliente}",
+                "replaceText": "={{ \n  $('dados').item.json.pecas_cliente.inclusas && $('dados').item.json.pecas_cliente.inclusas.length\n    ? $('dados').item.json.pecas_cliente.inclusas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}\n"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{partes_inseridas_medicalspin}",
+                "replaceText": "={{ \n  $('dados').item.json.pecas_medical_spin.inclusas && $('dados').item.json.pecas_medical_spin.inclusas.length\n    ? $('dados').item.json.pecas_medical_spin.inclusas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.googleDocs",
+        "typeVersion": 2,
+        "position": [
+          2304,
+          -192
+        ],
+        "id": "7f6c2759-90f1-46f0-89f1-c6efeb44df41",
+        "name": "Atualiza documento",
+        "credentials": {
+          "googleDocsOAuth2Api": {
+            "id": "7uUks2OM1WgLSPNJ",
+            "name": "Google Docs account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6fdcebc1-c772-40a8-bfc1-22584c6c2f93",
+                "name": "placeholder",
+                "value": "{fotos}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2640,
+          -192
+        ],
+        "id": "8d740cbc-aeb9-4871-93fa-6296e6567f8c",
+        "name": "Placeholder"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "documentURL": "={{ $('Copia  o arquivo').item.json.id }}",
+          "simple": false
+        },
+        "type": "n8n-nodes-base.googleDocs",
+        "typeVersion": 2,
+        "position": [
+          2128,
+          -192
+        ],
+        "id": "66a021d1-a04c-4ade-a6d5-07b36558cbf1",
+        "name": "Pega o documento",
+        "credentials": {
+          "googleDocsOAuth2Api": {
+            "id": "7uUks2OM1WgLSPNJ",
+            "name": "Google Docs account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Remove duplicados pelo campo \"id\"\nconst seen = new Set();\n\nconst unique = items.filter(item => {\n  const id = item.json.id;\n  if (seen.has(id)) return false;\n  seen.add(id);\n  return true;\n});\n\n// Retorna apenas os itens únicos\nreturn unique;\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1552,
+          -192
+        ],
+        "id": "a7e3fb9e-6c3f-4b8a-a40e-b1ecb298a54b",
+        "name": "Junta repeticoes"
+      },
+      {
+        "parameters": {
+          "resource": "fileFolder",
+          "queryString": "={{ $('Cria pasta1').item.json.name }}",
+          "limit": "={{ $items().filter(i => i.json.nome).length }}",
+          "filter": {
+            "folderId": {
+              "__rl": true,
+              "value": "={{ $('Cria pasta').item.json.id }}",
+              "mode": "id"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1376,
+          -192
+        ],
+        "id": "65ad52d3-715d-49a4-bfb5-3f073e584d96",
+        "name": "Procura imagens",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "share",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "permissionsUi": {
+            "permissionsValues": {
+              "role": "writer",
+              "type": "anyone"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1552,
+          16
+        ],
+        "id": "96b6ac61-b0de-4dfc-a210-657966c72ac8",
+        "name": "Torna publico",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "4e8de6be-f93a-4806-897e-9cd6a0e9886a",
+                "name": "midias",
+                "value": "={{ $('dados').item.json.midias }}",
+                "type": "object"
+              }
+            ]
+          },
+          "options": {
+            "ignoreConversionErrors": true
+          }
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          320,
+          -176
+        ],
+        "id": "e7fdae49-3011-4001-9751-a11757227766",
+        "name": "midia"
+      },
+      {
+        "parameters": {
+          "operation": "copy",
+          "fileId": {
+            "__rl": true,
+            "value": "1zyQzlhzDDsDONuzHqaT8Kql0riKMl2uPk79so4DXtYs",
+            "mode": "list",
+            "cachedResultName": "OS_modelo",
+            "cachedResultUrl": "https://docs.google.com/document/d/1zyQzlhzDDsDONuzHqaT8Kql0riKMl2uPk79so4DXtYs/edit?usp=drivesdk"
+          },
+          "name": "=OS_{{ $('dados').item.json.razao_social }}_{{ $('dados').item.json.cnpj }}_{{ $now.format('dd-LL-yyyy') }}",
+          "sameFolder": false,
+          "driveId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/folders/1OQHRuBKVD3WypEIhvQmiq5B8rh7bvsoS",
+            "mode": "url"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Cria pasta').item.json.id }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          160,
+          -176
+        ],
+        "id": "6a3b185f-7505-4b8f-8f97-5bb11e7fad87",
+        "name": "Copia  o arquivo",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "folder",
+          "name": "={{\n  'OS_' +\n  $json.razao_social\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .replace(/[^A-Za-z0-9 ]/g, '')\n    .trim()\n    .replace(/\\s+/g, '_')\n    .toUpperCase()\n    .substring(0, 30)\n  + '_' +\n  $json.cnpj.replace(/\\D/g, '') +\n  '_' +\n  $now.format('dd-MM-yyyy')\n}}",
+          "driveId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/folders/1nAeEaoG6QNZq2fuonNJB7GluFIhOffL1",
+            "mode": "url"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/folders/1nAeEaoG6QNZq2fuonNJB7GluFIhOffL1",
+            "mode": "url"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          -192,
+          -176
+        ],
+        "id": "48ec6e51-53cf-4fda-bbd2-e4760d8974e2",
+        "name": "Cria pasta",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "fileFolder",
+          "queryString": "={{ $json.nome }}",
+          "limit": "={{ $items().filter(i => i.json.nome).length }}",
+          "filter": {
+            "folderId": {
+              "__rl": true,
+              "value": "={{ $('Cria pasta1').item.json.id }}",
+              "mode": "id"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1376,
+          -48
+        ],
+        "id": "af033bd1-26c9-4192-8700-8623142e45db",
+        "name": "Imagens",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "midias",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          672,
+          -192
+        ],
+        "id": "ff48f387-3c97-40f4-a019-e274282f60a5",
+        "name": "Split Out"
+      },
+      {
+        "parameters": {
+          "name": "={{ $('Split Out').item.json.nome }}",
+          "driveId": {
+            "__rl": true,
+            "value": "={{ $('Cria pasta1').item.json.driveId }}",
+            "mode": "id"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Cria pasta1').item.json.id }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1024,
+          -192
+        ],
+        "id": "af28c939-f9d3-4278-8521-90e5df324829",
+        "name": "Adiciona imagem",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const input = items[0].json.body;\n\n// normaliza peças\nconst pecas = (input.pecas || []).map(p => ({\n  nome: p.nome,\n  modelo_ref: p.modeloRef,\n  numero_serie: p.numeroSerie,\n  observacoes: p.observacoes,\n  quantidade: p.quantidade,\n  categoria: p.categoria, // cliente | medical-spin\n  tipo: p.tipo           // removida | inclusa\n}));\n\n// separação por categoria + tipo\nconst pecasCliente = {\n  removidas: pecas.filter(p => p.categoria === 'cliente' && p.tipo === 'removida'),\n  inclusas:  pecas.filter(p => p.categoria === 'cliente' && p.tipo === 'inclusa'),\n};\n\nconst pecasMs = {\n  removidas: pecas.filter(p => p.categoria === 'medical-spin' && p.tipo === 'removida'),\n  inclusas:  pecas.filter(p => p.categoria === 'medical-spin' && p.tipo === 'inclusa'),\n};\n\n// imagens já processadas (jpg + base64)\nconst midias = (input.imagens || []).map(img => ({\n  nome: img.fileName || img.nome,\n  tipo: img.mimeType || img.tipo,\n  tamanho: img.fileSize || img.tamanho,\n  base64: img.base64\n}));\n\nreturn [\n  {\n    json: {\n      id: input.os.id,\n      razao_social: input.empresa.razaoSocial,\n      nome_fantasia: input.empresa.nomeFantasia,\n      cnpj: input.empresa.cnpj,\n      cidade: input.empresa.cidade,\n      uf: input.empresa.uf,\n      telefone: input.empresa.telefone,\n      email: input.empresa.email,\n      responsavel: input.empresa.responsavel,\n\n      tipo_equipamento: input.equipamento.tipo,\n      fabricante: input.equipamento.fabricante,\n      modelo: input.equipamento.modelo,\n      serie: input.equipamento.numeroSerie,\n\n      motivacao: input.motivo.motivacaoServico,\n      eventos: input.motivo.eventosRelevantes,\n\n      tipo_intervencao: input.intervencao.tipo,\n      descricao_servicos: input.intervencao.descricaoServicos,\n\n      pendencias_ms: input.pendencias.medicalSpin,\n      pendencias_cliente: input.pendencias.cliente,\n\n      estado_inicial: input.estadoEquipamento.estadoInicial,\n      estado_final: input.estadoEquipamento.estadoFinal,\n\n      cidade_assinatura: input.finalizacao.cidade,\n      uf_assinatura: input.finalizacao.uf,\n      nome_tecnico: input.finalizacao.nomeEngenheiro,\n      cft_tecnico: input.finalizacao.cftEngenheiro,\n      responsavel_assinatura: input.finalizacao.nomeRecebedor,\n\n      midias,\n\n      pecas_cliente: pecasCliente,\n      pecas_medical_spin: pecasMs,\n\n      mao_de_obra: input.maoDeObra || []\n    }\n  }\n];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -352,
+          -176
+        ],
+        "id": "462ba989-9fea-4ba7-9f95-009ed50e92e8",
+        "name": "dados"
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "base64",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          848,
+          -192
+        ],
+        "id": "d9c6559a-c25a-4864-8b99-d2c9d1cfb5dc",
+        "name": "Convert to File"
+      },
+      {
+        "parameters": {
+          "jsCode": "const map = new Map();\n\n// Pega os valores externos\nconst driveId = $('Separa itens').first().json.driveId;\nconst fileId = $('Separa itens').first().json.fileid;\nconst folderName = $('Cria pasta').first().json.name;\n\nfor (const item of items) {\n  const docId = item.json.documentId;\n\n  if (!map.has(docId)) {\n    // adiciona o item + os novos campos\n    map.set(docId, {\n      ...item.json,\n      driveId,\n      fileId,\n      folderName,\n    });\n  }\n}\n\n// retorna 1 item por documentId\nreturn Array.from(map.values()).map(json => ({ json }));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3792,
+          -192
+        ],
+        "id": "feb8a107-c68f-4b74-acbd-b748aa1f40d8",
+        "name": "Remove duplicatas"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "4d8af4ea-6429-462d-a924-1e2a634d8775",
+                "leftValue": "={{ $json.midias }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "array",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "looseTypeValidation": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          496,
+          -176
+        ],
+        "id": "c26a370b-bcf1-4541-966e-fa566291a137",
+        "name": "If2"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "documentURL": "={{ $('Pega o documento2').item.json.documentId }}",
+          "actionsUi": {
+            "actionFields": [
+              {
+                "action": "replaceAll",
+                "text": "{razao_social}",
+                "replaceText": "={{ $('dados').item.json.razao_social }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{cnpj}",
+                "replaceText": "={{ $('dados').item.json.cnpj }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{cidade}",
+                "replaceText": "={{ $('dados').item.json.cidade }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{uf}",
+                "replaceText": "={{ $('dados').item.json.uf }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{nome_do_solicitante}",
+                "replaceText": "={{ $('dados').item.json.responsavel }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{fabricante}",
+                "replaceText": "={{ $('dados').item.json.fabricante }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{modelo}",
+                "replaceText": "={{ $('dados').item.json.modelo }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{serie}",
+                "replaceText": "={{ $('dados').item.json.serie }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{motivacao_servico}",
+                "replaceText": "={{ $('dados').item.json.motivacao }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{eventos_r_relacionados}",
+                "replaceText": "={{ $('dados').item.json.eventos }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{partes_removidas_cliente}",
+                "replaceText": "={{ \n  $('dados').item.json.pecas_cliente.removidas && $('dados').item.json.pecas_cliente.removidas.length\n    ? $('dados').item.json.pecas_cliente.removidas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{partes_removidas_medicalspin}",
+                "replaceText": "={{ \n  $('dados').item.json.pecas_medical_spin.removidas && $('dados').item.json.pecas_medical_spin.removidas.length\n    ? $('dados').item.json.pecas_medical_spin.removidas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{tipo_intervencao}",
+                "replaceText": "={{ $('dados').item.json.tipo_intervencao }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{descricao_servicos_realizados}",
+                "replaceText": "={{ $('dados').item.json.descricao_servicos }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{data0}",
+                "replaceText": "={{ $now.format('dd/LL/yyyy') }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{data}",
+                "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.primeiraData \n    ? new Date($('Soma horas1').item.json.mao_de_obra.primeiraData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' \n}} - {{ $('Soma horas1').item.json.mao_de_obra.ultimaData \n    ? new Date($('Soma horas1').item.json.mao_de_obra.ultimaData + 'T00:00:00').toLocaleDateString('pt-BR') \n    : '0' }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{medicalspin}",
+                "replaceText": "={{ $('dados').item.json.pendencias_ms }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{cliente}",
+                "replaceText": "={{ $('dados').item.json.pendencias_cliente }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{antes_intervencao}",
+                "replaceText": "={{ $('dados').item.json.estado_inicial }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{apos_intervensao}",
+                "replaceText": "={{ $('dados').item.json.estado_final }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{cidade_realizacao}",
+                "replaceText": "={{ $('dados1').item.json.cidade_assinatura }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{uf_realizacao}",
+                "replaceText": "={{ $('dados1').item.json.uf_assinatura }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{tecnico_responsavel}",
+                "replaceText": "={{ $('dados').item.json.nome_tecnico }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{cft}",
+                "replaceText": "={{ $('dados').item.json.cft_tecnico }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{recebedor}",
+                "replaceText": "={{ $('dados1').item.json.responsavel_assinatura }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{efetivo}",
+                "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.totalEfetivo.toString() }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{contingencial}",
+                "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.totalContingencial.toString() }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{total}",
+                "replaceText": "={{ $('Soma horas1').item.json.mao_de_obra.totalGeral.toString() }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{fotos}",
+                "replaceText": "N/A"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{fantasia}",
+                "replaceText": "={{ $('dados').item.json.nome_fantasia }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{tipo_equipamento}",
+                "replaceText": "={{ $('dados').item.json.tipo_equipamento }}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{partes_inseridas_cliente}",
+                "replaceText": "={{ \n  $('dados').item.json.pecas_cliente.inclusas && $('dados').item.json.pecas_cliente.inclusas.length\n    ? $('dados').item.json.pecas_cliente.inclusas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+              },
+              {
+                "action": "replaceAll",
+                "text": "{partes_inseridas_medicalspin}",
+                "replaceText": "={{ \n  $('dados').item.json.pecas_medical_spin.inclusas && $('dados').item.json.pecas_medical_spin.inclusas.length\n    ? $('dados').item.json.pecas_medical_spin.inclusas\n        .map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`)\n        .join(' / ')\n    : 'N/A'\n}}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.googleDocs",
+        "typeVersion": 2,
+        "position": [
+          1376,
+          160
+        ],
+        "id": "4217395b-3272-41bf-a298-8322688542b9",
+        "name": "Atualiza documento2",
+        "credentials": {
+          "googleDocsOAuth2Api": {
+            "id": "7uUks2OM1WgLSPNJ",
+            "name": "Google Docs account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "documentURL": "={{ $('Copia  o arquivo').item.json.id }}",
+          "simple": false
+        },
+        "type": "n8n-nodes-base.googleDocs",
+        "typeVersion": 2,
+        "position": [
+          1200,
+          160
+        ],
+        "id": "0bbc1381-6a6f-4a2b-9b39-27944b49138e",
+        "name": "Pega o documento2",
+        "credentials": {
+          "googleDocsOAuth2Api": {
+            "id": "7uUks2OM1WgLSPNJ",
+            "name": "Google Docs account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Pega todos os itens do nó \"dados\"\nconst dados = $('dados').all();\n\n// Retorna exatamente o que veio do nó \"dados\"\nreturn dados;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          672,
+          160
+        ],
+        "id": "62f83f12-ca98-401c-a1e2-ec10ee86dea0",
+        "name": "dados1"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Entrada\nconst data = items[0].json;\n\n// Função utilitária para aplicar \"N/A\"\nconst na = v => {\n  if (v === undefined || v === null) return \"N/A\";\n  if (typeof v === \"string\" && v.trim() === \"\") return \"N/A\";\n  if (Array.isArray(v)) {\n    if (v.length === 0) return \"N/A\";\n    if (v.every(item => typeof item === \"object\" && Object.keys(item).length === 0)) return \"N/A\";\n  }\n  if (typeof v === \"object\" && Object.keys(v).length === 0) return \"N/A\";\n  return v;\n};\n\n// Arrays de peças\nconst pecas_cliente = na(data.pecas_cliente);\nconst pecas_ms = na(data.pecas_ms);\n\n// ---- MÃO DE OBRA (AGORA CORRETA) ----\nconst mao = data.mao_de_obra || {};\n\nlet datas = [];\nlet totalEfetivo = 0;\nlet totalContingencial = 0;\n\n// Suporta até 50 registros\nfor (let i = 1; i <= 50; i++) {\n  const dataKey = `data${i}`;\n  const efKey = `hh_efetivo${i}`;\n  const ctKey = `hh_contingencial${i}`;\n\n  if (mao[dataKey]) {\n    datas.push(mao[dataKey]);\n    totalEfetivo += Number(mao[efKey] || 0);\n    totalContingencial += Number(mao[ctKey] || 0);\n  }\n}\n\n// Ordena datas corretamente\ndatas.sort((a, b) => new Date(a) - new Date(b));\n\nconst primeiraData = na(datas[0]);\nconst ultimaData = na(datas[datas.length - 1]);\n\nconst totalEfetivoFinal = datas.length > 0 ? totalEfetivo : \"N/A\";\nconst totalContingencialFinal = datas.length > 0 ? totalContingencial : \"N/A\";\nconst totalGeralFinal =\n  datas.length > 0 ? totalEfetivo + totalContingencial : \"N/A\";\n\n// ---- RETORNO FINAL ----\nreturn [\n  {\n    json: {\n      pecas_cliente,\n      pecas_medical_spin: pecas_ms,\n      mao_de_obra: {\n        primeiraData,\n        ultimaData,\n        totalEfetivo: totalEfetivoFinal,\n        totalContingencial: totalContingencialFinal,\n        totalGeral: totalGeralFinal\n      }\n    }\n  }\n];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1024,
+          160
+        ],
+        "id": "0c671e06-412e-4f4b-a0aa-49b576d1f449",
+        "name": "Soma horas1"
+      },
+      {
+        "parameters": {
+          "name": "={{ $('Cria pasta').item.json.name }}",
+          "driveId": {
+            "__rl": true,
+            "value": "={{ $('Cria pasta').item.json.driveId }}",
+            "mode": "id"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Cria pasta').item.json.id }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1728,
+          160
+        ],
+        "id": "0e5c61e8-8e12-47da-8505-ff8e4e7eb59a",
+        "name": "Upload file1",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "download",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.documentId }}",
+            "mode": "id"
+          },
+          "options": {
+            "googleFileConversion": {
+              "conversion": {
+                "docsToFormat": "application/pdf"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1552,
+          160
+        ],
+        "id": "c8b5c876-6bf6-4e09-a747-f2bd9fc32952",
+        "name": "Download file1",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "cdd26832-a245-46f5-ae40-9c1c73ee68c5",
+                "name": "id",
+                "value": "={{ $json.id }}",
+                "type": "string"
+              },
+              {
+                "id": "9c1c92b4-c090-400c-952b-40aa56ee5824",
+                "name": "name",
+                "value": "={{ $json.name }}",
+                "type": "string"
+              },
+              {
+                "id": "a3722cd0-8dab-4ba5-9a6a-800a6e113562",
+                "name": "Visualizar",
+                "value": "={{ $json.webViewLink }}",
+                "type": "string"
+              },
+              {
+                "id": "8af2696c-a413-4cea-afd2-e98ad4e9037b",
+                "name": "Download",
+                "value": "={{ $json.webContentLink }}",
+                "type": "string"
+              },
+              {
+                "id": "86bdeb1c-bfe5-4e0d-9169-ab0386314e01",
+                "name": "idOs",
+                "value": "={{ $('dados1').item.json.id }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1920,
+          160
+        ],
+        "id": "fb32d3e8-10a8-4f79-b300-603eb4f86a3b",
+        "name": "Id e link"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "cdd26832-a245-46f5-ae40-9c1c73ee68c5",
+                "name": "id",
+                "value": "={{ $json.id }}",
+                "type": "string"
+              },
+              {
+                "id": "9c1c92b4-c090-400c-952b-40aa56ee5824",
+                "name": "name",
+                "value": "={{ $json.name }}",
+                "type": "string"
+              },
+              {
+                "id": "a3722cd0-8dab-4ba5-9a6a-800a6e113562",
+                "name": "Visualizar",
+                "value": "={{ $json.webViewLink }}",
+                "type": "string"
+              },
+              {
+                "id": "0aa0aaf6-4eba-4b20-a2b4-c09723f5bfb9",
+                "name": "Download",
+                "value": "={{ $json.webContentLink }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          4400,
+          -192
+        ],
+        "id": "af9030b9-89f7-4e78-afc1-929e08380ee6",
+        "name": "Id e link1"
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0",
+            "mode": "list",
+            "cachedResultName": "OS_DB",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 824063472,
+            "mode": "list",
+            "cachedResultName": "DB_OS",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit#gid=824063472"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "OS NOME": "={{ $('Id e link').item.json.name }}",
+              "OS LINK": "={{ $('Id e link').item.json.Download }}",
+              "DATA CADASTRO OS": "={{ $now.format('dd/LL/yyyy T') }}",
+              "ID": "={{ $json.idOs }}"
+            },
+            "matchingColumns": [
+              "CNPJ"
+            ],
+            "schema": [
+              {
+                "id": "ID",
+                "displayName": "ID",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "OS NOME",
+                "displayName": "OS NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "OS LINK",
+                "displayName": "OS LINK",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "DATA CADASTRO OS",
+                "displayName": "DATA CADASTRO OS",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2128,
+          160
+        ],
+        "id": "e1726742-d288-4bb3-a238-949b5bef332e",
+        "name": "DB7",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Pega todos os itens do nó \"dados\"\nconst dados = $('dados').all();\n\n// Retorna exatamente o que veio do nó \"dados\"\nreturn dados;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          4576,
+          -192
+        ],
+        "id": "5ab47815-680d-45a4-840e-e35001303cc8",
+        "name": "dados2"
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0",
+            "mode": "list",
+            "cachedResultName": "OS_DB",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 824063472,
+            "mode": "list",
+            "cachedResultName": "DB_OS",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit#gid=824063472"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "OS NOME": "={{ $('Id e link1').item.json.name }}",
+              "OS LINK": "={{ $('Id e link1').item.json.Download }}",
+              "DATA CADASTRO OS": "={{ $now.format('dd/LL/yyyy T') }}",
+              "ID": "={{ $json.id }}"
+            },
+            "matchingColumns": [
+              "CNPJ"
+            ],
+            "schema": [
+              {
+                "id": "ID",
+                "displayName": "ID",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "OS NOME",
+                "displayName": "OS NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "OS LINK",
+                "displayName": "OS LINK",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "DATA CADASTRO OS",
+                "displayName": "DATA CADASTRO OS",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          4768,
+          -192
+        ],
+        "id": "f9998d69-7438-4cc2-9363-cb3032b88960",
+        "name": "DB10",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "share",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "permissionsUi": {
+            "permissionsValues": {
+              "role": "writer",
+              "type": "anyone"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          -192,
+          -32
+        ],
+        "id": "06d414e7-32d8-4756-8102-dc0e896e1d76",
+        "name": "Torna publico1",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "share",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "permissionsUi": {
+            "permissionsValues": {
+              "role": "writer",
+              "type": "anyone"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1920,
+          304
+        ],
+        "id": "5410b5d3-20fc-4b10-8237-fb8c705c25ec",
+        "name": "Torna publico2",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "folder",
+          "name": "={{\n  'IMG_' +\n  $('dados').item.json.razao_social\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .replace(/[^A-Za-z0-9 ]/g, '')\n    .trim()\n    .replace(/\\s+/g, '_')\n    .toUpperCase()\n    .substring(0, 30)\n  + '_' +\n  $('dados').item.json.cnpj.replace(/\\D/g, '') +\n  '_' +\n  $now.format('dd-MM-yyyy')\n}}",
+          "driveId": {
+            "__rl": true,
+            "value": "={{ $json.driveId }}",
+            "mode": "id"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          0,
+          -176
+        ],
+        "id": "b5c85180-795f-4d60-bcc4-230ab14694e3",
+        "name": "Cria pasta1",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "share",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "permissionsUi": {
+            "permissionsValues": {
+              "role": "writer",
+              "type": "anyone"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          0,
+          -32
+        ],
+        "id": "e55dafa8-4159-4f44-9b61-d2c5efa64a36",
+        "name": "Torna publico3",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "037c90b6-20f5-4105-b3e9-16c23926a36b",
+                "name": "mao_de_obra",
+                "value": "={{ \n  $('dados1').item.json.mao_de_obra.reduce((acc, item, index) => {\n    const i = index + 1;\n\n    acc['data' + i] = item.data || '';\n    acc['hh_efetivo' + i] = item.horas || '';\n    acc['hh_contingencial' + i] = item.horas || '';\n\n    return acc;\n  }, {})\n}}",
+                "type": "array"
+              },
+              {
+                "id": "1d6d9cf1-86bb-4d7a-8862-e6bc3cf12462",
+                "name": "pecas_cliente_removidas",
+                "value": "={{ $json.pecas_cliente.removidas.map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`).join(' / ') }}",
+                "type": "object"
+              },
+              {
+                "id": "b4a6d67c-7e76-4aa1-a1ef-7c26756c98c5",
+                "name": "pecas_cliente_inclusas",
+                "value": "={{ $json.pecas_cliente.inclusas.map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`).join(' / ') }}",
+                "type": "string"
+              },
+              {
+                "id": "59321d2a-6bde-4b9f-a466-e295035bbfa1",
+                "name": "pecas_medical_spin_removidas",
+                "value": "={{ $json.pecas_medical_spin.removidas.map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`).join(' / ') }}",
+                "type": "string"
+              },
+              {
+                "id": "f842c07a-359d-4d45-acca-5fcf51b60065",
+                "name": "pecas_medical_spin_inclusas",
+                "value": "={{ $json.pecas_medical_spin.inclusas.map(p => `Peça: ${p.nome} | Modelo: ${p.modelo_ref} | Série: ${p.numero_serie} | Qtd: ${p.quantidade}`).join(' / ') }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {
+            "ignoreConversionErrors": true
+          }
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          848,
+          160
+        ],
+        "id": "21cb5c16-814a-4276-a37a-a01d3cc52456",
+        "name": "Edit Fields2"
+      },
+      {
+        "parameters": {
+          "operation": "deleteFile",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $('Cria pasta1').item.json.id }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          2128,
+          304
+        ],
+        "id": "ff51c205-67b5-4bca-ac43-8aeb7da5b972",
+        "name": "Deleta",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "Yg0MqWhsgxFkLHnh",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "6c58efc2-699c-4c59-8be2-2b7169900363",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -608,
+          -784
+        ],
+        "id": "d314cde6-46e2-4178-99d3-46917eb3af10",
+        "name": "Webhook1",
+        "webhookId": "6c58efc2-699c-4c59-8be2-2b7169900363"
+      },
+      {
+        "parameters": {
+          "sendTo": "=suporte@medicalspin.com.br",
+          "subject": "={{ $json.body.assunto }}",
+          "emailType": "text",
+          "message": "=Olá {{ $json.body.cliente }}! Sua ordem de serviço foi gerada e está disponível no link abaixo:\n\n{{ $json.body.linkDownload }}",
+          "options": {
+            "appendAttribution": false,
+            "attachmentsUi": {
+              "attachmentsBinary": [
+                {}
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          -416,
+          -912
+        ],
+        "id": "754bf2c7-8d2a-4156-b7ca-c69121f99124",
+        "name": "Send a message2",
+        "webhookId": "f2423354-0a17-4996-b6c3-7512ca3b739f",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ $json[\"body.emails\"] }}",
+          "subject": "={{ $('Webhook1').item.json.body.assunto }}",
+          "emailType": "text",
+          "message": "=Olá {{ $('Webhook1').item.json.body.cliente }}! Sua ordem de serviço foi gerada e está disponível no link abaixo:\n\n{{ $('Webhook1').item.json.body.linkDownload }}",
+          "options": {
+            "appendAttribution": false,
+            "attachmentsUi": {
+              "attachmentsBinary": [
+                {}
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          240,
+          -768
+        ],
+        "id": "560560cf-e755-4b52-be57-aeb8b779ac9f",
+        "name": "Send a message3",
+        "webhookId": "f2423354-0a17-4996-b6c3-7512ca3b739f",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "body.emails",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          -80,
+          -768
+        ],
+        "id": "6faf396b-0e9b-4b9e-9f5e-939f630df780",
+        "name": "Split Out1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "899992a6-03c3-4b24-a8c8-6193fff0a853",
+                "leftValue": "={{ $json.body.emails }}",
+                "rightValue": 1,
+                "operator": {
+                  "type": "array",
+                  "operation": "lengthEquals",
+                  "rightType": "number"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          -288,
+          -784
+        ],
+        "id": "6721f7b7-23a4-4c91-b51b-a5556d8d0f50",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ $json.body.emails[0] }}",
+          "subject": "={{ $('Webhook1').item.json.body.assunto }}",
+          "emailType": "text",
+          "message": "=Olá {{ $json.body.cliente }}! Sua ordem de serviço foi gerada e está disponível no link abaixo:\n\n{{ $json.body.linkDownload }}",
+          "options": {
+            "appendAttribution": false,
+            "attachmentsUi": {
+              "attachmentsBinary": [
+                {}
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          -80,
+          -912
+        ],
+        "id": "b1d9dc68-448a-4b3b-84e6-121be008598b",
+        "name": "Send a message4",
+        "webhookId": "f2423354-0a17-4996-b6c3-7512ca3b739f",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "40aa4c15-e9ff-4960-a1ee-94a8b6fdf64b",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -784,
+          -432
+        ],
+        "id": "6b4f68a9-4081-4713-ba3e-36a2ff23caa5",
+        "name": "Webhook2",
+        "webhookId": "40aa4c15-e9ff-4960-a1ee-94a8b6fdf64b"
+      },
+      {
+        "parameters": {
+          "documentId": {
+            "__rl": true,
+            "value": "1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0",
+            "mode": "list",
+            "cachedResultName": "OS_DB",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 824063472,
+            "mode": "list",
+            "cachedResultName": "DB_OS",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit#gid=824063472"
+          },
+          "filtersUI": {
+            "values": [
+              {
+                "lookupColumn": "ID",
+                "lookupValue": "={{ $json.body.id }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          -576,
+          -432
+        ],
+        "id": "5575d7f6-d335-4c89-8fe6-80241a22f954",
+        "name": "DB",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "delete",
+          "documentId": {
+            "__rl": true,
+            "value": "1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0",
+            "mode": "list",
+            "cachedResultName": "OS_DB",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 824063472,
+            "mode": "list",
+            "cachedResultName": "DB_OS",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mZ4GlKIZieM_yz-CBjwNk4_8K62w45ez4BDTe-4e1e0/edit#gid=824063472"
+          },
+          "startIndex": "={{ $json.row_number }}"
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          -384,
+          -432
+        ],
+        "id": "0a0efc1a-d1fb-4f90-93f4-ceaa95241152",
+        "name": "DB1",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.body.linkDownload }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          -608,
+          -912
+        ],
+        "id": "9fce30a8-e967-455a-b824-1689caaa6b3a",
+        "name": "HTTP Request"
+      },
+      {
+        "parameters": {
+          "url": "={{ $('Webhook1').item.json.body.linkDownload }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          80,
+          -768
+        ],
+        "id": "7319fea7-a6d8-4538-845e-3784e2f69454",
+        "name": "HTTP Request1"
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.body.linkDownload }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          -224,
+          -912
+        ],
+        "id": "953628bf-3fdd-446f-88ae-756e035ab4cf",
+        "name": "HTTP Request2"
+      }
+    ],
+    "connections": {
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "Unir tudo",
+              "type": "main",
+              "index": 5
+            }
+          ]
+        ]
+      },
+      "Upload file": {
+        "main": [
+          [
+            {
+              "node": "Id e link1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download file": {
+        "main": [
+          [
+            {
+              "node": "Upload file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Soma horas": {
+        "main": [
+          [
+            {
+              "node": "Pega o documento",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Soma horas",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Atualiza documento1": {
+        "main": [
+          [
+            {
+              "node": "Unir tudo",
+              "type": "main",
+              "index": 2
+            }
+          ]
+        ]
+      },
+      "Pega o documento1": {
+        "main": [
+          [
+            {
+              "node": "Placeholder",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Nome da imagem": {
+        "main": [
+          [
+            {
+              "node": "Procura imagens",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Imagens",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Index": {
+        "main": [
+          [
+            {
+              "node": "Atualiza documento1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Unir tudo",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Cola imagem no documento": {
+        "main": [
+          [
+            {
+              "node": "Percorre os itens",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Id e Name?": {
+        "main": [
+          [
+            {
+              "node": "Cola imagem no documento",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Percorre os itens",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Percorre os itens": {
+        "main": [
+          [
+            {
+              "node": "Remove duplicatas",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Id e Name?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Separa itens": {
+        "main": [
+          [
+            {
+              "node": "Percorre os itens",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Unir tudo": {
+        "main": [
+          [
+            {
+              "node": "Separa itens",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Atualiza documento": {
+        "main": [
+          [
+            {
+              "node": "Pega o documento1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Placeholder": {
+        "main": [
+          [
+            {
+              "node": "Unir tudo",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Index",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pega o documento": {
+        "main": [
+          [
+            {
+              "node": "Atualiza documento",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Junta repeticoes": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Procura imagens": {
+        "main": [
+          [
+            {
+              "node": "Junta repeticoes",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Torna publico": {
+        "main": [
+          [
+            {
+              "node": "Unir tudo",
+              "type": "main",
+              "index": 4
+            }
+          ]
+        ]
+      },
+      "midia": {
+        "main": [
+          [
+            {
+              "node": "If2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Copia  o arquivo": {
+        "main": [
+          [
+            {
+              "node": "midia",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Cria pasta": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Torna publico1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Cria pasta1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Imagens": {
+        "main": [
+          [
+            {
+              "node": "Unir tudo",
+              "type": "main",
+              "index": 3
+            },
+            {
+              "node": "Torna publico",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Out": {
+        "main": [
+          [
+            {
+              "node": "Convert to File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Adiciona imagem": {
+        "main": [
+          [
+            {
+              "node": "Nome da imagem",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "dados": {
+        "main": [
+          [
+            {
+              "node": "Cria pasta",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to File": {
+        "main": [
+          [
+            {
+              "node": "Adiciona imagem",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Remove duplicatas": {
+        "main": [
+          [
+            {
+              "node": "Download file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If2": {
+        "main": [
+          [
+            {
+              "node": "Split Out",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "dados1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Atualiza documento2": {
+        "main": [
+          [
+            {
+              "node": "Download file1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pega o documento2": {
+        "main": [
+          [
+            {
+              "node": "Atualiza documento2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "dados1": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Soma horas1": {
+        "main": [
+          [
+            {
+              "node": "Pega o documento2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload file1": {
+        "main": [
+          [
+            {
+              "node": "Id e link",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Torna publico2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download file1": {
+        "main": [
+          [
+            {
+              "node": "Upload file1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Id e link": {
+        "main": [
+          [
+            {
+              "node": "DB7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Id e link1": {
+        "main": [
+          [
+            {
+              "node": "dados2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "dados2": {
+        "main": [
+          [
+            {
+              "node": "DB10",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Cria pasta1": {
+        "main": [
+          [
+            {
+              "node": "Copia  o arquivo",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Torna publico3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "dados",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields2": {
+        "main": [
+          [
+            {
+              "node": "Soma horas1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Torna publico2": {
+        "main": [
+          [
+            {
+              "node": "Deleta",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook1": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a message2": {
+        "main": [
+          []
+        ]
+      },
+      "Split Out1": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request2",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Split Out1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook2": {
+        "main": [
+          [
+            {
+              "node": "DB",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "DB": {
+        "main": [
+          [
+            {
+              "node": "DB1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "DB1": {
+        "main": [
+          []
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "Send a message2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request1": {
+        "main": [
+          [
+            {
+              "node": "Send a message3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request2": {
+        "main": [
+          [
+            {
+              "node": "Send a message4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Automações  Medical Spin",
+    "name": "Version f76b94b5",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
