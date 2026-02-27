@@ -1,0 +1,1723 @@
+{
+  "updatedAt": "2026-02-26T14:36:09.337Z",
+  "createdAt": "2026-02-26T11:41:02.210Z",
+  "id": "MP9z4hiBLEzsJgi7",
+  "name": "APP CLIENTE NOTIFICAÇÃO",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "notificacao",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c45214e9-3457-4aaf-b7c9-f365f3d2655c",
+      "name": "Webhook",
+      "webhookId": "b72bf3f1-06ed-43ad-ba67-3ae5f81b6102"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.canal }}",
+                    "rightValue": "email_e_whatsapp",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "8f50f4eb-a12a-4ad0-9868-305b451d3843"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "email_e_whatsapp"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "78f00fe9-a2bf-4609-8ae9-99b3c8f32f7e",
+                    "leftValue": "={{ $json.body.canal }}",
+                    "rightValue": "email",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "email"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "50662748-dd41-4695-906e-dd9f65ca4b29",
+                    "leftValue": "={{ $json.body.canal }}",
+                    "rightValue": "whatsapp",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "whatsapp"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        -16
+      ],
+      "id": "318b7710-ceef-4a64-8254-08915ef96f5f",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.body.cliente.email }}",
+        "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+        "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Informamos que seu pedido/solicitação foi *finalizado com sucesso*.  Caso precise de qualquer suporte complementar ou tenha alguma dúvida, estamos à disposição para ajudar.  Agradecemos pela confiança!",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        0
+      ],
+      "id": "989ad654-2e8b-4d5e-97a6-afbadd6da209",
+      "name": "Send a message",
+      "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.cliente.email }}",
+        "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+        "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Seu pedido/solicitação *já está em progresso* e está sendo tratado pela nossa equipe.  Estamos acompanhando cada etapa para garantir que tudo ocorra corretamente. Assim que houver atualização, avisaremos você imediatamente.  Se precisar de alguma informação adicional, estamos à disposição.",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        -144
+      ],
+      "id": "1e101d57-3545-4f47-8b1c-803da52aa4bc",
+      "name": "Send a message1",
+      "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+        "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Seu pedido/solicitação *já está em progresso* e está sendo tratado pela nossa equipe.  Estamos acompanhando cada etapa para garantir que tudo ocorra corretamente. Assim que houver atualização, avisaremos você imediatamente.  Se precisar de alguma informação adicional, estamos à disposição.",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        688,
+        288
+      ],
+      "id": "2e5fd790-9ecc-426b-88be-9b0ab3955df1",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+        "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Informamos que seu pedido/solicitação foi *finalizado com sucesso*.  Caso precise de qualquer suporte complementar ou tenha alguma dúvida, estamos à disposição para ajudar.  Agradecemos pela confiança!",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        688,
+        432
+      ],
+      "id": "4d2b5b04-6c3a-417c-a871-1aada08cf8e4",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                    "rightValue": "em_progresso",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "312f7517-3d46-4f0f-9d8f-3ab8077ecfc5"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "em_progresso"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "77d80378-3fa1-453b-9997-244140526323",
+                    "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                    "rightValue": "finalizada",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "finalizada"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "769bc647-8aea-4a53-b688-66b5ab2c56aa",
+                    "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                    "rightValue": "cancelada",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "cancelada"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        416
+      ],
+      "id": "ad3ad7de-3cdd-4146-b663-2887150facca",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+        "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}.\nSeu pedido/solicitação foi *cancelado*. Acesse os detalhes da sua solicitação no nosso App para mais informações.",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        688,
+        576
+      ],
+      "id": "2f0ceae2-9bc3-4e29-a812-fa25e9fffe89",
+      "name": "Enviar texto2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                    "rightValue": "em_progresso",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "312f7517-3d46-4f0f-9d8f-3ab8077ecfc5"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "em_progresso"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "77d80378-3fa1-453b-9997-244140526323",
+                    "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                    "rightValue": "finalizada",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "finalizada"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "769bc647-8aea-4a53-b688-66b5ab2c56aa",
+                    "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                    "rightValue": "cancelada",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "cancelada"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        -16
+      ],
+      "id": "12fe31d8-ba85-4194-9167-5f8624ca1260",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.body.cliente.email }}",
+        "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+        "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}. Seu pedido/solicitação foi *cancelado*. Acesse os detalhes da sua solicitação no nosso App para mais informações.",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        144
+      ],
+      "id": "18f325f8-975a-49b4-9a0c-589e2e46fca7",
+      "name": "Send a message2",
+      "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                    "rightValue": "em_progresso",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "312f7517-3d46-4f0f-9d8f-3ab8077ecfc5"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "em_progresso"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "77d80378-3fa1-453b-9997-244140526323",
+                    "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                    "rightValue": "finalizada",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "finalizada"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "769bc647-8aea-4a53-b688-66b5ab2c56aa",
+                    "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                    "rightValue": "cancelada",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "cancelada"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        -432
+      ],
+      "id": "e895b22a-eed2-4f26-8165-bce02281b3ae",
+      "name": "Switch3"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.body.cliente.email }}",
+        "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+        "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Informamos que seu pedido/solicitação foi *finalizado com sucesso*.  Caso precise de qualquer suporte complementar ou tenha alguma dúvida, estamos à disposição para ajudar.  Agradecemos pela confiança!",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        -432
+      ],
+      "id": "9b957ff4-8e64-473b-a121-403e6e18b219",
+      "name": "Send a message3",
+      "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.cliente.email }}",
+        "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+        "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Seu pedido/solicitação *já está em progresso* e está sendo tratado pela nossa equipe.  Estamos acompanhando cada etapa para garantir que tudo ocorra corretamente. Assim que houver atualização, avisaremos você imediatamente.  Se precisar de alguma informação adicional, estamos à disposição.",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        -576
+      ],
+      "id": "e9b14b38-f820-4463-851c-ff08417af6c2",
+      "name": "Send a message4",
+      "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.body.cliente.email }}",
+        "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+        "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}. Seu pedido/solicitação foi *cancelado*. Acesse os detalhes da sua solicitação no nosso App para mais informações.",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        -288
+      ],
+      "id": "2a139806-7eb7-426f-8149-d539f6e67d3d",
+      "name": "Send a message5",
+      "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+        "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Seu pedido/solicitação *já está em progresso* e está sendo tratado pela nossa equipe.  Estamos acompanhando cada etapa para garantir que tudo ocorra corretamente. Assim que houver atualização, avisaremos você imediatamente.  Se precisar de alguma informação adicional, estamos à disposição.",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        896,
+        -576
+      ],
+      "id": "91a42061-4c1b-4e6e-b807-d2476484a9fb",
+      "name": "Enviar texto3",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+        "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Informamos que seu pedido/solicitação foi *finalizado com sucesso*.  Caso precise de qualquer suporte complementar ou tenha alguma dúvida, estamos à disposição para ajudar.  Agradecemos pela confiança!",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        896,
+        -432
+      ],
+      "id": "3f9a7372-e922-4e8a-8f21-b55f0c976359",
+      "name": "Enviar texto4",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+        "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}.\nSeu pedido/solicitação foi *cancelado*. Acesse os detalhes da sua solicitação no nosso App para mais informações.",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        896,
+        -288
+      ],
+      "id": "f253b572-d934-471f-9ea9-3fefd836af3b",
+      "name": "Enviar texto5",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Switch3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar texto2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch3": {
+      "main": [
+        [
+          {
+            "node": "Send a message4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message4": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message3": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message5": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "node",
+            "content-length": "451",
+            "accept": "*/*",
+            "accept-encoding": "br, gzip, deflate",
+            "accept-language": "*",
+            "content-type": "application/json",
+            "sec-fetch-mode": "cors",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "10.0.1.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "canal": "email_e_whatsapp",
+            "solicitacao": {
+              "id": "6ac49390-3a14-4a76-a0dd-1147cdd86f29",
+              "protocolo": "SOL-20260226-E2JN9Y",
+              "statusAnterior": "recebida",
+              "statusAtual": "em_progresso",
+              "descricaoProblema": "Teste",
+              "urgencia": "normal"
+            },
+            "cliente": {
+              "id": "1a9b25ab-55f5-4293-b44a-0ad50a6e858c",
+              "razaoSocial": "teste",
+              "nomeFantasia": "teste",
+              "cnpj": "12.345.678/9101-11",
+              "email": "lwendel003@gmail.com",
+              "telefone": "79999801810"
+            },
+            "timestamp": "2026-02-26T14:28:25.215Z"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/notificacao",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "versionId": "d91f1d19-5d38-4e14-baa8-07d37c57c952",
+  "activeVersionId": "d91f1d19-5d38-4e14-baa8-07d37c57c952",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-02-26T11:41:02.210Z",
+      "createdAt": "2026-02-26T11:41:02.210Z",
+      "role": "workflow:owner",
+      "workflowId": "MP9z4hiBLEzsJgi7",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-02-26T14:36:14.923Z",
+    "createdAt": "2026-02-26T14:36:09.339Z",
+    "versionId": "d91f1d19-5d38-4e14-baa8-07d37c57c952",
+    "workflowId": "MP9z4hiBLEzsJgi7",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "notificacao",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "c45214e9-3457-4aaf-b7c9-f365f3d2655c",
+        "name": "Webhook",
+        "webhookId": "b72bf3f1-06ed-43ad-ba67-3ae5f81b6102"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.body.canal }}",
+                      "rightValue": "email_e_whatsapp",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "8f50f4eb-a12a-4ad0-9868-305b451d3843"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "email_e_whatsapp"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "78f00fe9-a2bf-4609-8ae9-99b3c8f32f7e",
+                      "leftValue": "={{ $json.body.canal }}",
+                      "rightValue": "email",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "email"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "50662748-dd41-4695-906e-dd9f65ca4b29",
+                      "leftValue": "={{ $json.body.canal }}",
+                      "rightValue": "whatsapp",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "whatsapp"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          208,
+          -16
+        ],
+        "id": "318b7710-ceef-4a64-8254-08915ef96f5f",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ $json.body.cliente.email }}",
+          "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+          "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Informamos que seu pedido/solicitação foi *finalizado com sucesso*.  Caso precise de qualquer suporte complementar ou tenha alguma dúvida, estamos à disposição para ajudar.  Agradecemos pela confiança!",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          688,
+          0
+        ],
+        "id": "989ad654-2e8b-4d5e-97a6-afbadd6da209",
+        "name": "Send a message",
+        "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ $('Webhook').item.json.body.cliente.email }}",
+          "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+          "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Seu pedido/solicitação *já está em progresso* e está sendo tratado pela nossa equipe.  Estamos acompanhando cada etapa para garantir que tudo ocorra corretamente. Assim que houver atualização, avisaremos você imediatamente.  Se precisar de alguma informação adicional, estamos à disposição.",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          688,
+          -144
+        ],
+        "id": "1e101d57-3545-4f47-8b1c-803da52aa4bc",
+        "name": "Send a message1",
+        "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+          "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Seu pedido/solicitação *já está em progresso* e está sendo tratado pela nossa equipe.  Estamos acompanhando cada etapa para garantir que tudo ocorra corretamente. Assim que houver atualização, avisaremos você imediatamente.  Se precisar de alguma informação adicional, estamos à disposição.",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          688,
+          288
+        ],
+        "id": "2e5fd790-9ecc-426b-88be-9b0ab3955df1",
+        "name": "Enviar texto",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+          "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Informamos que seu pedido/solicitação foi *finalizado com sucesso*.  Caso precise de qualquer suporte complementar ou tenha alguma dúvida, estamos à disposição para ajudar.  Agradecemos pela confiança!",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          688,
+          432
+        ],
+        "id": "4d2b5b04-6c3a-417c-a871-1aada08cf8e4",
+        "name": "Enviar texto1",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                      "rightValue": "em_progresso",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "312f7517-3d46-4f0f-9d8f-3ab8077ecfc5"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "em_progresso"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "77d80378-3fa1-453b-9997-244140526323",
+                      "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                      "rightValue": "finalizada",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "finalizada"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "769bc647-8aea-4a53-b688-66b5ab2c56aa",
+                      "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                      "rightValue": "cancelada",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "cancelada"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          416,
+          416
+        ],
+        "id": "ad3ad7de-3cdd-4146-b663-2887150facca",
+        "name": "Switch1"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+          "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}.\nSeu pedido/solicitação foi *cancelado*. Acesse os detalhes da sua solicitação no nosso App para mais informações.",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          688,
+          576
+        ],
+        "id": "2f0ceae2-9bc3-4e29-a812-fa25e9fffe89",
+        "name": "Enviar texto2",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                      "rightValue": "em_progresso",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "312f7517-3d46-4f0f-9d8f-3ab8077ecfc5"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "em_progresso"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "77d80378-3fa1-453b-9997-244140526323",
+                      "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                      "rightValue": "finalizada",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "finalizada"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "769bc647-8aea-4a53-b688-66b5ab2c56aa",
+                      "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                      "rightValue": "cancelada",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "cancelada"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          416,
+          -16
+        ],
+        "id": "12fe31d8-ba85-4194-9167-5f8624ca1260",
+        "name": "Switch2"
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ $json.body.cliente.email }}",
+          "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+          "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}. Seu pedido/solicitação foi *cancelado*. Acesse os detalhes da sua solicitação no nosso App para mais informações.",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          688,
+          144
+        ],
+        "id": "18f325f8-975a-49b4-9a0c-589e2e46fca7",
+        "name": "Send a message2",
+        "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                      "rightValue": "em_progresso",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "312f7517-3d46-4f0f-9d8f-3ab8077ecfc5"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "em_progresso"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "77d80378-3fa1-453b-9997-244140526323",
+                      "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                      "rightValue": "finalizada",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "finalizada"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "769bc647-8aea-4a53-b688-66b5ab2c56aa",
+                      "leftValue": "={{ $('Webhook').item.json.body.solicitacao.statusAtual }}",
+                      "rightValue": "cancelada",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "cancelada"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          416,
+          -432
+        ],
+        "id": "e895b22a-eed2-4f26-8165-bce02281b3ae",
+        "name": "Switch3"
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ $json.body.cliente.email }}",
+          "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+          "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Informamos que seu pedido/solicitação foi *finalizado com sucesso*.  Caso precise de qualquer suporte complementar ou tenha alguma dúvida, estamos à disposição para ajudar.  Agradecemos pela confiança!",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          688,
+          -432
+        ],
+        "id": "9b957ff4-8e64-473b-a121-403e6e18b219",
+        "name": "Send a message3",
+        "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ $('Webhook').item.json.body.cliente.email }}",
+          "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+          "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Seu pedido/solicitação *já está em progresso* e está sendo tratado pela nossa equipe.  Estamos acompanhando cada etapa para garantir que tudo ocorra corretamente. Assim que houver atualização, avisaremos você imediatamente.  Se precisar de alguma informação adicional, estamos à disposição.",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          688,
+          -576
+        ],
+        "id": "e9b14b38-f820-4463-851c-ff08417af6c2",
+        "name": "Send a message4",
+        "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ $json.body.cliente.email }}",
+          "subject": "ATUALIZAÇÃO SOBRE O STATUS DA SUA SOLICITAÇÃO DE OS",
+          "message": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}. Seu pedido/solicitação foi *cancelado*. Acesse os detalhes da sua solicitação no nosso App para mais informações.",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          688,
+          -288
+        ],
+        "id": "2a139806-7eb7-426f-8149-d539f6e67d3d",
+        "name": "Send a message5",
+        "webhookId": "c5bf32e9-792a-4a4a-b0b7-e5b9162cda08",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+          "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Seu pedido/solicitação *já está em progresso* e está sendo tratado pela nossa equipe.  Estamos acompanhando cada etapa para garantir que tudo ocorra corretamente. Assim que houver atualização, avisaremos você imediatamente.  Se precisar de alguma informação adicional, estamos à disposição.",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          896,
+          -576
+        ],
+        "id": "91a42061-4c1b-4e6e-b807-d2476484a9fb",
+        "name": "Enviar texto3",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+          "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}! Informamos que seu pedido/solicitação foi *finalizado com sucesso*.  Caso precise de qualquer suporte complementar ou tenha alguma dúvida, estamos à disposição para ajudar.  Agradecemos pela confiança!",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          896,
+          -432
+        ],
+        "id": "3f9a7372-e922-4e8a-8f21-b55f0c976359",
+        "name": "Enviar texto4",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{ \n(() => {\n  let telefone = $('Webhook').item.json.body.cliente.telefone.toString().replace(/\\D/g, '');\n  return telefone.startsWith('55') ? telefone : '55' + telefone;\n})()\n}}",
+          "messageText": "=Olá, {{ $('Webhook').item.json.body.cliente.nomeFantasia }}.\nSeu pedido/solicitação foi *cancelado*. Acesse os detalhes da sua solicitação no nosso App para mais informações.",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          896,
+          -288
+        ],
+        "id": "f253b572-d934-471f-9ea9-3fefd836af3b",
+        "name": "Enviar texto5",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "Switch3",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Switch2",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Switch1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a message": {
+        "main": [
+          []
+        ]
+      },
+      "Switch1": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Enviar texto1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Enviar texto2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch2": {
+        "main": [
+          [
+            {
+              "node": "Send a message1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Send a message",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Send a message2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch3": {
+        "main": [
+          [
+            {
+              "node": "Send a message4",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Send a message3",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Send a message5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a message4": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a message3": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a message5": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Automações  Medical Spin",
+    "name": "Version d91f1d19",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
