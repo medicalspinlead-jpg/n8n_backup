@@ -1,0 +1,1977 @@
+{
+  "updatedAt": "2026-03-10T18:53:01.389Z",
+  "createdAt": "2026-01-07T20:47:46.942Z",
+  "id": "zNWLfiwZE7K7ccdY",
+  "name": "ID PIPE",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1079134785,
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=1079134785"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $json.ID }}",
+            "CNPJ": "={{ $('Limit').item.json.CNPJ }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instituição",
+              "displayName": "Instituição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Endereço",
+              "displayName": "Endereço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de Entrada",
+              "displayName": "Data de Entrada",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da investigação",
+              "displayName": "Data da investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação e cadência",
+              "displayName": "Responsável pela investigação e cadência",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia Inbound",
+              "displayName": "Cadencia Inbound",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino do Lead após investigação e cadência",
+              "displayName": "Destino do Lead após investigação e cadência",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ligação Comercial",
+              "displayName": "Ligação Comercial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reunião de apresentação",
+              "displayName": "Reunião de apresentação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead na qualificação",
+              "displayName": "Temperatura do Lead na qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        400
+      ],
+      "id": "9a099dc4-2ee2-46d2-a4b3-c634e216250e",
+      "name": "Update row in sheet",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds",
+              "secondsInterval": 5
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        384
+      ],
+      "id": "1f41c2b3-48bc-47b9-ac73-f271f912ab35",
+      "name": "Schedule Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1079134785,
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=1079134785"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        512,
+        384
+      ],
+      "id": "59b6ce4f-5865-46d5-8dd1-9822b10b4c11",
+      "name": "Get row(s) in sheet1",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $json.item.name }}",
+        "returnAll": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1712,
+        400
+      ],
+      "id": "6db9a682-f8a2-4384-b47c-2471e917935f",
+      "name": "Search a deal1",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bab4925b-181f-4f9b-a710-76d60598ca6b",
+              "leftValue": "={{ $json.CNPJ }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        720,
+        384
+      ],
+      "id": "b2408240-1ecf-4254-b646-daa778a2c16b",
+      "name": "If1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        416
+      ],
+      "id": "a8104dfc-d390-4b9a-89e6-08e961fa557f",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "abebfd2f-1ff2-4ce7-92bf-2ef2e7b2bb7e",
+              "leftValue": "={{ $json.ID }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        928,
+        400
+      ],
+      "id": "e2b44ac5-e00e-4f53-b7ec-e0072e4eca4e",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "search",
+        "returnAll": true,
+        "term": "={{ $json.CNPJ }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        416
+      ],
+      "id": "e85e60ef-97de-4f60-92c2-c584041c28b4",
+      "name": "Search an organization1",
+      "retryOnFail": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dealId": "={{ $json.item.id }}",
+        "resolveProperties": true
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        2128,
+        400
+      ],
+      "id": "cba6849e-2ff2-445e-a4e7-f2eff5f15e19",
+      "name": "Get a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8685ce3d-32e8-406f-ba8d-2eec44f0a747",
+              "leftValue": "={{ $json.item.id }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1920,
+        400
+      ],
+      "id": "dc76e2cb-5b04-4d5e-8d80-4d7e24b7ebfa",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1079134785,
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=1079134785"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CNPJ": "={{ $('Limit').item.json.CNPJ }}",
+            "ID": "0"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instituição",
+              "displayName": "Instituição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Endereço",
+              "displayName": "Endereço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de Entrada",
+              "displayName": "Data de Entrada",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da investigação",
+              "displayName": "Data da investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação e cadência",
+              "displayName": "Responsável pela investigação e cadência",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia Inbound",
+              "displayName": "Cadencia Inbound",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino do Lead após investigação e cadência",
+              "displayName": "Destino do Lead após investigação e cadência",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ligação Comercial",
+              "displayName": "Ligação Comercial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reunião de apresentação",
+              "displayName": "Reunião de apresentação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead na qualificação",
+              "displayName": "Temperatura do Lead na qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2128,
+        544
+      ],
+      "id": "cfc25af3-9cdf-4599-bcbb-deb7f7eff77d",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4d51d72b-0f77-48e2-8fe2-cfc29b381319",
+              "leftValue": "={{ $json.item.id }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1520,
+        416
+      ],
+      "id": "5dea2e52-fe41-4be3-8c64-893acf05d800",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1079134785,
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=1079134785"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CNPJ": "={{ $('Limit').item.json.CNPJ }}",
+            "ID": "0"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Instituição",
+              "displayName": "Instituição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Endereço",
+              "displayName": "Endereço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de Entrada",
+              "displayName": "Data de Entrada",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da investigação",
+              "displayName": "Data da investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação e cadência",
+              "displayName": "Responsável pela investigação e cadência",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia Inbound",
+              "displayName": "Cadencia Inbound",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino do Lead após investigação e cadência",
+              "displayName": "Destino do Lead após investigação e cadência",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ligação Comercial",
+              "displayName": "Ligação Comercial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reunião de apresentação",
+              "displayName": "Reunião de apresentação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead na qualificação",
+              "displayName": "Temperatura do Lead na qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1712,
+        544
+      ],
+      "id": "07e1ddee-55c6-4df0-9cd2-ad8a7d2015de",
+      "name": "Update row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "create",
+        "entity": "deal"
+      },
+      "type": "n8n-nodes-base.pipedriveTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        352,
+        192
+      ],
+      "id": "f3b24ba4-4bc6-465e-864b-6581373d4d3c",
+      "name": "Pipedrive Trigger",
+      "webhookId": "d90c7650-2287-454f-93ea-4c2270cb18e3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dealId": "={{ $json.data.id }}",
+        "resolveProperties": true
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        512,
+        192
+      ],
+      "id": "0e64a75c-679a-4a63-b0ed-37f3f449ce26",
+      "name": "Get a deal1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1079134785,
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=1079134785"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $json.ID }}",
+            "Nome": "={{ $json[\"Pessoa de contato\"].name }}",
+            "Instituição": "={{ $json[\"Organização\"].name }}"
+          },
+          "matchingColumns": [
+            "CNPJ"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Instituição",
+              "displayName": "Instituição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Endereço",
+              "displayName": "Endereço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de Entrada",
+              "displayName": "Data de Entrada",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da investigação",
+              "displayName": "Data da investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação e cadência",
+              "displayName": "Responsável pela investigação e cadência",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia Inbound",
+              "displayName": "Cadencia Inbound",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino do Lead após investigação e cadência",
+              "displayName": "Destino do Lead após investigação e cadência",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ligação Comercial",
+              "displayName": "Ligação Comercial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reunião de apresentação",
+              "displayName": "Reunião de apresentação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead na qualificação",
+              "displayName": "Temperatura do Lead na qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        928,
+        176
+      ],
+      "id": "efe48ad9-2361-467b-86df-7a017a14125b",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6912a56e-2e2e-4298-a664-22a956637bc2",
+              "leftValue": "={{ $json.stage_id }}",
+              "rightValue": 17,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "e75c4a64-a09f-459c-b10f-c8e7cdfb24f9",
+              "leftValue": "={{ $json.stage_id }}",
+              "rightValue": 15,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "389c9e47-7eb5-4a57-8e27-9a7a64548896",
+              "leftValue": "={{ $json.stage_id }}",
+              "rightValue": 51,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "546d062b-8ab3-4df8-b9c6-a54fde0a98fb",
+              "leftValue": "={{ $json.stage_id }}",
+              "rightValue": 50,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "36fb00ba-60fc-40e4-9dbb-798478698b1d",
+              "leftValue": "={{ $json.stage_id }}",
+              "rightValue": 16,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "6ef1c09b-0de3-4f85-b77f-7b1f7c942146",
+              "leftValue": "={{ $json.stage_id }}",
+              "rightValue": 14,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "24fd0a4d-86b6-4bc2-8e81-4fe8414eb94f",
+              "leftValue": "={{ $json.stage_id }}",
+              "rightValue": 60,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        720,
+        192
+      ],
+      "id": "54abf30d-6159-4f8d-806c-063420d1fbc5",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1079134785,
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=1079134785"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        512,
+        608
+      ],
+      "id": "88b72011-d751-4711-aef7-62d3665b59e3",
+      "name": "Get row(s) in sheet",
+      "retryOnFail": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        656,
+        784
+      ],
+      "id": "a1019c62-663c-4d2a-a186-fe8a1534d35c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "const seen = new Set();\nconst duplicates = [];\n\nfor (const item of items) {\n  const raw = item.json[\"CNPJ\"];\n\n  if (!raw) continue;\n\n  const cnpj = String(raw).replace(/\\D/g, \"\");\n\n  if (seen.has(cnpj)) {\n    duplicates.push(item); // é duplicado porque já apareceu antes\n  } else {\n    seen.add(cnpj); // primeiro registro\n  }\n}\n\nreturn duplicates;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        608
+      ],
+      "id": "3d660cbf-b5b9-473e-a214-bc87f9103b4d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "term": "={{ $json.Nome }}",
+        "limit": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        800
+      ],
+      "id": "f07d1341-4e7a-4bed-9f34-9954c40ff184",
+      "name": "Search a deal",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "ID"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        816,
+        784
+      ],
+      "id": "be8c950e-e167-4377-b819-a75b8eebc3b6",
+      "name": "Get row(s) in sheet2",
+      "retryOnFail": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        992,
+        784
+      ],
+      "id": "692df00c-334b-4c7c-903a-c229e77ecdf1",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b0f1c3fd-39ab-4179-a04e-66d9c07bf60e",
+              "leftValue": "={{ $json.ID }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1168,
+        784
+      ],
+      "id": "ed89abfb-c056-4306-952e-64feb7385cf5",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS INBOUND",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $json.id }}",
+            "Nome": "={{ $json.person.name }}"
+          },
+          "matchingColumns": [
+            "Nome"
+          ],
+          "schema": [
+            {
+              "id": "26.313.383/0001-41",
+              "displayName": "26.313.383/0001-41",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Instituição",
+              "displayName": "Instituição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Endereço",
+              "displayName": "Endereço",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "UF",
+              "displayName": "UF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data de Entrada",
+              "displayName": "Data de Entrada",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da investigação",
+              "displayName": "Data da investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação e cadência",
+              "displayName": "Responsável pela investigação e cadência",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia Inbound",
+              "displayName": "Cadencia Inbound",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino do Lead após investigação e cadência",
+              "displayName": "Destino do Lead após investigação e cadência",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ligação Comercial",
+              "displayName": "Ligação Comercial",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reunião de apresentação",
+              "displayName": "Reunião de apresentação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Temperatura do Lead na qualificação",
+              "displayName": "Temperatura do Lead na qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1536,
+        800
+      ],
+      "id": "fe38189a-80cf-4468-9ead-f22a0b03fd4e",
+      "name": "Update row in sheet3",
+      "retryOnFail": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Update row in sheet": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal1": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "If1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Search an organization1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search an organization1": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Get a deal": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Search a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pipedrive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a deal1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        []
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Search a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a deal": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:Pipedrive Trigger": {}
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Pipedrive Trigger": [
+      {
+        "json": {
+          "data": {
+            "add_time": "2026-03-10T15:43:36Z",
+            "channel": null,
+            "channel_id": null,
+            "close_time": null,
+            "creator_user_id": 24207328,
+            "currency": "BRL",
+            "custom_fields": {
+              "f1f552870cee1de5c7b4f0d7687dca3663af7bcc": null,
+              "6e47901a5f17b390ecab0c19cf5b39e4e3751739": null,
+              "66f805cef4b5232f0102aacdef57d4c7025d613c": null,
+              "44f54e62d4086d753544382ea1749fef715c85d8": null,
+              "4df249bacf647ead2ef083ea79cde21ae8c1e822": null,
+              "26246539655446743bf780a9ada870d71bacb1a0": null,
+              "650aed9009534afb9f6cdba3c8ef73e307b2f02b": null,
+              "17606f1bc4c663b4b6ae62e6fa5e6720aa8a912c": null,
+              "4487caa10d8a310a22a596e94a779de3a866b9b8": null,
+              "3d8bc66199a89d9fb354820e8335cc0a2fb78323": null,
+              "c65e1df9d074688521209712056f3320b6f2d041": null,
+              "37565bf62b76609c1579b63253b37c36a18600f3": null,
+              "49216dff78123676195ecdccf5d5e45cda80338b": null,
+              "a910e1416bf3dd7bad0209bb2406010853fd6317": null,
+              "bcb23d6ab811684c041b281ee629c0c22f283412": null,
+              "5162cef31c4cef291bf552dd2c806152a5013f72": null,
+              "aaeff7b92e77c045c19cbfae97da0c5cd526a44c": null,
+              "3c1b0e8b2081fdbc27acffe179a4c704662362f5": null,
+              "d69a4abf48d5aefd1a7e9d06a93779c9997de5a7": null
+            },
+            "expected_close_date": null,
+            "first_won_time": null,
+            "id": 2016,
+            "label_ids": [],
+            "lost_reason": null,
+            "lost_time": null,
+            "org_id": 1218,
+            "origin": "ManuallyCreated",
+            "origin_id": null,
+            "owner_id": 24207328,
+            "person_id": 777,
+            "pipeline_id": 3,
+            "probability": null,
+            "stage_change_time": null,
+            "stage_id": 17,
+            "status": "open",
+            "title": "TesteCL",
+            "update_time": null,
+            "value": 0,
+            "visible_to": "3",
+            "won_time": null,
+            "is_archived": false,
+            "archive_time": null
+          },
+          "previous": null,
+          "meta": {
+            "action": "create",
+            "company_id": "14556440",
+            "correlation_id": "cb50f691-3ef7-4bf3-a641-6ac952fc166a",
+            "entity_id": "2016",
+            "entity": "deal",
+            "id": "11ba94d4-bfeb-482e-89b3-d3457dfe53f7",
+            "is_bulk_edit": false,
+            "timestamp": "2026-03-10T15:43:37.106Z",
+            "type": "general",
+            "user_id": "24207328",
+            "version": "2.0",
+            "webhook_id": "1846143",
+            "webhook_owner_id": "24207328",
+            "change_source": "app",
+            "permitted_user_ids": [
+              "24207317",
+              "24207328"
+            ],
+            "attempt": 1,
+            "host": "medicalspin.pipedrive.com"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "versionId": "47db0d50-67b4-4fa2-beb0-793c57de8cfe",
+  "activeVersionId": null,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-01-07T20:47:46.942Z",
+      "createdAt": "2026-01-07T20:47:46.942Z",
+      "role": "workflow:owner",
+      "workflowId": "zNWLfiwZE7K7ccdY",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
