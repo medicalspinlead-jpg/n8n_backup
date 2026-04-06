@@ -1,0 +1,1783 @@
+{
+  "updatedAt": "2025-11-17T14:47:08.076Z",
+  "createdAt": "2025-11-17T14:47:08.076Z",
+  "id": "0WRqq48nc68oVjx9",
+  "name": "Extração de lista de CNPJs CNES",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        272,
+        240
+      ],
+      "id": "b368cbb8-44d7-400d-be5f-b81fb4972b6c",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1104,
+        240
+      ],
+      "id": "cf26610e-b27b-4b61-b190-5a2f224fffb9",
+      "name": "HTTP Request1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        928,
+        224
+      ],
+      "id": "e6ecc22f-35ff-4343-918e-1536e3e60bd4",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "from bs4 import BeautifulSoup\nimport re\n\nhtml = items[0]['json']['data']\nsoup = BeautifulSoup(html, 'html.parser')\n\n# Limpa o texto\ndef clean(text):\n    if not text:\n        return \"\"\n    return re.sub(r'\\s+', ' ', text.replace('\\xa0', ' ')).strip()\n\n# Captura todas as linhas relevantes\nrows = []\nfor tr in soup.find_all(\"tr\"):\n    tds = [clean(td.get_text()) for td in tr.find_all(\"td\")]\n    if tds:\n        rows.append(tds)\n\ndados = {\n    \"Nome\": \"\",\n    \"CNES\": \"\",\n    \"CNPJ\": \"\",\n    \"NomeEmpresarial\": \"\",\n    \"CPF\": \"\",\n    \"Personalidade\": \"\",\n    \"Logradouro\": \"\",\n    \"Número\": \"\",\n    \"Telefone\": \"\",\n    \"Complemento\": \"\",\n    \"Bairro\": \"\",\n    \"CEP\": \"\",\n    \"Município\": \"\",\n    \"UF\": \"\",\n    \"TipoEstabelecimento\": \"\",\n    \"SubTipoEstabelecimento\": \"\",\n    \"Gestão\": \"\",\n    \"Dependência\": \"\",\n    \"NúmeroAlvará\": \"\",\n    \"ÓrgãoExpedidor\": \"\",\n    \"DataExpedição\": \"\",\n    \"HoráriodeFuncionamento\": \"\",\n}\n\n# Lê por pares de linhas (rótulo / valor)\nfor i in range(len(rows) - 1):\n    rotulos = \" \".join(rows[i])\n    valores = rows[i + 1]\n\n    if \"Nome:\" in rotulos and \"CNES:\" in rotulos and \"CNPJ:\" in rotulos:\n        dados[\"Nome\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"CNES\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"CNPJ\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Nome Empresarial:\" in rotulos and \"CPF:\" in rotulos:\n        dados[\"NomeEmpresarial\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"CPF\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"Personalidade\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Logradouro:\" in rotulos and \"Telefone:\" in rotulos:\n        dados[\"Logradouro\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"Número\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"Telefone\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Complemento:\" in rotulos and \"Munic\" in rotulos:\n        dados[\"Complemento\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"Bairro\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"CEP\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n        dados[\"Município\"] = clean(valores[3]) if len(valores) > 3 else \"\"\n        dados[\"UF\"] = clean(valores[4]) if len(valores) > 4 else \"\"\n\n    elif \"Tipo Estabelecimento:\" in rotulos:\n        dados[\"TipoEstabelecimento\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"SubTipoEstabelecimento\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"Gestão\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n        dados[\"Dependência\"] = clean(valores[3]) if len(valores) > 3 else \"\"\n\n    elif \"Número Alvar\" in rotulos or \"Alvar\" in rotulos:\n        dados[\"NúmeroAlvará\"] = clean(valores[0]) if len(valores) > 0 else \"\"\n        dados[\"ÓrgãoExpedidor\"] = clean(valores[1]) if len(valores) > 1 else \"\"\n        dados[\"DataExpedição\"] = clean(valores[2]) if len(valores) > 2 else \"\"\n\n    elif \"Horário de Funcionamento\" in rotulos:\n        # próxima linha contém o texto\n        if i + 1 < len(rows):\n            dados[\"HoráriodeFuncionamento\"] = clean(rows[i + 1][0])\n\nreturn [{\"json\": dados}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1312,
+        224
+      ],
+      "id": "ebf78fe4-3c69-4c91-b916-4a0f50c36d95",
+      "name": "Code in Python (Beta)1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const baseUrl = \"https://cnes2.datasus.gov.br/\";\n\n// Pega o item corretamente (lista ou único objeto)\nconst item = Array.isArray(items) ? items[0] : items;\nconst html = item.json.data || item.json || \"\";\n\nconst rowRegex = /<tr[^>]*bgcolor=['\"]#cccccc['\"][^>]*>(.*?)<\\/tr>/gis;\nconst tdRegex = /<td[^>]*>(.*?)<\\/td>/gis;\nconst linkRegex = /<a[^>]*href=['\"]([^'\"]+)['\"][^>]*>(.*?)<\\/a>/i;\n\nconst resultados = [];\n\nlet match;\nwhile ((match = rowRegex.exec(html)) !== null) {\n  const rowHtml = match[1];\n  const cols = [...rowHtml.matchAll(tdRegex)].map(m => m[1]);\n\n  if (cols.length >= 4) {\n    const linkMatch = cols[1].match(linkRegex);\n    if (!linkMatch) continue;\n\n    const linkHref = linkMatch[1].trim();\n    const nome = linkMatch[2].replace(/<[^>]*>/g, \"\").trim();\n\n    let link = linkHref;\n    if (link && !link.startsWith(\"http\")) {\n      link = baseUrl + link.replace(/^\\//, \"\");\n    }\n\n    const existentes = cols[2].replace(/<[^>]*>/g, \"\").trim();\n    const emUso = cols[3].replace(/<[^>]*>/g, \"\").trim();\n\n    resultados.push({\n      Estabelecimento: nome,\n      Link: link,\n      Existentes: existentes,\n      Em_Uso: emUso,\n    });\n  }\n}\n\n// Adiciona o número do lote (1 ou 2)\nconst total = resultados.length;\nconst metade = Math.ceil(total / 2);\n\nconst final = resultados.map((r, i) => ({\n  json: {\n    ...r,\n    Lote: i < metade ? 1 : 2\n  }\n}));\n\nreturn final;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        240
+      ],
+      "id": "12b7f2c8-f732-405c-bda7-b0124427a292",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1968,
+        192
+      ],
+      "id": "6c3ea2a4-af9e-4887-a68a-7fc9d80eca90",
+      "name": "Wait",
+      "webhookId": "599fa408-0700-4f55-ae1f-89603f8fca6b"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        112
+      ],
+      "id": "9c46b4f1-f639-4b23-b5c2-06b380686a55",
+      "name": "..."
+    },
+    {
+      "parameters": {
+        "content": "# Extrai a lista de CNPJ/ CNES ",
+        "height": 480,
+        "width": 2528,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "91ed4a0e-5607-45c3-b944-4705608a8dea",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        688
+      ],
+      "id": "ba088bc6-33d4-4add-a2fd-80ea8bba5e57",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "maxItems": 1571
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        736,
+        160
+      ],
+      "id": "acb163f7-7a0c-40dd-96e1-f92094ac6e6e",
+      "name": "Primeiros"
+    },
+    {
+      "parameters": {
+        "maxItems": 1571
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        736,
+        304
+      ],
+      "id": "edbf29f2-a9aa-4345-9a13-5a1e7fc7fa53",
+      "name": "Ultimos"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dfaf47f0-8ded-41f5-81c7-4c7a10b74909",
+              "leftValue": "={{ $json.Lote }}",
+              "rightValue": 2,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        240
+      ],
+      "id": "82a34ff4-1aef-44ae-91bd-9386acb7d1b2",
+      "name": "If1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1536,
+        208
+      ],
+      "id": "a3fffa79-0af3-45a6-8ad6-1ab71cd99b94",
+      "name": "Wait1",
+      "webhookId": "9765a5de-6d61-45fb-a0ac-0c714d2e4571"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA",
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1185343356,
+          "mode": "list",
+          "cachedResultName": "Página3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA/edit#gid=1185343356"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "==HYPERLINK(\"{{ $('Code in JavaScript').item.json.Link }}\"; \"{{ $('Code in Python (Beta)1').item.json.Nome }}\")",
+            "CNPJ": "={{ $('Code in Python (Beta)1').item.json.CNPJ }}",
+            "Município": "={{ $('Code in Python (Beta)1').item.json['Município'].replace(/\\s*-+\\s*IBGE.*$/, '').trim() }}",
+            "Estado": "={{ $('Code in Python (Beta)1').item.json.UF }}",
+            "Existentes": "={{ $('Code in JavaScript').item.json.Existentes }}",
+            "em Uso": "={{ $('Code in JavaScript').item.json.Em_Uso }}"
+          },
+          "matchingColumns": [
+            "Nome"
+          ],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Município",
+              "displayName": "Município",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela investigação",
+              "displayName": "Responsável pela investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia de e-mail \"Nome do Responsável\"",
+              "displayName": "Cadencia de e-mail \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta ",
+              "displayName": "Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo concluído (Contrato, bobinas comp. Enviar e-mail) ",
+              "displayName": "Objetivo concluído (Contrato, bobinas comp. Enviar e-mail) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. de qualificação",
+              "displayName": "Responsável pela lig. de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de qualificação",
+              "displayName": "Data da ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Qualificação da Ligação",
+              "displayName": "Qualificação da Ligação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo ",
+              "displayName": "Objetivo ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1744,
+        208
+      ],
+      "id": "95d0d3b4-195c-4e2d-8ce5-55bd09c2f74c",
+      "name": "Append row in sheet",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA",
+          "mode": "list",
+          "cachedResultName": "Teste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1185343356,
+          "mode": "list",
+          "cachedResultName": "Página3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17xGhVU7nL1lkkdGabEG1o_DTCZ6P_pQ7XNgZGIIKEKA/edit#gid=1185343356"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        256,
+        688
+      ],
+      "id": "ba68f6f3-7a28-4e75-a187-4b90fb03aefd",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS OUTBOUND CNES2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Nome",
+              "lookupValue": "={{ $json.Nome }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        704,
+        704
+      ],
+      "id": "8020e16c-367d-4354-8ca3-58a2c289a188",
+      "name": "Get row(s) in sheet1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        464,
+        688
+      ],
+      "id": "05df7762-c48b-401d-be5a-42b16c6a4e37",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2112,
+        976
+      ],
+      "id": "631640b9-f4a5-47f3-bb02-8987f02e9aac",
+      "name": "Wait3",
+      "webhookId": "3b60de7a-6612-4bc6-98cd-e19c4763db29"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS OUTBOUND CNES2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "={{ $('Get row(s) in sheet').item.json.Nome }}",
+            "em Uso": "={{ $('Get row(s) in sheet').item.json['em Uso'] }}",
+            "Existentes": "={{ $('Get row(s) in sheet').item.json.Existentes }}",
+            "Campanha": "={{ $('Get row(s) in sheet').item.json.Campanha }}",
+            "Estado": "={{ $('Get row(s) in sheet').item.json.Estado }}",
+            "Município": "={{ $('Get row(s) in sheet').item.json['Município'] }}",
+            "CNPJ": "={{ $('Get row(s) in sheet').item.json.CNPJ }}"
+          },
+          "matchingColumns": [
+            "Nome"
+          ],
+          "schema": [
+            {
+              "id": "CNES",
+              "displayName": "CNES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Município",
+              "displayName": "Município",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Responsável pela investigação",
+              "displayName": "Responsável pela investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia de e-mail \"Nome do Responsável\"",
+              "displayName": "Cadencia de e-mail \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta ",
+              "displayName": "Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo concluído (Contrato, bobinas comp. Enviar e-mail) ",
+              "displayName": "Objetivo concluído (Contrato, bobinas comp. Enviar e-mail) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. de qualificação",
+              "displayName": "Responsável pela lig. de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de qualificação",
+              "displayName": "Data da ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Qualificação da Ligação",
+              "displayName": "Qualificação da Ligação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo ",
+              "displayName": "Objetivo ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1888,
+        992
+      ],
+      "id": "c96d2d22-2cb8-4318-9a51-bdf05553a882",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1648,
+        992
+      ],
+      "id": "31fb8aef-96a1-4cc4-8cce-6da9e81182fb",
+      "name": "Wait5",
+      "webhookId": "ff3b9cab-66d4-460d-99d4-14697a9e9cb7"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2112,
+        656
+      ],
+      "id": "2c2dff88-a345-4d44-8615-91c408f6bd15",
+      "name": "Wait4",
+      "webhookId": "3b60de7a-6612-4bc6-98cd-e19c4763db29"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1648,
+        672
+      ],
+      "id": "b69726b2-ce69-4b6a-9f6d-851788133db1",
+      "name": "Wait6",
+      "webhookId": "ff3b9cab-66d4-460d-99d4-14697a9e9cb7"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM",
+          "mode": "list",
+          "cachedResultName": "BANCO DE DADOS OUTBOUND CNES2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Com RM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eFvOc8SaopVMZsfN5AP_dpIF2xA6y1zgrxNdjkv5GWM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "={{ $('Get row(s) in sheet').item.json.Nome }}",
+            "em Uso": "={{ $('Get row(s) in sheet').item.json['em Uso'] }}",
+            "Existentes": "={{ $('Get row(s) in sheet').item.json.Existentes }}",
+            "Campanha": "={{ $('Get row(s) in sheet').item.json.Campanha }}",
+            "Estado": "={{ $('Get row(s) in sheet').item.json.Estado }}",
+            "Município": "={{ $('Get row(s) in sheet').item.json['Município'] }}",
+            "CNPJ": "={{ $('Get row(s) in sheet').item.json.CNPJ }}"
+          },
+          "matchingColumns": [
+            "Nome"
+          ],
+          "schema": [
+            {
+              "id": "CNES",
+              "displayName": "CNES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CNPJ",
+              "displayName": "CNPJ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Município",
+              "displayName": "Município",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Campanha",
+              "displayName": "Campanha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Responsável pela investigação",
+              "displayName": "Responsável pela investigação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da verificação de lista",
+              "displayName": "Data da verificação de lista",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Destino",
+              "displayName": "Destino",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Cadencia de e-mail \"Nome do Responsável\"",
+              "displayName": "Cadencia de e-mail \"Nome do Responsável\"",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resposta ",
+              "displayName": "Resposta ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da Investigação Web (Pipe)",
+              "displayName": "Data da Investigação Web (Pipe)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Caminho",
+              "displayName": "Caminho",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. filtragem de dados",
+              "displayName": "Responsável pela lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. filtragem de dados",
+              "displayName": "Data da lig. filtragem de dados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo concluído (Marca de RM e nome do responsável) ",
+              "displayName": "Objetivo concluído (Marca de RM e nome do responsável) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. Validação técnica",
+              "displayName": "Responsável pela lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da lig. Validação técnica",
+              "displayName": "Data da lig. Validação técnica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo concluído (Contrato, bobinas comp. Enviar e-mail) ",
+              "displayName": "Objetivo concluído (Contrato, bobinas comp. Enviar e-mail) ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resultado",
+              "displayName": "Resultado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Responsável pela lig. de qualificação",
+              "displayName": "Responsável pela lig. de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Data da ligação de qualificação",
+              "displayName": "Data da ligação de qualificação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Qualificação da Ligação",
+              "displayName": "Qualificação da Ligação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Objetivo ",
+              "displayName": "Objetivo ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Existentes",
+              "displayName": "Existentes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "em Uso",
+              "displayName": "em Uso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1888,
+        672
+      ],
+      "id": "2aed1038-b817-423e-b054-70d3eec053bd",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pega todos os itens vindos do nó anterior\nconst items = $input.all();\n\n// Verifica se é exatamente [ {} ]\nif (\n  items.length === 1 &&\n  items[0] &&\n  Object.keys(items[0].json).length === 0\n) {\n  return [\n    {\n      json: {\n        erro: true,\n        mensagem: 'Nenhum dado retornado',\n      },\n    },\n  ];\n}\n\n// Caso tenha dados válidos, apenas repassa\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        688
+      ],
+      "id": "f86cc149-e9a4-4dc6-840b-b3feeab95f77",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.mensagem }}",
+                    "rightValue": "Nenhum dado retornado",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "0b9590ce-43a1-4312-aea6-ec1a0474c9f9"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Não existe na tabela"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bbd3f3bc-3f5e-4e46-a0b7-447f80f64ab1",
+                    "leftValue": "={{ $json.Nome }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Existe na tabela"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1120,
+        688
+      ],
+      "id": "77f27d1b-08d6-40c1-ad78-b51d84b6090a",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d8febb0a-f2a1-4010-aff5-7fa2127b6144",
+              "leftValue": "={{ $json.Nome }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "6bbe52d2-564f-45b8-88b6-50141c667cfd",
+              "leftValue": "={{ $json.CNPJ ? String($json.CNPJ) : '' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "095fa828-f169-422d-b1cc-14de86e7919c",
+              "leftValue": "={{ $json[\"Município\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "765a779e-c41c-4c93-bc9f-269a68c9a398",
+              "leftValue": "={{ $json.Estado }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "cd11d6e2-82f8-494f-b95a-e7147b2b1ed7",
+              "leftValue": "={{ $json.Campanha }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "fbf30ea8-be9a-45be-a0f1-381dad3d4b25",
+              "leftValue": "={{ $json.Existentes }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b46c15d2-a027-4134-9e2f-b4744663968b",
+              "leftValue": "={{ $json[\"em Uso\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1376,
+        1008
+      ],
+      "id": "4d19efde-c2cb-4941-89ab-0ffab1732ab6",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "# Adiciona os dados extraídos da lista de CNPJ/CNES",
+        "height": 720,
+        "width": 2528,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        528
+      ],
+      "id": "2176d5b5-bd08-4b2e-870b-3225e44cb7e4",
+      "name": "Sticky Note"
+    }
+  ],
+  "connections": {
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "...",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in Python (Beta)1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Primeiros": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ultimos": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Primeiros",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ultimos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {
+        "json": {}
+      }
+    ]
+  },
+  "versionId": "609db21a-cf15-4fc7-baf8-2e543269c462",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T14:47:08.076Z",
+      "createdAt": "2025-11-17T14:47:08.076Z",
+      "role": "workflow:owner",
+      "workflowId": "0WRqq48nc68oVjx9",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": [
+    {
+      "updatedAt": "2025-11-17T14:46:49.590Z",
+      "createdAt": "2025-11-17T14:46:49.590Z",
+      "id": "07PoDe2av3fELS1A",
+      "name": "Python"
+    },
+    {
+      "updatedAt": "2025-11-17T14:46:49.579Z",
+      "createdAt": "2025-11-17T14:46:49.579Z",
+      "id": "9yuumwfUmri83S1w",
+      "name": "Javascript"
+    },
+    {
+      "updatedAt": "2025-11-17T14:32:35.191Z",
+      "createdAt": "2025-11-17T14:32:35.191Z",
+      "id": "Llfmd66GWbMUHQMr",
+      "name": "Http"
+    },
+    {
+      "updatedAt": "2025-11-17T14:09:04.153Z",
+      "createdAt": "2025-11-17T14:09:04.153Z",
+      "id": "32ehNS7DwOBedRQc",
+      "name": "Sheets"
+    }
+  ]
+}
