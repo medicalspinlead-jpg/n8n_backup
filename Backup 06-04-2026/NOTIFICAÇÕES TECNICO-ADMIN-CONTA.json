@@ -1,0 +1,302 @@
+{
+  "updatedAt": "2026-04-06T11:36:03.360Z",
+  "createdAt": "2026-03-20T12:20:10.130Z",
+  "id": "W7sacg2K0oZhDIVF",
+  "name": "NOTIFICAÇÕES TECNICO-ADMIN-CONTA",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "21deb1c6-29b4-4324-9f80-fc1ec485f365",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ea795e73-6afd-4368-a2fc-4e619df24835",
+      "name": "Webhook",
+      "webhookId": "21deb1c6-29b4-4324-9f80-fc1ec485f365"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "73836a3f-236a-4f76-8cbf-522c95c93db9",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        144
+      ],
+      "id": "23351a6e-cdf9-4606-9682-52eba2418bcc",
+      "name": "Webhook1",
+      "webhookId": "73836a3f-236a-4f76-8cbf-522c95c93db9"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b99c887c-0cda-4329-ba9e-aa31ebb32fd2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        288
+      ],
+      "id": "9a7e2f2f-e71a-49f0-8797-9567520b087a",
+      "name": "Webhook2",
+      "webhookId": "b99c887c-0cda-4329-ba9e-aa31ebb32fd2"
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "node",
+            "content-length": "673",
+            "accept": "*/*",
+            "accept-encoding": "br, gzip, deflate",
+            "accept-language": "*",
+            "content-type": "application/json",
+            "sec-fetch-mode": "cors",
+            "x-forwarded-for": "45.233.99.30",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.99.30"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "evento": "nova_solicitacao",
+            "timestamp": "2026-03-23T15:00:56.531Z",
+            "dados": {
+              "id": "c121bb10-87ff-479f-9f54-2eedb3bf5990",
+              "protocolo": "SOL-20260323-CYK3R0",
+              "status": "recebida",
+              "nomeEmpresa": "teste",
+              "cnpj": "12.345.678/9101-11",
+              "nomeContato": "testeEU",
+              "telefone": "79999801810",
+              "email": "lwendel003@gmail.com",
+              "cidade": "Aracaju",
+              "uf": "SE",
+              "tipoEquipamento": "Ressonância Magnética",
+              "fabricante": "Hitachi",
+              "modelo": "Ingenia Ambition 1.5T",
+              "numeroSerie": "54524522",
+              "descricaoProblema": "teste",
+              "urgencia": "normal",
+              "clienteId": "1a9b25ab-55f5-4293-b44a-0ad50a6e858c",
+              "midias": {
+                "videos": [],
+                "imagens": []
+              },
+              "createdAt": "2026-03-23T15:00:55.321Z",
+              "updatedAt": "2026-03-23T15:00:55.321Z"
+            }
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/21deb1c6-29b4-4324-9f80-fc1ec485f365",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "node",
+            "content-length": "346",
+            "accept": "*/*",
+            "accept-encoding": "br, gzip, deflate",
+            "accept-language": "*",
+            "content-type": "application/json",
+            "sec-fetch-mode": "cors",
+            "x-forwarded-for": "45.233.99.13",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.99.13"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "evento": "novo_registro_cliente",
+            "usuario": {
+              "id": "5871e16d-4168-49c6-b262-ad5c142ff29d",
+              "nome": "dfdfdf",
+              "email": "teste@teste1",
+              "cargo": "cliente"
+            },
+            "empresa": {
+              "id": "d8db8db1-b8cc-48e0-b89c-b47e1273817e",
+              "razaoSocial": "teste",
+              "nomeFantasia": "dfdfdf",
+              "cnpj": "12.345.678/9101-66",
+              "cidade": "dfdfd",
+              "uf": "PE"
+            },
+            "dataRegistro": "2026-03-30T11:37:31.146Z"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/73836a3f-236a-4f76-8cbf-522c95c93db9",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Webhook2": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "node",
+            "content-length": "526",
+            "accept": "*/*",
+            "accept-encoding": "br, gzip, deflate",
+            "accept-language": "*",
+            "content-type": "application/json",
+            "sec-fetch-mode": "cors",
+            "x-forwarded-for": "45.233.99.13",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.99.13"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "evento": "conta_aprovada",
+            "usuario": {
+              "id": "5871e16d-4168-49c6-b262-ad5c142ff29d",
+              "nome": "dfdfdf",
+              "email": "teste@teste1",
+              "telefone": null,
+              "cargo": "cliente"
+            },
+            "empresa": {
+              "id": "d8db8db1-b8cc-48e0-b89c-b47e1273817e",
+              "razaoSocial": "teste",
+              "nomeFantasia": "dfdfdf",
+              "cnpj": "12.345.678/9101-66",
+              "cidade": "dfdfd",
+              "uf": "PE",
+              "telefone": "79999801810",
+              "email": "desenvmedicalspin@gmail.com"
+            },
+            "aprovadoPor": {
+              "id": "c577abbb-f92e-4ffa-aace-98aaf29ecce6",
+              "nome": "Wendel",
+              "email": "lwendel003@gmail.com"
+            },
+            "dataAprovacao": "2026-03-30T11:38:57.569Z"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/b99c887c-0cda-4329-ba9e-aa31ebb32fd2",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "versionId": "99b36803-09eb-4d96-91ef-32d5a5648fe5",
+  "activeVersionId": "99b36803-09eb-4d96-91ef-32d5a5648fe5",
+  "triggerCount": 3,
+  "shared": [
+    {
+      "updatedAt": "2026-03-20T12:20:10.130Z",
+      "createdAt": "2026-03-20T12:20:10.130Z",
+      "role": "workflow:owner",
+      "workflowId": "W7sacg2K0oZhDIVF",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-03-30T11:41:48.019Z",
+    "createdAt": "2026-03-30T11:39:38.497Z",
+    "versionId": "99b36803-09eb-4d96-91ef-32d5a5648fe5",
+    "workflowId": "W7sacg2K0oZhDIVF",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "21deb1c6-29b4-4324-9f80-fc1ec485f365",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "ea795e73-6afd-4368-a2fc-4e619df24835",
+        "name": "Webhook",
+        "webhookId": "21deb1c6-29b4-4324-9f80-fc1ec485f365"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "73836a3f-236a-4f76-8cbf-522c95c93db9",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          144
+        ],
+        "id": "23351a6e-cdf9-4606-9682-52eba2418bcc",
+        "name": "Webhook1",
+        "webhookId": "73836a3f-236a-4f76-8cbf-522c95c93db9"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "b99c887c-0cda-4329-ba9e-aa31ebb32fd2",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          288
+        ],
+        "id": "9a7e2f2f-e71a-49f0-8797-9567520b087a",
+        "name": "Webhook2",
+        "webhookId": "b99c887c-0cda-4329-ba9e-aa31ebb32fd2"
+      }
+    ],
+    "connections": {},
+    "authors": "Automações  Medical Spin",
+    "name": "Version 99b36803",
+    "description": "",
+    "autosaved": false
+  },
+  "tags": []
+}
