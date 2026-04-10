@@ -1,0 +1,1452 @@
+{
+  "updatedAt": "2026-04-08T15:38:47.906Z",
+  "createdAt": "2026-03-20T12:20:10.130Z",
+  "id": "W7sacg2K0oZhDIVF",
+  "name": "NOTIFICAÇÕES TECNICO-ADMIN-CONTA",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "73836a3f-236a-4f76-8cbf-522c95c93db9",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        -16
+      ],
+      "id": "23351a6e-cdf9-4606-9682-52eba2418bcc",
+      "name": "Admin",
+      "webhookId": "73836a3f-236a-4f76-8cbf-522c95c93db9"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b99c887c-0cda-4329-ba9e-aa31ebb32fd2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        432
+      ],
+      "id": "9a7e2f2f-e71a-49f0-8797-9567520b087a",
+      "name": "Cliente",
+      "webhookId": "b99c887c-0cda-4329-ba9e-aa31ebb32fd2"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "21deb1c6-29b4-4324-9f80-fc1ec485f365",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        272
+      ],
+      "id": "ea795e73-6afd-4368-a2fc-4e619df24835",
+      "name": "Tecnicos",
+      "webhookId": "21deb1c6-29b4-4324-9f80-fc1ec485f365"
+    },
+    {
+      "parameters": {
+        "jsCode": "const entrada = $input.all()[0].json.body;\n\nconst admins = entrada.adminsNotificacao || [];\n\n// função de normalização\nfunction normalizarTelefone(numero) {\n  if (!numero) return null;\n\n  let telefone = numero.replace(/\\D/g, '');\n\n  // remove 0 inicial\n  if (telefone.startsWith('0')) {\n    telefone = telefone.slice(1);\n  }\n\n  // adiciona DDI Brasil se não existir\n  if (!telefone.startsWith('55')) {\n    telefone = '55' + telefone;\n  }\n\n  return telefone;\n}\n\nconst resultado = admins\n  .map(admin => {\n\n    const canaisAtivos = Object.entries(admin.canais || {})\n      .filter(([_, ativo]) => ativo === true)\n      .map(([canal]) => canal);\n\n    if (canaisAtivos.length === 0) return null;\n\n    return {\n      json: {\n        id: admin.id,\n        nome: admin.nome,\n        email: admin.email,\n        telefone: normalizarTelefone(admin.telefone),\n        canaisAtivos\n      }\n    };\n  })\n  .filter(Boolean);\n\nreturn resultado;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        -16
+      ],
+      "id": "ade6a127-5114-4f4e-b655-7027995d5477",
+      "name": "numAdm"
+    },
+    {
+      "parameters": {
+        "jsCode": "const entrada = $input.all()[0].json.body;\n\nconst tecnicos = entrada.usuariosNotificacao || [];\n\nfunction normalizarTelefone(numero) {\n  if (!numero) return null;\n\n  // remove tudo que não for número\n  let telefone = numero.replace(/\\D/g, '');\n\n  // se não começar com 55 → adiciona\n  if (!telefone.startsWith('55')) {\n    telefone = '55' + telefone;\n  }\n\n  return telefone;\n}\n\nconst resultado = tecnicos\n  .map(tecnico => {\n\n    const canaisAtivos = Object.entries(tecnico.canais || {})\n      .filter(([_, ativo]) => ativo === true)\n      .map(([canal]) => canal);\n\n    if (canaisAtivos.length === 0) return null;\n\n    return {\n      json: {\n        id: tecnico.id,\n        nome: tecnico.nome,\n        email: tecnico.email,\n        telefone: normalizarTelefone(tecnico.telefone),\n        canaisAtivos,\n        solicitacao: entrada.dados\n      }\n    };\n  })\n  .filter(Boolean);\n\nreturn resultado;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        272
+      ],
+      "id": "c5572706-e0a6-471a-a8cd-bfcfca499d9c",
+      "name": "numTec"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.telefone }}",
+        "messageText": "=Nova Solicitação de aprovação de conta do cliente:\n\nNome: {{ $('Admin').item.json.body.usuario.nome }}\nEmail: {{ $('Admin').item.json.body.usuario.email }}\nRazão Social: {{ $('Admin').item.json.body.empresa.razaoSocial }}\nCNPJ: {{ $('Admin').item.json.body.empresa.cnpj }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        848,
+        32
+      ],
+      "id": "1348260e-a42a-408f-b217-1b6e58f12825",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.telefone }}",
+        "messageText": "=Nova Solicitação de OS feita pelo cliente:\n\nRazão Social: {{ $json.solicitacao.nomeEmpresa }}\nCNPJ: {{ $json.solicitacao.cnpj }}\nEquipamento: {{ $json.solicitacao.tipoEquipamento }}\nFabricante: {{ $json.solicitacao.fabricante }}\nModelo: {{ $json.solicitacao.modelo }}\nSérie: {{ $json.solicitacao.numeroSerie }}\nProblema: {{ $json.solicitacao.descricaoProblema }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        848,
+        336
+      ],
+      "id": "af6c1b1b-2551-4197-b0c2-e32ac5454a1c",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.usuario.telefone }}",
+        "messageText": "=Olá {{ $json.usuario.nome }}\n\nSua conta foi aprovada e já está disponível para uso:\n\n",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        416,
+        432
+      ],
+      "id": "f3b97871-add4-4877-b207-c7fba50ce728",
+      "name": "Enviar texto2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const entrada = $input.all()[0].json.body;\n\n// normalização universal\nfunction normalizarTelefone(numero) {\n  if (!numero) return null;\n\n  let telefone = String(numero).replace(/\\D/g, '');\n\n  // remove 0 inicial\n  if (telefone.startsWith('0')) {\n    telefone = telefone.slice(1);\n  }\n\n  // adiciona DDI Brasil\n  if (!telefone.startsWith('55')) {\n    telefone = '55' + telefone;\n  }\n\n  return telefone;\n}\n\nconst usuario = entrada.usuario;\nconst empresa = entrada.empresa;\n\nreturn [\n  {\n    json: {\n      evento: entrada.evento,\n\n      usuario: {\n        id: usuario.id,\n        nome: usuario.nome,\n        email: usuario.email,\n        telefone: normalizarTelefone(usuario.telefone),\n        cargo: usuario.cargo\n      },\n\n      empresa: {\n        id: empresa.id,\n        nomeFantasia: empresa.nomeFantasia,\n        cnpj: empresa.cnpj,\n        cidade: empresa.cidade,\n        uf: empresa.uf,\n        telefone: normalizarTelefone(empresa.telefone),\n        email: empresa.email\n      },\n\n      aprovadoPor: entrada.aprovadoPor,\n      dataAprovacao: entrada.dataAprovacao\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        432
+      ],
+      "id": "7ef516d9-10c2-4eed-8a2a-a27d24ddb348",
+      "name": "numCli"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.canaisAtivos[0] }}",
+                    "rightValue": "=email",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "0b77540f-3017-45c9-87c5-bf64a613ed92"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "email"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        -112
+      ],
+      "id": "1991f280-1cc0-4a42-85c8-bb7d50d39a3c",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4cd81032-a4bb-4310-99ae-71884f525a84",
+              "leftValue": "={{ $json.canaisAtivos[0] }}",
+              "rightValue": "email",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "2531bfa1-1b37-4e2a-8762-8362b81c58af",
+              "leftValue": "={{ $json.canaisAtivos[1] }}",
+              "rightValue": "whatsapp",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        -16
+      ],
+      "id": "f9f20578-cfc9-4ab1-b2bc-ce76f1919351",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.canaisAtivos[1] }}",
+                    "rightValue": "=whatsapp",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "0b77540f-3017-45c9-87c5-bf64a613ed92"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "whatsapp"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        32
+      ],
+      "id": "a109e0ad-df94-4c70-a197-a03e6185fa4b",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "NOVA SOLICITAÇÃO DE ACESSO AO APP",
+        "message": "=NOVA SOLICITAÇÃO DE ACESSO AO APP\n\nNome: {{ $('Admin').item.json.body.usuario.nome }}\nEmail: {{ $('Admin').item.json.body.usuario.email }}\nRazão Social: {{ $('Admin').item.json.body.empresa.razaoSocial }}\nCNPJ: {{ $('Admin').item.json.body.empresa.cnpj }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        848,
+        -112
+      ],
+      "id": "3e451d96-0068-47f2-aa80-99377621c38e",
+      "name": "Send a message",
+      "webhookId": "bdcb2855-87c7-4a49-9b1a-2510380d9653",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.canaisAtivos[0] }}",
+                    "rightValue": "=email",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "0b77540f-3017-45c9-87c5-bf64a613ed92"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "email"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        192
+      ],
+      "id": "8f01432c-1677-4d0d-8bbf-7a7c8bd3ad9f",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4cd81032-a4bb-4310-99ae-71884f525a84",
+              "leftValue": "={{ $json.canaisAtivos[0] }}",
+              "rightValue": "email",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "2531bfa1-1b37-4e2a-8762-8362b81c58af",
+              "leftValue": "={{ $json.canaisAtivos[1] }}",
+              "rightValue": "whatsapp",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        272
+      ],
+      "id": "de46ba6b-07de-4b91-ab56-2fba68b85b9d",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.canaisAtivos[1] }}",
+                    "rightValue": "=whatsapp",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "0b77540f-3017-45c9-87c5-bf64a613ed92"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "whatsapp"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        336
+      ],
+      "id": "8f45f739-916f-4644-8f67-7ee9a56ac173",
+      "name": "Switch3"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "NOVA SOLICITAÇÃO DE OS FEITA PELO CLIENTE",
+        "message": "=NOVA SOLICITAÇÃO DE OS FEITA PELO CLIENTE\n\nRazão Social: {{ $json.solicitacao.nomeEmpresa }}\nCNPJ: {{ $json.solicitacao.cnpj }}\nEquipamento: {{ $json.solicitacao.tipoEquipamento }}\nFabricante: {{ $json.solicitacao.fabricante }}\nModelo: {{ $json.solicitacao.modelo }}\nSérie: {{ $json.solicitacao.numeroSerie }}\nProblema: {{ $json.solicitacao.descricaoProblema }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        848,
+        192
+      ],
+      "id": "1a3978b9-d328-4c02-9d0c-9490823a3b10",
+      "name": "Send a message1",
+      "webhookId": "bdcb2855-87c7-4a49-9b1a-2510380d9653",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KvJgpEKJ3c13wnGv",
+          "name": "Gmail account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "Admin": {
+      "main": [
+        [
+          {
+            "node": "numAdm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tecnicos": {
+      "main": [
+        [
+          {
+            "node": "numTec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cliente": {
+      "main": [
+        [
+          {
+            "node": "numCli",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "numAdm": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "numTec": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "numCli": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch3": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Admin": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "node",
+            "content-length": "524",
+            "accept": "*/*",
+            "accept-encoding": "br, gzip, deflate",
+            "accept-language": "*",
+            "content-type": "application/json",
+            "sec-fetch-mode": "cors",
+            "x-forwarded-for": "45.233.99.47",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.99.47"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "evento": "novo_registro_cliente",
+            "usuario": {
+              "id": "8a26e3e9-fa43-46c4-ab99-9fb1faefe45c",
+              "nome": "Teste",
+              "email": "teste@teste",
+              "cargo": "cliente"
+            },
+            "empresa": {
+              "id": "1a9b25ab-55f5-4293-b44a-0ad50a6e858c",
+              "razaoSocial": "teste",
+              "nomeFantasia": "teste",
+              "cnpj": "12.345.678/9101-11",
+              "cidade": "Aracaju",
+              "uf": "SE"
+            },
+            "adminsNotificacao": [
+              {
+                "id": "c577abbb-f92e-4ffa-aace-98aaf29ecce6",
+                "nome": "Wendel",
+                "email": "lwendel003@gmail.com",
+                "telefone": "7999801810",
+                "canais": {
+                  "email": true,
+                  "whatsapp": true
+                }
+              },
+              {
+                "id": "c577abbb-f92e-4ffa-aace-98aaf29ecce7",
+                "nome": "Wendel",
+                "email": "lwendel003@gmail.com",
+                "telefone": "7999801810",
+                "canais": {
+                  "email": true,
+                  "whatsapp": true
+                }
+              },
+              {
+                "id": "c577abbb-f92e-4ffa-aace-98aaf29ecce8",
+                "nome": "Wendel",
+                "email": "lwendel003@gmail.com",
+                "telefone": "7999801810",
+                "canais": {
+                  "email": true,
+                  "whatsapp": true
+                }
+              }
+            ],
+            "dataRegistro": "2026-04-07T18:32:02.429Z"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/73836a3f-236a-4f76-8cbf-522c95c93db9",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Cliente": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "node",
+            "content-length": "518",
+            "accept": "*/*",
+            "accept-encoding": "br, gzip, deflate",
+            "accept-language": "*",
+            "content-type": "application/json",
+            "sec-fetch-mode": "cors",
+            "x-forwarded-for": "45.233.99.47",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.99.47"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "evento": "conta_aprovada",
+            "usuario": {
+              "id": "8a26e3e9-fa43-46c4-ab99-9fb1faefe45c",
+              "nome": "Teste",
+              "email": "teste@teste",
+              "telefone": 79999801810,
+              "cargo": "cliente"
+            },
+            "empresa": {
+              "id": "1a9b25ab-55f5-4293-b44a-0ad50a6e858c",
+              "razaoSocial": "teste",
+              "nomeFantasia": "teste",
+              "cnpj": "12.345.678/9101-11",
+              "cidade": "Aracaju",
+              "uf": "SE",
+              "telefone": "79999801810",
+              "email": "lwendel003@gmail.com"
+            },
+            "aprovadoPor": {
+              "id": "c577abbb-f92e-4ffa-aace-98aaf29ecce6",
+              "nome": "Wendel",
+              "email": "lwendel003@gmail.com"
+            },
+            "dataAprovacao": "2026-04-07T18:33:23.840Z"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/b99c887c-0cda-4329-ba9e-aa31ebb32fd2",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Tecnicos": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "node",
+            "content-length": "1002",
+            "accept": "*/*",
+            "accept-encoding": "br, gzip, deflate",
+            "accept-language": "*",
+            "content-type": "application/json",
+            "sec-fetch-mode": "cors",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "10.0.1.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "evento": "nova_solicitacao",
+            "timestamp": "2026-04-08T14:44:52.633Z",
+            "dados": {
+              "id": "474f1a8e-12aa-45ac-b55d-a492e6b6e718",
+              "protocolo": "SOL-20260408-96LNMI",
+              "status": "recebida",
+              "nomeEmpresa": "teste",
+              "cnpj": "12.345.678/9101-11",
+              "nomeContato": "testeEU",
+              "telefone": "79999801810",
+              "email": "lwendel003@gmail.com",
+              "cidade": "Aracaju",
+              "uf": "SE",
+              "tipoEquipamento": "Ultrassom ",
+              "fabricante": "Philips",
+              "modelo": "Intera/Achieva 1.5T",
+              "numeroSerie": "MR12345",
+              "descricaoProblema": "teste",
+              "urgencia": "normal",
+              "clienteId": "1a9b25ab-55f5-4293-b44a-0ad50a6e858c",
+              "midias": {
+                "videos": [],
+                "imagens": []
+              },
+              "createdAt": "2026-04-08T14:44:52.612Z",
+              "updatedAt": "2026-04-08T14:44:52.612Z"
+            },
+            "usuariosNotificacao": [
+              {
+                "id": "c577abbb-f92e-4ffa-aace-98aaf29ecce6",
+                "nome": "Wendel",
+                "email": "lwendel003@gmail.com",
+                "telefone": "7999801810",
+                "canais": {
+                  "email": true,
+                  "whatsapp": true
+                }
+              },
+              {
+                "id": "de571cb2-6410-4bc7-8f98-81c35f073ec4",
+                "nome": "Wendel - Medical Spin",
+                "email": "teste@teste",
+                "telefone": "79999801810",
+                "canais": {
+                  "email": true,
+                  "whatsapp": true
+                }
+              }
+            ]
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/21deb1c6-29b4-4324-9f80-fc1ec485f365",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "versionId": "33e01364-7957-4f2d-be07-2ea006e1a7f7",
+  "activeVersionId": "33e01364-7957-4f2d-be07-2ea006e1a7f7",
+  "triggerCount": 3,
+  "shared": [
+    {
+      "updatedAt": "2026-03-20T12:20:10.130Z",
+      "createdAt": "2026-03-20T12:20:10.130Z",
+      "role": "workflow:owner",
+      "workflowId": "W7sacg2K0oZhDIVF",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-04-08T15:38:38.837Z",
+    "createdAt": "2026-04-08T15:38:36.887Z",
+    "versionId": "33e01364-7957-4f2d-be07-2ea006e1a7f7",
+    "workflowId": "W7sacg2K0oZhDIVF",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "73836a3f-236a-4f76-8cbf-522c95c93db9",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          -16
+        ],
+        "id": "23351a6e-cdf9-4606-9682-52eba2418bcc",
+        "name": "Admin",
+        "webhookId": "73836a3f-236a-4f76-8cbf-522c95c93db9"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "b99c887c-0cda-4329-ba9e-aa31ebb32fd2",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          432
+        ],
+        "id": "9a7e2f2f-e71a-49f0-8797-9567520b087a",
+        "name": "Cliente",
+        "webhookId": "b99c887c-0cda-4329-ba9e-aa31ebb32fd2"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "21deb1c6-29b4-4324-9f80-fc1ec485f365",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          272
+        ],
+        "id": "ea795e73-6afd-4368-a2fc-4e619df24835",
+        "name": "Tecnicos",
+        "webhookId": "21deb1c6-29b4-4324-9f80-fc1ec485f365"
+      },
+      {
+        "parameters": {
+          "jsCode": "const entrada = $input.all()[0].json.body;\n\nconst admins = entrada.adminsNotificacao || [];\n\n// função de normalização\nfunction normalizarTelefone(numero) {\n  if (!numero) return null;\n\n  let telefone = numero.replace(/\\D/g, '');\n\n  // remove 0 inicial\n  if (telefone.startsWith('0')) {\n    telefone = telefone.slice(1);\n  }\n\n  // adiciona DDI Brasil se não existir\n  if (!telefone.startsWith('55')) {\n    telefone = '55' + telefone;\n  }\n\n  return telefone;\n}\n\nconst resultado = admins\n  .map(admin => {\n\n    const canaisAtivos = Object.entries(admin.canais || {})\n      .filter(([_, ativo]) => ativo === true)\n      .map(([canal]) => canal);\n\n    if (canaisAtivos.length === 0) return null;\n\n    return {\n      json: {\n        id: admin.id,\n        nome: admin.nome,\n        email: admin.email,\n        telefone: normalizarTelefone(admin.telefone),\n        canaisAtivos\n      }\n    };\n  })\n  .filter(Boolean);\n\nreturn resultado;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          208,
+          -16
+        ],
+        "id": "ade6a127-5114-4f4e-b655-7027995d5477",
+        "name": "numAdm"
+      },
+      {
+        "parameters": {
+          "jsCode": "const entrada = $input.all()[0].json.body;\n\nconst tecnicos = entrada.usuariosNotificacao || [];\n\nfunction normalizarTelefone(numero) {\n  if (!numero) return null;\n\n  // remove tudo que não for número\n  let telefone = numero.replace(/\\D/g, '');\n\n  // se não começar com 55 → adiciona\n  if (!telefone.startsWith('55')) {\n    telefone = '55' + telefone;\n  }\n\n  return telefone;\n}\n\nconst resultado = tecnicos\n  .map(tecnico => {\n\n    const canaisAtivos = Object.entries(tecnico.canais || {})\n      .filter(([_, ativo]) => ativo === true)\n      .map(([canal]) => canal);\n\n    if (canaisAtivos.length === 0) return null;\n\n    return {\n      json: {\n        id: tecnico.id,\n        nome: tecnico.nome,\n        email: tecnico.email,\n        telefone: normalizarTelefone(tecnico.telefone),\n        canaisAtivos,\n        solicitacao: entrada.dados\n      }\n    };\n  })\n  .filter(Boolean);\n\nreturn resultado;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          208,
+          272
+        ],
+        "id": "c5572706-e0a6-471a-a8cd-bfcfca499d9c",
+        "name": "numTec"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{ $json.telefone }}",
+          "messageText": "=Nova Solicitação de aprovação de conta do cliente:\n\nNome: {{ $('Admin').item.json.body.usuario.nome }}\nEmail: {{ $('Admin').item.json.body.usuario.email }}\nRazão Social: {{ $('Admin').item.json.body.empresa.razaoSocial }}\nCNPJ: {{ $('Admin').item.json.body.empresa.cnpj }}",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          848,
+          32
+        ],
+        "id": "1348260e-a42a-408f-b217-1b6e58f12825",
+        "name": "Enviar texto",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{ $json.telefone }}",
+          "messageText": "=Nova Solicitação de OS feita pelo cliente:\n\nRazão Social: {{ $json.solicitacao.nomeEmpresa }}\nCNPJ: {{ $json.solicitacao.cnpj }}\nEquipamento: {{ $json.solicitacao.tipoEquipamento }}\nFabricante: {{ $json.solicitacao.fabricante }}\nModelo: {{ $json.solicitacao.modelo }}\nSérie: {{ $json.solicitacao.numeroSerie }}\nProblema: {{ $json.solicitacao.descricaoProblema }}",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          848,
+          336
+        ],
+        "id": "af6c1b1b-2551-4197-b0c2-e32ac5454a1c",
+        "name": "Enviar texto1",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{ $json.usuario.telefone }}",
+          "messageText": "=Olá {{ $json.usuario.nome }}\n\nSua conta foi aprovada e já está disponível para uso:\n\n",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          416,
+          432
+        ],
+        "id": "f3b97871-add4-4877-b207-c7fba50ce728",
+        "name": "Enviar texto2",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "jsCode": "const entrada = $input.all()[0].json.body;\n\n// normalização universal\nfunction normalizarTelefone(numero) {\n  if (!numero) return null;\n\n  let telefone = String(numero).replace(/\\D/g, '');\n\n  // remove 0 inicial\n  if (telefone.startsWith('0')) {\n    telefone = telefone.slice(1);\n  }\n\n  // adiciona DDI Brasil\n  if (!telefone.startsWith('55')) {\n    telefone = '55' + telefone;\n  }\n\n  return telefone;\n}\n\nconst usuario = entrada.usuario;\nconst empresa = entrada.empresa;\n\nreturn [\n  {\n    json: {\n      evento: entrada.evento,\n\n      usuario: {\n        id: usuario.id,\n        nome: usuario.nome,\n        email: usuario.email,\n        telefone: normalizarTelefone(usuario.telefone),\n        cargo: usuario.cargo\n      },\n\n      empresa: {\n        id: empresa.id,\n        nomeFantasia: empresa.nomeFantasia,\n        cnpj: empresa.cnpj,\n        cidade: empresa.cidade,\n        uf: empresa.uf,\n        telefone: normalizarTelefone(empresa.telefone),\n        email: empresa.email\n      },\n\n      aprovadoPor: entrada.aprovadoPor,\n      dataAprovacao: entrada.dataAprovacao\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          208,
+          432
+        ],
+        "id": "7ef516d9-10c2-4eed-8a2a-a27d24ddb348",
+        "name": "numCli"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.canaisAtivos[0] }}",
+                      "rightValue": "=email",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "0b77540f-3017-45c9-87c5-bf64a613ed92"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "email"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          640,
+          -112
+        ],
+        "id": "1991f280-1cc0-4a42-85c8-bb7d50d39a3c",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "4cd81032-a4bb-4310-99ae-71884f525a84",
+                "leftValue": "={{ $json.canaisAtivos[0] }}",
+                "rightValue": "email",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              },
+              {
+                "id": "2531bfa1-1b37-4e2a-8762-8362b81c58af",
+                "leftValue": "={{ $json.canaisAtivos[1] }}",
+                "rightValue": "whatsapp",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          416,
+          -16
+        ],
+        "id": "f9f20578-cfc9-4ab1-b2bc-ce76f1919351",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.canaisAtivos[1] }}",
+                      "rightValue": "=whatsapp",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "0b77540f-3017-45c9-87c5-bf64a613ed92"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "whatsapp"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          640,
+          32
+        ],
+        "id": "a109e0ad-df94-4c70-a197-a03e6185fa4b",
+        "name": "Switch1"
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ $json.email }}",
+          "subject": "NOVA SOLICITAÇÃO DE ACESSO AO APP",
+          "message": "=NOVA SOLICITAÇÃO DE ACESSO AO APP\n\nNome: {{ $('Admin').item.json.body.usuario.nome }}\nEmail: {{ $('Admin').item.json.body.usuario.email }}\nRazão Social: {{ $('Admin').item.json.body.empresa.razaoSocial }}\nCNPJ: {{ $('Admin').item.json.body.empresa.cnpj }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          848,
+          -112
+        ],
+        "id": "3e451d96-0068-47f2-aa80-99377621c38e",
+        "name": "Send a message",
+        "webhookId": "bdcb2855-87c7-4a49-9b1a-2510380d9653",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.canaisAtivos[0] }}",
+                      "rightValue": "=email",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "0b77540f-3017-45c9-87c5-bf64a613ed92"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "email"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          640,
+          192
+        ],
+        "id": "8f01432c-1677-4d0d-8bbf-7a7c8bd3ad9f",
+        "name": "Switch2"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "4cd81032-a4bb-4310-99ae-71884f525a84",
+                "leftValue": "={{ $json.canaisAtivos[0] }}",
+                "rightValue": "email",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              },
+              {
+                "id": "2531bfa1-1b37-4e2a-8762-8362b81c58af",
+                "leftValue": "={{ $json.canaisAtivos[1] }}",
+                "rightValue": "whatsapp",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          416,
+          272
+        ],
+        "id": "de46ba6b-07de-4b91-ab56-2fba68b85b9d",
+        "name": "If1"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.canaisAtivos[1] }}",
+                      "rightValue": "=whatsapp",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "0b77540f-3017-45c9-87c5-bf64a613ed92"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "whatsapp"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          640,
+          336
+        ],
+        "id": "8f45f739-916f-4644-8f67-7ee9a56ac173",
+        "name": "Switch3"
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ $json.email }}",
+          "subject": "NOVA SOLICITAÇÃO DE OS FEITA PELO CLIENTE",
+          "message": "=NOVA SOLICITAÇÃO DE OS FEITA PELO CLIENTE\n\nRazão Social: {{ $json.solicitacao.nomeEmpresa }}\nCNPJ: {{ $json.solicitacao.cnpj }}\nEquipamento: {{ $json.solicitacao.tipoEquipamento }}\nFabricante: {{ $json.solicitacao.fabricante }}\nModelo: {{ $json.solicitacao.modelo }}\nSérie: {{ $json.solicitacao.numeroSerie }}\nProblema: {{ $json.solicitacao.descricaoProblema }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          848,
+          192
+        ],
+        "id": "1a3978b9-d328-4c02-9d0c-9490823a3b10",
+        "name": "Send a message1",
+        "webhookId": "bdcb2855-87c7-4a49-9b1a-2510380d9653",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "KvJgpEKJ3c13wnGv",
+            "name": "Gmail account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      }
+    ],
+    "connections": {
+      "Admin": {
+        "main": [
+          [
+            {
+              "node": "numAdm",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Tecnicos": {
+        "main": [
+          [
+            {
+              "node": "numTec",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Cliente": {
+        "main": [
+          [
+            {
+              "node": "numCli",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "numAdm": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "numTec": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "numCli": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Switch1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch1": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "Send a message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch2": {
+        "main": [
+          [
+            {
+              "node": "Send a message1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Switch2",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Switch3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch3": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Automações  Medical Spin",
+    "name": "Version 33e01364",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
