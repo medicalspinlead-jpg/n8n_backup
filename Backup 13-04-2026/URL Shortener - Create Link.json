@@ -1,0 +1,276 @@
+{
+  "updatedAt": "2026-04-13T17:10:30.110Z",
+  "createdAt": "2026-04-13T10:54:24.559Z",
+  "id": "hNCQSD5SAQvX6KEP",
+  "name": "URL Shortener - Create Link",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1ca119ac-c815-4ce4-b2f6-e20baede0778",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8288744d-9404-4921-882b-6c783defe20b",
+              "name": "link",
+              "value": "https://medicalspin.com.br/loja-de-pecas/?wpf_filter_cat_list_0=1403&wpf_count=24&wpf_fbv=1&all_products_filtering=1",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1e9710c3-cc13-4eb6-a7ee-613a60b908a1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "96N1MV8YFpJXfixU",
+          "mode": "list",
+          "cachedResultName": "link",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/96N1MV8YFpJXfixU"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "link1",
+              "keyValue": "https://medicalspin.com.br/loja-de-pecas/?wpf_filter_cat_list_0=1403&wpf_count=24&wpf_fbv=1&all_products_filtering=1"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "26e31f30-314d-478d-bc1c-77143462288e",
+      "name": "Get row(s)"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "18575f42-3f42-4ec1-a8ac-e16763281845",
+  "activeVersionId": "b54a33fb-a85d-4dc6-b0de-8c4b259a2903",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-04-13T10:54:24.559Z",
+      "createdAt": "2026-04-13T10:54:24.559Z",
+      "role": "workflow:owner",
+      "workflowId": "hNCQSD5SAQvX6KEP",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-04-13T11:03:22.900Z",
+    "createdAt": "2026-04-13T11:02:59.680Z",
+    "versionId": "b54a33fb-a85d-4dc6-b0de-8c4b259a2903",
+    "workflowId": "hNCQSD5SAQvX6KEP",
+    "nodes": [
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "1ca119ac-c815-4ce4-b2f6-e20baede0778",
+        "name": "When clicking ‘Execute workflow’"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "8288744d-9404-4921-882b-6c783defe20b",
+                "name": "link",
+                "value": "https://medicalspin.com.br/loja-de-pecas/?wpf_filter_cat_list_0=1403&wpf_count=24&wpf_fbv=1&all_products_filtering=1",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          208,
+          0
+        ],
+        "id": "1e9710c3-cc13-4eb6-a7ee-613a60b908a1",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "value": "96N1MV8YFpJXfixU",
+            "mode": "list",
+            "cachedResultName": "link",
+            "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/96N1MV8YFpJXfixU"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "link1",
+                "keyValue": "https://medicalspin.com.br/loja-de-pecas/?wpf_filter_cat_list_0=1403&wpf_count=24&wpf_fbv=1&all_products_filtering=1"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          400,
+          160
+        ],
+        "id": "26e31f30-314d-478d-bc1c-77143462288e",
+        "name": "Get row(s)"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "shorten",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "id": "d922d0a5-9340-4533-9ce4-98672113897f",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [
+          -16,
+          160
+        ],
+        "webhookId": "5b293276-0c8e-4d2c-a8f8-f0469a834b17"
+      },
+      {
+        "parameters": {
+          "functionCode": "const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';\n\nfunction generateCode(length = 6) {\n  let result = '';\n  for (let i = 0; i < length; i++) {\n    result += chars.charAt(Math.floor(Math.random() * chars.length));\n  }\n  return result;\n}\n\nreturn [{\n  code: generateCode(),\n  url: $json.body.url\n}];"
+        },
+        "id": "55304ba0-0969-4dee-a6f2-b96debc0401f",
+        "name": "Generate Code",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [
+          208,
+          160
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "d57feb98-d267-408d-8adc-4a176579b27d",
+        "name": "Respond",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1,
+        "position": [
+          656,
+          160
+        ]
+      }
+    ],
+    "connections": {
+      "When clicking ‘Execute workflow’": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          []
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Generate Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate Code": {
+        "main": [
+          [
+            {
+              "node": "Get row(s)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Automações  Medical Spin",
+    "name": "Version b54a33fb",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
