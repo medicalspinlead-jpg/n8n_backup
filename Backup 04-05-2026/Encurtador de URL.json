@@ -1,0 +1,550 @@
+{
+  "updatedAt": "2026-04-14T13:52:22.657Z",
+  "createdAt": "2026-04-13T10:54:24.559Z",
+  "id": "hNCQSD5SAQvX6KEP",
+  "name": "Encurtador de URL",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "html",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        1824,
+        336
+      ],
+      "id": "82dabf35-1342-4a77-b9f2-8f7ac38fdb4e",
+      "name": "Webhook",
+      "webhookId": "40df227f-8ee8-44d3-b59f-a28caf61433d"
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=5.0\">\n    \n    <title>Encurtador de URL - Ferramenta Gratuita</title>\n    \n    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css\" \n          integrity=\"sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh\" \n          crossorigin=\"anonymous\">\n    \n    <style>\n        :root {\n            --bg-light: #f8f9fa;\n            --text-light: #212529;\n            --bg-dark: #1a1d20;\n            --text-dark: #f8f9fa;\n        }\n\n        body {\n            min-height: 100vh;\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            background: var(--bg-light);\n            color: var(--text-light);\n            line-height: 1.6;\n        }\n\n        .card {\n            width: 100%;\n            max-width: 768px;\n            border-radius: 12px;\n            box-shadow: 0 8px 30px rgba(0,0,0,0.12);\n            transition: transform 0.2s ease;\n        }\n\n        .card:hover {\n            transform: translateY(-2px);\n        }\n\n        .card-header {\n            background: rgba(0,123,255,0.1);\n            border-bottom: none;\n            font-size: 1.25rem;\n            font-weight: 600;\n        }\n\n        .form-control {\n            border-radius: 8px;\n            padding: 0.75rem 1rem;\n            transition: border-color 0.2s ease;\n        }\n\n        .btn-primary {\n            background-color: #007bff;\n            border: none;\n            border-radius: 8px;\n            padding: 0.75rem 1.5rem;\n            font-weight: 500;\n            transition: all 0.2s ease;\n        }\n\n        .btn-primary:hover {\n            background-color: #0056b3;\n            transform: translateY(-1px);\n        }\n\n        .card-text > a {\n            color: #007bff !important;\n            transition: opacity 0.2s ease;\n        }\n\n        .card-text > a:hover {\n            opacity: 0.8;\n            text-decoration: none;\n        }\n\n        #notice {\n            font-size: 0.875rem;\n            color: #6c757d;\n            text-align: center;\n            margin-top: 1rem;\n        }\n\n        @media (max-width: 768px) {\n            .card {\n                margin: 0 1rem;\n            }\n            \n            body {\n                padding: 1rem;\n            }\n        }\n\n        @media (prefers-color-scheme: dark) {\n            body {\n                background: var(--bg-dark);\n                color: var(--text-dark);\n            }\n            \n            .card {\n                background-color: #252d38;\n                border: 1px solid rgba(255,255,255,0.1);\n            }\n            \n            .form-control {\n                background-color: #2d3748;\n                border-color: #4a5568;\n                color: var(--text-dark);\n            }\n        }\n      .input-group {\n        align-items: stretch;\n    }\n\n    .form-control {\n        border-radius: 8px 0 0 8px;\n        padding: 0.675rem 1rem;\n        height: auto;\n    }\n\n    .btn-primary {\n        border-radius: 0 8px 8px 0;\n        padding: 0.675rem 1.25rem;\n        height: 100%;\n        white-space: nowrap;\n    }\n\n    .input-group-append {\n        height: auto;\n    }\n      #result {\n        background-color: #f8f9fa;\n        color: #212529;\n        border: 1px solid #ced4da;\n    }\n\n    /* Modo escuro */\n    @media (prefers-color-scheme: dark) {\n        #result {\n            background-color: #2d3748;\n            color: #e2e8f0;\n            border-color: #4a5568;\n        }\n        \n        #result:focus {\n            background-color: #2d3748;\n            color: #ffffff;\n            border-color: #63b3ed;\n        }\n    }\n</style\n</head>\n<body>\n    <div class=\"card\">\n        <div class=\"card-header\">🚀 Encurte suas URLs!</div>\n        <div class=\"card-body\">\n            <h5 class=\"card-title mb-4\">Insira sua URL longa abaixo:</h5>\n            \n            <div class=\"input-group mb-4\">\n                <input type=\"url\" \n                       class=\"form-control\" \n                       placeholder=\"https://exemplo.com/url-muito-longa...\"\n                       id=\"text\"\n                       aria-label=\"URL para encurtar\"\n                       required>\n                <div class=\"input-group-append\">\n                    <button class=\"btn btn-primary\" \n                            type=\"button\" \n                            id=\"searchbtn\"\n                            onclick=\"shorturl()\">\n                        Encurtar\n                    </button>\n                </div>\n            </div>\n            \n            <div class=\"card-text text-center mb-3\">\n                <a href=\"https://github.com/xyTom/Url-Shorten-Worker/\" \n                   target=\"_blank\"\n                   rel=\"noopener\"\n                   class=\"d-inline-flex align-items-center\">\n                    <svg width=\"1em\" height=\"1em\" viewBox=\"0 0 16 16\" class=\"bi bi-github mr-2\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path fill-rule=\"evenodd\" d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z\"/>\n                    </svg>\n                    Fork no GitHub\n                </a>\n            </div>\n            \n            <p id=\"notice\" class=\"text-muted small\">Seus dados estão seguros conosco</p>\n        </div>\n    </div>\n\n    <!-- Modal -->\n    <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n        <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                    <h5 class=\"modal-title\" id=\"exampleModalLabel\">URL Encurtada</h5>\n                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Fechar\">\n                        <span aria-hidden=\"true\">&times;</span>\n                    </button>\n                </div>\n                <div class=\"modal-body\">\n                    <div class=\"input-group\">\n                        <input type=\"text\" \n                               class=\"form-control\" \n                               id=\"result\"\n                               readonly>\n                        <div class=\"input-group-append\">\n                            <button class=\"btn btn-outline-secondary\" \n                                    type=\"button\"\n                                    onclick=\"copyurl('result')\"\n                                    data-toggle=\"tooltip\"\n                                    title=\"Copiado!\">\n                                📋\n                            </button>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Fechar</button>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <script src=\"https://code.jquery.com/jquery-3.4.1.slim.min.js\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js\"></script>\n\n    <script>\n        // Inicializa tooltips\n        $(function () {\n            $('[data-toggle=\"tooltip\"]').tooltip()\n        })\n\n        function shorturl() {\n            const urlInput = document.getElementById('text')\n            const url = urlInput.value.trim()\n\n            if (!url) {\n                alert('Por favor, insira uma URL válida')\n                urlInput.focus()\n                return\n            }\n\n            fetch('https://shorten.willianfernandes-ia.workers.dev', {\n                method: 'POST',\n                headers: { 'Content-Type': 'application/json' },\n                body: JSON.stringify({ url })\n            })\n            .then(response => {\n                if (!response.ok) throw new Error('Erro na requisição')\n                return response.json()\n            })\n            .then(data => {\n                const result = document.getElementById('result')\n                result.value = data.short_url || 'Erro ao encurtar URL'\n                $('#exampleModal').modal('show')\n            })\n            .catch(error => {\n                console.error('Error:', error)\n                document.getElementById('result').value = 'Erro no servidor'\n                $('#exampleModal').modal('show')\n            })\n        }\n\n        function copyurl(elementId) {\n            const copyText = document.getElementById(elementId)\n            copyText.select()\n            document.execCommand('copy')\n            \n            // Feedback visual\n            const copyBtn = document.querySelector('[data-toggle=\"tooltip\"]')\n            $(copyBtn).tooltip('show')\n            setTimeout(() => $(copyBtn).tooltip('hide'), 1000)\n        }\n    </script>\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        2048,
+        336
+      ],
+      "id": "d3a2df53-bd97-4a29-b8e0-09ed5a2392e3",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json['html'] }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2240,
+        336
+      ],
+      "id": "69ae540a-e17e-4dfe-93a6-47c0b8df09b4",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "functionCode": "return [\n  {\n    json: {\n      status: 200,\n      short_url: `${$json.short_id}`\n    },\n    headers: {\n      'Content-Type': 'application/json'\n    }\n  }\n];"
+      },
+      "name": "Retornar Resposta HTTP",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1312,
+        64
+      ],
+      "id": "91ad3187-8de2-429c-b546-a9f97f3429c4"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "generate-short-url",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "name": "Webhook - Gerar ID e Salvar1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        544,
+        64
+      ],
+      "webhookId": "webhook-id-gerar",
+      "id": "2748cbc4-35da-4dc7-8587-d4717ba1c394"
+    },
+    {
+      "parameters": {
+        "functionCode": "const generateUniqueId = () => Math.random().toString(36).substr(2, 9);\nconst longUrl = $json.body.url;\nconst shortId = generateUniqueId();\nreturn [\n  { json: { short_id: shortId, long_url: longUrl } }\n];"
+      },
+      "name": "Gerar ID Único1",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        768,
+        64
+      ],
+      "id": "b13a78c4-9100-4f4e-abf5-8683f53fb30c"
+    },
+    {
+      "parameters": {
+        "tableId": "urls",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "short_id",
+              "fieldValue": "={{ $json.short_id }}"
+            },
+            {
+              "fieldId": "long_url",
+              "fieldValue": "={{ $json.long_url }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        64
+      ],
+      "id": "5d4b76ef-385e-4f13-9f4c-6bbb834f730d",
+      "name": "Supabase"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "urls",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "short_id",
+              "keyValue": "={{ $json.body.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        944,
+        336
+      ],
+      "id": "d53986fd-3d84-4d60-9578-7b2602d68a3a",
+      "name": "Buscar URL Original"
+    },
+    {
+      "parameters": {
+        "functionCode": "if ($json.length === 0) {\n  return [\n    {\n      json: {},\n      response: {\n        statusCode: 404,\n        headers: {\n          'Content-Type': 'text/plain'\n        },\n        body: 'Link não encontrado.'\n      }\n    }\n  ];\n}\nreturn [\n  {\n    json: {'long_url': $json.long_url},\n    response: {\n      statusCode: 302,\n      headers: {\n        'Location': $json.long_url // Usa o campo `long_url` do primeiro item do array\n      }\n    }\n  }\n];"
+      },
+      "name": "Redirecionar para URL Original",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        336
+      ],
+      "id": "aa040369-3b32-4022-bc14-9a66bfb3d98c"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "=pegar-id",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "name": "Webhook - Redirecionamento",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        544,
+        336
+      ],
+      "webhookId": "webhook-id-redirecionar",
+      "id": "ccb962f6-54af-4d16-ae4b-58040cccdf78"
+    },
+    {
+      "parameters": {
+        "path": "mainjs",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        1824,
+        80
+      ],
+      "id": "2ff2e598-7328-4c49-a48e-a56e09f0e19d",
+      "name": "Webhook1",
+      "webhookId": "40df227f-8ee8-44d3-b59f-a28caf61433d"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=let res;\n\nfunction shorturl() {\n    let inputUrl = document.querySelector(\"#text\").value.trim();\n\n    if (inputUrl === \"\") {\n        alert(\"A URL não pode estar vazia!\");\n        return;\n    }\n\n    document.getElementById(\"searchbtn\").disabled = true;\n    document.getElementById(\"searchbtn\").innerHTML = \n        '<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> Aguarde...';\n\n    fetch(window.location.pathname, {\n        method: 'POST',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ url: inputUrl })\n    })\n    .then(response => response.json())\n    .then(data => {\n        res = data;\n        console.log(\"Resposta do Worker:\", res);\n\n        document.getElementById(\"searchbtn\").disabled = false;\n        document.getElementById(\"searchbtn\").innerHTML = 'Encurtar';\n\n        if (res.short_url) {\n            document.getElementById(\"result\").innerHTML = \n                `<a href=\"${res.short_url}\" target=\"_blank\">${res.short_url}</a>`;\n        } else {\n            document.getElementById(\"result\").innerHTML = \"Erro ao encurtar a URL.\";\n        }\n\n        $('#exampleModal').modal('show');\n    })\n    .catch(err => {\n        alert(\"Erro desconhecido. Por favor, tente novamente!\");\n        console.error(\"Erro ao processar:\", err);\n\n        document.getElementById(\"searchbtn\").disabled = false;\n        document.getElementById(\"searchbtn\").innerHTML = 'Encurtar';\n    });\n}\n\nfunction copyurl(id) {\n    let target = document.querySelector(`#${id}`);\n\n    if (!target) return;\n\n    try {\n        let range = document.createRange();\n        range.selectNode(target);\n        window.getSelection().removeAllRanges();\n        window.getSelection().addRange(range);\n        document.execCommand('copy');\n        window.getSelection().removeAllRanges();\n        console.log('Copiado com sucesso!');\n    } catch (e) {\n        console.log('Erro ao copiar');\n    }\n}\n\n$(function () {\n    $('[data-toggle=\"popover\"]').popover();\n});\n\nconsole.log(\"Repositório: https://github.com/xyTom/Url-Shorten-Worker/\");\n\nlet notice = \"Aviso: Este serviço é apenas para demonstração e os links curtos expiram automaticamente após 24 horas.\";\nif (window.location.host === \"lnks.eu.org\") {\n    document.getElementById(\"notice\").innerHTML = notice;\n}\n",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2240,
+        80
+      ],
+      "id": "2a48f145-7670-408d-95b0-6e19203c75ce",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "content": "# Javascript",
+        "height": 240,
+        "width": 680
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1760,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "0c1f6fb6-aab2-49bf-8695-b1b805ce4949",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# HTML",
+        "height": 260,
+        "width": 680,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1760,
+        256
+      ],
+      "typeVersion": 1,
+      "id": "2ce6dfaf-bdd4-449a-9f85-3fb6fc1bdaf1",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# Gerar ID e URL PEQUENA",
+        "height": 240,
+        "width": 1060,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        480,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "6b04ad1b-77be-4aa8-92fa-a4dc80f53c7b",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# Redirecionar para o URL original",
+        "height": 260,
+        "width": 1060,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        480,
+        256
+      ],
+      "typeVersion": 1,
+      "id": "ffe480cd-e8be-495f-b5fd-3ce61497ee14",
+      "name": "Sticky Note3"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Gerar ID e Salvar1": {
+      "main": [
+        [
+          {
+            "node": "Gerar ID Único1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar ID Único1": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "Retornar Resposta HTTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar URL Original": {
+      "main": [
+        [
+          {
+            "node": "Redirecionar para URL Original",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Redirecionamento": {
+      "main": [
+        [
+          {
+            "node": "Buscar URL Original",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "78192a0d-a285-4765-a5e4-72d6cd3c10d3",
+  "activeVersionId": "b54a33fb-a85d-4dc6-b0de-8c4b259a2903",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-04-13T10:54:24.559Z",
+      "createdAt": "2026-04-13T10:54:24.559Z",
+      "role": "workflow:owner",
+      "workflowId": "hNCQSD5SAQvX6KEP",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-04-13T11:03:22.900Z",
+    "createdAt": "2026-04-13T11:02:59.680Z",
+    "versionId": "b54a33fb-a85d-4dc6-b0de-8c4b259a2903",
+    "workflowId": "hNCQSD5SAQvX6KEP",
+    "nodes": [
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "1ca119ac-c815-4ce4-b2f6-e20baede0778",
+        "name": "When clicking ‘Execute workflow’"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "8288744d-9404-4921-882b-6c783defe20b",
+                "name": "link",
+                "value": "https://medicalspin.com.br/loja-de-pecas/?wpf_filter_cat_list_0=1403&wpf_count=24&wpf_fbv=1&all_products_filtering=1",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          208,
+          0
+        ],
+        "id": "1e9710c3-cc13-4eb6-a7ee-613a60b908a1",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "value": "96N1MV8YFpJXfixU",
+            "mode": "list",
+            "cachedResultName": "link",
+            "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/96N1MV8YFpJXfixU"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "link1",
+                "keyValue": "https://medicalspin.com.br/loja-de-pecas/?wpf_filter_cat_list_0=1403&wpf_count=24&wpf_fbv=1&all_products_filtering=1"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          400,
+          160
+        ],
+        "id": "26e31f30-314d-478d-bc1c-77143462288e",
+        "name": "Get row(s)"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "shorten",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "id": "d922d0a5-9340-4533-9ce4-98672113897f",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [
+          -16,
+          160
+        ],
+        "webhookId": "5b293276-0c8e-4d2c-a8f8-f0469a834b17"
+      },
+      {
+        "parameters": {
+          "functionCode": "const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';\n\nfunction generateCode(length = 6) {\n  let result = '';\n  for (let i = 0; i < length; i++) {\n    result += chars.charAt(Math.floor(Math.random() * chars.length));\n  }\n  return result;\n}\n\nreturn [{\n  code: generateCode(),\n  url: $json.body.url\n}];"
+        },
+        "id": "55304ba0-0969-4dee-a6f2-b96debc0401f",
+        "name": "Generate Code",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [
+          208,
+          160
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "d57feb98-d267-408d-8adc-4a176579b27d",
+        "name": "Respond",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1,
+        "position": [
+          656,
+          160
+        ]
+      }
+    ],
+    "connections": {
+      "When clicking ‘Execute workflow’": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          []
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Generate Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate Code": {
+        "main": [
+          [
+            {
+              "node": "Get row(s)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Automações  Medical Spin",
+    "name": "Version b54a33fb",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
