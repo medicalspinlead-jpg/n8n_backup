@@ -1,0 +1,30 @@
+{
+  "updatedAt": "2025-12-22T18:40:11.061Z",
+  "createdAt": "2025-12-22T18:39:23.431Z",
+  "id": "5cgi9ENWpiNyD8MC",
+  "name": "PWA – Manifest",
+  "active": false,
+  "isArchived": true,
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "ea1934e6-7230-4860-a9e5-cfb8aa34891b",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-12-22T18:39:23.431Z",
+      "createdAt": "2025-12-22T18:39:23.431Z",
+      "role": "workflow:owner",
+      "workflowId": "5cgi9ENWpiNyD8MC",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
