@@ -1,0 +1,79 @@
+{
+  "updatedAt": "2025-12-22T19:49:35.174Z",
+  "createdAt": "2025-12-22T19:49:25.876Z",
+  "id": "21hAe2Gom5tgqxYo",
+  "name": "My workflow",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "42732aff-29f1-4551-a876-22bfaee8dcec",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "teste",
+        "remoteJid": "5579999801810",
+        "messageText": "https://v8g0okscgc8gwc0k848wsk0s.95.217.164.173.sslip.io/",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1a2f5410-6127-491f-8b11-69f4b1ae46ba",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "17ec8f26-3771-4b02-9878-c5650e89c60f",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-12-22T19:49:25.876Z",
+      "createdAt": "2025-12-22T19:49:25.876Z",
+      "role": "workflow:owner",
+      "workflowId": "21hAe2Gom5tgqxYo",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
