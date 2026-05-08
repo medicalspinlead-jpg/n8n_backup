@@ -1,0 +1,1622 @@
+{
+  "updatedAt": "2026-05-08T14:14:28.271Z",
+  "createdAt": "2026-05-07T10:24:02.677Z",
+  "id": "Cdfra43EYx4KrGSh",
+  "name": "My workflow 2",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://receitaws.com.br/v1/cnpj/{{ $json.cnpj }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1008,
+        -320
+      ],
+      "id": "fd53e05f-9ccd-46ab-ab16-6ca9e5df191c",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2650c4d7-1ab7-45f9-814f-95b05599eedf",
+              "name": "cnpj",
+              "value": "={{ $json.custom_fields.CNPJ.replace(/\\D/g, '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        -320
+      ],
+      "id": "a9c51161-87dc-4b81-be9b-39b2404b5f2b",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "37efbdd3-c8ba-48f9-895c-54ef10c823bb",
+              "name": "razao",
+              "value": "={{ $json.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "e04457d3-e0b2-41c7-9438-7450231ded96",
+              "name": "cnpj",
+              "value": "={{ $json.cnpj }}",
+              "type": "string"
+            },
+            {
+              "id": "adc55e78-ad50-43a5-bc3c-99f225056d5f",
+              "name": "endereco",
+              "value": "={{ $json.municipio }},{{ $json.numero }}, {{ $json.bairro }}, {{ $json.uf }}, {{ $json.cep }}",
+              "type": "string"
+            },
+            {
+              "id": "cf2d18f9-0cab-49fd-984e-9955d17a9c1b",
+              "name": "uf",
+              "value": "={{ $json.uf }}",
+              "type": "string"
+            },
+            {
+              "id": "a648af8a-a164-4642-b9e6-5842e625d1c4",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "f0f12c1d-adc2-43f4-a469-9b4ab5cf7566",
+              "name": "telefone",
+              "value": "={{ $json.telefone }}",
+              "type": "string"
+            },
+            {
+              "id": "49900516-3b4c-4216-afaa-72a9a7e0216c",
+              "name": "atividade_principal",
+              "value": "={{ $json.atividade_principal?.[0] ? $json.atividade_principal[0].code + ' - ' + $json.atividade_principal[0].text : '' }}",
+              "type": "array"
+            },
+            {
+              "id": "653df22b-0800-4cec-b030-df0e897134e7",
+              "name": "atividades_secundarias",
+              "value": "={{ $json.atividades_secundarias?.length ? $json.atividades_secundarias.map(a => a.code + ' - ' + a.text).join('\\n') : '' }}",
+              "type": "array"
+            },
+            {
+              "id": "d2b648b4-62d0-4c59-8719-d78e2ee531b7",
+              "name": "tipo",
+              "value": "={{ $json.tipo ? $json.tipo.charAt(0).toUpperCase() + $json.tipo.slice(1).toLowerCase() : '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": true
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1216,
+        -320
+      ],
+      "id": "14055063-97bc-41ec-a252-efadf426cdd3",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bf59c78d-239d-4520-8b55-993f3408d911",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -16,
+        -432
+      ],
+      "id": "ab821fad-7686-4bc2-b529-aa943880bb6d",
+      "name": "Webhook",
+      "webhookId": "bf59c78d-239d-4520-8b55-993f3408d911"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "548fade4-56f1-4962-b256-9f5ebc272b96",
+              "leftValue": "={{ $json.done }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "55886a9d-04af-4fd6-bce9-2a9baad6f286",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "investigacao_web_ob__organ",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        384,
+        -304
+      ],
+      "id": "c3140e2c-e2a6-46e0-8f9a-1f073b386906",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "20e3021e-7820-4de5-9aa6-c401b0bc3563",
+              "name": "deal_id",
+              "value": "={{ $json.data.deal_id }}",
+              "type": "number"
+            },
+            {
+              "id": "4f362708-164e-456c-b92f-f08eefaf0dcb",
+              "name": "done",
+              "value": "={{ $json.data.done }}",
+              "type": "boolean"
+            },
+            {
+              "id": "8541c2c0-a995-42fa-b6b4-90b37861c0d2",
+              "name": "type",
+              "value": "={{ $json.data.type }}",
+              "type": "string"
+            },
+            {
+              "id": "29ca73ab-7b2d-4b8e-ae73-b5c6245fa730",
+              "name": "data.due_date",
+              "value": "={{ $json.data.update_time }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        176,
+        -304
+      ],
+      "id": "e66e5d2e-4b4a-496d-b92f-3f1397337762",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        592,
+        -176
+      ],
+      "id": "44b9d484-5de5-4e4e-a768-36d35da4d8f8",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "update",
+        "organizationId": "={{ $('Pipedrive Trigger').item.json.data.org_id }}",
+        "updateFields": {
+          "customFields": {
+            "property": [
+              {
+                "name": "Razão social",
+                "value": "={{ $json.razao }}"
+              },
+              {
+                "name": "CNPJ",
+                "value": "={{ $json.cnpj }}"
+              },
+              {
+                "name": "E-mail",
+                "value": "={{ $json.email }}"
+              },
+              {
+                "name": "Telefone",
+                "value": "={{ $json.telefone }}"
+              },
+              {
+                "name": "UF",
+                "value": "={{ $json.uf }}"
+              },
+              {
+                "name": "Matriz / Filial",
+                "value": "={{ $json.tipo }}"
+              },
+              {
+                "name": "Endereço",
+                "value": "={{ $json.endereco }}"
+              },
+              {
+                "name": "QNAE PRINCIPAL",
+                "value": "={{ $json.atividade_principal }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        1632,
+        -384
+      ],
+      "id": "8c2f1943-1cab-496a-bdbc-ddd3738490a8",
+      "name": "Update an organization",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "get",
+        "organizationId": "={{ $('Pipedrive Trigger').item.json.data.org_id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        592,
+        -320
+      ],
+      "id": "cdddbd74-defd-4e89-ab6f-196252f9fd76",
+      "name": "Get an organization",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "change",
+        "entity": "activity"
+      },
+      "type": "n8n-nodes-base.pipedriveTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -16,
+        -304
+      ],
+      "id": "6806af67-60d2-4ee3-b827-10101d8eaa20",
+      "name": "Pipedrive Trigger",
+      "webhookId": "e93e0ce0-3f00-444a-a147-e13dc3bb1a63",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8921d738-098a-409a-aeca-32a2f0e0ab90",
+              "leftValue": "={{ $json.atividade_principal }}",
+              "rightValue": "75.00-1-00",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "8f30094e-9165-41d9-bd8c-d04ee3aa56d9",
+              "leftValue": "={{ $json.atividade_principal }}",
+              "rightValue": "86.40-2-02",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "6398129b-3cb3-4347-999c-4a09aa3ba7e5",
+              "leftValue": "={{ $json.atividade_principal }}",
+              "rightValue": "86.40-2-04",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "04c6eb96-5fc7-43f1-9565-2cda77cd5518",
+              "leftValue": "={{ $json.atividade_principal }}",
+              "rightValue": "86.40-2-05",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "84c5898b-1a6f-4202-bc24-5ffa17d83557",
+              "leftValue": "={{ $json.atividade_principal }}",
+              "rightValue": "86.40-2-06",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "fad1cf99-d486-469a-b6b8-780bedc358a5",
+              "leftValue": "={{ $json.atividade_principal }}",
+              "rightValue": "86.40-2-07",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "f9d58c3c-0f50-4eed-906d-252a08551a79",
+              "leftValue": "={{ $json.atividade_principal }}",
+              "rightValue": "86.40-2-08",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "08eda1c3-60eb-46ec-b1f1-7e35a8b87918",
+              "leftValue": "={{ $json.atividade_principal }}",
+              "rightValue": "86.40-2-99",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "e2124fcf-522e-4d46-8a19-027a1a6ee944",
+              "leftValue": "={{ $json.atividade_principal }}",
+              "rightValue": "86.40-2-01",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "f75ae221-48ba-4998-9840-4cb86283b365",
+              "leftValue": "={{ $json.atividade_principal }}",
+              "rightValue": "86.60-7-00",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1424,
+        -368
+      ],
+      "id": "fc904e70-dea9-442f-96d2-42f48b7a404e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8921d738-098a-409a-aeca-32a2f0e0ab90",
+              "leftValue": "={{ $json.atividades_secundarias }}",
+              "rightValue": "75.00-1-00",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "8f30094e-9165-41d9-bd8c-d04ee3aa56d9",
+              "leftValue": "={{ $json.atividades_secundarias }}",
+              "rightValue": "86.40-2-02",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "6398129b-3cb3-4347-999c-4a09aa3ba7e5",
+              "leftValue": "={{ $json.atividades_secundarias }}",
+              "rightValue": "86.40-2-04",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "04c6eb96-5fc7-43f1-9565-2cda77cd5518",
+              "leftValue": "={{ $json.atividades_secundarias }}",
+              "rightValue": "86.40-2-05",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "84c5898b-1a6f-4202-bc24-5ffa17d83557",
+              "leftValue": "={{ $json.atividades_secundarias }}",
+              "rightValue": "86.40-2-06",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "fad1cf99-d486-469a-b6b8-780bedc358a5",
+              "leftValue": "={{ $json.atividades_secundarias }}",
+              "rightValue": "86.40-2-07",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "f9d58c3c-0f50-4eed-906d-252a08551a79",
+              "leftValue": "={{ $json.atividades_secundarias }}",
+              "rightValue": "86.40-2-08",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "08eda1c3-60eb-46ec-b1f1-7e35a8b87918",
+              "leftValue": "={{ $json.atividades_secundarias }}",
+              "rightValue": "86.40-2-99",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "e2124fcf-522e-4d46-8a19-027a1a6ee944",
+              "leftValue": "={{ $json.atividades_secundarias }}",
+              "rightValue": "86.40-2-01",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "f75ae221-48ba-4998-9840-4cb86283b365",
+              "leftValue": "={{ $json.atividades_secundarias }}",
+              "rightValue": "86.60-7-00",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1424,
+        -224
+      ],
+      "id": "3ff79ba0-93c0-4997-8042-38c03402f707",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "update",
+        "organizationId": "={{ $('Pipedrive Trigger').item.json.data.org_id }}",
+        "updateFields": {
+          "customFields": {
+            "property": [
+              {
+                "name": "Razão social",
+                "value": "={{ $json.razao }}"
+              },
+              {
+                "name": "CNPJ",
+                "value": "={{ $json.cnpj }}"
+              },
+              {
+                "name": "E-mail",
+                "value": "={{ $json.email }}"
+              },
+              {
+                "name": "Telefone",
+                "value": "={{ $json.telefone }}"
+              },
+              {
+                "name": "UF",
+                "value": "={{ $json.uf }}"
+              },
+              {
+                "name": "Matriz / Filial",
+                "value": "={{ $json.tipo }}"
+              },
+              {
+                "name": "Endereço",
+                "value": "={{ $json.endereco }}"
+              },
+              {
+                "name": "QNAE PRINCIPAL",
+                "value": "={{ $json.atividade_principal }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        1632,
+        -240
+      ],
+      "id": "9d2694e0-7be1-4d0f-8aba-c8c3c8ccb23e",
+      "name": "Update an organization1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get an organization",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update an organization": {
+      "main": [
+        []
+      ]
+    },
+    "Get an organization": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pipedrive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Update an organization",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Update an organization1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": {
+    "node:Google Sheets Trigger": {
+      "documentId": "1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw",
+      "sheetId": 0,
+      "lastRevision": 7070,
+      "lastRevisionLink": "https://docs.google.com/spreadsheets/export?id=1HQgsz0SjvmM6n6GaiiuUM9I3g-5MHgZv7s10FZLa8Mw&revision=7070&exportFormat=xlsx"
+    },
+    "node:Pipedrive Trigger": {}
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Pipedrive Trigger": [
+      {
+        "json": {
+          "data": {
+            "active_flag": true,
+            "add_time": "2026-05-07T17:33:02Z",
+            "busy_flag": false,
+            "custom_fields": {},
+            "deal_id": 2352,
+            "done": true,
+            "due_date": "2026-05-07",
+            "due_time": {
+              "timezone_id": null,
+              "value": ""
+            },
+            "duration": {
+              "timezone_id": null,
+              "value": ""
+            },
+            "id": 12927,
+            "type": "investigacao_web_ob__organ",
+            "lead_id": null,
+            "location": null,
+            "org_id": 2068,
+            "owner_id": 24207317,
+            "person_id": 1712,
+            "public_description": null,
+            "subject": "OB / IB | Investigação Web (Gatilho automação)",
+            "update_time": "2026-05-07T17:34:19Z",
+            "update_user_id": null
+          },
+          "previous": {
+            "busy_flag": false,
+            "done": false,
+            "update_time": "2026-05-07T17:34:06Z"
+          },
+          "meta": {
+            "action": "change",
+            "company_id": "14556440",
+            "correlation_id": "71acfb9e-b314-4c68-ad62-d9a2e1ecf66d",
+            "entity_id": "12927",
+            "entity": "activity",
+            "id": "fe967c3d-3952-4396-a463-a0a48732431b",
+            "is_bulk_edit": false,
+            "timestamp": "2026-05-07T17:34:19.522Z",
+            "type": "general",
+            "user_id": "24207317",
+            "version": "2.0",
+            "webhook_id": "1867341",
+            "webhook_owner_id": "24207328",
+            "change_source": "app",
+            "permitted_user_ids": [
+              "24207317",
+              "24207328"
+            ],
+            "attempt": 1,
+            "host": "medicalspin.pipedrive.com"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Edit Fields": [
+      {
+        "json": {
+          "cnpj": "89121230000112"
+        }
+      }
+    ]
+  },
+  "versionId": "483297e8-cf36-4a95-acc7-d96d91ba209e",
+  "activeVersionId": "483297e8-cf36-4a95-acc7-d96d91ba209e",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-05-07T10:24:02.677Z",
+      "createdAt": "2026-05-07T10:24:02.677Z",
+      "role": "workflow:owner",
+      "workflowId": "Cdfra43EYx4KrGSh",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-05-08T14:14:29.641Z",
+    "createdAt": "2026-05-08T14:14:28.272Z",
+    "versionId": "483297e8-cf36-4a95-acc7-d96d91ba209e",
+    "workflowId": "Cdfra43EYx4KrGSh",
+    "nodes": [
+      {
+        "parameters": {
+          "url": "=https://receitaws.com.br/v1/cnpj/{{ $json.cnpj }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          1008,
+          -320
+        ],
+        "id": "fd53e05f-9ccd-46ab-ab16-6ca9e5df191c",
+        "name": "HTTP Request"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "2650c4d7-1ab7-45f9-814f-95b05599eedf",
+                "name": "cnpj",
+                "value": "={{ $json.custom_fields.CNPJ.replace(/\\D/g, '') }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          800,
+          -320
+        ],
+        "id": "a9c51161-87dc-4b81-be9b-39b2404b5f2b",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "37efbdd3-c8ba-48f9-895c-54ef10c823bb",
+                "name": "razao",
+                "value": "={{ $json.nome }}",
+                "type": "string"
+              },
+              {
+                "id": "e04457d3-e0b2-41c7-9438-7450231ded96",
+                "name": "cnpj",
+                "value": "={{ $json.cnpj }}",
+                "type": "string"
+              },
+              {
+                "id": "adc55e78-ad50-43a5-bc3c-99f225056d5f",
+                "name": "endereco",
+                "value": "={{ $json.municipio }},{{ $json.numero }}, {{ $json.bairro }}, {{ $json.uf }}, {{ $json.cep }}",
+                "type": "string"
+              },
+              {
+                "id": "cf2d18f9-0cab-49fd-984e-9955d17a9c1b",
+                "name": "uf",
+                "value": "={{ $json.uf }}",
+                "type": "string"
+              },
+              {
+                "id": "a648af8a-a164-4642-b9e6-5842e625d1c4",
+                "name": "email",
+                "value": "={{ $json.email }}",
+                "type": "string"
+              },
+              {
+                "id": "f0f12c1d-adc2-43f4-a469-9b4ab5cf7566",
+                "name": "telefone",
+                "value": "={{ $json.telefone }}",
+                "type": "string"
+              },
+              {
+                "id": "49900516-3b4c-4216-afaa-72a9a7e0216c",
+                "name": "atividade_principal",
+                "value": "={{ $json.atividade_principal?.[0] ? $json.atividade_principal[0].code + ' - ' + $json.atividade_principal[0].text : '' }}",
+                "type": "array"
+              },
+              {
+                "id": "653df22b-0800-4cec-b030-df0e897134e7",
+                "name": "atividades_secundarias",
+                "value": "={{ $json.atividades_secundarias?.length ? $json.atividades_secundarias.map(a => a.code + ' - ' + a.text).join('\\n') : '' }}",
+                "type": "array"
+              },
+              {
+                "id": "d2b648b4-62d0-4c59-8719-d78e2ee531b7",
+                "name": "tipo",
+                "value": "={{ $json.tipo ? $json.tipo.charAt(0).toUpperCase() + $json.tipo.slice(1).toLowerCase() : '' }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {
+            "ignoreConversionErrors": true
+          }
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1216,
+          -320
+        ],
+        "id": "14055063-97bc-41ec-a252-efadf426cdd3",
+        "name": "Edit Fields1"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "bf59c78d-239d-4520-8b55-993f3408d911",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -16,
+          -432
+        ],
+        "id": "ab821fad-7686-4bc2-b529-aa943880bb6d",
+        "name": "Webhook",
+        "webhookId": "bf59c78d-239d-4520-8b55-993f3408d911"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "548fade4-56f1-4962-b256-9f5ebc272b96",
+                "leftValue": "={{ $json.done }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "55886a9d-04af-4fd6-bce9-2a9baad6f286",
+                "leftValue": "={{ $json.type }}",
+                "rightValue": "investigacao_web_ob__organ",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          384,
+          -304
+        ],
+        "id": "c3140e2c-e2a6-46e0-8f9a-1f073b386906",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "20e3021e-7820-4de5-9aa6-c401b0bc3563",
+                "name": "deal_id",
+                "value": "={{ $json.data.deal_id }}",
+                "type": "number"
+              },
+              {
+                "id": "4f362708-164e-456c-b92f-f08eefaf0dcb",
+                "name": "done",
+                "value": "={{ $json.data.done }}",
+                "type": "boolean"
+              },
+              {
+                "id": "8541c2c0-a995-42fa-b6b4-90b37861c0d2",
+                "name": "type",
+                "value": "={{ $json.data.type }}",
+                "type": "string"
+              },
+              {
+                "id": "29ca73ab-7b2d-4b8e-ae73-b5c6245fa730",
+                "name": "data.due_date",
+                "value": "={{ $json.data.update_time }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          176,
+          -304
+        ],
+        "id": "e66e5d2e-4b4a-496d-b92f-3f1397337762",
+        "name": "Edit Fields2"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          592,
+          -176
+        ],
+        "id": "44b9d484-5de5-4e4e-a768-36d35da4d8f8",
+        "name": "No Operation, do nothing"
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "operation": "update",
+          "organizationId": "={{ $('Pipedrive Trigger').item.json.data.org_id }}",
+          "updateFields": {
+            "customFields": {
+              "property": [
+                {
+                  "name": "Razão social",
+                  "value": "={{ $json.razao }}"
+                },
+                {
+                  "name": "CNPJ",
+                  "value": "={{ $json.cnpj }}"
+                },
+                {
+                  "name": "E-mail",
+                  "value": "={{ $json.email }}"
+                },
+                {
+                  "name": "Telefone",
+                  "value": "={{ $json.telefone }}"
+                },
+                {
+                  "name": "UF",
+                  "value": "={{ $json.uf }}"
+                },
+                {
+                  "name": "Matriz / Filial",
+                  "value": "={{ $json.tipo }}"
+                },
+                {
+                  "name": "Endereço",
+                  "value": "={{ $json.endereco }}"
+                },
+                {
+                  "name": "QNAE PRINCIPAL",
+                  "value": "={{ $json.atividade_principal }}"
+                }
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          1632,
+          -384
+        ],
+        "id": "8c2f1943-1cab-496a-bdbc-ddd3738490a8",
+        "name": "Update an organization",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "operation": "get",
+          "organizationId": "={{ $('Pipedrive Trigger').item.json.data.org_id }}"
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          592,
+          -320
+        ],
+        "id": "cdddbd74-defd-4e89-ab6f-196252f9fd76",
+        "name": "Get an organization",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "action": "change",
+          "entity": "activity"
+        },
+        "type": "n8n-nodes-base.pipedriveTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -16,
+          -304
+        ],
+        "id": "6806af67-60d2-4ee3-b827-10101d8eaa20",
+        "name": "Pipedrive Trigger",
+        "webhookId": "e93e0ce0-3f00-444a-a147-e13dc3bb1a63",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "8921d738-098a-409a-aeca-32a2f0e0ab90",
+                "leftValue": "={{ $json.atividade_principal }}",
+                "rightValue": "75.00-1-00",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              },
+              {
+                "id": "8f30094e-9165-41d9-bd8c-d04ee3aa56d9",
+                "leftValue": "={{ $json.atividade_principal }}",
+                "rightValue": "86.40-2-02",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              },
+              {
+                "id": "6398129b-3cb3-4347-999c-4a09aa3ba7e5",
+                "leftValue": "={{ $json.atividade_principal }}",
+                "rightValue": "86.40-2-04",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              },
+              {
+                "id": "04c6eb96-5fc7-43f1-9565-2cda77cd5518",
+                "leftValue": "={{ $json.atividade_principal }}",
+                "rightValue": "86.40-2-05",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "84c5898b-1a6f-4202-bc24-5ffa17d83557",
+                "leftValue": "={{ $json.atividade_principal }}",
+                "rightValue": "86.40-2-06",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "fad1cf99-d486-469a-b6b8-780bedc358a5",
+                "leftValue": "={{ $json.atividade_principal }}",
+                "rightValue": "86.40-2-07",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "f9d58c3c-0f50-4eed-906d-252a08551a79",
+                "leftValue": "={{ $json.atividade_principal }}",
+                "rightValue": "86.40-2-08",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "08eda1c3-60eb-46ec-b1f1-7e35a8b87918",
+                "leftValue": "={{ $json.atividade_principal }}",
+                "rightValue": "86.40-2-99",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "e2124fcf-522e-4d46-8a19-027a1a6ee944",
+                "leftValue": "={{ $json.atividade_principal }}",
+                "rightValue": "86.40-2-01",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "f75ae221-48ba-4998-9840-4cb86283b365",
+                "leftValue": "={{ $json.atividade_principal }}",
+                "rightValue": "86.60-7-00",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1424,
+          -368
+        ],
+        "id": "fc904e70-dea9-442f-96d2-42f48b7a404e",
+        "name": "If1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "8921d738-098a-409a-aeca-32a2f0e0ab90",
+                "leftValue": "={{ $json.atividades_secundarias }}",
+                "rightValue": "75.00-1-00",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              },
+              {
+                "id": "8f30094e-9165-41d9-bd8c-d04ee3aa56d9",
+                "leftValue": "={{ $json.atividades_secundarias }}",
+                "rightValue": "86.40-2-02",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              },
+              {
+                "id": "6398129b-3cb3-4347-999c-4a09aa3ba7e5",
+                "leftValue": "={{ $json.atividades_secundarias }}",
+                "rightValue": "86.40-2-04",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              },
+              {
+                "id": "04c6eb96-5fc7-43f1-9565-2cda77cd5518",
+                "leftValue": "={{ $json.atividades_secundarias }}",
+                "rightValue": "86.40-2-05",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "84c5898b-1a6f-4202-bc24-5ffa17d83557",
+                "leftValue": "={{ $json.atividades_secundarias }}",
+                "rightValue": "86.40-2-06",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "fad1cf99-d486-469a-b6b8-780bedc358a5",
+                "leftValue": "={{ $json.atividades_secundarias }}",
+                "rightValue": "86.40-2-07",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "f9d58c3c-0f50-4eed-906d-252a08551a79",
+                "leftValue": "={{ $json.atividades_secundarias }}",
+                "rightValue": "86.40-2-08",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "08eda1c3-60eb-46ec-b1f1-7e35a8b87918",
+                "leftValue": "={{ $json.atividades_secundarias }}",
+                "rightValue": "86.40-2-99",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "e2124fcf-522e-4d46-8a19-027a1a6ee944",
+                "leftValue": "={{ $json.atividades_secundarias }}",
+                "rightValue": "86.40-2-01",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              },
+              {
+                "id": "f75ae221-48ba-4998-9840-4cb86283b365",
+                "leftValue": "={{ $json.atividades_secundarias }}",
+                "rightValue": "86.60-7-00",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1424,
+          -224
+        ],
+        "id": "3ff79ba0-93c0-4997-8042-38c03402f707",
+        "name": "If2"
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "operation": "update",
+          "organizationId": "={{ $('Pipedrive Trigger').item.json.data.org_id }}",
+          "updateFields": {
+            "customFields": {
+              "property": [
+                {
+                  "name": "Razão social",
+                  "value": "={{ $json.razao }}"
+                },
+                {
+                  "name": "CNPJ",
+                  "value": "={{ $json.cnpj }}"
+                },
+                {
+                  "name": "E-mail",
+                  "value": "={{ $json.email }}"
+                },
+                {
+                  "name": "Telefone",
+                  "value": "={{ $json.telefone }}"
+                },
+                {
+                  "name": "UF",
+                  "value": "={{ $json.uf }}"
+                },
+                {
+                  "name": "Matriz / Filial",
+                  "value": "={{ $json.tipo }}"
+                },
+                {
+                  "name": "Endereço",
+                  "value": "={{ $json.endereco }}"
+                },
+                {
+                  "name": "QNAE PRINCIPAL",
+                  "value": "={{ $json.atividade_principal }}"
+                }
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          1632,
+          -240
+        ],
+        "id": "9d2694e0-7be1-4d0f-8aba-c8c3c8ccb23e",
+        "name": "Update an organization1",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          []
+        ]
+      },
+      "Edit Fields2": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Get an organization",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update an organization": {
+        "main": [
+          []
+        ]
+      },
+      "Get an organization": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pipedrive Trigger": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Update an organization",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          []
+        ]
+      },
+      "If2": {
+        "main": [
+          [
+            {
+              "node": "Update an organization1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Automações  Medical Spin",
+    "name": "Version 483297e8",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
