@@ -1,0 +1,373 @@
+{
+  "updatedAt": "2025-12-01T14:46:22.841Z",
+  "createdAt": "2025-11-17T17:32:47.207Z",
+  "id": "dMO7C44rrWElTB1W",
+  "name": "OMIE ERP",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8a2ab6c7-163d-4ede-8f60-80e7d7958a2f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -304,
+        -64
+      ],
+      "id": "9ad28797-1ecb-4c00-806f-e67147e056af",
+      "name": "Webhook",
+      "webhookId": "8a2ab6c7-163d-4ede-8f60-80e7d7958a2f"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    rawBinary: items[0].binary.data.data.toString()\n  }\n}];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -96,
+        -64
+      ],
+      "id": "d982d924-d46f-441e-9e2e-e3aff1f66528",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": "const base64 = $json.rawBinary;\nconst text = Buffer.from(base64, \"base64\").toString(\"utf8\");\n\nreturn [{\n  json: { text }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        96,
+        -64
+      ],
+      "id": "906ae653-c586-4d16-8aba-d28c042d882b",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $json.text;\n\n// Expressão regular que captura qualquer URL começando com http/https\nconst links = text.match(/https?:\\/\\/[^\\s>]+/g) || [];\n\nreturn [{\n  json: { links }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        -64
+      ],
+      "id": "e410f1f1-d826-44b2-9169-5e22c2371150",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c0c3d74a-ee47-412c-b31a-c961780f3208",
+              "name": "links[0]",
+              "value": "={{ $json.links[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        -64
+      ],
+      "id": "df09de15-5e80-47f6-ab17-e7b869e421ad",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.links[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        688,
+        -64
+      ],
+      "id": "c3a4e638-6e83-4a4e-b1b2-4418454ae3bf",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const html = $json.data;\n\n// pega o primeiro link dentro do content=\"0;URL=...\"\nconst match = html.match(/URL=([^\"]+)/i);\n\nreturn [{\n  json: {\n    realUrl: match ? match[1] : null\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        -64
+      ],
+      "id": "17dbd031-a185-4038-95c3-3df29cd0211f",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6dd1e45f-944e-424a-96a6-65bd7ee5effa",
+              "name": "realUrl",
+              "value": "={{ $json.realUrl }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1104,
+        -64
+      ],
+      "id": "f44f6435-8aa0-4879-953d-2e3bfa792150",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.realUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1328,
+        -64
+      ],
+      "id": "817d1b69-dc60-4c5c-9efc-c172d4570686",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        1536,
+        -64
+      ],
+      "id": "183fdde0-0456-45be-8327-eba6ca10eb23",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "44891af5-40ac-4ac6-938c-eff803276399",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1744,
+        -64
+      ],
+      "id": "55d9e7c7-3928-4685-b4cb-90ed36d457ca",
+      "name": "Edit Fields2"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Gmail Trigger": {
+      "Gmail Trigger": {
+        "lastTimeChecked": 1763553444
+      }
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "Google",
+            "content-length": "630",
+            "accept-encoding": "gzip, deflate, br",
+            "x-forwarded-for": "66.249.83.133",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "66.249.83.133"
+          },
+          "params": {},
+          "query": {},
+          "body": {},
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/8a2ab6c7-163d-4ede-8f60-80e7d7958a2f",
+          "executionMode": "production"
+        },
+        "binary": {
+          "data": {
+            "mimeType": "application/octet-stream",
+            "fileExtension": "bin",
+            "data": "UmU6IDEzIFNBTEFSSU8gMS8yIFJlZi4gMTEyMDI1IC0gQklPNzM1NTAgYWdlbmRhZG8uDQoNCkVtIHRlci4sIDExIGRlIG5vdi4gZGUgMjAyNSDDoHMgMTg6NDUsIDxhZG1AZGFuaWVsYWhvcm5jb250YWJpbC5jb20uYnI+DQplc2NyZXZldToNCg0KPiBPbGEsIHNlZ3VlIGFiYWl4byBvIGxpbmsgcGFyYSBvIGFycXVpdm86DQo+IDEzIFNBTEFSSU8gMS8yDQo+IDEzIHNhbGFyaW8gcHJpbWVpcmEgcGFyY2VsYQ0KPg0KPiBWZW5jaW1lbnRvOiAyOC8xMS8yMDI1DQo+DQo+IFJlZmVyZW50ZSBhIGVtcHJlc2E6DQo+IFNDSUVOVEVFIE1FRElDQUwgQlVTSU5FU1MgR1JPVVAgLSBFUVVJUEFNRU5UT1MgRSBTRVJWSUNPUyBERSBSQURJT0xPR0lBDQo+IExUREENCj4gQ05QSjogNTU1MzQ3MjQwMDAxMDcNCj4NCj4gQ2xpcXVlIG5vIGxpbmsgcGFyYSBhY2Vzc2FyIG8gYXJxdWl2byENCj4NCj4gaHR0cHM6Ly9kaG9ybi5zaXN0ZW1hLmJpby5ici9wYy9hLnBocD9hPTczNTUwDQo+DQo+IENvbmZpcmEgbyBjYWxlbmRhcmlvIGRlIE9icmlnYWNvZXMgZSBoaXN0b3JpY28gZGUgYXJxdWl2b3Mgbm8gUG9ydGFsIGRvDQo+IENsaWVudGUhDQo+IGh0dHA6Ly9kaG9ybi5zaXN0ZW1hLmJpby5ici9wYw0KPg0KPg0KDQotLQ0K",
+            "fileName": "39b29891-7af8-4ee2-95d4-6e00e8bf6719",
+            "fileSize": "630 B"
+          }
+        }
+      }
+    ]
+  },
+  "versionId": "6f5f534b-abc6-49b8-bcfb-880fb8bf72e7",
+  "activeVersionId": null,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T17:32:47.207Z",
+      "createdAt": "2025-11-17T17:32:47.207Z",
+      "role": "workflow:owner",
+      "workflowId": "dMO7C44rrWElTB1W",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
