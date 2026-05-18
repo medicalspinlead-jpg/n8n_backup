@@ -1,0 +1,107 @@
+{
+  "updatedAt": "2026-05-13T20:24:52.214Z",
+  "createdAt": "2026-05-13T10:53:41.441Z",
+  "id": "VJw6Q10zRuggH8GZ",
+  "name": "My workflow",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "00d60d11-efdf-43db-a259-37ad9de0af49",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "266b3736-be01-4154-b8d8-516a66ce7ee1",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "027d3054-3a9b-4409-8555-449e1bec2651",
+              "name": "data",
+              "value": "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",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": true
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "710e6e55-2470-4bdb-a05e-bc6cda67e899",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "b0388798-7a28-4ebc-ace2-89fb897b2f60",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-05-13T10:53:41.441Z",
+      "createdAt": "2026-05-13T10:53:41.441Z",
+      "role": "workflow:owner",
+      "workflowId": "VJw6Q10zRuggH8GZ",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
