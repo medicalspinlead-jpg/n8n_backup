@@ -1,0 +1,173 @@
+{
+  "updatedAt": "2026-05-15T12:06:49.020Z",
+  "createdAt": "2025-11-17T14:11:01.556Z",
+  "id": "yWv6lyB5rVxmn8Ho",
+  "name": "Atualizar Servidor 00:00AM",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months",
+              "triggerAtDayOfMonth": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4c8e07e4-bdf5-409d-8b61-3a3b5bbbfa46",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "command": "apt update && apt upgrade -y"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0dec2eb9-3cd3-41eb-a5f5-3357827b033c",
+      "name": "Atualizar",
+      "credentials": {
+        "sshPassword": {
+          "id": "gmZEvPFpOOfL26ym",
+          "name": "SSH Password account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Atualizar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualizar": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL",
+    "binaryMode": "separate"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Schedule Trigger": [
+      {
+        "json": {
+          "isArtificialRecoveredEventItem": true
+        }
+      }
+    ]
+  },
+  "versionId": "10ae0c91-bcdd-4fb4-b7ff-acf4611b4180",
+  "activeVersionId": "10ae0c91-bcdd-4fb4-b7ff-acf4611b4180",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T14:11:01.556Z",
+      "createdAt": "2025-11-17T14:11:01.556Z",
+      "role": "workflow:owner",
+      "workflowId": "yWv6lyB5rVxmn8Ho",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-05-15T12:06:22.134Z",
+    "createdAt": "2026-05-15T12:05:52.329Z",
+    "versionId": "10ae0c91-bcdd-4fb4-b7ff-acf4611b4180",
+    "workflowId": "yWv6lyB5rVxmn8Ho",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "months",
+                "triggerAtDayOfMonth": 15
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          0
+        ],
+        "id": "4c8e07e4-bdf5-409d-8b61-3a3b5bbbfa46",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "command": "apt update && apt upgrade -y"
+        },
+        "type": "n8n-nodes-base.ssh",
+        "typeVersion": 1,
+        "position": [
+          208,
+          0
+        ],
+        "id": "0dec2eb9-3cd3-41eb-a5f5-3357827b033c",
+        "name": "Atualizar",
+        "credentials": {
+          "sshPassword": {
+            "id": "gmZEvPFpOOfL26ym",
+            "name": "SSH Password account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Atualizar",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Atualizar": {
+        "main": [
+          []
+        ]
+      }
+    },
+    "authors": "Automações  Medical Spin",
+    "name": "Version 10ae0c91",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
