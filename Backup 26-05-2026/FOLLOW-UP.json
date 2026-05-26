@@ -1,0 +1,1891 @@
+{
+  "updatedAt": "2026-05-26T13:52:54.841Z",
+  "createdAt": "2026-05-13T10:53:41.441Z",
+  "id": "VJw6Q10zRuggH8GZ",
+  "name": "FOLLOW-UP",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        16
+      ],
+      "id": "8dd13cb9-a556-4da7-bc13-b6de87d0366f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 86
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        16
+      ],
+      "id": "41dd2047-6fe6-494a-82a5-c341c387b5ee",
+      "name": "Get many deals",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.telefone }}",
+        "messageText": "={{ $json.tentativa1 }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        976,
+        112
+      ],
+      "id": "8fc4e3ec-5571-4dd5-bb9d-71bc37bcaec9",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.id }}",
+        "updateFields": {
+          "stage_id": 87
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        16
+      ],
+      "id": "e0d4f555-0451-4172-b1ea-fec0be9969e3",
+      "name": "Update a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        304
+      ],
+      "id": "e800cfa2-0686-4281-9d0f-5c4cda00a6fa",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 87
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        304
+      ],
+      "id": "134129f4-5e90-4626-ad53-ba82040eb5c2",
+      "name": "Get many deals1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.id }}",
+        "updateFields": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        304
+      ],
+      "id": "8b8c5ace-6185-4945-b4aa-122ca62a9e53",
+      "name": "Update a deal1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        448
+      ],
+      "id": "3aeedd1a-cd00-4732-a1d2-1393de1e769d",
+      "name": "Schedule Trigger2"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        448
+      ],
+      "id": "2002249b-7f55-4d4f-b6fd-4ef4257bc4b9",
+      "name": "Get many deals2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.id }}",
+        "updateFields": {
+          "stage_id": 89
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        448
+      ],
+      "id": "2411f69b-cdc7-455e-95c7-7fc5db1b953f",
+      "name": "Update a deal2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        592
+      ],
+      "id": "7ddaef23-5ec6-4aef-936d-e6f9df083df7",
+      "name": "Schedule Trigger3"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 89
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        592
+      ],
+      "id": "c61a1a3a-6c65-4af8-a661-215d4eac904c",
+      "name": "Get many deals3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.id }}",
+        "updateFields": {
+          "stage_id": 90
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        592
+      ],
+      "id": "74347d9f-2079-475d-bd47-6f9b33b601cc",
+      "name": "Update a deal3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const deals = $input.all();\n\n// Horário atual no Brasil (America/Sao_Paulo)\nconst now = new Date();\n\n// 24 horas em milissegundos\nconst HOURS_24 = 24 * 60 * 60 * 1000;\n\nconst filteredDeals = deals.filter(item => {\n  // Data de criação do deal no Pipedrive\n  const addTime = item.json.add_time;\n\n  if (!addTime) return false;\n\n  // Converte para Date\n  const createdAt = new Date(addTime);\n\n  // Diferença em ms\n  const diff = now.getTime() - createdAt.getTime();\n\n  // Mantém apenas deals com mais de 24h\n  return diff > HOURS_24;\n});\n\nreturn filteredDeals;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        16
+      ],
+      "id": "eba37010-81c9-45a0-98dc-2a2a657592d8",
+      "name": "Filtra 24h Desqualificado"
+    },
+    {
+      "parameters": {
+        "jsCode": "const deals = $input.all();\n\n// Horário atual no Brasil (America/Sao_Paulo)\nconst now = new Date();\n\n// 24 horas em milissegundos\nconst HOURS_24 = 24 * 60 * 60 * 1000;\n\nconst filteredDeals = deals.filter(item => {\n  // Data de criação do deal no Pipedrive\n  const addTime = item.json.update_time;\n\n  if (!addTime) return false;\n\n  // Converte para Date\n  const createdAt = new Date(addTime);\n\n  // Diferença em ms\n  const diff = now.getTime() - createdAt.getTime();\n\n  // Mantém apenas deals com mais de 24h\n  return diff > HOURS_24;\n});\n\nreturn filteredDeals;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        304
+      ],
+      "id": "1f82baa8-3c58-4a7e-96c0-152fe967cc06",
+      "name": "Filtra 24h tentativa 1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const deals = $input.all();\n\n// Horário atual no Brasil (America/Sao_Paulo)\nconst now = new Date();\n\n// 24 horas em milissegundos\nconst HOURS_24 = 24 * 60 * 60 * 1000;\n\nconst filteredDeals = deals.filter(item => {\n  // Data de criação do deal no Pipedrive\n  const addTime = item.json.update_time;\n\n  if (!addTime) return false;\n\n  // Converte para Date\n  const createdAt = new Date(addTime);\n\n  // Diferença em ms\n  const diff = now.getTime() - createdAt.getTime();\n\n  // Mantém apenas deals com mais de 24h\n  return diff > HOURS_24;\n});\n\nreturn filteredDeals;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        448
+      ],
+      "id": "3566a19f-8060-43dd-8003-b8034700a13a",
+      "name": "Filtra 24h tentativa 2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const deals = $input.all();\n\n// Horário atual no Brasil (America/Sao_Paulo)\nconst now = new Date();\n\n// 24 horas em milissegundos\nconst HOURS_24 = 24 * 60 * 60 * 1000;\n\nconst filteredDeals = deals.filter(item => {\n  // Data de criação do deal no Pipedrive\n  const addTime = item.json.update_time;\n\n  if (!addTime) return false;\n\n  // Converte para Date\n  const createdAt = new Date(addTime);\n\n  // Diferença em ms\n  const diff = now.getTime() - createdAt.getTime();\n\n  // Mantém apenas deals com mais de 24h\n  return diff > HOURS_24;\n});\n\nreturn filteredDeals;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        592
+      ],
+      "id": "95c9a9f7-5eed-4d11-8a31-efd93dce597c",
+      "name": "Filtra 24h tentativa 3"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "oOuA9MPrVTSYogge",
+          "mode": "list",
+          "cachedResultName": "followUp",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/oOuA9MPrVTSYogge"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "1"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        112
+      ],
+      "id": "30c155e1-59fa-4545-80bf-f19103de2d5a",
+      "name": "Get row(s)"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $now.format('T') }}",
+                    "rightValue": "=08:00",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "f307f0eb-8fdc-418d-8b2d-ea30444b8b21"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "1 tentativa"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "9aae4242-fa57-4a1b-a45e-52dfb479e56e",
+                    "leftValue": "={{ $now.format('T') }}",
+                    "rightValue": "14:00",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "2 tentativa"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        288
+      ],
+      "id": "83a5a140-3a58-4962-b5c6-015a8379a174",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "oOuA9MPrVTSYogge",
+          "mode": "list",
+          "cachedResultName": "followUp",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/oOuA9MPrVTSYogge"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "1"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        240
+      ],
+      "id": "9669c340-48aa-4aea-af79-4485f647d8cf",
+      "name": "Get row(s)3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6fefafdb-4766-4b26-abbc-9475fd534efa",
+              "name": "tentativa1",
+              "value": "={{ ($json.tentativa1 || '').replace('{name}', $('Get a person').item.json.name) }}",
+              "type": "string"
+            },
+            {
+              "id": "5834108f-f2ad-4be4-a85d-14e618afef75",
+              "name": "telefone",
+              "value": "={{\n(() => {\n  let phone = $('Switch1').item.json.phones[0].value.replace(/\\D/g, '');\n\n  // Se tiver 10 ou 11 dígitos, não possui código do país\n  if (phone.length === 10 || phone.length === 11) {\n    phone = '55' + phone;\n  }\n\n  return phone;\n})()\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        112
+      ],
+      "id": "19552c93-40bf-4ec1-89ca-06d3e7c5e0d7",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6fefafdb-4766-4b26-abbc-9475fd534efa",
+              "name": "tentativa2",
+              "value": "={{ ($json.tentativa2 || '').replace('{name}', $('Get a person').item.json.name) }}",
+              "type": "string"
+            },
+            {
+              "id": "060964ac-1f4f-4a99-8c3e-f70006034aa9",
+              "name": "telefone",
+              "value": "={{\n(() => {\n  let phone = $('Switch1').item.json.phones[0].value.replace(/\\D/g, '');\n\n  // Se tiver 10 ou 11 dígitos, não possui código do país\n  if (phone.length === 10 || phone.length === 11) {\n    phone = '55' + phone;\n  }\n\n  return phone;\n})()\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        240
+      ],
+      "id": "fc77fea4-ed5e-415e-b4c8-9450f79a149a",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "oOuA9MPrVTSYogge",
+          "mode": "list",
+          "cachedResultName": "followUp",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/oOuA9MPrVTSYogge"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "1"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        368
+      ],
+      "id": "7188f595-52e4-40c3-bd80-47619b83139b",
+      "name": "Get row(s)1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $now.format('T') }}",
+                    "rightValue": "=08:00",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "f307f0eb-8fdc-418d-8b2d-ea30444b8b21"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "1 tentativa"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "9aae4242-fa57-4a1b-a45e-52dfb479e56e",
+                    "leftValue": "={{ $now.format('T') }}",
+                    "rightValue": "14:00",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "2 tentativa"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        432
+      ],
+      "id": "90394c8e-0b94-4d05-8c37-441e35f2d403",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "oOuA9MPrVTSYogge",
+          "mode": "list",
+          "cachedResultName": "followUp",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/oOuA9MPrVTSYogge"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "1"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        496
+      ],
+      "id": "e930eead-1ec4-4327-ab11-a3e4c7774044",
+      "name": "Get row(s)4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6fefafdb-4766-4b26-abbc-9475fd534efa",
+              "name": "tentativa1",
+              "value": "={{ ($json.tentativa3 || '').replace('{name}', $('Get a person').item.json.name) }}",
+              "type": "string"
+            },
+            {
+              "id": "ae8cceb0-e908-4564-8db1-22948b400127",
+              "name": "telefone",
+              "value": "={{\n(() => {\n  let phone = $('Switch2').item.json.phones[0].value.replace(/\\D/g, '');\n\n  // Se tiver 10 ou 11 dígitos, não possui código do país\n  if (phone.length === 10 || phone.length === 11) {\n    phone = '55' + phone;\n  }\n\n  return phone;\n})()\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        368
+      ],
+      "id": "103cc3cf-38b4-431a-b2f0-3915eb45666e",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6fefafdb-4766-4b26-abbc-9475fd534efa",
+              "name": "tentativa2",
+              "value": "={{ ($json.tentativa4 || '').replace('{name}', $('Get a person').item.json.name) }}",
+              "type": "string"
+            },
+            {
+              "id": "84c9cecd-729a-4def-a080-cfc30a3c60d1",
+              "name": "telefone",
+              "value": "={{\n(() => {\n  let phone = $('Switch2').item.json.phones[0].value.replace(/\\D/g, '');\n\n  // Se tiver 10 ou 11 dígitos, não possui código do país\n  if (phone.length === 10 || phone.length === 11) {\n    phone = '55' + phone;\n  }\n\n  return phone;\n})()\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        496
+      ],
+      "id": "50bf50dd-d8e6-4308-bfa8-77746f7d4470",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "oOuA9MPrVTSYogge",
+          "mode": "list",
+          "cachedResultName": "followUp",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/oOuA9MPrVTSYogge"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "1"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        624
+      ],
+      "id": "332bc43a-84b0-43e7-9ca6-3e4ca3bf9c96",
+      "name": "Get row(s)2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $now.format('T') }}",
+                    "rightValue": "=08:00",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "f307f0eb-8fdc-418d-8b2d-ea30444b8b21"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "1 tentativa"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "9aae4242-fa57-4a1b-a45e-52dfb479e56e",
+                    "leftValue": "={{ $now.format('T') }}",
+                    "rightValue": "14:00",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "2 tentativa"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        576
+      ],
+      "id": "ee2e434c-6253-48f5-b211-2f4c447b688d",
+      "name": "Switch3"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "oOuA9MPrVTSYogge",
+          "mode": "list",
+          "cachedResultName": "followUp",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/oOuA9MPrVTSYogge"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "1"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        752
+      ],
+      "id": "88d945c9-38fd-4a09-a548-06ad97521696",
+      "name": "Get row(s)5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6fefafdb-4766-4b26-abbc-9475fd534efa",
+              "name": "tentativa1",
+              "value": "={{ ($json.tentativa5 || '').replace('{name}', $('Get a person').item.json.name) }}",
+              "type": "string"
+            },
+            {
+              "id": "8760b137-17a5-4d74-a466-31721f472eb2",
+              "name": "telefone",
+              "value": "={{\n(() => {\n  let phone = $('Switch3').item.json.phones[0].value.replace(/\\D/g, '');\n\n  // Se tiver 10 ou 11 dígitos, não possui código do país\n  if (phone.length === 10 || phone.length === 11) {\n    phone = '55' + phone;\n  }\n\n  return phone;\n})()\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        624
+      ],
+      "id": "ba345a49-2312-4f72-bf4f-5c964fa00e5c",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6fefafdb-4766-4b26-abbc-9475fd534efa",
+              "name": "tentativa2",
+              "value": "={{ ($json.tentativa6 || '').replace('{name}', $('Get a person').item.json.name) }}",
+              "type": "string"
+            },
+            {
+              "id": "4a675ced-3e21-4c58-b607-e6849fec89ff",
+              "name": "telefone",
+              "value": "={{\n(() => {\n  let phone = $('Switch3').item.json.phones[0].value.replace(/\\D/g, '');\n\n  // Se tiver 10 ou 11 dígitos, não possui código do país\n  if (phone.length === 10 || phone.length === 11) {\n    phone = '55' + phone;\n  }\n\n  return phone;\n})()\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        752
+      ],
+      "id": "aa7149b4-dfcf-4e0c-9579-77ee482348d8",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        384
+      ],
+      "id": "1541f3ac-617d-45cf-abc3-2d90f1c0d0a7",
+      "name": "Schedule Trigger5"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "triggerAtHour": 14
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        512
+      ],
+      "id": "e2329cfc-aa1f-4ed9-b8cc-1d4da72f9b59",
+      "name": "Schedule Trigger6"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 87
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        112,
+        288
+      ],
+      "id": "87419cb4-06a7-4989-b04f-297d14011933",
+      "name": "Get many deals5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        112,
+        432
+      ],
+      "id": "a2299dce-613a-4da9-9ebd-2ec217d7971e",
+      "name": "Get many deals6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 89
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        112,
+        576
+      ],
+      "id": "87e8f202-a097-4f7a-9946-afe46a65812a",
+      "name": "Get many deals7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "get",
+        "personId": "={{ $json.person_id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        288,
+        288
+      ],
+      "id": "5a97995b-0278-464f-b921-c4f5908762b8",
+      "name": "Get a person",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "get",
+        "personId": "={{ $json.person_id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        288,
+        432
+      ],
+      "id": "2b76040a-b265-471e-9a19-aa44a95225f4",
+      "name": "Get a person1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "get",
+        "personId": "={{ $json.person_id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        288,
+        576
+      ],
+      "id": "b3a4629b-8125-4594-a965-3c05c3fb85bc",
+      "name": "Get a person2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.telefone }}",
+        "messageText": "={{ $json.tentativa2 }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        976,
+        240
+      ],
+      "id": "69f73bde-0e2d-4349-9f42-206ace6b852a",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.telefone }}",
+        "messageText": "={{ $json.tentativa1 }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        976,
+        368
+      ],
+      "id": "41152872-f36e-4341-be2e-ffd398793e56",
+      "name": "Enviar texto2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.telefone }}",
+        "messageText": "={{ $json.tentativa2 }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        976,
+        496
+      ],
+      "id": "134c5ebb-2dbe-45f2-96a9-1f31c26d7e55",
+      "name": "Enviar texto3",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.telefone }}",
+        "messageText": "={{ $json.tentativa1 }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        976,
+        624
+      ],
+      "id": "d0df48e6-9a16-45e5-baf3-cdde9455969c",
+      "name": "Enviar texto4",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{ $json.telefone }}",
+        "messageText": "={{ $json.tentativa2 }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        976,
+        752
+      ],
+      "id": "f9526d3b-249e-4054-820f-497e11b12167",
+      "name": "Enviar texto5",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        896
+      ],
+      "id": "c2ae1cc8-9d29-4b6a-a228-5f0e13a6338d",
+      "name": "Schedule Trigger7"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 90
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        896
+      ],
+      "id": "c8bd7c8d-3960-44c8-840d-18beacaffbcc",
+      "name": "Get many deals8",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.id }}",
+        "updateFields": {
+          "stage_id": 86
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        896
+      ],
+      "id": "4b1f2fc2-7e92-433c-b43c-9e0ff98a7e49",
+      "name": "Update a deal5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const deals = $input.all();\n\n// Horário atual\nconst now = new Date();\n\n// 7 dias completos em milissegundos\nconst DAYS_7 = 7 * 24 * 60 * 60 * 1000;\n\nconst filteredDeals = deals.filter(item => {\n  const addTime = item.json.update_time;\n\n  if (!addTime) return false;\n\n  const createdAt = new Date(addTime);\n\n  // Diferença entre agora e a criação do deal\n  const diff = now.getTime() - createdAt.getTime();\n\n  // Mantém apenas deals com mais de 7 dias (168 horas)\n  return diff >= DAYS_7;\n});\n\nreturn filteredDeals;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        896
+      ],
+      "id": "e1744dff-8127-4d6b-b535-724ec3e25aee",
+      "name": "Filtro 7 dias1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $('Get many deals5').item.json.id }}",
+        "updateFields": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        1168,
+        240
+      ],
+      "id": "5cd5b0fa-a08b-48e6-890a-72cd7e42ed9d",
+      "name": "Update a deal4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $('Get many deals6').item.json.id }}",
+        "updateFields": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        1168,
+        496
+      ],
+      "id": "8ccc10cd-fabd-4926-a15a-4a2490fa0114",
+      "name": "Update a deal6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $('Get many deals7').item.json.id }}",
+        "updateFields": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        1168,
+        752
+      ],
+      "id": "ce5e39bf-07fa-46e0-a4b1-b4a25e3709a0",
+      "name": "Update a deal7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Get many deals": {
+      "main": [
+        [
+          {
+            "node": "Filtra 24h Desqualificado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get many deals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get many deals1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals1": {
+      "main": [
+        [
+          {
+            "node": "Filtra 24h tentativa 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Get many deals2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals2": {
+      "main": [
+        [
+          {
+            "node": "Filtra 24h tentativa 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger3": {
+      "main": [
+        [
+          {
+            "node": "Get many deals3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals3": {
+      "main": [
+        [
+          {
+            "node": "Filtra 24h tentativa 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtra 24h Desqualificado": {
+      "main": [
+        [
+          {
+            "node": "Update a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtra 24h tentativa 1": {
+      "main": [
+        [
+          {
+            "node": "Update a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtra 24h tentativa 2": {
+      "main": [
+        [
+          {
+            "node": "Update a deal2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtra 24h tentativa 3": {
+      "main": [
+        [
+          {
+            "node": "Update a deal3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a deal1": {
+      "main": [
+        []
+      ]
+    },
+    "Update a deal2": {
+      "main": [
+        []
+      ]
+    },
+    "Update a deal3": {
+      "main": [
+        []
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s)3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s)4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch3": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s)5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)5": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger5": {
+      "main": [
+        [
+          {
+            "node": "Get many deals5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get many deals6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get many deals7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger6": {
+      "main": [
+        [
+          {
+            "node": "Get many deals7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get many deals6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get many deals5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals6": {
+      "main": [
+        [
+          {
+            "node": "Get a person1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals5": {
+      "main": [
+        [
+          {
+            "node": "Get a person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals7": {
+      "main": [
+        [
+          {
+            "node": "Get a person2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a person1": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a person2": {
+      "main": [
+        [
+          {
+            "node": "Switch3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a person": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger7": {
+      "main": [
+        [
+          {
+            "node": "Get many deals8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals8": {
+      "main": [
+        [
+          {
+            "node": "Filtro 7 dias1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtro 7 dias1": {
+      "main": [
+        [
+          {
+            "node": "Update a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto1": {
+      "main": [
+        [
+          {
+            "node": "Update a deal4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto3": {
+      "main": [
+        [
+          {
+            "node": "Update a deal6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto5": {
+      "main": [
+        [
+          {
+            "node": "Update a deal7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto4": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger1": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger2": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger3": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger4": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "0b266f29-2a49-4000-8a07-d92564e8570e",
+  "activeVersionId": null,
+  "triggerCount": 5,
+  "shared": [
+    {
+      "updatedAt": "2026-05-13T10:53:41.441Z",
+      "createdAt": "2026-05-13T10:53:41.441Z",
+      "role": "workflow:owner",
+      "workflowId": "VJw6Q10zRuggH8GZ",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
