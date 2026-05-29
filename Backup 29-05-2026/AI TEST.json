@@ -1,0 +1,184 @@
+{
+  "updatedAt": "2026-05-28T18:36:30.302Z",
+  "createdAt": "2026-05-28T18:07:43.032Z",
+  "id": "NDAankLZuEboDIdA",
+  "name": "AI TEST",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -160,
+        -352
+      ],
+      "id": "6b7f2614-a3ec-411f-924d-8a15710fc529",
+      "name": "When chat message received",
+      "webhookId": "e42b4972-3cf4-4d1e-bf23-a8a0e8933ede"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "98a38de1-bdff-4435-866c-28c70ea50a09",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        -352
+      ],
+      "id": "30c2ad83-819c-4e18-b705-4aa282055671",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Você tem que utilizar o Tool sheets e buscar as mensagens"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        48,
+        -352
+      ],
+      "id": "388f224e-1711-4f80-bd91-90178de6303f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        -208
+      ],
+      "id": "855e74b1-bb23-494d-ae7f-e7429693a360",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "gSB6UVptS5gdylpB",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ZJ-X195ty9PM4ZliJ2klJP0A38jlS-EKm6-FZadW0P8",
+          "mode": "list",
+          "cachedResultName": "Mapeamento de Mensagens",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZJ-X195ty9PM4ZliJ2klJP0A38jlS-EKm6-FZadW0P8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "META",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZJ-X195ty9PM4ZliJ2klJP0A38jlS-EKm6-FZadW0P8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        -144
+      ],
+      "id": "2d2d51c5-2c0e-4edf-b019-b9ddbcadd851",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "861b5d8a-50e5-4db3-8538-49097f9f95af",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-05-28T18:07:43.032Z",
+      "createdAt": "2026-05-28T18:07:43.032Z",
+      "role": "workflow:owner",
+      "workflowId": "NDAankLZuEboDIdA",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
