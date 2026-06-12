@@ -1,0 +1,90 @@
+{
+  "updatedAt": "2026-06-10T11:04:35.858Z",
+  "createdAt": "2026-05-28T18:07:43.032Z",
+  "id": "NDAankLZuEboDIdA",
+  "name": "AI TEST",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "5e1f6539-d968-4e03-9f69-dc16f6bff64d",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "acdf98ec-022b-4861-9fbe-a7f90f40b843",
+      "name": "Webhook",
+      "webhookId": "5e1f6539-d968-4e03-9f69-dc16f6bff64d"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "0409110d-d7bf-474c-b92c-3dd94224496f",
+  "activeVersionId": "0409110d-d7bf-474c-b92c-3dd94224496f",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-05-28T18:07:43.032Z",
+      "createdAt": "2026-05-28T18:07:43.032Z",
+      "role": "workflow:owner",
+      "workflowId": "NDAankLZuEboDIdA",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-06-11T12:11:48.249Z",
+    "createdAt": "2026-06-10T11:04:35.859Z",
+    "versionId": "0409110d-d7bf-474c-b92c-3dd94224496f",
+    "workflowId": "NDAankLZuEboDIdA",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "5e1f6539-d968-4e03-9f69-dc16f6bff64d",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "acdf98ec-022b-4861-9fbe-a7f90f40b843",
+        "name": "Webhook",
+        "webhookId": "5e1f6539-d968-4e03-9f69-dc16f6bff64d"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          []
+        ]
+      }
+    },
+    "authors": "Automações  Medical Spin",
+    "name": "Version 0409110d",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
