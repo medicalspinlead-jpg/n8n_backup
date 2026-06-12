@@ -1,0 +1,1756 @@
+{
+  "updatedAt": "2026-05-26T13:55:36.276Z",
+  "createdAt": "2026-05-20T12:51:01.435Z",
+  "id": "E5hX7s4ZxHR1RzIO",
+  "name": "Sistema de Mensagens ADS",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "60a5b47e-7c40-4560-8559-6f453c1d70e2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        48
+      ],
+      "id": "a059aed1-9620-4b0e-ba33-51b0bbac7afc",
+      "name": "Webhook",
+      "webhookId": "60a5b47e-7c40-4560-8559-6f453c1d70e2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.category }}",
+                    "rightValue": "aluguel",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "98a74be5-fcd8-4cf6-a269-67e2cd5d9b09"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "aluguel"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "0a7febd4-4675-4831-92dd-29bd86d62150",
+                    "leftValue": "={{ $json.body.category }}",
+                    "rightValue": "bobinas",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "bobinas"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "26c60243-e9c9-4946-8f78-43303d665c3d",
+                    "leftValue": "={{ $json.body.category }}",
+                    "rightValue": "manutenção",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "manutenção"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "022cb068-7b91-43fb-a7e7-fab79d49a718",
+                    "leftValue": "={{ $json.body.category }}",
+                    "rightValue": "ressonancia magnetica",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ressonancia magnetica"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "9acab8be-9c4a-4bfe-8f53-38f14be4fba1",
+                    "leftValue": "={{ $json.body.category }}",
+                    "rightValue": "ultrassom",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ultrassom"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        0
+      ],
+      "id": "7e539324-e95b-4e0c-bf32-8011fdf1df4a",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "p54UwVDuaKAvVQwD",
+          "mode": "list",
+          "cachedResultName": "mensagensADS",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "2"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "aluguel": "={{ $json.body.message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "aluguel",
+              "displayName": "aluguel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "bobinas",
+              "displayName": "bobinas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "manutencao",
+              "displayName": "manutencao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rm",
+              "displayName": "rm",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "ultrassom",
+              "displayName": "ultrassom",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        -208
+      ],
+      "id": "21eb74d7-7968-468e-a176-d8054a51deab",
+      "name": "aluguel"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "p54UwVDuaKAvVQwD",
+          "mode": "list",
+          "cachedResultName": "mensagensADS",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "2"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "bobinas": "={{ $json.body.message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "aluguel",
+              "displayName": "aluguel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "bobinas",
+              "displayName": "bobinas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "manutencao",
+              "displayName": "manutencao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rm",
+              "displayName": "rm",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "ultrassom",
+              "displayName": "ultrassom",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        -80
+      ],
+      "id": "3ef5a130-ac77-4eea-86b9-8061d9ac481a",
+      "name": "bobinas"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "p54UwVDuaKAvVQwD",
+          "mode": "list",
+          "cachedResultName": "mensagensADS",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "2"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "manutencao": "={{ $json.body.message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "aluguel",
+              "displayName": "aluguel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "bobinas",
+              "displayName": "bobinas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "manutencao",
+              "displayName": "manutencao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "rm",
+              "displayName": "rm",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "ultrassom",
+              "displayName": "ultrassom",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        48
+      ],
+      "id": "6453b86f-8b69-4012-9317-d837c8c690bf",
+      "name": "manutencao"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "p54UwVDuaKAvVQwD",
+          "mode": "list",
+          "cachedResultName": "mensagensADS",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "2"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "rm": "={{ $json.body.message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "aluguel",
+              "displayName": "aluguel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "bobinas",
+              "displayName": "bobinas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "manutencao",
+              "displayName": "manutencao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rm",
+              "displayName": "rm",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ultrassom",
+              "displayName": "ultrassom",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        176
+      ],
+      "id": "2165b449-1fd5-4483-99cd-708d71e4a3c4",
+      "name": "rm"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "p54UwVDuaKAvVQwD",
+          "mode": "list",
+          "cachedResultName": "mensagensADS",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "2"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ultrassom": "={{ $json.body.message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "aluguel",
+              "displayName": "aluguel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "bobinas",
+              "displayName": "bobinas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "manutencao",
+              "displayName": "manutencao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rm",
+              "displayName": "rm",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "ultrassom",
+              "displayName": "ultrassom",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        304
+      ],
+      "id": "337b31d1-281c-455e-bb73-397ec0749d78",
+      "name": "ultrassom"
+    },
+    {
+      "parameters": {
+        "path": "76b460ec-43bb-4b8d-ae2c-0e62b8d7ef2e",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -608,
+        -128
+      ],
+      "id": "37b31cfd-f69e-47b3-8591-ed4a1e71832f",
+      "name": "Webhook1",
+      "webhookId": "76b460ec-43bb-4b8d-ae2c-0e62b8d7ef2e"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -48,
+        -128
+      ],
+      "id": "22597044-a422-401b-8f51-3175fb144fc7",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"pt-br\">\n<head>\n<meta charset=\"UTF-8\" />\n<title>Editor de Mensagens MetaADS</title>\n\n<style>\n  body {\n    font-family: Arial;\n    background: #0f172a;\n    color: #e2e8f0;\n    padding: 20px;\n  }\n\n  .layout {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 20px;\n  }\n\n  .card {\n    background: #1e293b;\n    padding: 15px;\n    border-radius: 12px;\n  }\n\n  select, textarea {\n    width: 100%;\n    padding: 10px;\n    border-radius: 8px;\n    border: none;\n    background: #0f172a;\n    color: white;\n    margin-top: 6px;\n  }\n\n  button {\n    background: #2563eb;\n    border: none;\n    padding: 10px;\n    border-radius: 8px;\n    color: white;\n    cursor: pointer;\n    margin-top: 10px;\n  }\n\n  button:hover {\n    background: #1d4ed8;\n  }\n\n  .preview {\n    background: #0f172a;\n    padding: 15px;\n    border-radius: 10px;\n    border: 1px solid #334155;\n  }\n\n  .tag {\n    display: inline-block;\n    padding: 4px 10px;\n    border-radius: 999px;\n    background: #334155;\n    font-size: 12px;\n    margin-bottom: 10px;\n  }\n\n  .msg {\n    font-size: 16px;\n    line-height: 1.5;\n    white-space: pre-wrap;\n  }\n\n  .list {\n    margin-top: 10px;\n    display: flex;\n    flex-direction: column;\n    gap: 8px;\n  }\n\n  .item {\n    padding: 10px;\n    background: #0f172a;\n    border-radius: 8px;\n    cursor: pointer;\n    border: 1px solid #334155;\n  }\n\n  .item:hover {\n    border-color: #60a5fa;\n  }\n</style>\n</head>\n\n<body>\n\n<h1>🧠 Editor de Mensagens MetaADS</h1>\n\n<div class=\"layout\">\n\n  <!-- LISTA -->\n  <div class=\"card\">\n    <h3>📂 Mensagens</h3>\n\n    <div class=\"list\" id=\"list\"></div>\n  </div>\n\n  <!-- PREVIEW + EDIT -->\n  <div class=\"card\">\n    <h3>👁 Preview</h3>\n\n    <div id=\"preview\" class=\"preview\">\n      <div class=\"tag\">Selecione uma mensagem</div>\n      <div class=\"msg\">Nenhuma mensagem selecionada</div>\n    </div>\n\n    <h3 style=\"margin-top:20px;\">✏️ Editar</h3>\n\n    <label>Categoria</label>\n    <select id=\"category\">\n      <option>aluguel</option>\n      <option>bobinas</option>\n      <option>manutenção</option>\n      <option>ressonancia magnetica</option>\n      <option>ultrassom</option>\n    </select>\n\n    <label>Mensagem</label>\n    <textarea id=\"message\" rows=\"6\"></textarea>\n\n    <button onclick=\"send()\">Salvar no Webhook</button>\n  </div>\n\n</div>\n\n<script>\nconst data = {{ JSON.stringify($items(\"Get row(s)\")[0].json) }};\n\nlet selectedKey = null;\n\nfunction safeText(text) {\n  return (text || \"\").toString();\n}\n\nconst categories = [\n  { key: \"aluguel\", label: \"Aluguel\" },\n  { key: \"bobinas\", label: \"Bobinas\" },\n  { key: \"manutencao\", label: \"Manutenção\" },\n  { key: \"rm\", label: \"Ressonância Magnética\" },\n  { key: \"ultrassom\", label: \"Ultrassom\" }\n];\n\nfunction renderList() {\n  const list = document.getElementById(\"list\");\n\n  list.innerHTML = categories.map(c => `\n    <div class=\"item\" onclick=\"selectItem('${c.key}')\">\n      <strong>${c.label}</strong><br/>\n      <small>${(data[c.key] || \"vazio\").slice(0, 60)}</small>\n    </div>\n  `).join(\"\");\n}\n\nfunction selectItem(key) {\n  selectedKey = key;\n\n  document.getElementById(\"category\").value = key;\n  document.getElementById(\"message\").value = data[key] || \"\";\n\n  renderPreview();\n}\n\nfunction renderPreview() {\n  const preview = document.getElementById(\"preview\");\n\n  if (!selectedKey) {\n    preview.innerHTML = `\n      <div class=\"tag\">Selecione uma categoria</div>\n      <div class=\"msg\">Clique em uma mensagem ao lado</div>\n    `;\n    return;\n  }\n\n  preview.innerHTML = `\n    <div class=\"tag\">${selectedKey}</div>\n    <div class=\"msg\">${data[selectedKey] || \"\"}</div>\n  `;\n}\nconst WEBHOOK_URL = \"https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/60a5b47e-7c40-4560-8559-6f453c1d70e2\";\nasync function send() {\n  const category = document.getElementById(\"category\").value;\n  const message = document.getElementById(\"message\").value;\n\n  if (!category) {\n    alert(\"Selecione uma categoria\");\n    return;\n  }\n\n  const payload = {\n    id: data.id,\n    category,\n    message\n  };\n\n  await fetch(WEBHOOK_URL, {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(payload)\n  });\n\n  alert(\"Atualizado com sucesso!\");\n}\n\nwindow.onload = () => {\n  renderList();\n  renderPreview();\n};\n</script>\n\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -224,
+        -128
+      ],
+      "id": "c14b5d4a-c1f5-4136-b241-49d2b4bd4c1c",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "p54UwVDuaKAvVQwD",
+          "mode": "list",
+          "cachedResultName": "mensagensADS",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -416,
+        -128
+      ],
+      "id": "0fc0bc36-899b-4ca1-811c-8ecc4e31c0c4",
+      "name": "Get row(s)"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "p54UwVDuaKAvVQwD",
+          "mode": "list",
+          "cachedResultName": "mensagensADS",
+          "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -544,
+        224
+      ],
+      "id": "abac5e17-9ca7-4b03-bd37-3451b65a9fdc",
+      "name": "Get row(s)1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4e946048-f00e-4c1b-9665-c6ad1a3d855c",
+              "name": "rm",
+              "value": "={{ $('Get row(s)1').item.json.rm.replace(/\\{name\\}/g, $json.nome) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -128,
+        224
+      ],
+      "id": "07880f3f-ea09-45c6-ac66-b185a5998004",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Lista básica de nomes e sobrenomes (pode expandir depois)\nconst nomes = [\n  \"João\", \"Maria\", \"Pedro\", \"Ana\", \"Lucas\",\n  \"Beatriz\", \"Carlos\", \"Juliana\", \"Rafael\", \"Fernanda\"\n];\n\nconst sobrenomes = [\n  \"Silva\", \"Santos\", \"Oliveira\", \"Souza\", \"Lima\",\n  \"Costa\", \"Pereira\", \"Almeida\", \"Ferreira\", \"Rodrigues\"\n];\n\n// Função para pegar item aleatório\nfunction randomItem(arr) {\n  return arr[Math.floor(Math.random() * arr.length)];\n}\n\n// Gera nome completo\nconst nome = randomItem(nomes);\nconst sobrenome = randomItem(sobrenomes);\n\nconst nomeCompleto = `${nome} ${sobrenome}`;\n\n// Retorno no padrão do n8n\nreturn [\n  {\n    json: {\n      nome: nomeCompleto\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        224
+      ],
+      "id": "419e8d09-ae8a-4106-a618-0c875baa39c3",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "aluguel",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "bobinas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "manutencao",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "rm",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ultrassom",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+            "content-length": "49",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "null",
+            "priority": "u=1, i",
+            "sec-ch-ua": "\"Chromium\";v=\"148\", \"Google Chrome\";v=\"148\", \"Not/A)Brand\";v=\"99\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "45.233.99.26",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.99.26"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": 2,
+            "category": "manutenção",
+            "message": "oi"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/60a5b47e-7c40-4560-8559-6f453c1d70e2",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "versionId": "2117b19a-3049-4664-b02f-05617c5c752a",
+  "activeVersionId": "2117b19a-3049-4664-b02f-05617c5c752a",
+  "triggerCount": 2,
+  "shared": [
+    {
+      "updatedAt": "2026-05-20T12:51:01.435Z",
+      "createdAt": "2026-05-20T12:51:01.435Z",
+      "role": "workflow:owner",
+      "workflowId": "E5hX7s4ZxHR1RzIO",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-05-20T13:49:41.648Z",
+    "createdAt": "2026-05-20T13:49:13.064Z",
+    "versionId": "2117b19a-3049-4664-b02f-05617c5c752a",
+    "workflowId": "E5hX7s4ZxHR1RzIO",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "60a5b47e-7c40-4560-8559-6f453c1d70e2",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          416,
+          48
+        ],
+        "id": "a059aed1-9620-4b0e-ba33-51b0bbac7afc",
+        "name": "Webhook",
+        "webhookId": "60a5b47e-7c40-4560-8559-6f453c1d70e2"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.body.category }}",
+                      "rightValue": "aluguel",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "98a74be5-fcd8-4cf6-a269-67e2cd5d9b09"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "aluguel"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "0a7febd4-4675-4831-92dd-29bd86d62150",
+                      "leftValue": "={{ $json.body.category }}",
+                      "rightValue": "bobinas",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "bobinas"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "26c60243-e9c9-4946-8f78-43303d665c3d",
+                      "leftValue": "={{ $json.body.category }}",
+                      "rightValue": "manutenção",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "manutenção"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "022cb068-7b91-43fb-a7e7-fab79d49a718",
+                      "leftValue": "={{ $json.body.category }}",
+                      "rightValue": "ressonancia magnetica",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "ressonancia magnetica"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "9acab8be-9c4a-4bfe-8f53-38f14be4fba1",
+                      "leftValue": "={{ $json.body.category }}",
+                      "rightValue": "ultrassom",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "ultrassom"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          624,
+          0
+        ],
+        "id": "7e539324-e95b-4e0c-bf32-8011fdf1df4a",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dataTableId": {
+            "__rl": true,
+            "value": "p54UwVDuaKAvVQwD",
+            "mode": "list",
+            "cachedResultName": "mensagensADS",
+            "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyValue": "2"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "aluguel": "={{ $json.body.message }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "aluguel",
+                "displayName": "aluguel",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "bobinas",
+                "displayName": "bobinas",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "manutencao",
+                "displayName": "manutencao",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "rm",
+                "displayName": "rm",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "ultrassom",
+                "displayName": "ultrassom",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          832,
+          -208
+        ],
+        "id": "21eb74d7-7968-468e-a176-d8054a51deab",
+        "name": "aluguel"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dataTableId": {
+            "__rl": true,
+            "value": "p54UwVDuaKAvVQwD",
+            "mode": "list",
+            "cachedResultName": "mensagensADS",
+            "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyValue": "2"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "bobinas": "={{ $json.body.message }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "aluguel",
+                "displayName": "aluguel",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "bobinas",
+                "displayName": "bobinas",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "manutencao",
+                "displayName": "manutencao",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "rm",
+                "displayName": "rm",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "ultrassom",
+                "displayName": "ultrassom",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          832,
+          -80
+        ],
+        "id": "3ef5a130-ac77-4eea-86b9-8061d9ac481a",
+        "name": "bobinas"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dataTableId": {
+            "__rl": true,
+            "value": "p54UwVDuaKAvVQwD",
+            "mode": "list",
+            "cachedResultName": "mensagensADS",
+            "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyValue": "2"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "manutencao": "={{ $json.body.message }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "aluguel",
+                "displayName": "aluguel",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "bobinas",
+                "displayName": "bobinas",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "manutencao",
+                "displayName": "manutencao",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "rm",
+                "displayName": "rm",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "ultrassom",
+                "displayName": "ultrassom",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          832,
+          48
+        ],
+        "id": "6453b86f-8b69-4012-9317-d837c8c690bf",
+        "name": "manutencao"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dataTableId": {
+            "__rl": true,
+            "value": "p54UwVDuaKAvVQwD",
+            "mode": "list",
+            "cachedResultName": "mensagensADS",
+            "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyValue": "2"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "rm": "={{ $json.body.message }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "aluguel",
+                "displayName": "aluguel",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "bobinas",
+                "displayName": "bobinas",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "manutencao",
+                "displayName": "manutencao",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "rm",
+                "displayName": "rm",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "ultrassom",
+                "displayName": "ultrassom",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          832,
+          176
+        ],
+        "id": "2165b449-1fd5-4483-99cd-708d71e4a3c4",
+        "name": "rm"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dataTableId": {
+            "__rl": true,
+            "value": "p54UwVDuaKAvVQwD",
+            "mode": "list",
+            "cachedResultName": "mensagensADS",
+            "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyValue": "2"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "ultrassom": "={{ $json.body.message }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "aluguel",
+                "displayName": "aluguel",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "bobinas",
+                "displayName": "bobinas",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "manutencao",
+                "displayName": "manutencao",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "rm",
+                "displayName": "rm",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "ultrassom",
+                "displayName": "ultrassom",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          832,
+          304
+        ],
+        "id": "337b31d1-281c-455e-bb73-397ec0749d78",
+        "name": "ultrassom"
+      },
+      {
+        "parameters": {
+          "path": "76b460ec-43bb-4b8d-ae2c-0e62b8d7ef2e",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -608,
+          -128
+        ],
+        "id": "37b31cfd-f69e-47b3-8591-ed4a1e71832f",
+        "name": "Webhook1",
+        "webhookId": "76b460ec-43bb-4b8d-ae2c-0e62b8d7ef2e"
+      },
+      {
+        "parameters": {
+          "respondWith": "text",
+          "responseBody": "={{ $json.html }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.5,
+        "position": [
+          -48,
+          -128
+        ],
+        "id": "22597044-a422-401b-8f51-3175fb144fc7",
+        "name": "Respond to Webhook"
+      },
+      {
+        "parameters": {
+          "html": "<!DOCTYPE html>\n<html lang=\"pt-br\">\n<head>\n<meta charset=\"UTF-8\" />\n<title>Editor de Mensagens MetaADS</title>\n\n<style>\n  body {\n    font-family: Arial;\n    background: #0f172a;\n    color: #e2e8f0;\n    padding: 20px;\n  }\n\n  .layout {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 20px;\n  }\n\n  .card {\n    background: #1e293b;\n    padding: 15px;\n    border-radius: 12px;\n  }\n\n  select, textarea {\n    width: 100%;\n    padding: 10px;\n    border-radius: 8px;\n    border: none;\n    background: #0f172a;\n    color: white;\n    margin-top: 6px;\n  }\n\n  button {\n    background: #2563eb;\n    border: none;\n    padding: 10px;\n    border-radius: 8px;\n    color: white;\n    cursor: pointer;\n    margin-top: 10px;\n  }\n\n  button:hover {\n    background: #1d4ed8;\n  }\n\n  .preview {\n    background: #0f172a;\n    padding: 15px;\n    border-radius: 10px;\n    border: 1px solid #334155;\n  }\n\n  .tag {\n    display: inline-block;\n    padding: 4px 10px;\n    border-radius: 999px;\n    background: #334155;\n    font-size: 12px;\n    margin-bottom: 10px;\n  }\n\n  .msg {\n    font-size: 16px;\n    line-height: 1.5;\n    white-space: pre-wrap;\n  }\n\n  .list {\n    margin-top: 10px;\n    display: flex;\n    flex-direction: column;\n    gap: 8px;\n  }\n\n  .item {\n    padding: 10px;\n    background: #0f172a;\n    border-radius: 8px;\n    cursor: pointer;\n    border: 1px solid #334155;\n  }\n\n  .item:hover {\n    border-color: #60a5fa;\n  }\n</style>\n</head>\n\n<body>\n\n<h1>🧠 Editor de Mensagens MetaADS</h1>\n\n<div class=\"layout\">\n\n  <!-- LISTA -->\n  <div class=\"card\">\n    <h3>📂 Mensagens</h3>\n\n    <div class=\"list\" id=\"list\"></div>\n  </div>\n\n  <!-- PREVIEW + EDIT -->\n  <div class=\"card\">\n    <h3>👁 Preview</h3>\n\n    <div id=\"preview\" class=\"preview\">\n      <div class=\"tag\">Selecione uma mensagem</div>\n      <div class=\"msg\">Nenhuma mensagem selecionada</div>\n    </div>\n\n    <h3 style=\"margin-top:20px;\">✏️ Editar</h3>\n\n    <label>Categoria</label>\n    <select id=\"category\">\n      <option>aluguel</option>\n      <option>bobinas</option>\n      <option>manutenção</option>\n      <option>ressonancia magnetica</option>\n      <option>ultrassom</option>\n    </select>\n\n    <label>Mensagem</label>\n    <textarea id=\"message\" rows=\"6\"></textarea>\n\n    <button onclick=\"send()\">Salvar no Webhook</button>\n  </div>\n\n</div>\n\n<script>\nconst data = {{ JSON.stringify($items(\"Get row(s)\")[0].json) }};\n\nlet selectedKey = null;\n\nfunction safeText(text) {\n  return (text || \"\").toString();\n}\n\nconst categories = [\n  { key: \"aluguel\", label: \"Aluguel\" },\n  { key: \"bobinas\", label: \"Bobinas\" },\n  { key: \"manutencao\", label: \"Manutenção\" },\n  { key: \"rm\", label: \"Ressonância Magnética\" },\n  { key: \"ultrassom\", label: \"Ultrassom\" }\n];\n\nfunction renderList() {\n  const list = document.getElementById(\"list\");\n\n  list.innerHTML = categories.map(c => `\n    <div class=\"item\" onclick=\"selectItem('${c.key}')\">\n      <strong>${c.label}</strong><br/>\n      <small>${(data[c.key] || \"vazio\").slice(0, 60)}</small>\n    </div>\n  `).join(\"\");\n}\n\nfunction selectItem(key) {\n  selectedKey = key;\n\n  document.getElementById(\"category\").value = key;\n  document.getElementById(\"message\").value = data[key] || \"\";\n\n  renderPreview();\n}\n\nfunction renderPreview() {\n  const preview = document.getElementById(\"preview\");\n\n  if (!selectedKey) {\n    preview.innerHTML = `\n      <div class=\"tag\">Selecione uma categoria</div>\n      <div class=\"msg\">Clique em uma mensagem ao lado</div>\n    `;\n    return;\n  }\n\n  preview.innerHTML = `\n    <div class=\"tag\">${selectedKey}</div>\n    <div class=\"msg\">${data[selectedKey] || \"\"}</div>\n  `;\n}\nconst WEBHOOK_URL = \"https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/60a5b47e-7c40-4560-8559-6f453c1d70e2\";\nasync function send() {\n  const category = document.getElementById(\"category\").value;\n  const message = document.getElementById(\"message\").value;\n\n  if (!category) {\n    alert(\"Selecione uma categoria\");\n    return;\n  }\n\n  const payload = {\n    id: data.id,\n    category,\n    message\n  };\n\n  await fetch(WEBHOOK_URL, {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(payload)\n  });\n\n  alert(\"Atualizado com sucesso!\");\n}\n\nwindow.onload = () => {\n  renderList();\n  renderPreview();\n};\n</script>\n\n</body>\n</html>"
+        },
+        "type": "n8n-nodes-base.html",
+        "typeVersion": 1.2,
+        "position": [
+          -224,
+          -128
+        ],
+        "id": "c14b5d4a-c1f5-4136-b241-49d2b4bd4c1c",
+        "name": "HTML"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "value": "p54UwVDuaKAvVQwD",
+            "mode": "list",
+            "cachedResultName": "mensagensADS",
+            "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+          },
+          "returnAll": true
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          -416,
+          -128
+        ],
+        "id": "0fc0bc36-899b-4ca1-811c-8ecc4e31c0c4",
+        "name": "Get row(s)"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "value": "p54UwVDuaKAvVQwD",
+            "mode": "list",
+            "cachedResultName": "mensagensADS",
+            "cachedResultUrl": "/projects/XZrA9Oiu8K5e6BgC/datatables/p54UwVDuaKAvVQwD"
+          },
+          "returnAll": true
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          -544,
+          224
+        ],
+        "id": "abac5e17-9ca7-4b03-bd37-3451b65a9fdc",
+        "name": "Get row(s)1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "4e946048-f00e-4c1b-9665-c6ad1a3d855c",
+                "name": "rm",
+                "value": "={{ $('Get row(s)1').item.json.rm.replace(/\\{name\\}/g, $json.nome) }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -128,
+          224
+        ],
+        "id": "07880f3f-ea09-45c6-ac66-b185a5998004",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Lista básica de nomes e sobrenomes (pode expandir depois)\nconst nomes = [\n  \"João\", \"Maria\", \"Pedro\", \"Ana\", \"Lucas\",\n  \"Beatriz\", \"Carlos\", \"Juliana\", \"Rafael\", \"Fernanda\"\n];\n\nconst sobrenomes = [\n  \"Silva\", \"Santos\", \"Oliveira\", \"Souza\", \"Lima\",\n  \"Costa\", \"Pereira\", \"Almeida\", \"Ferreira\", \"Rodrigues\"\n];\n\n// Função para pegar item aleatório\nfunction randomItem(arr) {\n  return arr[Math.floor(Math.random() * arr.length)];\n}\n\n// Gera nome completo\nconst nome = randomItem(nomes);\nconst sobrenome = randomItem(sobrenomes);\n\nconst nomeCompleto = `${nome} ${sobrenome}`;\n\n// Retorno no padrão do n8n\nreturn [\n  {\n    json: {\n      nome: nomeCompleto\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -336,
+          224
+        ],
+        "id": "419e8d09-ae8a-4106-a618-0c875baa39c3",
+        "name": "Code in JavaScript"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "aluguel",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "bobinas",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "manutencao",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "rm",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "ultrassom",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook1": {
+        "main": [
+          [
+            {
+              "node": "Get row(s)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Respond to Webhook": {
+        "main": [
+          []
+        ]
+      },
+      "HTML": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get row(s)": {
+        "main": [
+          [
+            {
+              "node": "HTML",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get row(s)1": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Automações  Medical Spin",
+    "name": "Version 2117b19a",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
