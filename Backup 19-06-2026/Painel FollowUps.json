@@ -1,0 +1,3434 @@
+{
+  "updatedAt": "2026-06-18T18:02:54.153Z",
+  "createdAt": "2026-05-28T18:07:43.032Z",
+  "id": "NDAankLZuEboDIdA",
+  "name": "Painel FollowUps",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "MedicalSpin",
+        "remoteJid": "={{\n(() => {\n  let phone = ($json.phone || \"\").replace(/\\D/g, \"\"); // Remove tudo que não é número\n\n  // Se não começar com o código do Brasil (55), adiciona\n  if (!phone.startsWith(\"55\")) {\n    phone = \"55\" + phone;\n  }\n\n  return phone;\n})()\n}}",
+        "messageText": "={{ $json.message }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        64,
+        208
+      ],
+      "id": "0ed5f908-a948-484d-918e-e0d82278c609",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "79qcaif6AQLNsa1x",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "430cd40e-022f-47a1-b299-842c87c55847",
+              "name": "id",
+              "value": "={{ $json.body.lead.id }}",
+              "type": "string"
+            },
+            {
+              "id": "81a930dd-0cad-46d0-b6c9-ef83f2e50501",
+              "name": "pipedriveId",
+              "value": "={{ $json.body.lead.pipedriveId }}",
+              "type": "string"
+            },
+            {
+              "id": "0bf5c23b-7820-40a2-9499-68656277ac4a",
+              "name": "name",
+              "value": "={{ $json.body.lead.name }}",
+              "type": "string"
+            },
+            {
+              "id": "e5976499-fab9-4218-9f11-fe0a41392adc",
+              "name": "email",
+              "value": "={{ $json.body.lead.email }}",
+              "type": "string"
+            },
+            {
+              "id": "760baaea-42de-4049-ab4c-fb9f510ec532",
+              "name": "phone",
+              "value": "={{ $json.body.lead.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "2ec8c538-417a-4001-abc2-722a6ccf92d2",
+              "name": "stage",
+              "value": "={{ $json.body.lead.stage }}",
+              "type": "string"
+            },
+            {
+              "id": "c7d1b9ff-1dac-40b1-af0d-5db65ed894d3",
+              "name": "category",
+              "value": "={{ $json.body.category.name }}",
+              "type": "string"
+            },
+            {
+              "id": "5ab4ed64-ce01-4278-987f-81c7264a9383",
+              "name": "to",
+              "value": "={{ $json.body.transition.from }}-{{ $json.body.transition.to }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -112,
+        352
+      ],
+      "id": "f9e79426-5f78-4cef-912b-77acc22f1eb2",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "action": "change",
+        "entity": "activity"
+      },
+      "type": "n8n-nodes-base.pipedriveTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -512,
+        -432
+      ],
+      "id": "44df6e4c-f4ec-4062-abff-563a3e6ecd86",
+      "name": "Pipedrive Trigger",
+      "webhookId": "ca565844-9d51-486e-9e63-c061b2e81dbe",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "548fade4-56f1-4962-b256-9f5ebc272b96",
+              "leftValue": "={{ $json.done }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "4da0c55e-e4d1-4fef-9e6a-c16f74875723",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "=enviar_whatsapp",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -112,
+        -432
+      ],
+      "id": "41968711-46e3-4d15-a593-6a4d87cc5cfa",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        48,
+        -320
+      ],
+      "id": "96754373-1bdc-4095-85d3-0c5c1d3c2cd3",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "20e3021e-7820-4de5-9aa6-c401b0bc3563",
+              "name": "deal_id",
+              "value": "={{ $json.data.deal_id }}",
+              "type": "number"
+            },
+            {
+              "id": "4f362708-164e-456c-b92f-f08eefaf0dcb",
+              "name": "done",
+              "value": "={{ $json.data.done }}",
+              "type": "boolean"
+            },
+            {
+              "id": "8541c2c0-a995-42fa-b6b4-90b37861c0d2",
+              "name": "type",
+              "value": "={{ $json.data.type }}",
+              "type": "string"
+            },
+            {
+              "id": "29ca73ab-7b2d-4b8e-ae73-b5c6245fa730",
+              "name": "data.due_date",
+              "value": "={{ $json.data.update_time }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -320,
+        -432
+      ],
+      "id": "922b19b2-d5c9-4a28-8adc-a8b4b9f47708",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dealId": "={{ $json.deal_id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        48,
+        -448
+      ],
+      "id": "645e32de-fc6e-4a05-a67a-caca6c3d849b",
+      "name": "Get a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78327663-c58d-4ee9-858f-8c01ff8e1d9c",
+              "name": "title",
+              "value": "={{ $('Get a deal').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "a59cdbca-9b56-4d76-bb2e-c670fd201d0f",
+              "name": "idDeal",
+              "value": "={{ $('Get a deal').item.json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "e7f15958-9e9d-48ba-9718-d62d2bbcdc43",
+              "name": "idPerson",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "e49975b1-2ba8-437a-8dcc-c5daadd77a7d",
+              "name": "org_id",
+              "value": "={{ $json.org_id }}",
+              "type": "number"
+            },
+            {
+              "id": "f418c370-28ae-4122-9c7e-d3cc1328e94d",
+              "name": "phone",
+              "value": "={{ $json.phones[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "0f243268-c6f9-4101-801e-29cd80e63305",
+              "name": "Categoria",
+              "value": "={{ $('Get a deal').item.json.custom_fields.Categoria }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        -448
+      ],
+      "id": "2a029d4e-5e9b-4d81-a627-50680d9d332d",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "get",
+        "personId": "={{ $json.person_id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        240,
+        -448
+      ],
+      "id": "2df07ac5-da17-481e-aa95-242195c93608",
+      "name": "Get a person",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://msp.painelfollowups.95.217.164.173.sslip.io/api/categories",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -640,
+        400
+      ],
+      "id": "eee36b4f-a503-4187-a54e-9c1de97315b5",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "SOGUBKAG8W4TpmRP",
+          "name": "PainelFollowup"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Categoria }}",
+                    "rightValue": "Ressonância magnética",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "dcc25c7f-a499-49c4-886d-f5f151bf50f5"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Ressonância magnética"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "fcd55d4d-8fe4-46ab-838c-a4c4dfef0162",
+                    "leftValue": "={{ $json.Categoria }}",
+                    "rightValue": "Bobinas de Exames",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Bobinas de Exames"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a5880d87-b5e8-4e6d-9013-57b9c17389a9",
+                    "leftValue": "={{ $json.Categoria }}",
+                    "rightValue": "Manutenção",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Manutenção"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "cf526db3-872d-422d-8594-562011b285b9",
+                    "leftValue": "={{ $json.Categoria }}",
+                    "rightValue": "Ultrassom",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Ultrassom"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "feb70bf2-cd7e-4b18-84be-60e2738dbb73",
+                    "leftValue": "={{ $json.Categoria }}",
+                    "rightValue": "Aluguel/Locação",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Aluguel/locação"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "83b3934e-0b5f-42e7-87c2-3cadedc6cd09",
+                    "leftValue": "={{ $json.Categoria }}",
+                    "rightValue": "Tomografia",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Tomografia"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        -512
+      ],
+      "id": "c00b6580-0868-4858-bc74-ef42be3915a1",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+              "name": "categoryId",
+              "value": "=cmq6pr9e0000001lkc13w6a3e",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        -768
+      ],
+      "id": "efddceeb-1ac2-4a60-9932-26cff80b59e6",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $('Switch').item.json.title }}\",\n  \"phone\": \"{{ $('Switch').item.json.phone }}\",\n  \"categoryId\": \"{{ $json.categoryId }}\",\n  \"pipedriveId\": \"{{ $('Switch').item.json.idDeal }}\",\n  \"stage\": \"dia1\",\n  \"notes\": \"https://medicalspin.pipedrive.com/deal/{{ $('Switch').item.json.idDeal }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1568,
+        -448
+      ],
+      "id": "41273e83-ae74-4d24-9dbb-30f99571de42",
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "SOGUBKAG8W4TpmRP",
+          "name": "PainelFollowup"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+              "name": "categoryId",
+              "value": "=cmq6prwvd000301lkh6a56ihf",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        -256
+      ],
+      "id": "a413b2e2-105f-4849-bf01-5563644e7f31",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+              "name": "categoryId",
+              "value": "=cmq6prnj6000201lkkcyok5yk",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        -384
+      ],
+      "id": "8c9f8d10-396e-41a4-90a3-112ceb444a13",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+              "name": "categoryId",
+              "value": "=cmq6priqa000101lkj9svghu4",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        -640
+      ],
+      "id": "830d9b66-6944-4b0c-bc22-7ee3128de4ba",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+              "name": "categoryId",
+              "value": "=cmqjhyfj1000001s9ave0qogd",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        -512
+      ],
+      "id": "2734d556-0375-4676-a5f7-f4f3874c771a",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+              "name": "categoryId",
+              "value": "=cmqjhynw2000101s9uij7qykx",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        -128
+      ],
+      "id": "637ecee0-bcb5-4232-a529-000f55d223ee",
+      "name": "Edit Fields8"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.data.pipedriveId }}",
+        "updateFields": {
+          "stage_id": 87
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        1776,
+        -448
+      ],
+      "id": "c290c46e-753f-48c6-b040-f0a267d2e1fd",
+      "name": "Update a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.pipedriveId }}",
+        "updateFields": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        864,
+        64
+      ],
+      "id": "bad1ddd2-72d3-4e8a-8f69-270cbd26ea71",
+      "name": "Update a deal1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "5e1f6539-d968-4e03-9f69-dc16f6bff64d",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -512,
+        272
+      ],
+      "id": "ff571a64-74c3-41d4-9e0c-9b45ab047778",
+      "name": "Webhook2",
+      "webhookId": "5e1f6539-d968-4e03-9f69-dc16f6bff64d"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "430cd40e-022f-47a1-b299-842c87c55847",
+              "name": "id",
+              "value": "={{ $json.body.lead.id }}",
+              "type": "string"
+            },
+            {
+              "id": "81a930dd-0cad-46d0-b6c9-ef83f2e50501",
+              "name": "pipedriveId",
+              "value": "={{ $json.body.lead.pipedriveId }}",
+              "type": "string"
+            },
+            {
+              "id": "0bf5c23b-7820-40a2-9499-68656277ac4a",
+              "name": "name",
+              "value": "={{ $json.body.lead.name }}",
+              "type": "string"
+            },
+            {
+              "id": "e5976499-fab9-4218-9f11-fe0a41392adc",
+              "name": "email",
+              "value": "={{ $json.body.lead.email }}",
+              "type": "string"
+            },
+            {
+              "id": "760baaea-42de-4049-ab4c-fb9f510ec532",
+              "name": "phone",
+              "value": "={{ $json.body.lead.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "2ec8c538-417a-4001-abc2-722a6ccf92d2",
+              "name": "stage",
+              "value": "={{ $json.body.lead.stage }}",
+              "type": "string"
+            },
+            {
+              "id": "c7d1b9ff-1dac-40b1-af0d-5db65ed894d3",
+              "name": "category",
+              "value": "={{ $json.body.category.name }}",
+              "type": "string"
+            },
+            {
+              "id": "a8045fba-a8f5-4fc2-a0fb-74cbc17c5bf1",
+              "name": "message",
+              "value": "={{ $json.body.message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "03868ee8-44d5-43c6-86fc-ef5157a28679",
+              "name": "isLast",
+              "value": "={{ $json.body.followup.isLast }}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -112,
+        208
+      ],
+      "id": "d2539f3b-793d-4239-aef5-4a38aa78afd7",
+      "name": "Edit Fields9"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ea682e27-2cb0-42a3-adcc-dd11b2c86047",
+              "leftValue": "={{ $('Edit Fields9').item.json.isLast }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        208
+      ],
+      "id": "c6718452-080b-4abb-874c-1c88dba9dabe",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.stage }}",
+                    "rightValue": "dia1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "f07f915e-587a-481c-949c-50de32a7eec7"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "dia1"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d813f977-32e4-453b-a6b7-389e11ee8a0c",
+                    "leftValue": "={{ $json.stage }}",
+                    "rightValue": "dia2",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "dia2"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "0dc5eecd-d1ae-4536-b15a-a469614d41ba",
+                    "leftValue": "={{ $json.stage }}",
+                    "rightValue": "dia3",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "dia3"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        656,
+        176
+      ],
+      "id": "0e0c4bfd-5b5d-46af-abe5-e46235528407",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        656,
+        336
+      ],
+      "id": "07a9d38f-a24b-46ad-8759-eb79bfc55b41",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.pipedriveId }}",
+        "updateFields": {
+          "stage_id": 89
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        864,
+        192
+      ],
+      "id": "ad2fa51f-02fd-47d4-b3de-b9914dcf18b6",
+      "name": "Update a deal2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.pipedriveId }}",
+        "updateFields": {
+          "stage_id": 90
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        864,
+        320
+      ],
+      "id": "2a393211-d0c0-4a2f-886e-c23de396d8dd",
+      "name": "Update a deal3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.pipedriveId }}",
+        "updateFields": {
+          "stage_id": 87
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        64,
+        352
+      ],
+      "id": "d3e1b00a-1764-4960-9ba8-32d9506a70fc",
+      "name": "Update a deal4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "2069b4cf-92b3-4e3d-ac8a-4ae58ea79e9f",
+                    "leftValue": "={{ $json.body.event }}",
+                    "rightValue": "followup.scheduled",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "followup.scheduled"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.event }}",
+                    "rightValue": "lead.cycle_restarted",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "a9aa19aa-92e5-4f88-ba5c-6b7cf2e9376a"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "lead.cycle_restarted"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -320,
+        272
+      ],
+      "id": "60c7e4d8-8e20-4da8-990f-e95fa16a3eea",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=Follow-up {{ $('Edit Fields9').item.json.stage }} enviado!<br>\n<br>\n{{ $('Edit Fields9').item.json.message }}",
+        "additionalFields": {
+          "deal_id": 2849
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        240,
+        208
+      ],
+      "id": "c41d8247-647f-4022-86c0-294bfbb79f34",
+      "name": "Create a note",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "teste",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -512,
+        528
+      ],
+      "id": "146588d5-15be-4b20-99bb-830d79cf3dac",
+      "name": "Webhook",
+      "webhookId": "2291b9fa-8511-476d-b01d-89c968f01c6e"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d06e77e9-fda1-465b-b0bc-84fdad8a9b84",
+              "name": "Name",
+              "value": "={{ $('Webhook').item.json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "a30c8ba5-c35d-4369-93a8-d639755954f1",
+              "name": "telefone",
+              "value": "={{ $json.body.data.key.remoteJid.split('@')[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -320,
+        528
+      ],
+      "id": "a8191d4b-7aad-4346-b6e1-1cb9527751a8",
+      "name": "Edit Fields10"
+    },
+    {
+      "parameters": {
+        "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/phone/{{ $json.telefone }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -112,
+        528
+      ],
+      "id": "5883d326-dfae-4215-b076-bce7b0fc082e",
+      "name": "HTTP Request2",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "SOGUBKAG8W4TpmRP",
+          "name": "PainelFollowup"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.data.pipedriveId }}",
+        "updateFields": {
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        64,
+        512
+      ],
+      "id": "2ff29a6c-9435-4157-89cb-ac76b64a0691",
+      "name": "Update a deal5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/{{ $('HTTP Request2').item.json.data.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        240,
+        512
+      ],
+      "id": "cf3a7d90-e723-4ab6-b0c7-a14b598871fe",
+      "name": "HTTP Request3",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "SOGUBKAG8W4TpmRP",
+          "name": "PainelFollowup"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Update a deal4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto": {
+      "main": [
+        [
+          {
+            "node": "Create a note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pipedrive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a deal": {
+      "main": [
+        [
+          {
+            "node": "Get a person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a person": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Update a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook2": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields9": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Update a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update a deal2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update a deal3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields10": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Update a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a deal5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": {
+    "node:Pipedrive Trigger": {}
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Pipedrive Trigger": [
+      {
+        "json": {
+          "data": {
+            "active_flag": true,
+            "add_time": "2026-06-18T12:07:01Z",
+            "busy_flag": false,
+            "custom_fields": {},
+            "deal_id": 2849,
+            "done": true,
+            "due_date": "2026-06-18",
+            "due_time": null,
+            "duration": null,
+            "id": 16626,
+            "type": "enviar_whatsapp",
+            "lead_id": null,
+            "location": null,
+            "org_id": 1218,
+            "owner_id": 24207317,
+            "person_id": 777,
+            "public_description": null,
+            "subject": "Follow-up Whatsapp",
+            "update_time": "2026-06-18T12:07:18Z",
+            "update_user_id": null
+          },
+          "previous": {
+            "busy_flag": false,
+            "done": false,
+            "update_time": "2026-06-18T12:07:01Z"
+          },
+          "meta": {
+            "action": "change",
+            "company_id": "14556440",
+            "correlation_id": "79114c6a-a1dd-4bc8-b152-6bec2f0fd9db",
+            "entity_id": "16626",
+            "entity": "activity",
+            "id": "d239796e-aef6-4f64-a1b0-e7cec19ce724",
+            "is_bulk_edit": false,
+            "timestamp": "2026-06-18T12:07:18.326Z",
+            "type": "general",
+            "user_id": "24207317",
+            "version": "2.0",
+            "webhook_id": "1878447",
+            "webhook_owner_id": "24207328",
+            "change_source": "app",
+            "permitted_user_ids": [
+              "24207317",
+              "24207328"
+            ],
+            "attempt": 1,
+            "host": "medicalspin.pipedrive.com"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "HTTP Request": [
+      {
+        "json": {
+          "data": [
+            {
+              "id": "cmq6pr9e0000001lkc13w6a3e",
+              "name": "Ressonância Magnética",
+              "color": "bg-blue-500",
+              "active": true,
+              "createdAt": "2026-06-09T14:06:50.184Z",
+              "updatedAt": "2026-06-09T14:06:50.184Z",
+              "_count": {
+                "messages": 4,
+                "leads": 3
+              }
+            },
+            {
+              "id": "cmq6priqa000101lkj9svghu4",
+              "name": "Bobinas de Exames",
+              "color": "bg-blue-500",
+              "active": true,
+              "createdAt": "2026-06-09T14:07:02.290Z",
+              "updatedAt": "2026-06-09T14:07:02.290Z",
+              "_count": {
+                "messages": 0,
+                "leads": 0
+              }
+            },
+            {
+              "id": "cmq6prnj6000201lkkcyok5yk",
+              "name": "Ultrassom",
+              "color": "bg-blue-500",
+              "active": true,
+              "createdAt": "2026-06-09T14:07:08.514Z",
+              "updatedAt": "2026-06-09T14:07:08.514Z",
+              "_count": {
+                "messages": 0,
+                "leads": 0
+              }
+            },
+            {
+              "id": "cmq6prwvd000301lkh6a56ihf",
+              "name": "Aluguel/locação",
+              "color": "bg-blue-500",
+              "active": true,
+              "createdAt": "2026-06-09T14:07:20.617Z",
+              "updatedAt": "2026-06-09T14:07:20.617Z",
+              "_count": {
+                "messages": 0,
+                "leads": 0
+              }
+            },
+            {
+              "id": "cmqjhyfj1000001s9ave0qogd",
+              "name": "Manutenção",
+              "color": "bg-red-500",
+              "active": true,
+              "createdAt": "2026-06-18T12:49:28.093Z",
+              "updatedAt": "2026-06-18T12:49:28.093Z",
+              "_count": {
+                "messages": 0,
+                "leads": 0
+              }
+            },
+            {
+              "id": "cmqjhynw2000101s9uij7qykx",
+              "name": "Tomografia",
+              "color": "bg-blue-500",
+              "active": true,
+              "createdAt": "2026-06-18T12:49:38.930Z",
+              "updatedAt": "2026-06-18T12:49:38.930Z",
+              "_count": {
+                "messages": 0,
+                "leads": 0
+              }
+            }
+          ]
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Edit Fields1": [
+      {
+        "json": {
+          "deal_id": 2849,
+          "done": true,
+          "type": "enviar_whatsapp",
+          "data": {
+            "due_date": "2026-06-18T12:07:18Z"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Webhook2": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "node",
+            "content-length": "420",
+            "accept": "*/*",
+            "accept-encoding": "br, gzip, deflate",
+            "accept-language": "*",
+            "content-type": "application/json",
+            "sec-fetch-mode": "cors",
+            "x-forwarded-for": "45.233.99.6",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "45.233.99.6"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "followup.scheduled",
+            "timestamp": "2026-06-18T14:45:40.150Z",
+            "lead": {
+              "id": "cmqjm3tr80001eotp3m10usgt",
+              "pipedriveId": "4555",
+              "name": "eyrtue",
+              "email": "",
+              "phone": "6466363",
+              "stage": "dia1"
+            },
+            "category": {
+              "id": "cmq6pr9e0000001lkc13w6a3e",
+              "name": "Ressonância Magnética"
+            },
+            "message": {
+              "id": "cmqjm3iyk0000eotpzozfb9a2",
+              "order": 6,
+              "dayOffset": 0,
+              "time": "09:00",
+              "content": "teste"
+            },
+            "followup": {
+              "index": 1,
+              "total": 1,
+              "isLast": true
+            }
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/5e1f6539-d968-4e03-9f69-dc16f6bff64d",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "axios/1.13.2",
+            "content-length": "790",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "10.0.1.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "teste",
+            "data": {
+              "key": {
+                "remoteJid": "557991054765@s.whatsapp.net",
+                "remoteJidAlt": "557991054765@s.whatsapp.net",
+                "fromMe": true,
+                "id": "AC39687FCF3AB6B7E159554C912C2597",
+                "participant": "",
+                "addressingMode": "lid"
+              },
+              "pushName": "Wendel Lucas",
+              "status": "SERVER_ACK",
+              "message": {
+                "conversation": "Boa tarde, em que serviço você tem interesse?"
+              },
+              "messageType": "conversation",
+              "messageTimestamp": 1781800577,
+              "instanceId": "5d3470be-0678-4908-a873-45413232d44f",
+              "source": "android"
+            },
+            "destination": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/teste",
+            "date_time": "2026-06-18T13:36:18.024Z",
+            "sender": "557999801810@s.whatsapp.net",
+            "server_url": "http://evo-j0o08ok8sgwc4cog04w0owok.95.217.164.173.sslip.io",
+            "apikey": "47C540EF977F-48E1-A7BC-8F23DB0E9F71"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/teste",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "2cf0c82e-4c72-421e-baf2-3c533a554b9b",
+  "activeVersionId": "2cf0c82e-4c72-421e-baf2-3c533a554b9b",
+  "triggerCount": 2,
+  "shared": [
+    {
+      "updatedAt": "2026-05-28T18:07:43.032Z",
+      "createdAt": "2026-05-28T18:07:43.032Z",
+      "role": "workflow:owner",
+      "workflowId": "NDAankLZuEboDIdA",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-06-18T18:03:25.229Z",
+    "createdAt": "2026-06-18T18:02:54.154Z",
+    "versionId": "2cf0c82e-4c72-421e-baf2-3c533a554b9b",
+    "workflowId": "NDAankLZuEboDIdA",
+    "nodes": [
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "MedicalSpin",
+          "remoteJid": "={{\n(() => {\n  let phone = ($json.phone || \"\").replace(/\\D/g, \"\"); // Remove tudo que não é número\n\n  // Se não começar com o código do Brasil (55), adiciona\n  if (!phone.startsWith(\"55\")) {\n    phone = \"55\" + phone;\n  }\n\n  return phone;\n})()\n}}",
+          "messageText": "={{ $json.message }}",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          64,
+          208
+        ],
+        "id": "0ed5f908-a948-484d-918e-e0d82278c609",
+        "name": "Enviar texto",
+        "credentials": {
+          "evolutionApi": {
+            "id": "79qcaif6AQLNsa1x",
+            "name": "Evolution account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "430cd40e-022f-47a1-b299-842c87c55847",
+                "name": "id",
+                "value": "={{ $json.body.lead.id }}",
+                "type": "string"
+              },
+              {
+                "id": "81a930dd-0cad-46d0-b6c9-ef83f2e50501",
+                "name": "pipedriveId",
+                "value": "={{ $json.body.lead.pipedriveId }}",
+                "type": "string"
+              },
+              {
+                "id": "0bf5c23b-7820-40a2-9499-68656277ac4a",
+                "name": "name",
+                "value": "={{ $json.body.lead.name }}",
+                "type": "string"
+              },
+              {
+                "id": "e5976499-fab9-4218-9f11-fe0a41392adc",
+                "name": "email",
+                "value": "={{ $json.body.lead.email }}",
+                "type": "string"
+              },
+              {
+                "id": "760baaea-42de-4049-ab4c-fb9f510ec532",
+                "name": "phone",
+                "value": "={{ $json.body.lead.phone }}",
+                "type": "string"
+              },
+              {
+                "id": "2ec8c538-417a-4001-abc2-722a6ccf92d2",
+                "name": "stage",
+                "value": "={{ $json.body.lead.stage }}",
+                "type": "string"
+              },
+              {
+                "id": "c7d1b9ff-1dac-40b1-af0d-5db65ed894d3",
+                "name": "category",
+                "value": "={{ $json.body.category.name }}",
+                "type": "string"
+              },
+              {
+                "id": "5ab4ed64-ce01-4278-987f-81c7264a9383",
+                "name": "to",
+                "value": "={{ $json.body.transition.from }}-{{ $json.body.transition.to }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -112,
+          352
+        ],
+        "id": "f9e79426-5f78-4cef-912b-77acc22f1eb2",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "action": "change",
+          "entity": "activity"
+        },
+        "type": "n8n-nodes-base.pipedriveTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -512,
+          -432
+        ],
+        "id": "44df6e4c-f4ec-4062-abff-563a3e6ecd86",
+        "name": "Pipedrive Trigger",
+        "webhookId": "ca565844-9d51-486e-9e63-c061b2e81dbe",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "548fade4-56f1-4962-b256-9f5ebc272b96",
+                "leftValue": "={{ $json.done }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "4da0c55e-e4d1-4fef-9e6a-c16f74875723",
+                "leftValue": "={{ $json.type }}",
+                "rightValue": "=enviar_whatsapp",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "looseTypeValidation": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -112,
+          -432
+        ],
+        "id": "41968711-46e3-4d15-a593-6a4d87cc5cfa",
+        "name": "If"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          48,
+          -320
+        ],
+        "id": "96754373-1bdc-4095-85d3-0c5c1d3c2cd3",
+        "name": "No Operation, do nothing"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "20e3021e-7820-4de5-9aa6-c401b0bc3563",
+                "name": "deal_id",
+                "value": "={{ $json.data.deal_id }}",
+                "type": "number"
+              },
+              {
+                "id": "4f362708-164e-456c-b92f-f08eefaf0dcb",
+                "name": "done",
+                "value": "={{ $json.data.done }}",
+                "type": "boolean"
+              },
+              {
+                "id": "8541c2c0-a995-42fa-b6b4-90b37861c0d2",
+                "name": "type",
+                "value": "={{ $json.data.type }}",
+                "type": "string"
+              },
+              {
+                "id": "29ca73ab-7b2d-4b8e-ae73-b5c6245fa730",
+                "name": "data.due_date",
+                "value": "={{ $json.data.update_time }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -320,
+          -432
+        ],
+        "id": "922b19b2-d5c9-4a28-8adc-a8b4b9f47708",
+        "name": "Edit Fields1"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dealId": "={{ $json.deal_id }}"
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          48,
+          -448
+        ],
+        "id": "645e32de-fc6e-4a05-a67a-caca6c3d849b",
+        "name": "Get a deal",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "78327663-c58d-4ee9-858f-8c01ff8e1d9c",
+                "name": "title",
+                "value": "={{ $('Get a deal').item.json.title }}",
+                "type": "string"
+              },
+              {
+                "id": "a59cdbca-9b56-4d76-bb2e-c670fd201d0f",
+                "name": "idDeal",
+                "value": "={{ $('Get a deal').item.json.id }}",
+                "type": "number"
+              },
+              {
+                "id": "e7f15958-9e9d-48ba-9718-d62d2bbcdc43",
+                "name": "idPerson",
+                "value": "={{ $json.id }}",
+                "type": "number"
+              },
+              {
+                "id": "e49975b1-2ba8-437a-8dcc-c5daadd77a7d",
+                "name": "org_id",
+                "value": "={{ $json.org_id }}",
+                "type": "number"
+              },
+              {
+                "id": "f418c370-28ae-4122-9c7e-d3cc1328e94d",
+                "name": "phone",
+                "value": "={{ $json.phones[0].value }}",
+                "type": "string"
+              },
+              {
+                "id": "0f243268-c6f9-4101-801e-29cd80e63305",
+                "name": "Categoria",
+                "value": "={{ $('Get a deal').item.json.custom_fields.Categoria }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          448,
+          -448
+        ],
+        "id": "2a029d4e-5e9b-4d81-a627-50680d9d332d",
+        "name": "Edit Fields2"
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "operation": "get",
+          "personId": "={{ $json.person_id }}"
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          240,
+          -448
+        ],
+        "id": "2df07ac5-da17-481e-aa95-242195c93608",
+        "name": "Get a person",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "https://msp.painelfollowups.95.217.164.173.sslip.io/api/categories",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBearerAuth",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          -640,
+          400
+        ],
+        "id": "eee36b4f-a503-4187-a54e-9c1de97315b5",
+        "name": "HTTP Request",
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "SOGUBKAG8W4TpmRP",
+            "name": "PainelFollowup"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.Categoria }}",
+                      "rightValue": "Ressonância magnética",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "dcc25c7f-a499-49c4-886d-f5f151bf50f5"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Ressonância magnética"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "fcd55d4d-8fe4-46ab-838c-a4c4dfef0162",
+                      "leftValue": "={{ $json.Categoria }}",
+                      "rightValue": "Bobinas de Exames",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Bobinas de Exames"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "a5880d87-b5e8-4e6d-9013-57b9c17389a9",
+                      "leftValue": "={{ $json.Categoria }}",
+                      "rightValue": "Manutenção",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Manutenção"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "cf526db3-872d-422d-8594-562011b285b9",
+                      "leftValue": "={{ $json.Categoria }}",
+                      "rightValue": "Ultrassom",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Ultrassom"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "feb70bf2-cd7e-4b18-84be-60e2738dbb73",
+                      "leftValue": "={{ $json.Categoria }}",
+                      "rightValue": "Aluguel/Locação",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Aluguel/locação"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "83b3934e-0b5f-42e7-87c2-3cadedc6cd09",
+                      "leftValue": "={{ $json.Categoria }}",
+                      "rightValue": "Tomografia",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Tomografia"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          640,
+          -512
+        ],
+        "id": "c00b6580-0868-4858-bc74-ef42be3915a1",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+                "name": "categoryId",
+                "value": "=cmq6pr9e0000001lkc13w6a3e",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          864,
+          -768
+        ],
+        "id": "efddceeb-1ac2-4a60-9932-26cff80b59e6",
+        "name": "Edit Fields3"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBearerAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"name\": \"{{ $('Switch').item.json.title }}\",\n  \"phone\": \"{{ $('Switch').item.json.phone }}\",\n  \"categoryId\": \"{{ $json.categoryId }}\",\n  \"pipedriveId\": \"{{ $('Switch').item.json.idDeal }}\",\n  \"stage\": \"dia1\",\n  \"notes\": \"https://medicalspin.pipedrive.com/deal/{{ $('Switch').item.json.idDeal }}\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          1568,
+          -448
+        ],
+        "id": "41273e83-ae74-4d24-9dbb-30f99571de42",
+        "name": "HTTP Request1",
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "SOGUBKAG8W4TpmRP",
+            "name": "PainelFollowup"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+                "name": "categoryId",
+                "value": "=cmq6prwvd000301lkh6a56ihf",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          864,
+          -256
+        ],
+        "id": "a413b2e2-105f-4849-bf01-5563644e7f31",
+        "name": "Edit Fields4"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+                "name": "categoryId",
+                "value": "=cmq6prnj6000201lkkcyok5yk",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          864,
+          -384
+        ],
+        "id": "8c9f8d10-396e-41a4-90a3-112ceb444a13",
+        "name": "Edit Fields5"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+                "name": "categoryId",
+                "value": "=cmq6priqa000101lkj9svghu4",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          864,
+          -640
+        ],
+        "id": "830d9b66-6944-4b0c-bc22-7ee3128de4ba",
+        "name": "Edit Fields6"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+                "name": "categoryId",
+                "value": "=cmqjhyfj1000001s9ave0qogd",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          864,
+          -512
+        ],
+        "id": "2734d556-0375-4676-a5f7-f4f3874c771a",
+        "name": "Edit Fields7"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "8d41265e-2d78-4d6b-b54c-9df2e1154298",
+                "name": "categoryId",
+                "value": "=cmqjhynw2000101s9uij7qykx",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          864,
+          -128
+        ],
+        "id": "637ecee0-bcb5-4232-a529-000f55d223ee",
+        "name": "Edit Fields8"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dealId": "={{ $json.data.pipedriveId }}",
+          "updateFields": {
+            "stage_id": 87
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          1776,
+          -448
+        ],
+        "id": "c290c46e-753f-48c6-b040-f0a267d2e1fd",
+        "name": "Update a deal",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dealId": "={{ $json.pipedriveId }}",
+          "updateFields": {
+            "stage_id": 88
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          864,
+          64
+        ],
+        "id": "bad1ddd2-72d3-4e8a-8f69-270cbd26ea71",
+        "name": "Update a deal1",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "5e1f6539-d968-4e03-9f69-dc16f6bff64d",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -512,
+          272
+        ],
+        "id": "ff571a64-74c3-41d4-9e0c-9b45ab047778",
+        "name": "Webhook2",
+        "webhookId": "5e1f6539-d968-4e03-9f69-dc16f6bff64d"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "430cd40e-022f-47a1-b299-842c87c55847",
+                "name": "id",
+                "value": "={{ $json.body.lead.id }}",
+                "type": "string"
+              },
+              {
+                "id": "81a930dd-0cad-46d0-b6c9-ef83f2e50501",
+                "name": "pipedriveId",
+                "value": "={{ $json.body.lead.pipedriveId }}",
+                "type": "string"
+              },
+              {
+                "id": "0bf5c23b-7820-40a2-9499-68656277ac4a",
+                "name": "name",
+                "value": "={{ $json.body.lead.name }}",
+                "type": "string"
+              },
+              {
+                "id": "e5976499-fab9-4218-9f11-fe0a41392adc",
+                "name": "email",
+                "value": "={{ $json.body.lead.email }}",
+                "type": "string"
+              },
+              {
+                "id": "760baaea-42de-4049-ab4c-fb9f510ec532",
+                "name": "phone",
+                "value": "={{ $json.body.lead.phone }}",
+                "type": "string"
+              },
+              {
+                "id": "2ec8c538-417a-4001-abc2-722a6ccf92d2",
+                "name": "stage",
+                "value": "={{ $json.body.lead.stage }}",
+                "type": "string"
+              },
+              {
+                "id": "c7d1b9ff-1dac-40b1-af0d-5db65ed894d3",
+                "name": "category",
+                "value": "={{ $json.body.category.name }}",
+                "type": "string"
+              },
+              {
+                "id": "a8045fba-a8f5-4fc2-a0fb-74cbc17c5bf1",
+                "name": "message",
+                "value": "={{ $json.body.message.content }}",
+                "type": "string"
+              },
+              {
+                "id": "03868ee8-44d5-43c6-86fc-ef5157a28679",
+                "name": "isLast",
+                "value": "={{ $json.body.followup.isLast }}",
+                "type": "boolean"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -112,
+          208
+        ],
+        "id": "d2539f3b-793d-4239-aef5-4a38aa78afd7",
+        "name": "Edit Fields9"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "ea682e27-2cb0-42a3-adcc-dd11b2c86047",
+                "leftValue": "={{ $('Edit Fields9').item.json.isLast }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          448,
+          208
+        ],
+        "id": "c6718452-080b-4abb-874c-1c88dba9dabe",
+        "name": "If1"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.stage }}",
+                      "rightValue": "dia1",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "f07f915e-587a-481c-949c-50de32a7eec7"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "dia1"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "d813f977-32e4-453b-a6b7-389e11ee8a0c",
+                      "leftValue": "={{ $json.stage }}",
+                      "rightValue": "dia2",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "dia2"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "0dc5eecd-d1ae-4536-b15a-a469614d41ba",
+                      "leftValue": "={{ $json.stage }}",
+                      "rightValue": "dia3",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "dia3"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          656,
+          176
+        ],
+        "id": "0e0c4bfd-5b5d-46af-abe5-e46235528407",
+        "name": "Switch1"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          656,
+          336
+        ],
+        "id": "07a9d38f-a24b-46ad-8759-eb79bfc55b41",
+        "name": "No Operation, do nothing1"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dealId": "={{ $json.pipedriveId }}",
+          "updateFields": {
+            "stage_id": 89
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          864,
+          192
+        ],
+        "id": "ad2fa51f-02fd-47d4-b3de-b9914dcf18b6",
+        "name": "Update a deal2",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dealId": "={{ $json.pipedriveId }}",
+          "updateFields": {
+            "stage_id": 90
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          864,
+          320
+        ],
+        "id": "2a393211-d0c0-4a2f-886e-c23de396d8dd",
+        "name": "Update a deal3",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dealId": "={{ $json.pipedriveId }}",
+          "updateFields": {
+            "stage_id": 87
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          64,
+          352
+        ],
+        "id": "d3e1b00a-1764-4960-9ba8-32d9506a70fc",
+        "name": "Update a deal4",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "2069b4cf-92b3-4e3d-ac8a-4ae58ea79e9f",
+                      "leftValue": "={{ $json.body.event }}",
+                      "rightValue": "followup.scheduled",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "followup.scheduled"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.body.event }}",
+                      "rightValue": "lead.cycle_restarted",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "a9aa19aa-92e5-4f88-ba5c-6b7cf2e9376a"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "lead.cycle_restarted"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          -320,
+          272
+        ],
+        "id": "60c7e4d8-8e20-4da8-990f-e95fa16a3eea",
+        "name": "Switch2"
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=Follow-up {{ $('Edit Fields9').item.json.stage }} enviado!<br>\n<br>\n{{ $('Edit Fields9').item.json.message }}",
+          "additionalFields": {
+            "deal_id": 2849
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          240,
+          208
+        ],
+        "id": "c41d8247-647f-4022-86c0-294bfbb79f34",
+        "name": "Create a note",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "teste",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -512,
+          528
+        ],
+        "id": "146588d5-15be-4b20-99bb-830d79cf3dac",
+        "name": "Webhook",
+        "webhookId": "2291b9fa-8511-476d-b01d-89c968f01c6e"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d06e77e9-fda1-465b-b0bc-84fdad8a9b84",
+                "name": "Name",
+                "value": "={{ $('Webhook').item.json.body.data.pushName }}",
+                "type": "string"
+              },
+              {
+                "id": "a30c8ba5-c35d-4369-93a8-d639755954f1",
+                "name": "telefone",
+                "value": "={{ $json.body.data.key.remoteJid.split('@')[0] }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -320,
+          528
+        ],
+        "id": "a8191d4b-7aad-4346-b6e1-1cb9527751a8",
+        "name": "Edit Fields10"
+      },
+      {
+        "parameters": {
+          "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/phone/{{ $json.telefone }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBearerAuth",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          -112,
+          528
+        ],
+        "id": "5883d326-dfae-4215-b076-bce7b0fc082e",
+        "name": "HTTP Request2",
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "SOGUBKAG8W4TpmRP",
+            "name": "PainelFollowup"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dealId": "={{ $json.data.pipedriveId }}",
+          "updateFields": {
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          64,
+          512
+        ],
+        "id": "2ff29a6c-9435-4157-89cb-ac76b64a0691",
+        "name": "Update a deal5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "DELETE",
+          "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/{{ $('HTTP Request2').item.json.data.id }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBearerAuth",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          240,
+          512
+        ],
+        "id": "cf3a7d90-e723-4ab6-b0c7-a14b598871fe",
+        "name": "HTTP Request3",
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "SOGUBKAG8W4TpmRP",
+            "name": "PainelFollowup"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Update a deal4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Enviar texto": {
+        "main": [
+          [
+            {
+              "node": "Create a note",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Get a deal",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pipedrive Trigger": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get a deal": {
+        "main": [
+          [
+            {
+              "node": "Get a person",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields2": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get a person": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields3",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Edit Fields6",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Edit Fields7",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Edit Fields5",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Edit Fields4",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Edit Fields8",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields3": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          []
+        ]
+      },
+      "Edit Fields6": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields7": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields5": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields4": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields8": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request1": {
+        "main": [
+          [
+            {
+              "node": "Update a deal",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook2": {
+        "main": [
+          [
+            {
+              "node": "Switch2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields9": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Switch1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch1": {
+        "main": [
+          [
+            {
+              "node": "Update a deal1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Update a deal2",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Update a deal3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch2": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields9",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields10",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields10": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request2": {
+        "main": [
+          [
+            {
+              "node": "Update a deal5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update a deal5": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Automações  Medical Spin",
+    "name": "Version 2cf0c82e",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": [
+    {
+      "updatedAt": "2025-11-17T14:32:35.191Z",
+      "createdAt": "2025-11-17T14:32:35.191Z",
+      "id": "Llfmd66GWbMUHQMr",
+      "name": "Http"
+    },
+    {
+      "updatedAt": "2025-11-17T14:34:30.644Z",
+      "createdAt": "2025-11-17T14:34:30.644Z",
+      "id": "ro1Seq0NGEH7zm0y",
+      "name": "Pipedrive"
+    },
+    {
+      "updatedAt": "2025-11-17T14:00:11.395Z",
+      "createdAt": "2025-11-17T14:00:11.395Z",
+      "id": "BiXlsIc9sGawCxiS",
+      "name": "EvolutionAPI"
+    }
+  ]
+}
