@@ -1,0 +1,839 @@
+{
+  "updatedAt": "2026-06-18T18:01:32.610Z",
+  "createdAt": "2026-05-22T11:32:27.735Z",
+  "id": "fZ7zkyJHsQWCjMFX",
+  "name": "QUALIFICAÇÃO DE LEADS",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "teste",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1264,
+        304
+      ],
+      "id": "11967a0d-2cb3-409c-bfb2-c431d32057cd",
+      "name": "Webhook",
+      "webhookId": "2291b9fa-8511-476d-b01d-89c968f01c6e",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "95bc6c3a-267d-4984-85a0-cd4e3a7fb318",
+              "name": "lastMessageId",
+              "value": "={{ $json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "87a44bcb-9316-4464-ba46-59571c9de5df",
+              "name": "telefone",
+              "value": "={{ $json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "e800e1f6-027d-4659-aa92-8eee7ae5304c",
+              "name": "lastMessage",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "c93cc3e3-7c7f-4ec6-bb2e-533da50a7919",
+              "name": "date_time",
+              "value": "={{ $json.body.date_time.slice(0, 10) + ' ' + $json.body.date_time.slice(11, 16) }}",
+              "type": "string"
+            },
+            {
+              "id": "b020eae4-9bfc-4f69-9a61-5409cf9cd4fa",
+              "name": "lastInteraction",
+              "value": "={{ $json.body.data.messageTimestamp }}",
+              "type": "number"
+            },
+            {
+              "id": "4f2204eb-8cb3-4bce-9261-293544523c74",
+              "name": "fromMe",
+              "value": "={{ $json.body.data.key.fromMe }}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        -32
+      ],
+      "id": "0699cd0a-f406-46d8-a1aa-628ec1372114",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "={{ $json.telefone }}",
+        "messageData": "={{ $json.fromMe === true ? 'Medical Spin' : 'Lead' }}-{{ $json.lastMessage }}-{{ $json.date_time }}",
+        "tail": true
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        208,
+        -32
+      ],
+      "id": "1c6b941c-a1e4-44cd-9773-48a50c8f1ecd",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        -32
+      ],
+      "id": "561cf2a4-030c-43d0-88ef-096040d095c1",
+      "name": "Wait",
+      "webhookId": "8fd98cf8-ec93-4322-ae89-1ac13fc18732"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "mensagens",
+        "key": "={{ $json.telefone }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        624,
+        -32
+      ],
+      "id": "2752ff54-157a-459e-bc2c-555b0493b902",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d5288294-e630-423e-9428-5a7be81ec9d9",
+              "leftValue": "={{ $('Wait1').item.json.mensagens.last(' ') }}",
+              "rightValue": "=Medical Spin-",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1248,
+        -48
+      ],
+      "id": "f238d8c5-9453-4311-bc05-41970afed655",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d06e77e9-fda1-465b-b0bc-84fdad8a9b84",
+              "name": "Name",
+              "value": "={{ $('Webhook').item.json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "a30c8ba5-c35d-4369-93a8-d639755954f1",
+              "name": "telefone",
+              "value": "={{ $('Redis').item.json.telefone.split('@')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "962cd150-4d5f-4e23-b66c-47b2ece94b38",
+              "name": "mensagens",
+              "value": "={{ $('Wait1').item.json.mensagens.join('\\n') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1456,
+        -64
+      ],
+      "id": "5582ab3c-d9e2-4d81-8468-88138b168418",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const mensagens = $json.mensagens;\n\n// filtra apenas mensagens do Lead\nconst mensagensLead = mensagens.filter(m => m.startsWith('Lead-'));\n\n// pega a última mensagem do Lead\nconst ultimaMensagem = mensagensLead[mensagensLead.length - 1];\n\n// extrai horário (último bloco após \"-\")\nconst partes = ultimaMensagem.split('-');\nconst horario = partes[partes.length - 1];\n\nconst [hora, minuto] = horario.split(':').map(Number);\n\n// hora atual Brasil\nconst agora = new Date();\n\nconst horaAtual = Number(\n  agora.toLocaleString('en-US', {\n    timeZone: 'America/Sao_Paulo',\n    hour: '2-digit',\n    hour12: false\n  })\n);\n\nconst minutoAtual = Number(\n  agora.toLocaleString('en-US', {\n    timeZone: 'America/Sao_Paulo',\n    minute: '2-digit'\n  })\n);\n\n// conversão em minutos\nconst minutosMensagem = hora * 60 + minuto;\nconst minutosAtual = horaAtual * 60 + minutoAtual;\n\n// diferença\nconst diferenca = minutosAtual - minutosMensagem;\n\nreturn [\n  {\n    json: {\n      ultimaMensagem,\n      horarioMensagem: horario,\n      diferencaMinutos: diferenca,\n      passou3Min: diferenca >= 3\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1024,
+        -32
+      ],
+      "id": "998ef2a8-d395-4271-a64f-4cd644e6d142",
+      "name": "Code in JavaScript",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.data.pipedriveId }}",
+        "updateFields": {
+          "stage_id": 87
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        1824,
+        -176
+      ],
+      "id": "82974807-a966-4ec7-aba7-45a19539d56a",
+      "name": "Update a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('Edit Fields1').item.json.Name }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1824,
+        -48
+      ],
+      "id": "75fb2396-d48f-4812-b42c-0eecaf019f50",
+      "name": "Cria a Organização",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Code in JavaScript').item?.json?.name ?? $json.name }}",
+        "additionalFields": {
+          "email": [],
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Edit Fields1').item.json.telefone }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        -48
+      ],
+      "id": "513ec65c-5aa6-4a07-90e3-30a1e0bf7aae",
+      "name": "Cria o Contato",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {
+          "organization_id": "={{ $json.org_id.value }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        2176,
+        -48
+      ],
+      "id": "b8c5db36-518e-4650-b650-61e75e039e52",
+      "name": "Cria o Lead",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $('Cria o Lead').item.json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Cria o Contato').item.json.id }}",
+        "additionalFields": {
+          "org_id": "={{ $('Cria a Organização').item.json.id }}",
+          "stage_id": 87
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        2352,
+        -48
+      ],
+      "id": "9540a35d-09c3-4e40-a221-6635a35c93ba",
+      "name": "Cria o Negócio",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=HISTÓRICO DE MENSAGENS COM O LEAD ANTES DO FUNIL FOLLOW-UP\n\nNome: {{ $('Edit Fields1').item.json.Name }}\nTelefone: {{ $('Edit Fields1').item.json.telefone }}\n\nMensagens:\n{{ $('Edit Fields1').item.json.mensagens }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "lead_id": "={{ $('Cria o Lead').item.json.id }}",
+          "person_id": "={{ $('Cria o Contato').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        2528,
+        -48
+      ],
+      "id": "430071b6-4380-4c70-8b87-057204cadadd",
+      "name": "Cria uma Nota",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $('Edit Fields').item.json.telefone }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        2704,
+        -48
+      ],
+      "id": "8248cbf1-c930-4454-9cbc-eca19ae4e2b9",
+      "name": "Redis4",
+      "credentials": {
+        "redis": {
+          "id": "zxoKZ2hHG1VotLrg",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        80
+      ],
+      "id": "33df8e0d-fa5f-40e9-8a6e-edd0f6268f3a",
+      "name": "No Operation, do nothing2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d06e77e9-fda1-465b-b0bc-84fdad8a9b84",
+              "name": "Name",
+              "value": "={{ $('Webhook').item.json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "a30c8ba5-c35d-4369-93a8-d639755954f1",
+              "name": "telefone",
+              "value": "={{ $json.body.data.key.remoteJid.split('@')[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        304
+      ],
+      "id": "92b7edf9-a470-4bfe-b432-7a26010b7a20",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        816,
+        -32
+      ],
+      "id": "8777b2d9-df61-48c3-8932-d8cf3d6e8655",
+      "name": "Wait1",
+      "webhookId": "4df6cc42-4d7c-414e-b595-81d7da70622f"
+    },
+    {
+      "parameters": {
+        "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/phone/{{ $json.telefone }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1632,
+        304
+      ],
+      "id": "52f6c239-fc64-4459-9807-0f727491a275",
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "SOGUBKAG8W4TpmRP",
+          "name": "PainelFollowup"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.data.pipedriveId }}",
+        "updateFields": {
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        1808,
+        288
+      ],
+      "id": "1e3d042d-c0f1-4cca-ba94-34af760e84f9",
+      "name": "Update a deal1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/{{ $('HTTP Request1').item.json.data.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1984,
+        288
+      ],
+      "id": "3bb2fef9-d45c-4174-8668-2862b08a76cb",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "SOGUBKAG8W4TpmRP",
+          "name": "PainelFollowup"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/phone/{{ $json.telefone }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1648,
+        -64
+      ],
+      "id": "7445f401-932f-45ad-bb20-e02e87f9a855",
+      "name": "HTTP Request2",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "SOGUBKAG8W4TpmRP",
+          "name": "PainelFollowup"
+        }
+      },
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Redis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria a Organização": {
+      "main": [
+        [
+          {
+            "node": "Cria o Contato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria o Contato": {
+      "main": [
+        [
+          {
+            "node": "Cria o Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria o Lead": {
+      "main": [
+        [
+          {
+            "node": "Cria o Negócio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria o Negócio": {
+      "main": [
+        [
+          {
+            "node": "Cria uma Nota",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a deal": {
+      "main": [
+        []
+      ]
+    },
+    "Cria uma Nota": {
+      "main": [
+        [
+          {
+            "node": "Redis4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Update a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a deal1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Update a deal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cria a Organização",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "axios/1.13.2",
+            "content-length": "790",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "10.0.1.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "teste",
+            "data": {
+              "key": {
+                "remoteJid": "557991054765@s.whatsapp.net",
+                "remoteJidAlt": "557991054765@s.whatsapp.net",
+                "fromMe": true,
+                "id": "AC39687FCF3AB6B7E159554C912C2597",
+                "participant": "",
+                "addressingMode": "lid"
+              },
+              "pushName": "Wendel Lucas",
+              "status": "SERVER_ACK",
+              "message": {
+                "conversation": "Boa tarde, em que serviço você tem interesse?"
+              },
+              "messageType": "conversation",
+              "messageTimestamp": 1781800577,
+              "instanceId": "5d3470be-0678-4908-a873-45413232d44f",
+              "source": "android"
+            },
+            "destination": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/teste",
+            "date_time": "2026-06-18T13:36:18.024Z",
+            "sender": "557999801810@s.whatsapp.net",
+            "server_url": "http://evo-j0o08ok8sgwc4cog04w0owok.95.217.164.173.sslip.io",
+            "apikey": "47C540EF977F-48E1-A7BC-8F23DB0E9F71"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/teste",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "versionId": "f315bfc1-6625-467e-9308-9d83d4c2338b",
+  "activeVersionId": null,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-05-22T11:32:27.735Z",
+      "createdAt": "2026-05-22T11:32:27.735Z",
+      "role": "workflow:owner",
+      "workflowId": "fZ7zkyJHsQWCjMFX",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
