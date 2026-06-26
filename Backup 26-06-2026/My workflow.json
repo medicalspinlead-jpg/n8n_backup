@@ -1,0 +1,98 @@
+{
+  "updatedAt": "2026-06-19T20:12:53.005Z",
+  "createdAt": "2026-06-19T18:39:03.457Z",
+  "id": "D83Q4NNKYeCqzMJD",
+  "name": "My workflow",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "0da9b68a-827b-4b1e-8354-bc02a85dcd84",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b1acdd44-8a88-4bcb-982d-e8c5311ee5ea",
+      "name": "Webhook",
+      "webhookId": "0da9b68a-827b-4b1e-8354-bc02a85dcd84"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.voxfree.com.br/crm/webservices/webIniciaOmnichannel.php",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"chave\": \"ahirlllzkrgcsnHM\",\n    \"canal\": 444,\n    \"numero\": \"+5579999801810\",\n    \"mensagem\": \"Teste da Mensagem\",\n    \"mensagem\": \"teste\",\n    \"direcionamento\": \"959\",\n    \"msg_operador\": \"👋 Olá, !\\nSou o *Magnetto*, assistente inteligente da *Medical Spin* 🤖\\n🧠 Um especialista foi avisado e atenderá você em breve!\\n\\n🎯 *Bem-vindo* ao *Programa Medical Spin Certified*.\\nSua *ressonância protegida* pela *Solução 360°* 🛡️\\n\\n💬 Pode nos contar mais sobre o seu projeto?\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        288,
+        -48
+      ],
+      "id": "2a98abef-d192-4892-8c8f-68c431e4ab83",
+      "name": "HTTP Request2"
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "8ad85406-c8f3-4e87-a963-d394d3d34779",
+  "activeVersionId": "2fed273b-ef11-4445-850b-876d85d05a70",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-06-19T18:39:03.457Z",
+      "createdAt": "2026-06-19T18:39:03.457Z",
+      "role": "workflow:owner",
+      "workflowId": "D83Q4NNKYeCqzMJD",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-06-19T18:53:34.888Z",
+    "createdAt": "2026-06-19T18:53:31.317Z",
+    "versionId": "2fed273b-ef11-4445-850b-876d85d05a70",
+    "workflowId": "D83Q4NNKYeCqzMJD",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "0da9b68a-827b-4b1e-8354-bc02a85dcd84",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "b1acdd44-8a88-4bcb-982d-e8c5311ee5ea",
+        "name": "Webhook",
+        "webhookId": "0da9b68a-827b-4b1e-8354-bc02a85dcd84"
+      }
+    ],
+    "connections": {},
+    "nodeGroups": [],
+    "authors": "Automações  Medical Spin",
+    "name": "Version 2fed273b",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
