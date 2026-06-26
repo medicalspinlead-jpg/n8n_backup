@@ -1,0 +1,971 @@
+{
+  "updatedAt": "2026-06-12T18:57:28.277Z",
+  "createdAt": "2026-05-13T10:53:41.441Z",
+  "id": "VJw6Q10zRuggH8GZ",
+  "name": "FOLLOW-UP",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        16
+      ],
+      "id": "8dd13cb9-a556-4da7-bc13-b6de87d0366f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 86
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        16
+      ],
+      "id": "41dd2047-6fe6-494a-82a5-c341c387b5ee",
+      "name": "Get many deals",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.id }}",
+        "updateFields": {
+          "stage_id": 87
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        16
+      ],
+      "id": "e0d4f555-0451-4172-b1ea-fec0be9969e3",
+      "name": "Update a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        304
+      ],
+      "id": "e800cfa2-0686-4281-9d0f-5c4cda00a6fa",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 87
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        304
+      ],
+      "id": "134129f4-5e90-4626-ad53-ba82040eb5c2",
+      "name": "Get many deals1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.id }}",
+        "updateFields": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        304
+      ],
+      "id": "8b8c5ace-6185-4945-b4aa-122ca62a9e53",
+      "name": "Update a deal1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        448
+      ],
+      "id": "3aeedd1a-cd00-4732-a1d2-1393de1e769d",
+      "name": "Schedule Trigger2"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        448
+      ],
+      "id": "2002249b-7f55-4d4f-b6fd-4ef4257bc4b9",
+      "name": "Get many deals2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.id }}",
+        "updateFields": {
+          "stage_id": 89
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        448
+      ],
+      "id": "2411f69b-cdc7-455e-95c7-7fc5db1b953f",
+      "name": "Update a deal2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        592
+      ],
+      "id": "7ddaef23-5ec6-4aef-936d-e6f9df083df7",
+      "name": "Schedule Trigger3"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 89
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        592
+      ],
+      "id": "c61a1a3a-6c65-4af8-a661-215d4eac904c",
+      "name": "Get many deals3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.id }}",
+        "updateFields": {
+          "stage_id": 90
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        592
+      ],
+      "id": "74347d9f-2079-475d-bd47-6f9b33b601cc",
+      "name": "Update a deal3",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const deals = $input.all();\n\n// Horário atual no Brasil (America/Sao_Paulo)\nconst now = new Date();\n\n// 24 horas em milissegundos\nconst HOURS_24 = 24 * 60 * 60 * 1000;\n\nconst filteredDeals = deals.filter(item => {\n  // Data de criação do deal no Pipedrive\n  const addTime = item.json.add_time;\n\n  if (!addTime) return false;\n\n  // Converte para Date\n  const createdAt = new Date(addTime);\n\n  // Diferença em ms\n  const diff = now.getTime() - createdAt.getTime();\n\n  // Mantém apenas deals com mais de 24h\n  return diff > HOURS_24;\n});\n\nreturn filteredDeals;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        16
+      ],
+      "id": "eba37010-81c9-45a0-98dc-2a2a657592d8",
+      "name": "Filtra 24h Desqualificado"
+    },
+    {
+      "parameters": {
+        "jsCode": "const deals = $input.all();\n\n// Horário atual no Brasil (America/Sao_Paulo)\nconst now = new Date();\n\n// 24 horas em milissegundos\nconst HOURS_24 = 24 * 60 * 60 * 1000;\n\nconst filteredDeals = deals.filter(item => {\n  // Data de criação do deal no Pipedrive\n  const addTime = item.json.update_time;\n\n  if (!addTime) return false;\n\n  // Converte para Date\n  const createdAt = new Date(addTime);\n\n  // Diferença em ms\n  const diff = now.getTime() - createdAt.getTime();\n\n  // Mantém apenas deals com mais de 24h\n  return diff > HOURS_24;\n});\n\nreturn filteredDeals;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        304
+      ],
+      "id": "1f82baa8-3c58-4a7e-96c0-152fe967cc06",
+      "name": "Filtra 24h tentativa 1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const deals = $input.all();\n\n// Horário atual no Brasil (America/Sao_Paulo)\nconst now = new Date();\n\n// 24 horas em milissegundos\nconst HOURS_24 = 24 * 60 * 60 * 1000;\n\nconst filteredDeals = deals.filter(item => {\n  // Data de criação do deal no Pipedrive\n  const addTime = item.json.update_time;\n\n  if (!addTime) return false;\n\n  // Converte para Date\n  const createdAt = new Date(addTime);\n\n  // Diferença em ms\n  const diff = now.getTime() - createdAt.getTime();\n\n  // Mantém apenas deals com mais de 24h\n  return diff > HOURS_24;\n});\n\nreturn filteredDeals;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        448
+      ],
+      "id": "3566a19f-8060-43dd-8003-b8034700a13a",
+      "name": "Filtra 24h tentativa 2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const deals = $input.all();\n\n// Horário atual no Brasil (America/Sao_Paulo)\nconst now = new Date();\n\n// 24 horas em milissegundos\nconst HOURS_24 = 24 * 60 * 60 * 1000;\n\nconst filteredDeals = deals.filter(item => {\n  // Data de criação do deal no Pipedrive\n  const addTime = item.json.update_time;\n\n  if (!addTime) return false;\n\n  // Converte para Date\n  const createdAt = new Date(addTime);\n\n  // Diferença em ms\n  const diff = now.getTime() - createdAt.getTime();\n\n  // Mantém apenas deals com mais de 24h\n  return diff > HOURS_24;\n});\n\nreturn filteredDeals;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        592
+      ],
+      "id": "95c9a9f7-5eed-4d11-8a31-efd93dce597c",
+      "name": "Filtra 24h tentativa 3"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        384
+      ],
+      "id": "1541f3ac-617d-45cf-abc3-2d90f1c0d0a7",
+      "name": "Schedule Trigger5"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "triggerAtHour": 14
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        512
+      ],
+      "id": "e2329cfc-aa1f-4ed9-b8cc-1d4da72f9b59",
+      "name": "Schedule Trigger6"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 87
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        112,
+        288
+      ],
+      "id": "87419cb4-06a7-4989-b04f-297d14011933",
+      "name": "Get many deals5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        112,
+        432
+      ],
+      "id": "a2299dce-613a-4da9-9ebd-2ec217d7971e",
+      "name": "Get many deals6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 89
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        112,
+        576
+      ],
+      "id": "87e8f202-a097-4f7a-9946-afe46a65812a",
+      "name": "Get many deals7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "get",
+        "personId": "={{ $json.person_id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        288,
+        288
+      ],
+      "id": "5a97995b-0278-464f-b921-c4f5908762b8",
+      "name": "Get a person",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "get",
+        "personId": "={{ $json.person_id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        288,
+        432
+      ],
+      "id": "2b76040a-b265-471e-9a19-aa44a95225f4",
+      "name": "Get a person1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "get",
+        "personId": "={{ $json.person_id }}"
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        288,
+        576
+      ],
+      "id": "b3a4629b-8125-4594-a965-3c05c3fb85bc",
+      "name": "Get a person2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        896
+      ],
+      "id": "c2ae1cc8-9d29-4b6a-a228-5f0e13a6338d",
+      "name": "Schedule Trigger7"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "stage_id": 90
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        896
+      ],
+      "id": "c8bd7c8d-3960-44c8-840d-18beacaffbcc",
+      "name": "Get many deals8",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.id }}",
+        "updateFields": {
+          "stage_id": 86
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        896
+      ],
+      "id": "4b1f2fc2-7e92-433c-b43c-9e0ff98a7e49",
+      "name": "Update a deal5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const deals = $input.all();\n\n// Horário atual\nconst now = new Date();\n\n// 7 dias completos em milissegundos\nconst DAYS_7 = 7 * 24 * 60 * 60 * 1000;\n\nconst filteredDeals = deals.filter(item => {\n  const addTime = item.json.update_time;\n\n  if (!addTime) return false;\n\n  const createdAt = new Date(addTime);\n\n  // Diferença entre agora e a criação do deal\n  const diff = now.getTime() - createdAt.getTime();\n\n  // Mantém apenas deals com mais de 7 dias (168 horas)\n  return diff >= DAYS_7;\n});\n\nreturn filteredDeals;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        896
+      ],
+      "id": "e1744dff-8127-4d6b-b535-724ec3e25aee",
+      "name": "Filtro 7 dias1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $('Get many deals5').item.json.id }}",
+        "updateFields": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        544,
+        160
+      ],
+      "id": "5cd5b0fa-a08b-48e6-890a-72cd7e42ed9d",
+      "name": "Update a deal4",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $('Get many deals6').item.json.id }}",
+        "updateFields": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        544,
+        416
+      ],
+      "id": "8ccc10cd-fabd-4926-a15a-4a2490fa0114",
+      "name": "Update a deal6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $('Get many deals7').item.json.id }}",
+        "updateFields": {
+          "stage_id": 88
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        544,
+        672
+      ],
+      "id": "ce5e39bf-07fa-46e0-a4b1-b4a25e3709a0",
+      "name": "Update a deal7",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Get many deals": {
+      "main": [
+        [
+          {
+            "node": "Filtra 24h Desqualificado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get many deals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get many deals1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals1": {
+      "main": [
+        [
+          {
+            "node": "Filtra 24h tentativa 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Get many deals2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals2": {
+      "main": [
+        [
+          {
+            "node": "Filtra 24h tentativa 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger3": {
+      "main": [
+        [
+          {
+            "node": "Get many deals3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals3": {
+      "main": [
+        [
+          {
+            "node": "Filtra 24h tentativa 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtra 24h Desqualificado": {
+      "main": [
+        [
+          {
+            "node": "Update a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtra 24h tentativa 1": {
+      "main": [
+        [
+          {
+            "node": "Update a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtra 24h tentativa 2": {
+      "main": [
+        [
+          {
+            "node": "Update a deal2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtra 24h tentativa 3": {
+      "main": [
+        [
+          {
+            "node": "Update a deal3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a deal1": {
+      "main": [
+        []
+      ]
+    },
+    "Update a deal2": {
+      "main": [
+        []
+      ]
+    },
+    "Update a deal3": {
+      "main": [
+        []
+      ]
+    },
+    "Schedule Trigger5": {
+      "main": [
+        [
+          {
+            "node": "Get many deals5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get many deals6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get many deals7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger6": {
+      "main": [
+        [
+          {
+            "node": "Get many deals7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get many deals6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get many deals5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals6": {
+      "main": [
+        [
+          {
+            "node": "Get a person1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals5": {
+      "main": [
+        [
+          {
+            "node": "Get a person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals7": {
+      "main": [
+        [
+          {
+            "node": "Get a person2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a person1": {
+      "main": [
+        []
+      ]
+    },
+    "Get a person2": {
+      "main": [
+        []
+      ]
+    },
+    "Get a person": {
+      "main": [
+        []
+      ]
+    },
+    "Schedule Trigger7": {
+      "main": [
+        [
+          {
+            "node": "Get many deals8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many deals8": {
+      "main": [
+        [
+          {
+            "node": "Filtro 7 dias1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtro 7 dias1": {
+      "main": [
+        [
+          {
+            "node": "Update a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger1": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger2": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger3": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger4": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "7600f105-3295-42d4-808f-d2000abbb760",
+  "activeVersionId": null,
+  "triggerCount": 5,
+  "shared": [
+    {
+      "updatedAt": "2026-05-13T10:53:41.441Z",
+      "createdAt": "2026-05-13T10:53:41.441Z",
+      "role": "workflow:owner",
+      "workflowId": "VJw6Q10zRuggH8GZ",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
