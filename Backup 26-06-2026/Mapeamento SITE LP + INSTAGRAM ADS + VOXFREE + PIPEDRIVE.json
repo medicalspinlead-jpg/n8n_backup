@@ -1,0 +1,5493 @@
+{
+  "updatedAt": "2026-06-25T15:28:27.270Z",
+  "createdAt": "2025-11-17T15:13:05.753Z",
+  "id": "7QAO0I3gV5FpfemT",
+  "name": "Mapeamento SITE LP + INSTAGRAM ADS + VOXFREE + PIPEDRIVE",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "83f1bffe-0e3b-4fae-a38e-e80061b3ca7d",
+              "name": "body.data.key.remoteJid",
+              "value": "={{ $json.whatsappJid.replace('@s.whatsapp.net', '') }}",
+              "type": "string"
+            },
+            {
+              "id": "b3057820-4c9d-44dd-b25d-003f396ee8f4",
+              "name": "body.data.key.fromMe",
+              "value": "={{ $('Webhook1').item.json.body.data.key.fromMe }}",
+              "type": "boolean"
+            },
+            {
+              "id": "64251236-d9dd-49cf-946d-7e97c571b906",
+              "name": "body.data.pushName",
+              "value": "={{ $('Webhook1').item.json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "6aa3b3ac-b1a7-4942-9938-f2ad573c7164",
+              "name": "body.data.message.conversation",
+              "value": "={{ $('Webhook1').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "9e28e8d1-70e3-45a2-af63-b98a0ff9dd1d",
+              "name": "produto",
+              "value": "={{ $('Webhook1').item.json.body.data.message.conversation.match(/https?:\\/\\/[^\\s]+/)[0].split('/produto/')[1].replace('/', '') }}",
+              "type": "string"
+            },
+            {
+              "id": "acaea2db-4e15-4c25-9157-059fbb87f4b2",
+              "name": "produto1",
+              "value": "={{ $('Webhook1').item.json.body.data.message.conversation.match(/https?:\\/\\/[^\\s]+/)[0].split('/produto/')[1].replace('/', '') }}",
+              "type": "string"
+            },
+            {
+              "id": "f7c68c1a-22f1-4078-8e11-d664fd5fb03c",
+              "name": "produto_url",
+              "value": "={{ $('Webhook1').item.json.body.data.message.conversation.match(/https?:\\/\\/[^\\s]+/)[0] }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        256
+      ],
+      "id": "3c779638-95bc-4887-b01a-5c4d47e83a31",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b2f8e2b-0739-48ed-bea1-a5d1ae34ebeb",
+              "leftValue": "={{ $json.body.data.message.conversation }}",
+              "rightValue": "Olá! Gostaria de solicitar um orçamento para o produto:",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        96
+      ],
+      "id": "42e5b7b8-ec03-48d3-b5a2-82edadea43f0",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        832,
+        80
+      ],
+      "id": "03b39b18-bd0c-4fb9-9d00-892c94163c08",
+      "name": "Create an organization",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+        "additionalFields": {
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        80
+      ],
+      "id": "8f0a016e-0715-45c1-9b9c-d30c56c5dcc0",
+      "name": "Create a person",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.org_id.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        80
+      ],
+      "id": "7a9cef45-382b-438f-86e7-318d4f30dc34",
+      "name": "Create a lead",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Site"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "Inbound"
+              },
+              {
+                "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                "value": "Camila"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        80
+      ],
+      "id": "8bd1f841-7d99-4e06-864f-18595b3ca06b",
+      "name": "Create a deal",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🛒LEAD INTERESSADO NA LOJA DE PEÇAS\n\n🔹Nome: {{ $('Edit Fields1').item.json.body.data.pushName }}\n🔹Telefone: {{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\n🔹Produto: {{ $('Edit Fields1').item.json.produto }}\n🔹Link: {{ $('Edit Fields1').item.json.produto_url }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "org_id": "={{ $('Create an organization').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        80
+      ],
+      "id": "720042d7-0d5d-4851-bf25-f6d21de8a499",
+      "name": "Create a note",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ",
+          "mode": "list",
+          "cachedResultName": "Mapeamento de Produtos da Loja de Peças",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 348125450,
+          "mode": "list",
+          "cachedResultName": "Lead",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit#gid=348125450"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "PRODUTO": "={{ $('Edit Fields1').item.json.produto }}",
+            "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+            "NOME": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+            "TELEFONE": "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}",
+            "LINK": "={{ $('Edit Fields1').item.json.produto_url }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PRODUTO",
+              "displayName": "PRODUTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LINK",
+              "displayName": "LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1856,
+        80
+      ],
+      "id": "9a0e1a19-6f75-467e-a271-66fefa53aa19",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b2f8e2b-0739-48ed-bea1-a5d1ae34ebeb",
+              "leftValue": "={{ $json.body.data.message.conversation }}",
+              "rightValue": "Olá! Estou acessando esta página:",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        240
+      ],
+      "id": "cd67d7ca-01a1-44a3-a18a-6bf219a42eb9",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        832,
+        224
+      ],
+      "id": "6813094d-96b4-4482-ae2b-2b3944074089",
+      "name": "Create an organization1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+        "additionalFields": {
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        224
+      ],
+      "id": "1dd798d3-6946-4ff7-928c-b3d078cf337f",
+      "name": "Create a person1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.org_id.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        224
+      ],
+      "id": "7f1e0b4c-6ce6-4579-9333-ca2ba2fb2287",
+      "name": "Create a lead1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person1').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Site"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "Inbound"
+              },
+              {
+                "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                "value": "Camila"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization1').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        224
+      ],
+      "id": "b965b172-72f1-44a6-9de2-a645fdf4399d",
+      "name": "Create a deal1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🛒LEAD INTERESSADO NA LOJA DE PEÇAS\n\n🔹Nome: {{ $('Edit Fields1').item.json.body.data.pushName }}\n🔹Telefone: {{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\n🔹Produto: {{ $('Edit Fields1').item.json.produto1 }}\n🔹Link: {{ $('Edit Fields1').item.json.produto_url }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "org_id": "={{ $('Create an organization1').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        224
+      ],
+      "id": "40ae6595-5d06-4b77-b516-32d1a1ff257c",
+      "name": "Create a note1",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ",
+          "mode": "list",
+          "cachedResultName": "Mapeamento de Produtos da Loja de Peças",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 348125450,
+          "mode": "list",
+          "cachedResultName": "Lead",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit#gid=348125450"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "PRODUTO": "={{ $('Edit Fields1').item.json.produto1 }}",
+            "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+            "NOME": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+            "TELEFONE": "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}",
+            "LINK": "={{ $('Edit Fields1').item.json.produto_url }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PRODUTO",
+              "displayName": "PRODUTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LINK",
+              "displayName": "LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1856,
+        224
+      ],
+      "id": "1b9b4d27-0725-4f65-a846-41658736c3b5",
+      "name": "Append row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Captura os valores\nconst data = $input.first().json.body.data.key;\n\nconst jid1 = data.remoteJid;\nconst jid2 = data.remoteJidAlt;\n\n// Função para extrair e formatar o JID\nfunction formatWhatsApp(jid) {\n  if (typeof jid !== 'string' || !jid) return null;\n\n  // Pega somente a parte antes do @\n  let base = jid.split('@')[0].trim();\n  if (!base) return null;\n\n  // Adiciona @s.whatsapp.net\n  return `${base}@s.whatsapp.net`;\n}\n\n// Prioriza o primeiro válido, depois o segundo\nlet result = formatWhatsApp(jid1) || formatWhatsApp(jid2);\n\n// Saída formatada\nreturn [\n  {\n    json: {\n      whatsappJid: result\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        192,
+        256
+      ],
+      "id": "e749c3eb-1f39-4e6e-9c73-c9c1b74667d3",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b2f8e2b-0739-48ed-bea1-a5d1ae34ebeb",
+              "leftValue": "={{ $json.body.data.message.conversation }}",
+              "rightValue": "https://medicalspin.com.br/produto/ultrassom",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        384
+      ],
+      "id": "0be3ca10-5fe6-4cb5-894b-fa7c29ade738",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        832,
+        368
+      ],
+      "id": "cc448e63-910b-4bd8-9ccf-c7db1fe0c852",
+      "name": "Create an organization2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+        "additionalFields": {
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        368
+      ],
+      "id": "ea35536b-36c9-40db-abb4-83bfc540aaef",
+      "name": "Create a person2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.org_id.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        368
+      ],
+      "id": "f92c6145-4773-4e69-b045-34877e17e0f1",
+      "name": "Create a lead2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person2').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Site"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "Inbound"
+              },
+              {
+                "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                "value": "Camila"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization2').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        368
+      ],
+      "id": "59ad1169-fb78-460a-8020-0b3770cbacdd",
+      "name": "Create a deal2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🛒LEAD INTERESSADO NA LOJA DE PEÇAS DE ULTRASSOM\n\n🔹Nome: {{ $('Edit Fields1').item.json.body.data.pushName }}\n🔹Telefone: {{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\n🔹Produto: {{ $('Edit Fields1').item.json.produto1 }}\n🔹Link: {{ $('Edit Fields1').item.json.produto_url }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "org_id": "={{ $('Create an organization2').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        368
+      ],
+      "id": "9c571190-4e9c-47bf-af96-99c0776daba9",
+      "name": "Create a note2",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ",
+          "mode": "list",
+          "cachedResultName": "Mapeamento de Produtos da Loja de Peças",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 348125450,
+          "mode": "list",
+          "cachedResultName": "Lead",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit#gid=348125450"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "PRODUTO": "={{ $('Edit Fields1').item.json.produto1 }}",
+            "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+            "NOME": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+            "TELEFONE": "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}",
+            "LINK": "={{ $('Edit Fields1').item.json.produto_url }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PRODUTO",
+              "displayName": "PRODUTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LINK",
+              "displayName": "LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1856,
+        368
+      ],
+      "id": "540e8ae9-c721-48c1-8805-189c0405bba9",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "voxfree",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        256
+      ],
+      "id": "90e29123-6ff1-4730-95bc-424e8874ff35",
+      "name": "Webhook1",
+      "webhookId": "ee4f75d4-d3b9-4683-a09e-6063ca3f14f0"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $json.contato }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        832,
+        656
+      ],
+      "id": "4b787e8d-42af-4d79-8b79-ddac9d15e88a",
+      "name": "Search a person",
+      "alwaysOutputData": true,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7fefca81-74ef-4f99-a902-cc2abad961dd",
+              "name": "contato",
+              "value": "={{ $json.body.data.key.remoteJid.replace('@s.whatsapp.net', '') }}",
+              "type": "string"
+            },
+            {
+              "id": "93d2d10b-87a6-431e-b78f-5c9149760b6d",
+              "name": "nome",
+              "value": "={{ $json.body.data.message.conversation.split(',')[1].split('!')[0].trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "3f38ceda-dca9-45eb-a9c1-a0f9c3d71087",
+              "name": "message",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "e8e64fbc-4424-4027-bcef-9327826f844b",
+              "name": "fromMe",
+              "value": "={{ $json.body.data.key.fromMe }}",
+              "type": "boolean"
+            },
+            {
+              "id": "e187a778-149e-4731-8eec-1a47b803beed",
+              "name": "pushName",
+              "value": "={{ $json.body.data.pushName }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        736
+      ],
+      "id": "0b5d1a5b-10d1-444d-b108-38fb38b0d191",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "limit": 1,
+        "term": "={{ $json.contato }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        832,
+        800
+      ],
+      "id": "ee18cd0c-e973-428e-9358-6d7b7e21d861",
+      "name": "Search a person1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1bbb0b75-afc1-4bdf-8f03-1485e5918e85",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "Olá Equipe Medical Spin. Tenho interesse e desejo mais informações",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        816
+      ],
+      "id": "60d0623a-1128-49ca-b9c5-79d35e816436",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d283015f-e073-4e82-822b-04571d797a43",
+              "leftValue": "={{ $json.phones[0] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        656
+      ],
+      "id": "53673585-5ab8-4d8d-8b32-225cc003f217",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1bbb0b75-afc1-4bdf-8f03-1485e5918e85",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "📌 Веⅿ-vіոⅾо à *Меⅾісаⅼ Ѕpіո* - Ꭱеfеrêոсіа Νасіоոаⅼ еⅿ *Еԛսіpаⅿеոtоѕ ⅾе Ꭱеѕѕоոâոсіа Маցոétіса е Ꭱаⅾіоⅼоցіа.*",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "5672c207-ab11-4a27-9cab-f15a83408258",
+              "leftValue": "={{ $json.fromMe }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        672
+      ],
+      "id": "c1640b35-8da1-44c9-8703-69ee019d4cea",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('Edit Fields2').item.json.nome }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        672
+      ],
+      "id": "dd10c4a4-a4bf-4459-ae07-83a73fd28ad5",
+      "name": "Create an organization3",
+      "alwaysOutputData": false,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Edit Fields2').item.json.nome }}",
+        "additionalFields": {
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Edit Fields2').item.json.contato }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        672
+      ],
+      "id": "8da04bc3-492c-4e82-b817-c0ac8b81e0d2",
+      "name": "Create a person3",
+      "alwaysOutputData": false,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {
+          "organization_id": "={{ $json.org_id.value }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1664,
+        672
+      ],
+      "id": "ecfbf2f6-906f-4640-ab6e-bc6385ebefcc",
+      "name": "Create a lead3",
+      "alwaysOutputData": false,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $('Create a lead3').item.json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person3').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Orgânica WhatsApp"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "VoxFree"
+              },
+              {
+                "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                "value": "Camila"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization3').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1856,
+        672
+      ],
+      "id": "48e81817-9b3f-48dc-99d0-b7966bb9b00c",
+      "name": "Create a deal3",
+      "alwaysOutputData": false,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=⚠️LEAD SEM ORIGEM DEFINIDA VINDO DA VOXFREE\n\n🔹Nome: {{ $('Edit Fields2').item.json.nome }}\n🔹Telefone: {{ $('Edit Fields2').item.json.contato }}\n🔹Origem:  VOXFREE",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "lead_id": "={{ $('Create a lead3').item.json.id }}",
+          "org_id": "={{ $('Create an organization3').item.json.id }}",
+          "person_id": "={{ $('Create a person3').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        672
+      ],
+      "id": "9d568288-9fdc-487f-bd3a-9d140d31b132",
+      "name": "Create a note3",
+      "alwaysOutputData": false,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads Medical Spin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1698967993,
+          "mode": "list",
+          "cachedResultName": "VoxFree",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1698967993"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Edit Fields2').item.json.nome }}",
+            "TELEFONE": "={{ $('Edit Fields2').item.json.contato }}",
+            "DATA": "={{ $now.format('dd-LL-yyyy T') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2256,
+        672
+      ],
+      "id": "930e0c3a-36d4-4e3d-8d93-ba4d818907a6",
+      "name": "Append row in sheet3",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d283015f-e073-4e82-822b-04571d797a43",
+              "leftValue": "={{ $json.phones[0] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        800
+      ],
+      "id": "20479402-f551-4831-a916-f39a571c3cc9",
+      "name": "If6"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('If3').item.json.pushName }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        816
+      ],
+      "id": "92392970-22c2-405b-a1df-d02ab3549e3a",
+      "name": "Create an organization4",
+      "alwaysOutputData": false,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('If3').item.json.pushName }}",
+        "additionalFields": {
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('If3').item.json.contato }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        816
+      ],
+      "id": "e5d75aa7-1bed-4740-8f81-440ea11eaca5",
+      "name": "Create a person4",
+      "alwaysOutputData": false,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {
+          "organization_id": "={{ $json.org_id.value }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1664,
+        816
+      ],
+      "id": "c956de81-6d76-4c03-b50f-c863d1f0e07e",
+      "name": "Create a lead4",
+      "alwaysOutputData": false,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $('Create a lead4').item.json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person4').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Instagram ADS"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "Instagram ADS"
+              },
+              {
+                "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                "value": "Camila"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization4').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1856,
+        816
+      ],
+      "id": "21e97941-3946-4eca-9e75-f67061c6f860",
+      "name": "Create a deal4",
+      "alwaysOutputData": false,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🚀NOVO LEAD VINDO DOS ANÚNCIOS DO INDEPENDENTES DO INSTAGRAM\n\n🔹Nome: {{ $('If3').item.json.pushName }}\n🔹Telefone: {{ $('If3').item.json.contato }}\n🔹Origem:  INSTAGRAM ADS",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "lead_id": "={{ $('Create a lead4').item.json.id }}",
+          "org_id": "={{ $('Create an organization4').item.json.id }}",
+          "person_id": "={{ $('Create a person4').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        816
+      ],
+      "id": "8abc37a3-3387-4407-b0fa-0cdd4730d697",
+      "name": "Create a note4",
+      "alwaysOutputData": false,
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads Medical Spin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2130362979,
+          "mode": "list",
+          "cachedResultName": "Instagram ADS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=2130362979"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('If3').item.json.pushName }}",
+            "TELEFONE": "={{ $('If3').item.json.contato }}",
+            "DATA": "={{ $now.format('dd-LL-yyyy T') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2256,
+        816
+      ],
+      "id": "cc553d9e-243b-4ddf-b15e-5aed057efdc0",
+      "name": "Append row in sheet4",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b2f8e2b-0739-48ed-bea1-a5d1ae34ebeb",
+              "leftValue": "={{ $json.body.data.message.conversation }}",
+              "rightValue": "Estou no site da Medical Spin e preciso de",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        528
+      ],
+      "id": "5a44faf8-439b-4d2b-81af-d1d3ef67b616",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        832,
+        512
+      ],
+      "id": "a3ce794c-65b4-4dae-acb5-6c0f9ef6ce25",
+      "name": "Create an organization5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+        "additionalFields": {
+          "org_id": "={{ $json.id }}",
+          "phone": [
+            "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        512
+      ],
+      "id": "83c1ac48-c05c-4003-8289-007c28fed1b8",
+      "name": "Create a person5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "title": "={{ $json.org_id.name }}",
+        "associateWith": "person",
+        "person_id": "={{ $json.id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        512
+      ],
+      "id": "0e9b6938-2d4a-4f30-9147-c20028539e9a",
+      "name": "Create a lead5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "associateWith": "person",
+        "person_id": "={{ $('Create a person5').item.json.id }}",
+        "additionalFields": {
+          "customProperties": {
+            "property": [
+              {
+                "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                "value": "Site"
+              },
+              {
+                "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                "value": "Inbound"
+              },
+              {
+                "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                "value": "Camila"
+              }
+            ]
+          },
+          "org_id": "={{ $('Create an organization5').item.json.id }}",
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        512
+      ],
+      "id": "175e0fbb-e97a-4f49-a676-718587015f27",
+      "name": "Create a deal5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=🛒LEAD INTERESSADO NA LOJA DE PEÇAS DE ULTRASSOM\n\n🔹Nome: {{ $('Edit Fields1').item.json.body.data.pushName }}\n🔹Telefone: {{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\n🔹Produto: {{ $('Edit Fields1').item.json.produto1 }}\n🔹Link: {{ $('Edit Fields1').item.json.produto_url }}",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}",
+          "org_id": "={{ $('Create an organization5').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        512
+      ],
+      "id": "800c2b47-84c2-4b8e-aefc-4d052d569a74",
+      "name": "Create a note5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+          "mode": "list",
+          "cachedResultName": "Leads Medical Spin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978480406,
+          "mode": "list",
+          "cachedResultName": "SITE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOME": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+            "TELEFONE": "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}",
+            "DATA": "={{$now.format('dd-LL-yyyy T')}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLÍNICA",
+              "displayName": "CLÍNICA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "OBSERVAÇÕES",
+              "displayName": "OBSERVAÇÕES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1856,
+        512
+      ],
+      "id": "5ed0ed79-0541-4a44-adc7-4dd417190e78",
+      "name": "Append row in sheet6",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2DSmp4SarxDNx6pV",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "voxfree",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        -16
+      ],
+      "id": "334f0181-3494-4107-be36-4d3c63f3b97b",
+      "name": "Webhook",
+      "webhookId": "2291b9fa-8511-476d-b01d-89c968f01c6e",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d06e77e9-fda1-465b-b0bc-84fdad8a9b84",
+              "name": "Name",
+              "value": "={{ $json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "a30c8ba5-c35d-4369-93a8-d639755954f1",
+              "name": "telefone",
+              "value": "={{ $json.body.data.key.remoteJid.split('@')[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        -32
+      ],
+      "id": "8e54d192-8df0-4c28-88a4-f0570f7788c1",
+      "name": "Edit Fields10"
+    },
+    {
+      "parameters": {
+        "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/phone/{{ $json.telefone }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        592,
+        -32
+      ],
+      "id": "7ed328a8-66fe-49c3-8bca-d9f2097a6119",
+      "name": "HTTP Request2",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "SOGUBKAG8W4TpmRP",
+          "name": "PainelFollowup"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dealId": "={{ $json.data.pipedriveId }}",
+        "updateFields": {
+          "stage_id": 17
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 2,
+      "position": [
+        832,
+        -48
+      ],
+      "id": "dc7b2498-a275-4d65-8277-fa6a0dfa5a85",
+      "name": "Update a deal5",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/{{ $('HTTP Request2').item.json.data.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1248,
+        -48
+      ],
+      "id": "21f52426-dfb4-4aa7-b15b-b570d1459f85",
+      "name": "HTTP Request3",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "SOGUBKAG8W4TpmRP",
+          "name": "PainelFollowup"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        352,
+        96
+      ],
+      "id": "16b7433c-ebb3-44c9-b84c-20281e4d90d9",
+      "name": "No Operation, do nothing2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f28b9a7a-5299-4407-a429-fd74009e375d",
+              "leftValue": "={{ $json.body.data.key.fromMe }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        192,
+        -16
+      ],
+      "id": "b00681f9-7212-4329-b7cf-40b0993b65f1",
+      "name": "If8"
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "content": "=Lead respondeu o Follow-up!<br>\n<br>\nLead respondeu o último follow-up com:<br>\n{{ $('If8').item.json.body.data.message.conversation }}\n",
+        "additionalFields": {
+          "deal_id": "={{ $json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        -48
+      ],
+      "id": "055804a7-f01e-4441-aa99-a1777b8264e0",
+      "name": "Create a note6",
+      "credentials": {
+        "pipedriveApi": {
+          "id": "4qJXbNcTRplBXhrh",
+          "name": "Pipedrive account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create an organization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization": {
+      "main": [
+        [
+          {
+            "node": "Create a person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person": {
+      "main": [
+        [
+          {
+            "node": "Create a lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead": {
+      "main": [
+        [
+          {
+            "node": "Create a deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal": {
+      "main": [
+        [
+          {
+            "node": "Create a note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Create an organization1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization1": {
+      "main": [
+        [
+          {
+            "node": "Create a person1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person1": {
+      "main": [
+        [
+          {
+            "node": "Create a lead1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead1": {
+      "main": [
+        [
+          {
+            "node": "Create a deal1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal1": {
+      "main": [
+        [
+          {
+            "node": "Create a note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization2": {
+      "main": [
+        [
+          {
+            "node": "Create a person2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person2": {
+      "main": [
+        [
+          {
+            "node": "Create a lead2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead2": {
+      "main": [
+        [
+          {
+            "node": "Create a deal2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal2": {
+      "main": [
+        [
+          {
+            "node": "Create a note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Create an organization2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a person1": {
+      "main": [
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Search a person1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "If4": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Create an organization3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "Search a person",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Create an organization3": {
+      "main": [
+        [
+          {
+            "node": "Create a person3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person3": {
+      "main": [
+        [
+          {
+            "node": "Create a lead3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead3": {
+      "main": [
+        [
+          {
+            "node": "Create a deal3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal3": {
+      "main": [
+        [
+          {
+            "node": "Create a note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note3": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Create an organization4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization4": {
+      "main": [
+        [
+          {
+            "node": "Create a person4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person4": {
+      "main": [
+        [
+          {
+            "node": "Create a lead4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead4": {
+      "main": [
+        [
+          {
+            "node": "Create a deal4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal4": {
+      "main": [
+        [
+          {
+            "node": "Create a note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note4": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "Create an organization5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an organization5": {
+      "main": [
+        [
+          {
+            "node": "Create a person5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a person5": {
+      "main": [
+        [
+          {
+            "node": "Create a lead5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a lead5": {
+      "main": [
+        [
+          {
+            "node": "Create a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a deal5": {
+      "main": [
+        [
+          {
+            "node": "Create a note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note5": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields10": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Update a deal5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a deal5": {
+      "main": [
+        [
+          {
+            "node": "Create a note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields10",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a note6": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Cw4BKEAZCX2tPyvL",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "axios/1.13.2",
+            "content-length": "1547",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "10.0.1.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "MedicalSpin",
+            "data": {
+              "key": {
+                "remoteJid": "5511940645036@s.whatsapp.net",
+                "remoteJidAlt": "5511940645036@s.whatsapp.net",
+                "fromMe": false,
+                "id": "3EB0C99843C66E990DB9E2",
+                "participant": "",
+                "addressingMode": "lid"
+              },
+              "pushName": "Elisangela Scaff",
+              "status": "DELIVERY_ACK",
+              "message": {
+                "conversation": "Boa tarde",
+                "messageContextInfo": {
+                  "threadId": [],
+                  "deviceListMetadata": {
+                    "senderKeyIndexes": [],
+                    "recipientKeyIndexes": [],
+                    "senderKeyHash": {
+                      "0": 151,
+                      "1": 124,
+                      "2": 57,
+                      "3": 206,
+                      "4": 187,
+                      "5": 228,
+                      "6": 54,
+                      "7": 43,
+                      "8": 218,
+                      "9": 167
+                    },
+                    "senderTimestamp": {
+                      "low": 1781096648,
+                      "high": 0,
+                      "unsigned": true
+                    },
+                    "senderAccountType": 0,
+                    "receiverAccountType": 0,
+                    "recipientKeyHash": {
+                      "0": 10,
+                      "1": 170,
+                      "2": 173,
+                      "3": 138,
+                      "4": 118,
+                      "5": 17,
+                      "6": 89,
+                      "7": 198,
+                      "8": 153,
+                      "9": 38
+                    },
+                    "recipientTimestamp": {
+                      "low": 1781870018,
+                      "high": 0,
+                      "unsigned": true
+                    }
+                  },
+                  "deviceListMetadataVersion": 2,
+                  "messageSecret": {
+                    "0": 27,
+                    "1": 185,
+                    "2": 204,
+                    "3": 42,
+                    "4": 177,
+                    "5": 119,
+                    "6": 45,
+                    "7": 19,
+                    "8": 71,
+                    "9": 253,
+                    "10": 134,
+                    "11": 148,
+                    "12": 64,
+                    "13": 117,
+                    "14": 92,
+                    "15": 162,
+                    "16": 206,
+                    "17": 63,
+                    "18": 172,
+                    "19": 4,
+                    "20": 204,
+                    "21": 181,
+                    "22": 174,
+                    "23": 18,
+                    "24": 163,
+                    "25": 45,
+                    "26": 91,
+                    "27": 95,
+                    "28": 154,
+                    "29": 180,
+                    "30": 230,
+                    "31": 157
+                  }
+                }
+              },
+              "messageType": "conversation",
+              "messageTimestamp": 1781882455,
+              "instanceId": "1a6f3d10-643f-4d3a-a86d-8c4139720839",
+              "source": "web"
+            },
+            "destination": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/loja-de-peças1",
+            "date_time": "2026-06-19T12:20:56.903Z",
+            "sender": "555131811899@s.whatsapp.net",
+            "server_url": "http://evo-j0o08ok8sgwc4cog04w0owok.95.217.164.173.sslip.io",
+            "apikey": "06302B2C50C7-41DF-A3A2-DDEB39A4CEF8"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/loja-de-peças1",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "user-agent": "axios/1.13.2",
+            "content-length": "790",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "10.0.1.1",
+            "x-forwarded-host": "n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "21ebda4186cf",
+            "x-real-ip": "10.0.1.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "teste",
+            "data": {
+              "key": {
+                "remoteJid": "557991054765@s.whatsapp.net",
+                "remoteJidAlt": "557991054765@s.whatsapp.net",
+                "fromMe": true,
+                "id": "AC39687FCF3AB6B7E159554C912C2597",
+                "participant": "",
+                "addressingMode": "lid"
+              },
+              "pushName": "Wendel Lucas",
+              "status": "SERVER_ACK",
+              "message": {
+                "conversation": "Boa tarde, em que serviço você tem interesse?"
+              },
+              "messageType": "conversation",
+              "messageTimestamp": 1781800577,
+              "instanceId": "5d3470be-0678-4908-a873-45413232d44f",
+              "source": "android"
+            },
+            "destination": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/teste",
+            "date_time": "2026-06-18T13:36:18.024Z",
+            "sender": "557999801810@s.whatsapp.net",
+            "server_url": "http://evo-j0o08ok8sgwc4cog04w0owok.95.217.164.173.sslip.io",
+            "apikey": "47C540EF977F-48E1-A7BC-8F23DB0E9F71"
+          },
+          "webhookUrl": "https://n8n-www4kggggc4c8k8ow4w8g4g0.95.217.164.173.sslip.io/webhook/teste",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "9f65d625-45de-47d9-98d0-fca671d80213",
+  "activeVersionId": "9f65d625-45de-47d9-98d0-fca671d80213",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-11-17T15:13:05.753Z",
+      "createdAt": "2025-11-17T15:13:05.753Z",
+      "role": "workflow:owner",
+      "workflowId": "7QAO0I3gV5FpfemT",
+      "projectId": "XZrA9Oiu8K5e6BgC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-06-25T14:40:29.584Z",
+    "createdAt": "2026-06-25T14:40:07.649Z",
+    "versionId": "9f65d625-45de-47d9-98d0-fca671d80213",
+    "workflowId": "7QAO0I3gV5FpfemT",
+    "nodes": [
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "83f1bffe-0e3b-4fae-a38e-e80061b3ca7d",
+                "name": "body.data.key.remoteJid",
+                "value": "={{ $json.whatsappJid.replace('@s.whatsapp.net', '') }}",
+                "type": "string"
+              },
+              {
+                "id": "b3057820-4c9d-44dd-b25d-003f396ee8f4",
+                "name": "body.data.key.fromMe",
+                "value": "={{ $('Webhook1').item.json.body.data.key.fromMe }}",
+                "type": "boolean"
+              },
+              {
+                "id": "64251236-d9dd-49cf-946d-7e97c571b906",
+                "name": "body.data.pushName",
+                "value": "={{ $('Webhook1').item.json.body.data.pushName }}",
+                "type": "string"
+              },
+              {
+                "id": "6aa3b3ac-b1a7-4942-9938-f2ad573c7164",
+                "name": "body.data.message.conversation",
+                "value": "={{ $('Webhook1').item.json.body.data.message.conversation }}",
+                "type": "string"
+              },
+              {
+                "id": "9e28e8d1-70e3-45a2-af63-b98a0ff9dd1d",
+                "name": "produto",
+                "value": "={{ $('Webhook1').item.json.body.data.message.conversation.match(/https?:\\/\\/[^\\s]+/)[0].split('/produto/')[1].replace('/', '') }}",
+                "type": "string"
+              },
+              {
+                "id": "acaea2db-4e15-4c25-9157-059fbb87f4b2",
+                "name": "produto1",
+                "value": "={{ $('Webhook1').item.json.body.data.message.conversation.match(/https?:\\/\\/[^\\s]+/)[0].split('/produto/')[1].replace('/', '') }}",
+                "type": "string"
+              },
+              {
+                "id": "f7c68c1a-22f1-4078-8e11-d664fd5fb03c",
+                "name": "produto_url",
+                "value": "={{ $('Webhook1').item.json.body.data.message.conversation.match(/https?:\\/\\/[^\\s]+/)[0] }}\n",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          352,
+          256
+        ],
+        "id": "3c779638-95bc-4887-b01a-5c4d47e83a31",
+        "name": "Edit Fields1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "5b2f8e2b-0739-48ed-bea1-a5d1ae34ebeb",
+                "leftValue": "={{ $json.body.data.message.conversation }}",
+                "rightValue": "Olá! Gostaria de solicitar um orçamento para o produto:",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          592,
+          96
+        ],
+        "id": "42e5b7b8-ec03-48d3-b5a2-82edadea43f0",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          832,
+          80
+        ],
+        "id": "03b39b18-bd0c-4fb9-9d00-892c94163c08",
+        "name": "Create an organization",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+          "additionalFields": {
+            "org_id": "={{ $json.id }}",
+            "phone": [
+              "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1040,
+          80
+        ],
+        "id": "8f0a016e-0715-45c1-9b9c-d30c56c5dcc0",
+        "name": "Create a person",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "title": "={{ $json.org_id.name }}",
+          "associateWith": "person",
+          "person_id": "={{ $json.id }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1248,
+          80
+        ],
+        "id": "7a9cef45-382b-438f-86e7-318d4f30dc34",
+        "name": "Create a lead",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $json.title }}",
+          "associateWith": "person",
+          "person_id": "={{ $('Create a person').item.json.id }}",
+          "additionalFields": {
+            "customProperties": {
+              "property": [
+                {
+                  "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                  "value": "Site"
+                },
+                {
+                  "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                  "value": "Inbound"
+                },
+                {
+                  "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                  "value": "Camila"
+                }
+              ]
+            },
+            "org_id": "={{ $('Create an organization').item.json.id }}",
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1456,
+          80
+        ],
+        "id": "8bd1f841-7d99-4e06-864f-18595b3ca06b",
+        "name": "Create a deal",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=🛒LEAD INTERESSADO NA LOJA DE PEÇAS\n\n🔹Nome: {{ $('Edit Fields1').item.json.body.data.pushName }}\n🔹Telefone: {{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\n🔹Produto: {{ $('Edit Fields1').item.json.produto }}\n🔹Link: {{ $('Edit Fields1').item.json.produto_url }}",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}",
+            "org_id": "={{ $('Create an organization').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1648,
+          80
+        ],
+        "id": "720042d7-0d5d-4851-bf25-f6d21de8a499",
+        "name": "Create a note",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ",
+            "mode": "list",
+            "cachedResultName": "Mapeamento de Produtos da Loja de Peças",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 348125450,
+            "mode": "list",
+            "cachedResultName": "Lead",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit#gid=348125450"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "PRODUTO": "={{ $('Edit Fields1').item.json.produto }}",
+              "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+              "NOME": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+              "TELEFONE": "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}",
+              "LINK": "={{ $('Edit Fields1').item.json.produto_url }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "NOME",
+                "displayName": "NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "TELEFONE",
+                "displayName": "TELEFONE",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "PRODUTO",
+                "displayName": "PRODUTO",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "LINK",
+                "displayName": "LINK",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          1856,
+          80
+        ],
+        "id": "9a0e1a19-6f75-467e-a271-66fefa53aa19",
+        "name": "Append row in sheet1",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "5b2f8e2b-0739-48ed-bea1-a5d1ae34ebeb",
+                "leftValue": "={{ $json.body.data.message.conversation }}",
+                "rightValue": "Olá! Estou acessando esta página:",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          592,
+          240
+        ],
+        "id": "cd67d7ca-01a1-44a3-a18a-6bf219a42eb9",
+        "name": "If1"
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          832,
+          224
+        ],
+        "id": "6813094d-96b4-4482-ae2b-2b3944074089",
+        "name": "Create an organization1",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+          "additionalFields": {
+            "org_id": "={{ $json.id }}",
+            "phone": [
+              "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1040,
+          224
+        ],
+        "id": "1dd798d3-6946-4ff7-928c-b3d078cf337f",
+        "name": "Create a person1",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "title": "={{ $json.org_id.name }}",
+          "associateWith": "person",
+          "person_id": "={{ $json.id }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1248,
+          224
+        ],
+        "id": "7f1e0b4c-6ce6-4579-9333-ca2ba2fb2287",
+        "name": "Create a lead1",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $json.title }}",
+          "associateWith": "person",
+          "person_id": "={{ $('Create a person1').item.json.id }}",
+          "additionalFields": {
+            "customProperties": {
+              "property": [
+                {
+                  "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                  "value": "Site"
+                },
+                {
+                  "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                  "value": "Inbound"
+                },
+                {
+                  "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                  "value": "Camila"
+                }
+              ]
+            },
+            "org_id": "={{ $('Create an organization1').item.json.id }}",
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1456,
+          224
+        ],
+        "id": "b965b172-72f1-44a6-9de2-a645fdf4399d",
+        "name": "Create a deal1",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=🛒LEAD INTERESSADO NA LOJA DE PEÇAS\n\n🔹Nome: {{ $('Edit Fields1').item.json.body.data.pushName }}\n🔹Telefone: {{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\n🔹Produto: {{ $('Edit Fields1').item.json.produto1 }}\n🔹Link: {{ $('Edit Fields1').item.json.produto_url }}",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}",
+            "org_id": "={{ $('Create an organization1').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1648,
+          224
+        ],
+        "id": "40ae6595-5d06-4b77-b516-32d1a1ff257c",
+        "name": "Create a note1",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ",
+            "mode": "list",
+            "cachedResultName": "Mapeamento de Produtos da Loja de Peças",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 348125450,
+            "mode": "list",
+            "cachedResultName": "Lead",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit#gid=348125450"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "PRODUTO": "={{ $('Edit Fields1').item.json.produto1 }}",
+              "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+              "NOME": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+              "TELEFONE": "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}",
+              "LINK": "={{ $('Edit Fields1').item.json.produto_url }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "NOME",
+                "displayName": "NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "TELEFONE",
+                "displayName": "TELEFONE",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "PRODUTO",
+                "displayName": "PRODUTO",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "LINK",
+                "displayName": "LINK",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          1856,
+          224
+        ],
+        "id": "1b9b4d27-0725-4f65-a846-41658736c3b5",
+        "name": "Append row in sheet2",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Captura os valores\nconst data = $input.first().json.body.data.key;\n\nconst jid1 = data.remoteJid;\nconst jid2 = data.remoteJidAlt;\n\n// Função para extrair e formatar o JID\nfunction formatWhatsApp(jid) {\n  if (typeof jid !== 'string' || !jid) return null;\n\n  // Pega somente a parte antes do @\n  let base = jid.split('@')[0].trim();\n  if (!base) return null;\n\n  // Adiciona @s.whatsapp.net\n  return `${base}@s.whatsapp.net`;\n}\n\n// Prioriza o primeiro válido, depois o segundo\nlet result = formatWhatsApp(jid1) || formatWhatsApp(jid2);\n\n// Saída formatada\nreturn [\n  {\n    json: {\n      whatsappJid: result\n    }\n  }\n];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          192,
+          256
+        ],
+        "id": "e749c3eb-1f39-4e6e-9c73-c9c1b74667d3",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "5b2f8e2b-0739-48ed-bea1-a5d1ae34ebeb",
+                "leftValue": "={{ $json.body.data.message.conversation }}",
+                "rightValue": "https://medicalspin.com.br/produto/ultrassom",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          592,
+          384
+        ],
+        "id": "0be3ca10-5fe6-4cb5-894b-fa7c29ade738",
+        "name": "If2"
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          832,
+          368
+        ],
+        "id": "cc448e63-910b-4bd8-9ccf-c7db1fe0c852",
+        "name": "Create an organization2",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+          "additionalFields": {
+            "org_id": "={{ $json.id }}",
+            "phone": [
+              "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1040,
+          368
+        ],
+        "id": "ea35536b-36c9-40db-abb4-83bfc540aaef",
+        "name": "Create a person2",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "title": "={{ $json.org_id.name }}",
+          "associateWith": "person",
+          "person_id": "={{ $json.id }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1248,
+          368
+        ],
+        "id": "f92c6145-4773-4e69-b045-34877e17e0f1",
+        "name": "Create a lead2",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $json.title }}",
+          "associateWith": "person",
+          "person_id": "={{ $('Create a person2').item.json.id }}",
+          "additionalFields": {
+            "customProperties": {
+              "property": [
+                {
+                  "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                  "value": "Site"
+                },
+                {
+                  "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                  "value": "Inbound"
+                },
+                {
+                  "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                  "value": "Camila"
+                }
+              ]
+            },
+            "org_id": "={{ $('Create an organization2').item.json.id }}",
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1456,
+          368
+        ],
+        "id": "59ad1169-fb78-460a-8020-0b3770cbacdd",
+        "name": "Create a deal2",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=🛒LEAD INTERESSADO NA LOJA DE PEÇAS DE ULTRASSOM\n\n🔹Nome: {{ $('Edit Fields1').item.json.body.data.pushName }}\n🔹Telefone: {{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\n🔹Produto: {{ $('Edit Fields1').item.json.produto1 }}\n🔹Link: {{ $('Edit Fields1').item.json.produto_url }}",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}",
+            "org_id": "={{ $('Create an organization2').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1648,
+          368
+        ],
+        "id": "9c571190-4e9c-47bf-af96-99c0776daba9",
+        "name": "Create a note2",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ",
+            "mode": "list",
+            "cachedResultName": "Mapeamento de Produtos da Loja de Peças",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 348125450,
+            "mode": "list",
+            "cachedResultName": "Lead",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MxYU4E5J0FoRyMXI2VcXGCHa5zVkio3XT033zR_2puQ/edit#gid=348125450"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "PRODUTO": "={{ $('Edit Fields1').item.json.produto1 }}",
+              "DATA": "={{$now.format('dd-LL-yyyy T')}}",
+              "NOME": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+              "TELEFONE": "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}",
+              "LINK": "={{ $('Edit Fields1').item.json.produto_url }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "NOME",
+                "displayName": "NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "TELEFONE",
+                "displayName": "TELEFONE",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "PRODUTO",
+                "displayName": "PRODUTO",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "LINK",
+                "displayName": "LINK",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          1856,
+          368
+        ],
+        "id": "540e8ae9-c721-48c1-8805-189c0405bba9",
+        "name": "Append row in sheet",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "voxfree",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          256
+        ],
+        "id": "90e29123-6ff1-4730-95bc-424e8874ff35",
+        "name": "Webhook1",
+        "webhookId": "ee4f75d4-d3b9-4683-a09e-6063ca3f14f0"
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "operation": "search",
+          "limit": 1,
+          "term": "={{ $json.contato }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          832,
+          656
+        ],
+        "id": "4b787e8d-42af-4d79-8b79-ddac9d15e88a",
+        "name": "Search a person",
+        "alwaysOutputData": true,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "7fefca81-74ef-4f99-a902-cc2abad961dd",
+                "name": "contato",
+                "value": "={{ $json.body.data.key.remoteJid.replace('@s.whatsapp.net', '') }}",
+                "type": "string"
+              },
+              {
+                "id": "93d2d10b-87a6-431e-b78f-5c9149760b6d",
+                "name": "nome",
+                "value": "={{ $json.body.data.message.conversation.split(',')[1].split('!')[0].trim() }}",
+                "type": "string"
+              },
+              {
+                "id": "3f38ceda-dca9-45eb-a9c1-a0f9c3d71087",
+                "name": "message",
+                "value": "={{ $json.body.data.message.conversation }}",
+                "type": "string"
+              },
+              {
+                "id": "e8e64fbc-4424-4027-bcef-9327826f844b",
+                "name": "fromMe",
+                "value": "={{ $json.body.data.key.fromMe }}",
+                "type": "boolean"
+              },
+              {
+                "id": "e187a778-149e-4731-8eec-1a47b803beed",
+                "name": "pushName",
+                "value": "={{ $json.body.data.pushName }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          352,
+          736
+        ],
+        "id": "0b5d1a5b-10d1-444d-b108-38fb38b0d191",
+        "name": "Edit Fields2"
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "operation": "search",
+          "limit": 1,
+          "term": "={{ $json.contato }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          832,
+          800
+        ],
+        "id": "ee18cd0c-e973-428e-9358-6d7b7e21d861",
+        "name": "Search a person1",
+        "alwaysOutputData": true,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "1bbb0b75-afc1-4bdf-8f03-1485e5918e85",
+                "leftValue": "={{ $json.message }}",
+                "rightValue": "Olá Equipe Medical Spin. Tenho interesse e desejo mais informações",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "looseTypeValidation": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          592,
+          816
+        ],
+        "id": "60d0623a-1128-49ca-b9c5-79d35e816436",
+        "name": "If3"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "d283015f-e073-4e82-822b-04571d797a43",
+                "leftValue": "={{ $json.phones[0] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1040,
+          656
+        ],
+        "id": "53673585-5ab8-4d8d-8b32-225cc003f217",
+        "name": "If4"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "1bbb0b75-afc1-4bdf-8f03-1485e5918e85",
+                "leftValue": "={{ $json.message }}",
+                "rightValue": "📌 Веⅿ-vіոⅾо à *Меⅾісаⅼ Ѕpіո* - Ꭱеfеrêոсіа Νасіоոаⅼ еⅿ *Еԛսіpаⅿеոtоѕ ⅾе Ꭱеѕѕоոâոсіа Маցոétіса е Ꭱаⅾіоⅼоցіа.*",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              },
+              {
+                "id": "5672c207-ab11-4a27-9cab-f15a83408258",
+                "leftValue": "={{ $json.fromMe }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          592,
+          672
+        ],
+        "id": "c1640b35-8da1-44c9-8703-69ee019d4cea",
+        "name": "If5"
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "name": "={{ $('Edit Fields2').item.json.nome }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1248,
+          672
+        ],
+        "id": "dd10c4a4-a4bf-4459-ae07-83a73fd28ad5",
+        "name": "Create an organization3",
+        "alwaysOutputData": false,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "name": "={{ $('Edit Fields2').item.json.nome }}",
+          "additionalFields": {
+            "org_id": "={{ $json.id }}",
+            "phone": [
+              "={{ $('Edit Fields2').item.json.contato }}"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1456,
+          672
+        ],
+        "id": "8da04bc3-492c-4e82-b817-c0ac8b81e0d2",
+        "name": "Create a person3",
+        "alwaysOutputData": false,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "title": "={{ $json.name }}",
+          "associateWith": "person",
+          "person_id": "={{ $json.id }}",
+          "additionalFields": {
+            "organization_id": "={{ $json.org_id.value }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1664,
+          672
+        ],
+        "id": "ecfbf2f6-906f-4640-ab6e-bc6385ebefcc",
+        "name": "Create a lead3",
+        "alwaysOutputData": false,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $('Create a lead3').item.json.title }}",
+          "associateWith": "person",
+          "person_id": "={{ $('Create a person3').item.json.id }}",
+          "additionalFields": {
+            "customProperties": {
+              "property": [
+                {
+                  "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                  "value": "Orgânica WhatsApp"
+                },
+                {
+                  "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                  "value": "VoxFree"
+                },
+                {
+                  "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                  "value": "Camila"
+                }
+              ]
+            },
+            "org_id": "={{ $('Create an organization3').item.json.id }}",
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1856,
+          672
+        ],
+        "id": "48e81817-9b3f-48dc-99d0-b7966bb9b00c",
+        "name": "Create a deal3",
+        "alwaysOutputData": false,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=⚠️LEAD SEM ORIGEM DEFINIDA VINDO DA VOXFREE\n\n🔹Nome: {{ $('Edit Fields2').item.json.nome }}\n🔹Telefone: {{ $('Edit Fields2').item.json.contato }}\n🔹Origem:  VOXFREE",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}",
+            "lead_id": "={{ $('Create a lead3').item.json.id }}",
+            "org_id": "={{ $('Create an organization3').item.json.id }}",
+            "person_id": "={{ $('Create a person3').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          2064,
+          672
+        ],
+        "id": "9d568288-9fdc-487f-bd3a-9d140d31b132",
+        "name": "Create a note3",
+        "alwaysOutputData": false,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+            "mode": "list",
+            "cachedResultName": "Leads Medical Spin",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 1698967993,
+            "mode": "list",
+            "cachedResultName": "VoxFree",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1698967993"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "NOME": "={{ $('Edit Fields2').item.json.nome }}",
+              "TELEFONE": "={{ $('Edit Fields2').item.json.contato }}",
+              "DATA": "={{ $now.format('dd-LL-yyyy T') }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "NOME",
+                "displayName": "NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "TELEFONE",
+                "displayName": "TELEFONE",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2256,
+          672
+        ],
+        "id": "930e0c3a-36d4-4e3d-8d93-ba4d818907a6",
+        "name": "Append row in sheet3",
+        "retryOnFail": true,
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "d283015f-e073-4e82-822b-04571d797a43",
+                "leftValue": "={{ $json.phones[0] }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1040,
+          800
+        ],
+        "id": "20479402-f551-4831-a916-f39a571c3cc9",
+        "name": "If6"
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "name": "={{ $('If3').item.json.pushName }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1248,
+          816
+        ],
+        "id": "92392970-22c2-405b-a1df-d02ab3549e3a",
+        "name": "Create an organization4",
+        "alwaysOutputData": false,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "name": "={{ $('If3').item.json.pushName }}",
+          "additionalFields": {
+            "org_id": "={{ $json.id }}",
+            "phone": [
+              "={{ $('If3').item.json.contato }}"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1456,
+          816
+        ],
+        "id": "e5d75aa7-1bed-4740-8f81-440ea11eaca5",
+        "name": "Create a person4",
+        "alwaysOutputData": false,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "title": "={{ $json.name }}",
+          "associateWith": "person",
+          "person_id": "={{ $json.id }}",
+          "additionalFields": {
+            "organization_id": "={{ $json.org_id.value }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1664,
+          816
+        ],
+        "id": "c956de81-6d76-4c03-b50f-c863d1f0e07e",
+        "name": "Create a lead4",
+        "alwaysOutputData": false,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $('Create a lead4').item.json.title }}",
+          "associateWith": "person",
+          "person_id": "={{ $('Create a person4').item.json.id }}",
+          "additionalFields": {
+            "customProperties": {
+              "property": [
+                {
+                  "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                  "value": "Instagram ADS"
+                },
+                {
+                  "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                  "value": "Instagram ADS"
+                },
+                {
+                  "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                  "value": "Camila"
+                }
+              ]
+            },
+            "org_id": "={{ $('Create an organization4').item.json.id }}",
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1856,
+          816
+        ],
+        "id": "21e97941-3946-4eca-9e75-f67061c6f860",
+        "name": "Create a deal4",
+        "alwaysOutputData": false,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=🚀NOVO LEAD VINDO DOS ANÚNCIOS DO INDEPENDENTES DO INSTAGRAM\n\n🔹Nome: {{ $('If3').item.json.pushName }}\n🔹Telefone: {{ $('If3').item.json.contato }}\n🔹Origem:  INSTAGRAM ADS",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}",
+            "lead_id": "={{ $('Create a lead4').item.json.id }}",
+            "org_id": "={{ $('Create an organization4').item.json.id }}",
+            "person_id": "={{ $('Create a person4').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          2064,
+          816
+        ],
+        "id": "8abc37a3-3387-4407-b0fa-0cdd4730d697",
+        "name": "Create a note4",
+        "alwaysOutputData": false,
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+            "mode": "list",
+            "cachedResultName": "Leads Medical Spin",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 2130362979,
+            "mode": "list",
+            "cachedResultName": "Instagram ADS",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=2130362979"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "NOME": "={{ $('If3').item.json.pushName }}",
+              "TELEFONE": "={{ $('If3').item.json.contato }}",
+              "DATA": "={{ $now.format('dd-LL-yyyy T') }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "NOME",
+                "displayName": "NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "TELEFONE",
+                "displayName": "TELEFONE",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2256,
+          816
+        ],
+        "id": "cc553d9e-243b-4ddf-b15e-5aed057efdc0",
+        "name": "Append row in sheet4",
+        "retryOnFail": true,
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "5b2f8e2b-0739-48ed-bea1-a5d1ae34ebeb",
+                "leftValue": "={{ $json.body.data.message.conversation }}",
+                "rightValue": "Estou no site da Medical Spin e preciso de",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          592,
+          528
+        ],
+        "id": "5a44faf8-439b-4d2b-81af-d1d3ef67b616",
+        "name": "If7"
+      },
+      {
+        "parameters": {
+          "resource": "organization",
+          "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          832,
+          512
+        ],
+        "id": "a3ce794c-65b4-4dae-acb5-6c0f9ef6ce25",
+        "name": "Create an organization5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "person",
+          "name": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+          "additionalFields": {
+            "org_id": "={{ $json.id }}",
+            "phone": [
+              "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1040,
+          512
+        ],
+        "id": "83c1ac48-c05c-4003-8289-007c28fed1b8",
+        "name": "Create a person5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "lead",
+          "title": "={{ $json.org_id.name }}",
+          "associateWith": "person",
+          "person_id": "={{ $json.id }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1248,
+          512
+        ],
+        "id": "0e9b6938-2d4a-4f30-9147-c20028539e9a",
+        "name": "Create a lead5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $json.title }}",
+          "associateWith": "person",
+          "person_id": "={{ $('Create a person5').item.json.id }}",
+          "additionalFields": {
+            "customProperties": {
+              "property": [
+                {
+                  "name": "bcb23d6ab811684c041b281ee629c0c22f283412",
+                  "value": "Site"
+                },
+                {
+                  "name": "26246539655446743bf780a9ada870d71bacb1a0",
+                  "value": "Inbound"
+                },
+                {
+                  "name": "3c1b0e8b2081fdbc27acffe179a4c704662362f5",
+                  "value": "Camila"
+                }
+              ]
+            },
+            "org_id": "={{ $('Create an organization5').item.json.id }}",
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1456,
+          512
+        ],
+        "id": "175e0fbb-e97a-4f49-a676-718587015f27",
+        "name": "Create a deal5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=🛒LEAD INTERESSADO NA LOJA DE PEÇAS DE ULTRASSOM\n\n🔹Nome: {{ $('Edit Fields1').item.json.body.data.pushName }}\n🔹Telefone: {{ $('Edit Fields1').item.json.body.data.key.remoteJid }}\n🔹Produto: {{ $('Edit Fields1').item.json.produto1 }}\n🔹Link: {{ $('Edit Fields1').item.json.produto_url }}",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}",
+            "org_id": "={{ $('Create an organization5').item.json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1648,
+          512
+        ],
+        "id": "800c2b47-84c2-4b8e-aefc-4d052d569a74",
+        "name": "Create a note5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M",
+            "mode": "list",
+            "cachedResultName": "Leads Medical Spin",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 1978480406,
+            "mode": "list",
+            "cachedResultName": "SITE",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ohgvaerBe6gxiJFh96RHeGV810otcCnwhKUe3kJ2j2M/edit#gid=1978480406"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "NOME": "={{ $('Edit Fields1').item.json.body.data.pushName }}",
+              "TELEFONE": "={{ $('Edit Fields1').item.json.body.data.key.remoteJid }}",
+              "DATA": "={{$now.format('dd-LL-yyyy T')}}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "NOME",
+                "displayName": "NOME",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "EMAIL",
+                "displayName": "EMAIL",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "TELEFONE",
+                "displayName": "TELEFONE",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "CLÍNICA",
+                "displayName": "CLÍNICA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "OBSERVAÇÕES",
+                "displayName": "OBSERVAÇÕES",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          1856,
+          512
+        ],
+        "id": "5ed0ed79-0541-4a44-adc7-4dd417190e78",
+        "name": "Append row in sheet6",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "2DSmp4SarxDNx6pV",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "voxfree",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          -16
+        ],
+        "id": "334f0181-3494-4107-be36-4d3c63f3b97b",
+        "name": "Webhook",
+        "webhookId": "2291b9fa-8511-476d-b01d-89c968f01c6e",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d06e77e9-fda1-465b-b0bc-84fdad8a9b84",
+                "name": "Name",
+                "value": "={{ $json.body.data.pushName }}",
+                "type": "string"
+              },
+              {
+                "id": "a30c8ba5-c35d-4369-93a8-d639755954f1",
+                "name": "telefone",
+                "value": "={{ $json.body.data.key.remoteJid.split('@')[0] }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          352,
+          -32
+        ],
+        "id": "8e54d192-8df0-4c28-88a4-f0570f7788c1",
+        "name": "Edit Fields10"
+      },
+      {
+        "parameters": {
+          "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/phone/{{ $json.telefone }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBearerAuth",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          592,
+          -32
+        ],
+        "id": "7ed328a8-66fe-49c3-8bca-d9f2097a6119",
+        "name": "HTTP Request2",
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "SOGUBKAG8W4TpmRP",
+            "name": "PainelFollowup"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dealId": "={{ $json.data.pipedriveId }}",
+          "updateFields": {
+            "stage_id": 17
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 2,
+        "position": [
+          832,
+          -48
+        ],
+        "id": "dc7b2498-a275-4d65-8277-fa6a0dfa5a85",
+        "name": "Update a deal5",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "DELETE",
+          "url": "=https://msp.painelfollowups.95.217.164.173.sslip.io/api/leads/{{ $('HTTP Request2').item.json.data.id }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBearerAuth",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          1248,
+          -48
+        ],
+        "id": "21f52426-dfb4-4aa7-b15b-b570d1459f85",
+        "name": "HTTP Request3",
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "SOGUBKAG8W4TpmRP",
+            "name": "PainelFollowup"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          352,
+          96
+        ],
+        "id": "16b7433c-ebb3-44c9-b84c-20281e4d90d9",
+        "name": "No Operation, do nothing2"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "f28b9a7a-5299-4407-a429-fd74009e375d",
+                "leftValue": "={{ $json.body.data.key.fromMe }}",
+                "rightValue": false,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          192,
+          -16
+        ],
+        "id": "b00681f9-7212-4329-b7cf-40b0993b65f1",
+        "name": "If8"
+      },
+      {
+        "parameters": {
+          "resource": "note",
+          "content": "=Lead respondeu o Follow-up!<br>\n<br>\nLead respondeu o último follow-up com:<br>\n{{ $('If8').item.json.body.data.message.conversation }}\n",
+          "additionalFields": {
+            "deal_id": "={{ $json.id }}"
+          }
+        },
+        "type": "n8n-nodes-base.pipedrive",
+        "typeVersion": 1,
+        "position": [
+          1040,
+          -48
+        ],
+        "id": "055804a7-f01e-4441-aa99-a1777b8264e0",
+        "name": "Create a note6",
+        "credentials": {
+          "pipedriveApi": {
+            "id": "4qJXbNcTRplBXhrh",
+            "name": "Pipedrive account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If2",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Create an organization",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an organization": {
+        "main": [
+          [
+            {
+              "node": "Create a person",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a person": {
+        "main": [
+          [
+            {
+              "node": "Create a lead",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a lead": {
+        "main": [
+          [
+            {
+              "node": "Create a deal",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a deal": {
+        "main": [
+          [
+            {
+              "node": "Create a note",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note": {
+        "main": [
+          [
+            {
+              "node": "Append row in sheet1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Create an organization1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an organization1": {
+        "main": [
+          [
+            {
+              "node": "Create a person1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a person1": {
+        "main": [
+          [
+            {
+              "node": "Create a lead1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a lead1": {
+        "main": [
+          [
+            {
+              "node": "Create a deal1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a deal1": {
+        "main": [
+          [
+            {
+              "node": "Create a note1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note1": {
+        "main": [
+          [
+            {
+              "node": "Append row in sheet2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an organization2": {
+        "main": [
+          [
+            {
+              "node": "Create a person2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a person2": {
+        "main": [
+          [
+            {
+              "node": "Create a lead2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a lead2": {
+        "main": [
+          [
+            {
+              "node": "Create a deal2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a deal2": {
+        "main": [
+          [
+            {
+              "node": "Create a note2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note2": {
+        "main": [
+          [
+            {
+              "node": "Append row in sheet",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If2": {
+        "main": [
+          [
+            {
+              "node": "Create an organization2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook1": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Edit Fields2",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If8",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Search a person": {
+        "main": [
+          [
+            {
+              "node": "If4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields2": {
+        "main": [
+          [
+            {
+              "node": "If5",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Search a person1": {
+        "main": [
+          [
+            {
+              "node": "If6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If3": {
+        "main": [
+          [
+            {
+              "node": "Search a person1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          []
+        ]
+      },
+      "If4": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Create an organization3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If5": {
+        "main": [
+          [
+            {
+              "node": "Search a person",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          []
+        ]
+      },
+      "Create an organization3": {
+        "main": [
+          [
+            {
+              "node": "Create a person3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a person3": {
+        "main": [
+          [
+            {
+              "node": "Create a lead3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a lead3": {
+        "main": [
+          [
+            {
+              "node": "Create a deal3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a deal3": {
+        "main": [
+          [
+            {
+              "node": "Create a note3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note3": {
+        "main": [
+          [
+            {
+              "node": "Append row in sheet3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If6": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Create an organization4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an organization4": {
+        "main": [
+          [
+            {
+              "node": "Create a person4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a person4": {
+        "main": [
+          [
+            {
+              "node": "Create a lead4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a lead4": {
+        "main": [
+          [
+            {
+              "node": "Create a deal4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a deal4": {
+        "main": [
+          [
+            {
+              "node": "Create a note4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note4": {
+        "main": [
+          [
+            {
+              "node": "Append row in sheet4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If7": {
+        "main": [
+          [
+            {
+              "node": "Create an organization5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an organization5": {
+        "main": [
+          [
+            {
+              "node": "Create a person5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a person5": {
+        "main": [
+          [
+            {
+              "node": "Create a lead5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a lead5": {
+        "main": [
+          [
+            {
+              "node": "Create a deal5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a deal5": {
+        "main": [
+          [
+            {
+              "node": "Create a note5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note5": {
+        "main": [
+          [
+            {
+              "node": "Append row in sheet6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "If8",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields10": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request2": {
+        "main": [
+          [
+            {
+              "node": "Update a deal5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update a deal5": {
+        "main": [
+          [
+            {
+              "node": "Create a note6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If8": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields10",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a note6": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Automações  Medical Spin",
+    "name": "Version 9f65d625",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": [
+    {
+      "updatedAt": "2025-11-17T14:48:08.195Z",
+      "createdAt": "2025-11-17T14:48:08.195Z",
+      "id": "tWCrFViPj858W1pE",
+      "name": "Site"
+    },
+    {
+      "updatedAt": "2025-11-17T14:42:35.258Z",
+      "createdAt": "2025-11-17T14:42:35.258Z",
+      "id": "XcOvDRXTYzj650Vd",
+      "name": "Voxfree"
+    },
+    {
+      "updatedAt": "2025-11-17T14:32:35.191Z",
+      "createdAt": "2025-11-17T14:32:35.191Z",
+      "id": "Llfmd66GWbMUHQMr",
+      "name": "Http"
+    },
+    {
+      "updatedAt": "2025-11-17T14:46:49.579Z",
+      "createdAt": "2025-11-17T14:46:49.579Z",
+      "id": "9yuumwfUmri83S1w",
+      "name": "Javascript"
+    },
+    {
+      "updatedAt": "2025-11-17T14:09:04.153Z",
+      "createdAt": "2025-11-17T14:09:04.153Z",
+      "id": "32ehNS7DwOBedRQc",
+      "name": "Sheets"
+    },
+    {
+      "updatedAt": "2025-11-17T14:34:30.644Z",
+      "createdAt": "2025-11-17T14:34:30.644Z",
+      "id": "ro1Seq0NGEH7zm0y",
+      "name": "Pipedrive"
+    }
+  ]
+}
